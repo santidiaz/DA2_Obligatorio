@@ -1,9 +1,0 @@
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\bin\Debug\netcoreapp2.1\BusinessEntities.deps.json
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\bin\Debug\netcoreapp2.1\BusinessEntities.dll
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\bin\Debug\netcoreapp2.1\BusinessEntities.pdb
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\obj\Debug\netcoreapp2.1\BusinessEntities.csprojAssemblyReference.cache
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\obj\Debug\netcoreapp2.1\BusinessEntities.csproj.CoreCompileInputs.cache
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\obj\Debug\netcoreapp2.1\BusinessEntities.AssemblyInfoInputs.cache
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\obj\Debug\netcoreapp2.1\BusinessEntities.AssemblyInfo.cs
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\obj\Debug\netcoreapp2.1\BusinessEntities.dll
-C:\Users\santi_reaqng9\Desktop\ORT\DA2\Oblig1_DA2\Proyecto\SportsManager\BusinessEntities\obj\Debug\netcoreapp2.1\BusinessEntities.pdb

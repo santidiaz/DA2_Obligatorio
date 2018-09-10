@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography;
+using System.Collections.Generic;
 using System.Text;
 
 namespace BusinessEntities
@@ -8,7 +8,6 @@ namespace BusinessEntities
     {
         private string _email;
         //private List<Team> _favouriteTeams;
-
         public int UserOID { get; set; } // [Object Id] This id is used by EntityFramework.
         public string Name { get; set; }
         public string LastName { get; set; }
@@ -24,14 +23,11 @@ namespace BusinessEntities
         }
         public string Password { get; set; }
         public string IsAdmin { get; set; }
-
         public virtual string GetFullName()
         {
             return string.Format("{0} {1}", this.Name, this.LastName);
         }
-
         //public List<Team> GetFavouritesTeams() { }
-
         #region Private Methods
         private bool IsValidEmail(string email)
         {
