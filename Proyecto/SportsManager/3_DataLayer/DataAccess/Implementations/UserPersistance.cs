@@ -6,5 +6,6 @@ namespace DataAccess.Implementations
 {
     public class UserPersistance
     {
+
     }
 }
