@@ -9,6 +9,7 @@ namespace ProviderManager
     {
         private IUserLogic UserLogic;
         private ITeamLogic TeamLogic;
+        private ISportLogic SportLogic;
 
         #region Singleton
         // Variable estática para la instancia, se necesita utilizar una función lambda ya que el constructor es privado.
@@ -17,6 +18,7 @@ namespace ProviderManager
         {
             this.UserLogic = new UserLogic(new UserPersistance());
             this.TeamLogic = new TeamLogic(new TeamPersistance());
+            this.SportLogic = new SportLogic(new SportPersistance());
         }
         public static Provider GetInstance
         {
@@ -30,6 +32,16 @@ namespace ProviderManager
         public IUserLogic GetUserOperations()
         {
             return this.UserLogic;
+        }
+
+        public ITeamLogic GetTeamOperations()
+        {
+            return this.TeamLogic;
+        }
+
+        public ISportLogic GetSportOperations()
+        {
+            return this.SportLogic;
         }
     }
 }
