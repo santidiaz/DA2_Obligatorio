@@ -13,7 +13,7 @@ namespace UnitTests
         public void CreateSport()
         {
             var expectedName = "Futbol";
-            var expectedTeamsList = new List<Team>() { new Team() { Name = "a", Photo = "f" } };
+            var expectedTeamsList = new List<Team>() { new Team() { Name = "a", Photo = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 } } };
 
             Sport sport = new Sport();
             sport.Name = expectedName;
