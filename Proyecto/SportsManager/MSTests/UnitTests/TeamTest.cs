@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BusinessContracts;
 using BusinessEntities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Utilities;
@@ -61,5 +62,16 @@ namespace UnitTests
 
             Assert.IsFalse(firstTeam.Equals(secondTeam));
         }
+
+        //public void AddTeamToSystem()
+        //{
+        //    ITeamLogic TeamOperations = DummyProvider.GetInstance.GetTeamOperations();
+
+        //    Team newTeam = new Team("Yoga", new DateTime(2017, 11, 14), 100);
+
+        //    TeamOperations.AddTeam(newTeam);
+
+        //    Assert.IsNotNull(this.FindTeamOnSystem(newTeam.Id));
+        //}
     }
 }
