@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\2_BusinessLayer\BusinessContracts\BusinessContracts.csproj" />
-    <ProjectReference Include="..\..\2_BusinessLayer\BusinessLogic\BusinessLogic.csproj" />
-    <ProjectReference Include="..\..\3_DataLayer\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\..\3_BusinessLayer\BusinessContracts\BusinessContracts.csproj" />
+    <ProjectReference Include="..\..\3_BusinessLayer\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\..\4_DataLayer\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
