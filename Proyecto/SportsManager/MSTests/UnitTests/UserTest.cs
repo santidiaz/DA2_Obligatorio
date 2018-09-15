@@ -1,6 +1,8 @@
 using BusinessEntities;
 using CommonUtilities;
+using DataContracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using UnitTests.Utilities;
@@ -18,7 +20,6 @@ namespace UnitTests
             string expectedUserName = string.Empty;
             bool expectedIsAdminFlag = false;
             string expectedEmail = string.Empty;
-            string expectedPassword = string.Empty;
             List<Team> expectedFavouriteTeams = new List<Team>();
 
             User user = new User();
@@ -28,10 +29,20 @@ namespace UnitTests
             Assert.AreEqual(expectedLastName, user.LastName);
             Assert.AreEqual(expectedUserName, user.UserName);
             Assert.AreEqual(expectedEmail, user.Email);
-            Assert.AreEqual(expectedPassword, user.Password);
             Assert.AreEqual(expectedIsAdminFlag, user.IsAdmin);
 
             Assert.IsTrue(Utility.CompareLists(actualFavouriteTeams, expectedFavouriteTeams));
+        }
+
+        [TestMethod]
+        public void CompareUserPassword()
+        {
+            string expectedCorrectPassword = "123456";
+            string expectedWrongPassword = "654321";
+            User user = new User { SetPassword = "123456" };
+            
+            Assert.IsTrue(user.ComparePassword(expectedCorrectPassword));
+            Assert.IsFalse(user.ComparePassword(expectedWrongPassword));
         }
 
         [TestMethod]
@@ -51,7 +62,7 @@ namespace UnitTests
             Assert.AreEqual(expectedLastName, user.LastName);
             Assert.AreEqual(expectedUserName, user.UserName);
             Assert.AreEqual(expectedEmail, user.Email);
-            Assert.AreEqual(expectedPassword, user.Password);
+            Assert.IsTrue(user.ComparePassword(expectedPassword));
             Assert.AreEqual(expectedIsAdminFlag, user.IsAdmin);
 
             List<Team> actualFavouritesTeams = user.GetFavouritesTeams();
@@ -94,5 +105,18 @@ namespace UnitTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        //[TestMethod]
+        //public void TestMOQ()
+        //{
+        //    // Creo el mock con lo que va a retornar cuando invoque el metodo en el controller.
+        //    var mock = new Mock<IUserPersistance>();
+        //    var mockedUser = new User();
+        //    mock.Setup(p => p.AddUser(mockedUser));
+
+        //    IBusin home = new HomeController(mock.Object);
+        //    string result = home.GetNameById(1);
+        //    Assert.AreEqual("Jignesh", result);
+        //}
     }
 }

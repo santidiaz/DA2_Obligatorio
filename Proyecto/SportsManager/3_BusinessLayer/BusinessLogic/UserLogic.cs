@@ -1,4 +1,6 @@
 ﻿using BusinessContracts;
+using BusinessEntities;
+using CommonUtilities;
 using DataContracts;
 using System;
 using System.Collections.Generic;
@@ -8,11 +10,24 @@ namespace BusinessLogic
 {
     public class UserLogic : IUserLogic
     {
-        private IUserPersistance PersistanceProvider;
+        private IUserPersistance persistanceProvider;
 
         public UserLogic(IUserPersistance provider)
         {
-            this.PersistanceProvider = provider;
+            this.persistanceProvider = provider;
         }
+
+        public bool DoesUserExists(string userName)
+        {
+            return this.persistanceProvider.DoesUserExists(userName);
+        }
+
+        //public void AddUser(User newUser)
+        //{
+        //    if (this.DoesStudentExists(newStudent))
+        //        throw new Exception(Constants.Errors.USER_ALREDY_EXISTS);
+
+        //    this.persistanceProvider.AddStudent(newStudent);
+        //}
     }
 }

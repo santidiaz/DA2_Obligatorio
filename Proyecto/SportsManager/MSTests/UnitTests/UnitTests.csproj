@@ -8,12 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="Moq" Version="4.10.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\3_BusinessLayer\BusinessEntities\BusinessEntities.csproj" />
+    <ProjectReference Include="..\..\4_DataLayer\DataContracts\DataContracts.csproj" />
   </ItemGroup>
 
 </Project>

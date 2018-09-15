@@ -1,12 +1,16 @@
 ﻿using CommonUtilities;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+using System.Linq;
 
 namespace BusinessEntities
 {
     public class User
     {
         private string _email;
+        private string _password;
         private List<Team> _favouriteTeams;
 
         public int UserOID { get; set; } // [Object Id] This id is used by EntityFramework.
@@ -22,8 +26,14 @@ namespace BusinessEntities
                     this._email = value;
             }
         }
-        public string Password { get; set; }
         public bool IsAdmin { get; set; } = false;
+        public string  SetPassword
+        {
+            set
+            {
+                this._password = value;
+            }
+        }
 
         public User()
         {
@@ -31,7 +41,7 @@ namespace BusinessEntities
             this.LastName = string.Empty;
             this.UserName = string.Empty;
             this._email = string.Empty;
-            this.Password = string.Empty;
+            this._password = string.Empty;
             this._favouriteTeams = new List<Team>();
         }
 
@@ -40,7 +50,7 @@ namespace BusinessEntities
             this.Name = name;
             this.LastName = lastName;
             this.UserName = userName;
-            this.Password = password;
+            this.SetPassword = password;
             this.Email = email;
             this._favouriteTeams = new List<Team>();
             this.IsAdmin = isAdmin;
@@ -54,6 +64,11 @@ namespace BusinessEntities
         public List<Team> GetFavouritesTeams()
         {
             return this._favouriteTeams;
+        }
+
+        public bool ComparePassword(string passwordToCompare)
+        {
+            return this._password.Equals(passwordToCompare);
         }
 
         #region Private Methods
