@@ -67,7 +67,6 @@ namespace UnitTests.LogicTests
                 mock.Setup(up => up.DoesUserExists(It.IsAny<string>())).Returns(true);
                 mock.Setup(mr => mr.AddUser(It.IsAny<User>())).Verifiable();
 
-                // Instancio UserLogic con el mock como parametro.
                 UserLogic userLogic = new UserLogic(mock.Object);
                 User userToAdd = Utility.GenerateRandomUser();
                 userLogic.AddUser(userToAdd);
@@ -80,8 +79,30 @@ namespace UnitTests.LogicTests
             }
         }
 
+        [TestMethod]
+        public void TryGetUserByUserName()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<IUserPersistance>();
+                User mockedUser = Utility.GenerateRandomUser("santidiaz");
+                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedUser);
+                
+                UserLogic userLogic = new UserLogic(mock.Object);
+                string userToBeSearch = "santidiaz";
+                User foundUser = Utility.GenerateRandomUser(userToBeSearch);
+
+                Assert.AreEqual(foundUser.UserName, userToBeSearch);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
         //[TestMethod]
-        //public void UserAlreadyExists()
+        //public void DeleteUser()
         //{
         //    // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
         //    var mock = new Mock<IUserPersistance>();

@@ -29,5 +29,14 @@ namespace BusinessLogic
 
             this.persistanceProvider.AddUser(newUser);
         }
+
+        public User GetUserByUserName(string userName)
+        {
+            User userFound = this.persistanceProvider.GetUserByUserName(userName);
+            if (userFound == null)
+                throw new Exception(Constants.Errors.USER_NOT_FOUND);
+
+            return userFound;
+        }
     }
 }

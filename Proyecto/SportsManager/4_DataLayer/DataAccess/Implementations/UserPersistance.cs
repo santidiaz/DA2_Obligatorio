@@ -25,5 +25,15 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
+
+        public User GetUserByUserName(string userName)
+        {
+            User foundUser;
+            using (Context context = new Context())
+            {
+                foundUser = context.Users.OfType<User>().FirstOrDefault(u => u.UserName.Equals(userName));
+            }
+            return foundUser;
+        }
     }
 }
