@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\3_BusinessLayer\BusinessEntities\BusinessEntities.csproj" />
+    <ProjectReference Include="..\..\3_BusinessLayer\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\..\4_DataLayer\DataContracts\DataContracts.csproj" />
-    <ProjectReference Include="..\..\Cross-Cutting\ProviderManager\ProviderManager.csproj" />
   </ItemGroup>
 
 </Project>

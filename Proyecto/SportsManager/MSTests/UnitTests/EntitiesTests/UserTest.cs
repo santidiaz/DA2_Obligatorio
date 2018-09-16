@@ -1,12 +1,9 @@
-using BusinessEntities;
-using CommonUtilities;
-using DataContracts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using ProviderManager;
 using System;
-using System.Collections.Generic;
+using CommonUtilities;
+using BusinessEntities;
 using UnitTests.Utilities;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests
 {
@@ -166,69 +163,5 @@ namespace UnitTests
                 Assert.IsTrue(ex.Message.Equals(Constants.Errors.LAST_NAME_REQUIRED));
             }
         }
-
-        //[TestMethod]
-        //public void ValidateEmptyUserName()
-        //{
-        //    try
-        //    {
-        //        string name = Utility.GetRandomName();
-        //        string lastName = Utility.GetRandomLastName();
-        //        string email = "santidiaz.uy@gmail.com"; // Invalid format
-
-        //        User user = new User();
-        //        user.Email = email;
-        //        Assert.IsTrue(true);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Assert.Fail(ex.Message);
-        //    }
-        //}
-
-        //[TestMethod]
-        //public void ValidateEmptyUserName()
-        //{
-        //    try
-        //    {
-        //        string name = Utility.GetRandomName();
-        //        string lastName = Utility.GetRandomLastName();
-        //        string email = "santidiaz.uy@gmail.com"; // Invalid format
-
-        //        User user = new User();
-        //        user.Email = email;
-        //        Assert.IsTrue(true);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Assert.Fail(ex.Message);
-        //    }
-        //}
-
-        //[TestMethod]
-        //public void DoesUserExists()
-        //{
-        //    BusinessContracts.IUserLogic userOpr = Provider.GetInstance.GetUserOperations();
-
-        //    string expectedUserName = "santidiaz";
-
-        //    var doesExists = userOpr.DoesUserExists(expectedUserName);
-
-        //    Assert.IsTrue(doesExists);
-        //}
-
-
-        //[TestMethod]
-        //public void TestMOQ()
-        //{
-        //    // Creo el mock con lo que va a retornar cuando invoque el metodo en el controller.
-        //    var mock = new Mock<IUserPersistance>();
-        //    var mockedUser = new User();
-        //    mock.Setup(p => p.AddUser(mockedUser));
-
-        //    IBusin home = new HomeController(mock.Object);
-        //    string result = home.GetNameById(1);
-        //    Assert.AreEqual("Jignesh", result);
-        //}
     }
 }
