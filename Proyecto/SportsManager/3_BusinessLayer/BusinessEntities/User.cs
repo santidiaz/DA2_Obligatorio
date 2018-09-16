@@ -9,14 +9,47 @@ namespace BusinessEntities
 {
     public class User
     {
+        private string _name;
+        private string _lastName;
+        private string _userName;
         private string _email;
         private string _password;
         private List<Team> _favouriteTeams;
 
         public int UserOID { get; set; } // [Object Id] This id is used by EntityFramework.
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public string UserName { get; set; }
+        public string Name
+        {
+            get { return this._name; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception(Constants.Errors.NAME_REQUIRED);
+
+                this._name = value;
+            }
+        }
+        public string LastName
+        {
+            get { return this._lastName; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception(Constants.Errors.LAST_NAME_REQUIRED);
+
+                this._lastName = value;
+            }
+        }
+        public string UserName
+        {
+            get { return this._userName; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception(Constants.Errors.USER_NAME_REQUIRED);
+
+                this._userName = value;
+            }
+        }
         public string Email
         {
             get { return this._email; }
@@ -31,15 +64,18 @@ namespace BusinessEntities
         {
             set
             {
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception(Constants.Errors.PASSWORD_REQUIRED);
+
                 this._password = value;
             }
         }
 
         public User()
         {
-            this.Name = string.Empty;
-            this.LastName = string.Empty;
-            this.UserName = string.Empty;
+            this._name = string.Empty;
+            this._lastName = string.Empty;
+            this._userName = string.Empty;
             this._email = string.Empty;
             this._password = string.Empty;
             this._favouriteTeams = new List<Team>();
@@ -54,11 +90,6 @@ namespace BusinessEntities
             this.Email = email;
             this._favouriteTeams = new List<Team>();
             this.IsAdmin = isAdmin;
-        }
-
-        public virtual string GetFullName()
-        {
-            return string.Format("{0} {1}", this.Name, this.LastName);
         }
 
         public List<Team> GetFavouritesTeams()

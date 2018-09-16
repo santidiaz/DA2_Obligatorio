@@ -3,6 +3,7 @@ using CommonUtilities;
 using DataContracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ProviderManager;
 using System;
 using System.Collections.Generic;
 using UnitTests.Utilities;
@@ -105,6 +106,117 @@ namespace UnitTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void ValidateRequiredUserName()
+        {
+            try
+            {
+                string emptyUserName = string.Empty;
+                User user = new User();
+                user.UserName = emptyUserName;
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.Errors.USER_NAME_REQUIRED));
+            }
+        }
+
+        [TestMethod]
+        public void ValidateRequiredPassword()
+        {
+            try
+            {
+                string emptyPassword = null;
+                User user = new User();
+                user.SetPassword = emptyPassword;
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.Errors.PASSWORD_REQUIRED));
+            }
+        }
+
+        [TestMethod]
+        public void ValidateRequiredName()
+        {
+            try
+            {
+                string emptyName = string.Empty;
+                User user = new User();
+                user.Name = emptyName;
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.Errors.NAME_REQUIRED));
+            }
+        }
+
+        [TestMethod]
+        public void ValidateRequiredLastName()
+        {
+            try
+            {
+                string emptyLastName = "";
+                User user = new User();
+                user.LastName = emptyLastName;
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.Errors.LAST_NAME_REQUIRED));
+            }
+        }
+
+        //[TestMethod]
+        //public void ValidateEmptyUserName()
+        //{
+        //    try
+        //    {
+        //        string name = Utility.GetRandomName();
+        //        string lastName = Utility.GetRandomLastName();
+        //        string email = "santidiaz.uy@gmail.com"; // Invalid format
+
+        //        User user = new User();
+        //        user.Email = email;
+        //        Assert.IsTrue(true);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //}
+
+        //[TestMethod]
+        //public void ValidateEmptyUserName()
+        //{
+        //    try
+        //    {
+        //        string name = Utility.GetRandomName();
+        //        string lastName = Utility.GetRandomLastName();
+        //        string email = "santidiaz.uy@gmail.com"; // Invalid format
+
+        //        User user = new User();
+        //        user.Email = email;
+        //        Assert.IsTrue(true);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //}
+
+        //[TestMethod]
+        //public void DoesUserExists()
+        //{
+        //    BusinessContracts.IUserLogic userOpr = Provider.GetInstance.GetUserOperations();
+
+        //    string expectedUserName = "santidiaz";
+
+        //    var doesExists = userOpr.DoesUserExists(expectedUserName);
+
+        //    Assert.IsTrue(doesExists);
+        //}
+
 
         //[TestMethod]
         //public void TestMOQ()

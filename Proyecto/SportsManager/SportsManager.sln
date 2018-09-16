@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContracts", "4_DataLaye
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtilities", "Cross-Cutting\CommonUtilities\CommonUtilities.csproj", "{7F13DF10-A359-4EEA-8B9F-FA6ED381A4A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProviderManager", "Cross-Cutting\ProviderManager\ProviderManager.csproj", "{004D881D-DD35-417B-9E4C-75C3285C3D24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProviderManager", "Cross-Cutting\ProviderManager\ProviderManager.csproj", "{004D881D-DD35-417B-9E4C-75C3285C3D24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

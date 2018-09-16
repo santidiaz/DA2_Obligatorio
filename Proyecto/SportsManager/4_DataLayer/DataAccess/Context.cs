@@ -25,5 +25,12 @@ namespace DataAccess
             //modelBuilder.Entity<Teacher>().ToTable("Teachers");
             //modelBuilder.Entity<Student>().ToTable("Students");
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //Data Source=<ip address>\SQLEXPRESS; Initial Catalog=<database>; Integrated Security=FALSE; User ID=<user>; password=<password>
+
+            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Initial Catalog=SportsManagerDB;Integrated Security=True;");
+        }
     }
 }
