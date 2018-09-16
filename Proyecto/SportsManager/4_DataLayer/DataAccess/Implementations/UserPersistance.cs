@@ -17,13 +17,13 @@ namespace DataAccess.Implementations
             }
         }
 
-        //public void AddUser(User newUser)
-        //{
-        //    using (Context context = new Context())
-        //    {
-        //        context.Users.Add(newUser);
-        //        context.SaveChanges();
-        //    }
-        //}
+        public void AddUser(User newUser)
+        {
+            using (Context context = new Context())
+            {
+                context.Users.Add(newUser);
+                context.SaveChanges();
+            }
+        }
     }
 }

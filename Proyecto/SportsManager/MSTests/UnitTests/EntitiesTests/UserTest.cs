@@ -81,7 +81,7 @@ namespace UnitTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.Errors.ERROR_INVALID_EMAIL_FORMAT));
+                Assert.IsTrue(ex.Message.Equals(Constants.Errors.INVALID_EMAIL_FORMAT));
             }
         }
 

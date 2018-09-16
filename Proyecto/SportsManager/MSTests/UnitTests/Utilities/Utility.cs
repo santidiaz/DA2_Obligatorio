@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace UnitTests.Utilities
         private static string[] lastNames = new string[5] { "Richards", "Kovacs", "Wayne", "Johnes", "Stark" };
         private static string[] emails = new string[5] { "aaa@bbb.com", "ccc@ddd.com", "eee@fff.com", "ggg@hhh.com", "iii@jjj.com" };
         private static string[] subjectNames = new string[5] { "Maths", "Physics", "Chemistry", "Geography", "History" };
+        private static string[] userNames = new string[5] { "fox", "pepsi", "mcdonalds", "ford", "norteña" };
 
         public static bool CompareLists<T>(List<T> real, List<T> toBeCompareWith)
             where T : class
@@ -42,42 +44,48 @@ namespace UnitTests.Utilities
             return lastNames[randomNumber.Next(0, lastNames.Length - 1)];
         }
 
-        //public static string GetRandomDocument()
-        //{
-        //    Random randomNumber = new Random(DateTime.Now.Second);
-        //    return documents[randomNumber.Next(0, documents.Length - 1)];
-        //}
+        public static User GenerateRandomUser(string userName = null, string password = null)
+        {
+            string randomUserName;
+            if (string.IsNullOrEmpty(userName))
+                randomUserName = userNames[GetRandomNumber(userNames.Length)];
+            else
+                randomUserName = userName;
 
-        //public static Student CreateRandomStudent()
-        //{
-        //    Student newStudent = new Student(Utility.GetRandomName(), Utility.GetRandomLastName(), Utility.GetRandomDocument());
-        //    return newStudent;
-        //}
+            string randomPassword;
+            if (string.IsNullOrEmpty(password))
+                randomPassword = GenerateRandomPassword();
+            else
+                randomPassword = password;
 
-        //public static Student FindStudentOnSystem(string documentNumber)
-        //{
-        //    return SystemDummyData.GetInstance.GetStudents().Find(x => x.GetDocumentNumber().Equals(documentNumber));
-        //}
+            string randomName = GetRandomName();
+            string randomLastName = lastNames[GetRandomNumber(lastNames.Length)];
+            string randomEmail = emails[GetRandomNumber(emails.Length)];
+
+            User randomUser = new User(randomName, randomLastName, randomUserName, randomPassword, randomEmail);
+            return randomUser;
+        }
 
         public static List<int> GetMonthsOfTheYear()
         {
             return new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
         }
 
-        //public static List<Fee> GenerateYearFees()
-        //{
-        //    var yearFees = new List<Fee>();
-        //    for (int index = 1; index < 13; index++)
-        //    {
-        //        var newFee = new Fee
-        //        {
-        //            Amount = (0.6M + index * 2) / 3,
-        //            Date = new DateTime(DateTime.Now.Year, index, 1),
-        //            IsPaid = false
-        //        };
-        //        yearFees.Add(newFee);
-        //    }
-        //    return yearFees;
-        //}
+        public static string GenerateRandomPassword(int length = 6)
+        {
+            const string seed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder result = new StringBuilder();
+            Random random = new Random();
+            
+            while (0 < length--)
+                result.Append(seed[random.Next(seed.Length)]);
+            
+            return result.ToString();
+        }
+        
+        private static int GetRandomNumber(int arrayLength)
+        {
+            return new Random(DateTime.Now.Second).Next(0, arrayLength - 1);
+        }
     }
 }

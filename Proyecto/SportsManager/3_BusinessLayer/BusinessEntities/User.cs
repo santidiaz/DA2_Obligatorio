@@ -9,13 +9,16 @@ namespace BusinessEntities
 {
     public class User
     {
+        #region Private attributes
         private string _name;
         private string _lastName;
         private string _userName;
         private string _email;
         private string _password;
         private List<Team> _favouriteTeams;
+        #endregion
 
+        #region Public attributes
         public int UserOID { get; set; } // [Object Id] This id is used by EntityFramework.
         public string Name
         {
@@ -70,7 +73,9 @@ namespace BusinessEntities
                 this._password = value;
             }
         }
+        #endregion
 
+        #region Constructors
         public User()
         {
             this._name = string.Empty;
@@ -78,10 +83,10 @@ namespace BusinessEntities
             this._userName = string.Empty;
             this._email = string.Empty;
             this._password = string.Empty;
+            this.IsAdmin = false;
             this._favouriteTeams = new List<Team>();
         }
-
-        public User(string name, string lastName, string userName, string password, string email, bool isAdmin)
+        public User(string name, string lastName, string userName, string password, string email, bool isAdmin = false)
         {
             this.Name = name;
             this.LastName = lastName;
@@ -91,16 +96,18 @@ namespace BusinessEntities
             this._favouriteTeams = new List<Team>();
             this.IsAdmin = isAdmin;
         }
+        #endregion
 
+        #region Methods
         public List<Team> GetFavouritesTeams()
         {
             return this._favouriteTeams;
         }
-
         public bool ComparePassword(string passwordToCompare)
         {
             return this._password.Equals(passwordToCompare);
         }
+        #endregion
 
         #region Private Methods
         private bool IsValidEmail(string email)
@@ -112,7 +119,7 @@ namespace BusinessEntities
             }
             catch
             {
-                throw new Exception(Constants.Errors.ERROR_INVALID_EMAIL_FORMAT);
+                throw new Exception(Constants.Errors.INVALID_EMAIL_FORMAT);
             }
         }
         #endregion 

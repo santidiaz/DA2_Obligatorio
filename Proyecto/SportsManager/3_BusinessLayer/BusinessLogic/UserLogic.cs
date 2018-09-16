@@ -22,12 +22,12 @@ namespace BusinessLogic
             return this.persistanceProvider.DoesUserExists(userName);
         }
 
-        //public void AddUser(User newUser)
-        //{
-        //    if (this.DoesStudentExists(newStudent))
-        //        throw new Exception(Constants.Errors.USER_ALREDY_EXISTS);
+        public void AddUser(User newUser)
+        {
+            if (this.DoesUserExists(newUser.UserName))
+                throw new Exception(Constants.Errors.USER_ALREDY_EXISTS);
 
-        //    this.persistanceProvider.AddStudent(newStudent);
-        //}
+            this.persistanceProvider.AddUser(newUser);
+        }
     }
 }

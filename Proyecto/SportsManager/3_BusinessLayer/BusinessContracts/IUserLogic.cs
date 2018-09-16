@@ -8,6 +8,6 @@ namespace BusinessContracts
     public interface IUserLogic
     {
         bool DoesUserExists(string userName);
-        //void AddUser(User newUser);
+        void AddUser(User newUser);
     }
 }
