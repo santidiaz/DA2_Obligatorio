@@ -28,9 +28,7 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Data Source=<ip address>\SQLEXPRESS; Initial Catalog=<database>; Integrated Security=FALSE; User ID=<user>; password=<password>
-
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Initial Catalog=SportsManagerDB;Integrated Security=True;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=SportsManagerDB;Trusted_Connection=True;");
         }
     }
 }

@@ -35,5 +35,15 @@ namespace DataAccess.Implementations
             }
             return foundUser;
         }
+
+        public void DeleteUser(User userToDelete)
+        {
+            using (Context context = new Context())
+            {
+                context.Users.Attach(userToDelete);
+                context.Users.Remove(userToDelete);
+                context.SaveChanges();
+            }
+        }
     }
 }

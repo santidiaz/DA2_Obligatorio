@@ -9,5 +9,6 @@ namespace BusinessContracts
     {
         bool DoesUserExists(string userName);
         void AddUser(User newUser);
+        User GetUserByUserName(string userName);
     }
 }

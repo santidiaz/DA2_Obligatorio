@@ -44,5 +44,7 @@ namespace BusinessLogic
             User userToDelete = this.GetUserByUserName(userName);
             this.persistanceProvider.DeleteUser(userToDelete);
         }
+
+        //public void ModifyUser(ModifyUserInput input)
     }
 }

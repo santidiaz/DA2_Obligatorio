@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/2_BusinessLayer/SportsWebApi/SportsWebApi.csproj"
+                "${workspaceFolder}/2_ServiceLayer/SportsWebApi/SportsWebApi.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

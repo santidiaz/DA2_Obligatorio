@@ -10,13 +10,13 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/2_BusinessLayer/SportsWebApi/bin/Debug/netcoreapp2.1/SportsWebApi.dll",
+            "program": "${workspaceFolder}/2_ServiceLayer/SportsWebApi/bin/Debug/netcoreapp2.1/SportsWebApi.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/2_BusinessLayer/SportsWebApi",
+            "cwd": "${workspaceFolder}/2_ServiceLayer/SportsWebApi",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
-                "enabled": true,
+                "enabled": false,
                 "args": "${auto-detect-url}",
                 "windows": {
                     "command": "cmd.exe",
