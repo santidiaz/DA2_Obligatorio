@@ -84,20 +84,39 @@ namespace UnitTests.LogicTests
         {
             try
             {
-                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<IUserPersistance>();
                 User mockedUser = Utility.GenerateRandomUser("santidiaz");
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedUser);
                 
                 UserLogic userLogic = new UserLogic(mock.Object);
                 string userToBeSearch = "santidiaz";
-                User foundUser = Utility.GenerateRandomUser(userToBeSearch);
+                User foundUser = userLogic.GetUserByUserName(userToBeSearch);
 
                 Assert.AreEqual(foundUser.UserName, userToBeSearch);
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void TryGetUserByUserNameThatNotExists()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                mock.Setup(up => up.GetUserByUserName(It.IsAny<string>())).Returns((User)null);
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                string userToBeSearch = "santidiaz";
+                User foundUser = userLogic.GetUserByUserName(userToBeSearch);
+
+                Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.Errors.USER_NOT_FOUND));
             }
         }
 
