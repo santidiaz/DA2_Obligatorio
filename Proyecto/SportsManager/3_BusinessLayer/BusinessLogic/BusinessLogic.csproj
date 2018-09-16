@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\4_DataLayer\DataContracts\DataContracts.csproj" />
     <ProjectReference Include="..\BusinessContracts\BusinessContracts.csproj" />
+    <ProjectReference Include="..\BusinessEntities\BusinessEntities.csproj" />
   </ItemGroup>
 
 </Project>

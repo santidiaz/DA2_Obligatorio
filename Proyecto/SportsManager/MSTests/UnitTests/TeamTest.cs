@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BusinessContracts;
 using BusinessEntities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProviderManager;
 using UnitTests.Utilities;
 
 namespace UnitTests
@@ -62,15 +64,24 @@ namespace UnitTests
             Assert.IsFalse(firstTeam.Equals(secondTeam));
         }
 
-        //public void AddTeamToSystem()
-        //{
-        //    ITeamLogic TeamOperations = DummyProvider.GetInstance.GetTeamOperations();
+        [TestMethod]
+        public void AddTeamToSystem()
+        {
+            ITeamLogic TeamOperations = Provider.GetInstance.GetTeamOperations();
 
-        //    Team newTeam = new Team("Yoga", new DateTime(2017, 11, 14), 100);
+            Team newTeam = new Team("Nacional", new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
 
-        //    TeamOperations.AddTeam(newTeam);
+            TeamOperations.AddTeam(newTeam);
 
-        //    Assert.IsNotNull(this.FindTeamOnSystem(newTeam.Id));
-        //}
+            Assert.IsNotNull(this.FindTeamOnSystem(newTeam.Name));
+        }
+        
+        private object FindTeamOnSystem(string name)
+        {
+            ITeamLogic teamOperations = Provider.GetInstance.GetTeamOperations();
+            List<Team> activities = teamOperations.GetTeams();
+            return activities.Find(x => x.Name == name);
+        }
+
     }
 }

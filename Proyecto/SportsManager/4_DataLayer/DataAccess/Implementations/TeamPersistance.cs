@@ -1,4 +1,5 @@
-﻿using DataContracts;
+﻿using BusinessEntities;
+using DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,5 +18,14 @@ namespace DataAccess.Implementations
             }
         }
          */
+        public void AddTeam(Team newTeam)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Team> GetTeams()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
