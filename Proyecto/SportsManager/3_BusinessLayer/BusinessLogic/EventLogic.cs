@@ -1,11 +1,12 @@
-﻿using DataContracts;
+﻿using BusinessContracts;
+using DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BusinessLogic
 {
-    public class EventLogic : BusinessContracts.IEventLogic
+    public class EventLogic : IEventLogic
     {
         private IEventPersistance PersistanceProvider;
 

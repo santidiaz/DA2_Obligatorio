@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\3_DataLayer\DataContracts\DataContracts.csproj" />
+    <ProjectReference Include="..\..\4_DataLayer\DataContracts\DataContracts.csproj" />
     <ProjectReference Include="..\BusinessContracts\BusinessContracts.csproj" />
   </ItemGroup>
 

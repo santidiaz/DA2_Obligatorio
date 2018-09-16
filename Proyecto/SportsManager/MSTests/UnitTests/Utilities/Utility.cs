@@ -10,7 +10,7 @@ namespace UnitTests.Utilities
         private static string[] maleNames = new string[5] { "Alfred", "Tony", "Bart", "Peter", "Jhon" };
         private static string[] femaleNames = new string[5] { "Carol", "Jennifer", "Storm", "Leia", "Jessica" };
         private static string[] lastNames = new string[5] { "Richards", "Kovacs", "Wayne", "Johnes", "Stark" };
-        private static string[] documents = new string[5] { "1234567-8", "3216549-8", "7418529-6", "9638527-4", "1596324-7" };
+        private static string[] emails = new string[5] { "aaa@bbb.com", "ccc@ddd.com", "eee@fff.com", "ggg@hhh.com", "iii@jjj.com" };
         private static string[] subjectNames = new string[5] { "Maths", "Physics", "Chemistry", "Geography", "History" };
 
         public static bool CompareLists<T>(List<T> real, List<T> toBeCompareWith)
@@ -42,12 +42,12 @@ namespace UnitTests.Utilities
             return lastNames[randomNumber.Next(0, lastNames.Length - 1)];
         }
 
-        public static string GetRandomDocument()
-        {
-            Random randomNumber = new Random(DateTime.Now.Second);
-            return documents[randomNumber.Next(0, documents.Length - 1)];
-        }
-        
+        //public static string GetRandomDocument()
+        //{
+        //    Random randomNumber = new Random(DateTime.Now.Second);
+        //    return documents[randomNumber.Next(0, documents.Length - 1)];
+        //}
+
         //public static Student CreateRandomStudent()
         //{
         //    Student newStudent = new Student(Utility.GetRandomName(), Utility.GetRandomLastName(), Utility.GetRandomDocument());

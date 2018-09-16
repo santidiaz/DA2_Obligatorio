@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BusinessContracts;
 using BusinessEntities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Utilities;
