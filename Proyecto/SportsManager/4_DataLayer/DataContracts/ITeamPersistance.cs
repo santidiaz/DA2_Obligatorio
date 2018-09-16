@@ -9,5 +9,8 @@ namespace DataContracts
     {
         void AddTeam(Team newTeam);
         List<Team> GetTeams();
+        void ModifyTeamByName(Team newTeam);
+        Team GetTeamByName(string name);
+        void DeleteTeamByName(string name);
     }
 }

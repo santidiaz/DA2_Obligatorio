@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using System.Text;
 using BusinessContracts;
 using BusinessEntities;
+using CommonUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProviderManager;
 using UnitTests.Utilities;
+using System.Linq;
 
 namespace UnitTests
 {
     [TestClass]
     public class TeamTest
     {
+        [TestInitialize]
+        public void TestInitialization()
+        {
+            //SystemDummyData.GetInstance.Reset();
+        }
         [TestMethod]
         public void CreateTeam()
         {
-            var expectedName = "Nacional";
+            var expectedName = Constants.Team.NAME_TEST;
             var expectedPhoto = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
 
             Team team = new Team();
@@ -29,7 +36,7 @@ namespace UnitTests
         [TestMethod]
         public void CreateTeamWithParameters()
         {
-            var expectedName = "Nacional";
+            var expectedName = Constants.Team.NAME_TEST;
             var expectedPhoto = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
 
             Team team = new Team(expectedName, expectedPhoto);
@@ -52,10 +59,10 @@ namespace UnitTests
         [TestMethod]
         public void TeamsInstancesAreNotEqual()
         {
-            string name1 = "Nacional";
+            string name1 = Constants.Team.NAME_TEST;
             byte[] photo1 = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
 
-            string name2 = "Peñarol";
+            string name2 = Constants.Team.NAME_TEST_PENIAROL;
             byte[] photo2 = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
 
             Team firstTeam = new Team(name1, photo1);
@@ -69,7 +76,7 @@ namespace UnitTests
         {
             ITeamLogic TeamOperations = Provider.GetInstance.GetTeamOperations();
 
-            Team newTeam = new Team("Nacional", new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
+            Team newTeam = new Team(Constants.Team.NAME_TEST, new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
 
             TeamOperations.AddTeam(newTeam);
 
@@ -82,6 +89,49 @@ namespace UnitTests
             List<Team> activities = teamOperations.GetTeams();
             return activities.Find(x => x.Name == name);
         }
+        
+        [TestMethod]
+        public void TryToAddTeamThatAlreadyExistsToSystem()
+        {
+            ITeamLogic TeamOperations = Provider.GetInstance.GetTeamOperations();
 
+            Team newTeam = new Team("Nacional", new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
+
+            TeamOperations.AddTeam(newTeam);
+
+            Assert.IsNotNull(this.FindTeamOnSystem(newTeam.Name));
+        }
+
+        [TestMethod]
+        public void ModifyTeam()
+        {
+            ITeamLogic TeamOperations = Provider.GetInstance.GetTeamOperations();
+
+            var team = new Team(Constants.Team.NAME_TEST, new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
+            TeamOperations.AddTeam(team);
+
+            string teamName = team.Name;
+
+            team.Name = Constants.Team.NAME_TEST;
+            TeamOperations.ModifyTeamByName(teamName, team);
+
+            var modifiedTeam = TeamOperations.GetTeamByName(team.Name);
+            Assert.AreEqual(modifiedTeam.Name, Constants.Team.NAME_TEST_MODIFY);
+        }
+
+        [TestMethod]
+        public void DeleteTeamByName()
+        {
+            ITeamLogic teamOperations = Provider.GetInstance.GetTeamOperations();
+
+            var team = new Team(Constants.Team.NAME_TEST, new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
+            teamOperations.AddTeam(team);
+
+            teamOperations.DeleteTeamByName(team.Name);
+
+            var quantityOfATeams = teamOperations.GetTeams().Count();
+
+            Assert.IsTrue(quantityOfATeams == 0);
+        }
     }
 }

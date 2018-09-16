@@ -23,7 +23,22 @@ namespace DataAccess.Implementations
             throw new NotImplementedException();
         }
 
+        public void DeleteTeamByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Team GetTeamByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Team> GetTeams()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ModifyTeamByName(Team newTeam)
         {
             throw new NotImplementedException();
         }
