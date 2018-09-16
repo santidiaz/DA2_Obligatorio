@@ -7,9 +7,8 @@ namespace DataContracts
     {
         bool DoesUserExists(string userName);
         void AddUser(User newUser);
-
         User GetUserByUserName(string userName);
+        void DeleteUser(User userToDelete);
         //void ModifyUser(User userToModify);
-        //void DeleteUser(string userName);
     }
 }
