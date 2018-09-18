@@ -30,31 +30,23 @@ namespace SportsWebApi.Controllers
         {
             if (addUserInput == null) return BadRequest();
 
-            User newUser = new User();
+            User newUser = new User
+            {
+                Email = addUserInput.Email,
+                Name = addUserInput.Name,
+                LastName = addUserInput.LastName,
+                SetPassword = addUserInput.Password,
+                UserName = addUserInput.UserName
+            };
 
-            //var city = userOperations.AddUser();
-
-            //if (city == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var maxPointOfInterestId =
-            //    CityDataStore.Current.Cities.SelectMany(c => c.PointsOfInterest).Max(p => p.Id);
-
-            //var finalPointOfInterest = new PointOfInterestDto()
-            //{
-            //    Id = ++maxPointOfInterestId,
-            //    Name = pointOfInterest.Name,
-            //    Description = pointOfInterest.Description
-            //};
-
-            //city.PointsOfInterest.Add(finalPointOfInterest);
+            //TODO: Ver como manejar los errores. 
+            userOperations.AddUser(newUser);
 
             //return CreatedAtRoute(
             //    "GetPointOfInterest",
             //    new { cityId, id = finalPointOfInterest.Id },
             //    finalPointOfInterest);
+
             return Ok();
         }
     }

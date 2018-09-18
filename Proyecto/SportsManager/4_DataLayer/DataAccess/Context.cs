@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess
 {
-    internal class Context : DbContext
+    public class Context : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Team> Teams { get; set; }
