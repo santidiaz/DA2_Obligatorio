@@ -17,37 +17,47 @@ namespace SportsWebApi.Controllers
     {
         private IUserLogic userOperations = Provider.GetInstance.GetUserOperations();
 
-        // GET api/values/5
         [HttpGet("{userName}")]
-        public User GetUserByUserName(string userName)
-        {            
-            User result = userOperations.GetUserByUserName(userName);
-            return result;
+        public IActionResult GetUserByUserName(string userName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userName))
+                    return NotFound();
+
+                User result = userOperations.GetUserByUserName(userName);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
+                return this.StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost()]
         public IActionResult AddUser([FromBody] AddUserInput addUserInput)
         {
-            if (addUserInput == null) return BadRequest();
-
-            User newUser = new User
+            try
             {
-                Email = addUserInput.Email,
-                Name = addUserInput.Name,
-                LastName = addUserInput.LastName,
-                SetPassword = addUserInput.Password,
-                UserName = addUserInput.UserName
-            };
+                if (addUserInput == null) return BadRequest();
 
-            //TODO: Ver como manejar los errores. 
-            userOperations.AddUser(newUser);
+                User newUser = new User
+                {
+                    Email = addUserInput.Email,
+                    Name = addUserInput.Name,
+                    LastName = addUserInput.LastName,
+                    SetPassword = addUserInput.Password,
+                    UserName = addUserInput.UserName
+                };
 
-            //return CreatedAtRoute(
-            //    "GetPointOfInterest",
-            //    new { cityId, id = finalPointOfInterest.Id },
-            //    finalPointOfInterest);
-
-            return Ok();
+                userOperations.AddUser(newUser);
+                return Ok();
+            }
+            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            {
+                return this.StatusCode(500, ex.Message);
+            }
         }
     }
 }
