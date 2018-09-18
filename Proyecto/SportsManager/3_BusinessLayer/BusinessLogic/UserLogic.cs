@@ -37,7 +37,7 @@ namespace BusinessLogic
             return userFound;
         }
 
-        public void DeleteUser(string userName)
+        public void DeleteUserByUserName(string userName)
         {
             User userToDelete = this.GetUserByUserName(userName);
             this.persistanceProvider.DeleteUser(userToDelete);

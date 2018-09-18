@@ -121,7 +121,7 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
-        public void DeleteUser()
+        public void DeleteUserByUserName()
         {
             try
             {
@@ -134,7 +134,7 @@ namespace UnitTests.LogicTests
 
                 UserLogic userLogic = new UserLogic(mock.Object);
                 string userToBeDeleted = "santidiaz";
-                userLogic.DeleteUser(userToBeDeleted);
+                userLogic.DeleteUserByUserName(userToBeDeleted);
 
                 Assert.IsTrue(true);
             }

@@ -48,13 +48,28 @@ namespace SportsWebApi.Controllers
                     Name = addUserInput.Name,
                     LastName = addUserInput.LastName,
                     SetPassword = addUserInput.Password,
-                    UserName = addUserInput.UserName
+                    UserName = addUserInput.UserName,
+                    IsAdmin = addUserInput.IsAdmin
                 };
 
                 userOperations.AddUser(newUser);
                 return Ok();
             }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("{userName}")]
+        public IActionResult DeleteUserByUserName(string userName)
+        {
+            try
+            {
+                this.userOperations.DeleteUserByUserName(userName);
+                return Ok();
+            }
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }
