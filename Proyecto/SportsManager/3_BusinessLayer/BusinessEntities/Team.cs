@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonUtilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,10 @@ namespace BusinessEntities
 {
     public class Team
     {
+        #region Private attributes
+        private string _name;
+        private byte[] _photo;
+        #endregion
         public Team()
         {
 
@@ -17,8 +22,28 @@ namespace BusinessEntities
         }
 
         public int TeamOID { get; set; } // [Object Id] This id is team by EntityFramework.
-        public string Name { get; set; }
-        public byte[] Photo { get; set; } //ver como guardar foto.
+        public string Name
+        {
+            get { return this._name; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception(Constants.TeamErrors.NAME_REQUIRED);
+
+                this._name = value;
+            }
+        }
+        public byte[] Photo
+        {
+            get { return this._photo; }
+            set
+            {
+                if (value == null || value.Length == 0)
+                    throw new Exception(Constants.TeamErrors.PHOTO_INVALID);
+
+                this._photo = value;
+            }
+        } //ver como guardar foto.
 
         public override bool Equals(object obj)
         {

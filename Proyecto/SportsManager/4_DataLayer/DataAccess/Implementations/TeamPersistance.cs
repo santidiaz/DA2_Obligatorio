@@ -1,26 +1,22 @@
 ﻿using BusinessEntities;
 using DataContracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace DataAccess.Implementations
 {
     public class TeamPersistance : ITeamPersistance
     {
-        /*
-         public void AddUser(User newUser)
+        public void AddTeam(Team newTeam)
         {
             using (Context context = new Context())
             {
-                context.users.Add(newUser);
+                context.Teams.Add(newTeam);
                 context.SaveChanges();
             }
-        }
-         */
-        public void AddTeam(Team newTeam)
-        {
-            throw new NotImplementedException();
         }
 
         public void DeleteTeamByName(string name)
@@ -34,6 +30,23 @@ namespace DataAccess.Implementations
         }
 
         public List<Team> GetTeams()
+        {
+            var teams = new List<Team>();
+            using (Context context = new Context())
+            {
+                var query = from team in context.Teams.Include("Teams")
+                            select team;
+
+                if (query != null)
+                {
+                    foreach (var team in query)
+                        teams.Add(team);
+                }
+            }
+            return teams;
+        }
+
+        public bool IsTeamInSystem(Team team)
         {
             throw new NotImplementedException();
         }

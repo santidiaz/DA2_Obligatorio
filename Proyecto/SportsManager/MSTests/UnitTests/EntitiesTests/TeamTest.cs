@@ -19,6 +19,53 @@ namespace UnitTests
         {
             //SystemDummyData.GetInstance.Reset();
         }
+
+        [TestMethod]
+        public void ThrowExceptionOnCreateTeamNameRequired()
+        {
+            try
+            {
+                var expectedPhoto = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+
+                Team team = new Team();
+                team.Name = string.Empty;
+                team.Photo = expectedPhoto;
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.TeamErrors.NAME_REQUIRED));
+            }
+        }
+
+        [TestMethod]
+        public void ThrowExceptionOnCreateInvalidPhotoRequired()
+        {
+            try
+            {
+                Team team = new Team();
+                team.Name = Utilities.Utility.GetRandomTeamName();
+                team.Photo = null;
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.TeamErrors.PHOTO_INVALID));
+            }
+        }
+
+        [TestMethod]
+        public void CreateTeamPhotoInvalid()
+        {
+            var expectedName = Constants.Team.NAME_TEST;
+            var expectedPhoto = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+
+            Team team = new Team();
+            team.Name = expectedName;
+            team.Photo = expectedPhoto;
+
+            Assert.AreEqual(team.Name, expectedName);
+            Assert.AreEqual(team.Photo, expectedPhoto);
+        }
+
         [TestMethod]
         public void CreateTeam()
         {
@@ -71,67 +118,5 @@ namespace UnitTests
             Assert.IsFalse(firstTeam.Equals(secondTeam));
         }
 
-        [TestMethod]
-        public void AddTeamToSystem()
-        {
-            ITeamLogic TeamOperations = Provider.GetInstance.GetTeamOperations();
-
-            Team newTeam = new Team(Constants.Team.NAME_TEST, new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
-
-            TeamOperations.AddTeam(newTeam);
-
-            Assert.IsNotNull(this.FindTeamOnSystem(newTeam.Name));
-        }
-        
-        private object FindTeamOnSystem(string name)
-        {
-            ITeamLogic teamOperations = Provider.GetInstance.GetTeamOperations();
-            List<Team> activities = teamOperations.GetTeams();
-            return activities.Find(x => x.Name == name);
-        }
-        
-        [TestMethod]
-        public void TryToAddTeamThatAlreadyExistsToSystem()
-        {
-            ITeamLogic TeamOperations = Provider.GetInstance.GetTeamOperations();
-
-            Team newTeam = new Team("Nacional", new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
-
-            TeamOperations.AddTeam(newTeam);
-
-            Assert.IsNotNull(this.FindTeamOnSystem(newTeam.Name));
-        }
-
-        [TestMethod]
-        public void ModifyTeam()
-        {
-            ITeamLogic TeamOperations = Provider.GetInstance.GetTeamOperations();
-
-            var team = new Team(Constants.Team.NAME_TEST, new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
-            TeamOperations.AddTeam(team);
-
-            string teamName = team.Name;
-
-            team.Name = Constants.Team.NAME_TEST;
-            TeamOperations.ModifyTeamByName(teamName, team);
-
-            var modifiedTeam = TeamOperations.GetTeamByName(team.Name);
-            Assert.AreEqual(modifiedTeam.Name, Constants.Team.NAME_TEST_MODIFY);
-        }
-
-        [TestMethod]
-        public void DeleteTeamByName()
-        {
-            ITeamLogic teamOperations = Provider.GetInstance.GetTeamOperations();
-
-            var team = new Team(Constants.Team.NAME_TEST, new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 });
-            teamOperations.AddTeam(team);
-
-            teamOperations.DeleteTeamByName(team.Name);
-
-            var quantityOfATeams = teamOperations.GetTeams().Count();
-
-            Assert.IsTrue(quantityOfATeams == 0);
-        }
     }
 }

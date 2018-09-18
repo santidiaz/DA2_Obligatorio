@@ -23,6 +23,8 @@ namespace CommonUtilities
         {
             public const string ERROR_TEAM_ALREADY_EXISTS = "Team already exists.";
             public const string ERROR_TEAM_NOT_EXISTS = "Team not exists.";
+            public const string NAME_REQUIRED = "Name required";
+            public const string PHOTO_INVALID = "Invalid photo";
         }
     }
 }

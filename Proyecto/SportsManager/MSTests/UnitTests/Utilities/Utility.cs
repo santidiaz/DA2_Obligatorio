@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BusinessEntities;
 
 namespace UnitTests.Utilities
 {
@@ -12,6 +13,7 @@ namespace UnitTests.Utilities
         private static string[] lastNames = new string[5] { "Richards", "Kovacs", "Wayne", "Johnes", "Stark" };
         private static string[] emails = new string[5] { "aaa@bbb.com", "ccc@ddd.com", "eee@fff.com", "ggg@hhh.com", "iii@jjj.com" };
         private static string[] subjectNames = new string[5] { "Maths", "Physics", "Chemistry", "Geography", "History" };
+        private static string[] teamNames = new string[5] { "Juventud", "Rampla", "Tanque", "Albion", "Salus" };
 
         public static bool CompareLists<T>(List<T> real, List<T> toBeCompareWith)
             where T : class
@@ -22,6 +24,29 @@ namespace UnitTests.Utilities
                 result = real.ElementAt(index).Equals(toBeCompareWith.ElementAt(index));
             }
             return result;
+        }
+
+        public static string GetRandomTeamName()
+        {
+            Random randomName = new Random(DateTime.Now.Second);
+            string name = string.Empty;
+
+            name = teamNames[randomName.Next(0, teamNames.Length - 1)];
+
+            return name;
+        }
+
+        public static Team GenerateRandomTeam(string teamName = null)
+        {
+            string randomUserName;
+            if (string.IsNullOrEmpty(teamName))
+                randomUserName = GetRandomTeamName();
+            else
+                randomUserName = teamName;
+            
+            byte[] photo = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            Team randomUser = new Team(randomUserName, photo);
+            return randomUser;
         }
 
         public static string GetRandomName()

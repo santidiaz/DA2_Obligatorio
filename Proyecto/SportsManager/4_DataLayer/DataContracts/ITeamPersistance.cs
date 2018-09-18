@@ -12,5 +12,6 @@ namespace DataContracts
         void ModifyTeamByName(Team newTeam);
         Team GetTeamByName(string name);
         void DeleteTeamByName(string name);
+        bool IsTeamInSystem(Team team);
     }
 }
