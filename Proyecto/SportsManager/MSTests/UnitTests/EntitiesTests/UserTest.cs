@@ -33,12 +33,12 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void CompareUserPassword()
+        public void CompareHashedUserPassword()
         {
-            string expectedCorrectPassword = "123456";
-            string expectedWrongPassword = "654321";
+            string expectedCorrectPassword = Utility.GenerateHash("123456");
+            string expectedWrongPassword = "123456";
             User user = new User { SetPassword = "123456" };
-            
+
             Assert.IsTrue(user.ComparePassword(expectedCorrectPassword));
             Assert.IsFalse(user.ComparePassword(expectedWrongPassword));
         }
@@ -51,10 +51,10 @@ namespace UnitTests
             string expectedUserName = "santidiaz";
             bool expectedIsAdminFlag = false;
             string expectedEmail = "santidiaz.uy@gmail.com";
-            string expectedPassword = "123456";
+            string expectedPassword = Utility.GenerateHash("123456");
             List<Team> expectedFavouriteTeams = new List<Team>();
 
-            User user = new User(expectedName, expectedLastName, expectedUserName, expectedPassword, expectedEmail, expectedIsAdminFlag);
+            User user = new User(expectedName, expectedLastName, expectedUserName, "123456", expectedEmail, expectedIsAdminFlag);
 
             Assert.AreEqual(expectedName, user.Name);
             Assert.AreEqual(expectedLastName, user.LastName);
