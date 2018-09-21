@@ -26,5 +26,16 @@ namespace CommonUtilities
             public const string NAME_REQUIRED = "Name required";
             public const string PHOTO_INVALID = "Invalid photo";
         }
+
+        public static class Sport
+        {
+            public const string NAME_SPORT = "Futbol";
+        }
+
+        public static class SportErrors
+        {
+            public const string NAME_REQUIRED = "Name required";
+            public const string TEAMLIST_REQUIRED = "Team list required";
+        }
     }
 }

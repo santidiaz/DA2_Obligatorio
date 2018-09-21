@@ -14,6 +14,7 @@ namespace UnitTests.Utilities
         private static string[] emails = new string[5] { "aaa@bbb.com", "ccc@ddd.com", "eee@fff.com", "ggg@hhh.com", "iii@jjj.com" };
         private static string[] subjectNames = new string[5] { "Maths", "Physics", "Chemistry", "Geography", "History" };
         private static string[] teamNames = new string[5] { "Juventud", "Rampla", "Tanque", "Albion", "Salus" };
+        private static string[] sportNames = new string[5] { "Futbol", "Hockey", "Natación", "Salto alto", "Tenis" };
 
         public static bool CompareLists<T>(List<T> real, List<T> toBeCompareWith)
             where T : class
@@ -24,6 +25,29 @@ namespace UnitTests.Utilities
                 result = real.ElementAt(index).Equals(toBeCompareWith.ElementAt(index));
             }
             return result;
+        }
+
+        public static string GetRandomSportName()
+        {
+            Random randomName = new Random(DateTime.Now.Second);
+            string name = string.Empty;
+
+            name = sportNames[randomName.Next(0, sportNames.Length - 1)];
+
+            return name;
+        }
+
+        public static Sport GenerateRandomSport(string sportName = null)
+        {
+            string randomSportName;
+            if (string.IsNullOrEmpty(sportName))
+                randomSportName = GetRandomSportName();
+            else
+                randomSportName = sportName;
+
+            List<Team> teamList = new List<Team>() { new Team() { Name = "Racing" } };
+            Sport randomSport = new Sport(randomSportName, teamList);
+            return randomSport;
         }
 
         public static string GetRandomTeamName()
