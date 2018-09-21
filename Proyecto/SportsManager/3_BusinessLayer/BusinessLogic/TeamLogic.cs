@@ -43,10 +43,11 @@ namespace BusinessLogic
 
         public void ModifyTeamByName(string name, Team team)
         {
-            if (this.IsTeamInSystem(new Team() { Name = name }))
+            Team teamToModify = this.GetTeamByName(name);
+            if (teamToModify == null)
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS);
             else
-                this.persistanceProvider.ModifyTeamByName(team);
+                this.persistanceProvider.ModifyTeamByName(name, team);
         }
 
         public Team GetTeamByName(string name)

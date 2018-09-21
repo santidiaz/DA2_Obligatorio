@@ -21,12 +21,27 @@ namespace DataAccess.Implementations
 
         public void DeleteTeamByName(string name)
         {
-            throw new NotImplementedException();
+            using (Context context = new Context())
+            {
+                Team teamToDelete = new Team() { Name = name };
+                context.Teams.Attach(teamToDelete);
+                context.Teams.Remove(teamToDelete);
+                context.SaveChanges();
+            }
         }
 
         public Team GetTeamByName(string name)
         {
-            throw new NotImplementedException();
+            Team teamFound;
+            using (Context context = new Context())
+            {
+                var queryResult = (from team in (context.Teams).Include("Teams")
+                                   where team.Name.Equals(name)
+                                   select team).FirstOrDefault();
+
+                teamFound = queryResult;
+            }
+            return teamFound;
         }
 
         public List<Team> GetTeams()
@@ -48,12 +63,27 @@ namespace DataAccess.Implementations
 
         public bool IsTeamInSystem(Team team)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            using (Context context = new Context())
+            {
+                var teamOnDB = context.Teams.OfType<Team>().Include("Teams").Where(a => a.TeamOID.Equals(team.TeamOID)).FirstOrDefault();
+
+                result = teamOnDB != null ? true : false;
+            }
+            return result;
         }
 
-        public void ModifyTeamByName(Team newTeam)
+        public void ModifyTeamByName(string name, Team teamToModify)
         {
-            throw new NotImplementedException();
+            using (Context context = new Context())
+            {
+                var teamOnDB = context.Teams.OfType<Team>().Include("Teams").Where(a => a.TeamOID.Equals(teamToModify.TeamOID)).FirstOrDefault();
+                
+                teamOnDB.Name = teamToModify.Name;
+                teamOnDB.Photo = teamToModify.Photo;
+
+                context.SaveChanges();
+            }
         }
     }
 }

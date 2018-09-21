@@ -1,73 +1,111 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessContracts;
 using BusinessEntities;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
+using SportsWebApi.Models.TeamModel;
 
 namespace SportsWebApi.Controllers
 {
-    [Route("api/teams")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class TeamController : Controller
+    public class TeamController : ControllerBase
     {
-        // POST: api/team
-        /// <summary>
-        /// Register a new User
-        /// </summary>
-        /// <param name="user">User created client-side</param>
-        /// <param name="invitationCode">Invitation Code recieved</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/team/")]
-        public IActionResult PostUser(Team newTeam)
+        private ITeamLogic teamOperations = Provider.GetInstance.GetTeamOperations();
+
+        [HttpGet("{teamName}")]
+        public IActionResult GetTeamByUserName(string teamName)
         {
-            ITeamLogic TeamOperations = Provider.GetInstance.GetTeamOperations();
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
-                TeamOperations.AddTeam(newTeam);
-                //if (TeamOperations.AddTeam(newTeam))
-                    //return Ok(newUser.User);
-                //return BadRequest();
+                if (string.IsNullOrEmpty(teamName))
+                    return NotFound();
+
+                Team result = teamOperations.GetTeamByName(teamName);
+                return Ok(result);
             }
-            catch (Exception ue)
+            catch (Exception ex)
             {
-                return BadRequest(ue.Message);
+                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
+                return this.StatusCode(500, ex.Message);
             }
-            return Ok();
         }
 
-        //// GET api/values/5
-        //[HttpGet("{id}")]
-        //public ActionResult<string> Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpPost()]
+        public IActionResult AddTeam([FromBody] AddTeamInput addTeamInput)
+        {
+            try
+            {
+                if (addTeamInput == null) return BadRequest();
+                
+                Team newTeam = new Team
+                {
+                    Name = addTeamInput.Name
+                };
 
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+                var file = HttpContext.Request.Form.Files.GetFile("image");
+                
+                using (var memoryStream = new MemoryStream())
+                {
+                    file.CopyTo(memoryStream);
+                    newTeam.Photo = memoryStream.ToArray();
+                }
 
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+                teamOperations.AddTeam(newTeam);
+                return Ok();
+            }
+            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
 
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{userName}")]
+        public IActionResult DeleteTeamByUserName(string teamName)
+        {
+            try
+            {
+                this.teamOperations.DeleteTeamByName(teamName);
+                return Ok();
+            }
+            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut()]
+        public IActionResult ModifyTeamByName([FromBody] ModifyTeamInput modifyTeamInput)
+        {
+            try
+            {
+                if (modifyTeamInput == null) return BadRequest();
+
+                Team modifyTeam = new Team
+                {
+                    Name = modifyTeamInput.NewName
+                };
+
+                var file = HttpContext.Request.Form.Files.GetFile("image");
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    file.CopyTo(memoryStream);
+                    modifyTeam.Photo = memoryStream.ToArray();
+                }
+
+                teamOperations.ModifyTeamByName(modifyTeamInput.OldName, modifyTeam);
+                return Ok();
+            }
+            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
