@@ -65,7 +65,7 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ITeamPersistance>();
-                mock.Setup(up => up.GetTeams()).Returns(new List<Team>());
+                mock.Setup(up => up.GetTeamByName(It.IsAny<string>())).Returns(new Team());
                 mock.Setup(mr => mr.ModifyTeamByName(It.IsAny<string>(), It.IsAny<Team>())).Verifiable();
 
                 // Instancio TeamLogic con el mock como parametro.
