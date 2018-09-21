@@ -29,7 +29,8 @@ namespace CommonUtilities
 
         public static class Sport
         {
-            public const string NAME_SPORT = "Futbol";
+            public const string NAME_SPORT_FUTBOL = "Futbol";
+            public const string NAME_SPORT_TENIS = "Futbol";
         }
 
         public static class SportErrors

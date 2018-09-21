@@ -14,7 +14,7 @@ namespace UnitTests
         [TestMethod]
         public void CreateSport()
         {
-            var expectedName = Constants.Sport.NAME_SPORT;
+            var expectedName = Constants.Sport.NAME_SPORT_FUTBOL;
             var expectedTeamsList = new List<Team>() { new Team() { Name = "Racing", Photo = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 } } };
 
             Sport sport = new Sport();
@@ -59,7 +59,7 @@ namespace UnitTests
         [TestMethod]
         public void CreateTeamWithParameters()
         {
-            var expectedName = Constants.Sport.NAME_SPORT;
+            var expectedName = Constants.Sport.NAME_SPORT_FUTBOL;
             var expectedTeamList = new List<Team>() { new Team() { Name = "Racing" } };
 
             Sport sport = new Sport(expectedName, expectedTeamList);
@@ -68,30 +68,30 @@ namespace UnitTests
             Assert.AreEqual(expectedTeamList, sport.TeamsList);
         }
 
-        //[TestMethod]
-        //public void TeamsInstancesAreEqual()
-        //{
-        //    string name = Utility.GetRandomName();
-        //    byte[] photo = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-        //    Team firstTeam = new Team(name, photo);
-        //    Team secondTeam = new Team(name, photo);
+        [TestMethod]
+        public void SportInstancesAreEqual()
+        {
+            string name = Utility.GetRandomSportName();
+            var teamList = new List<Team>() { new Team() { Name = "Racing" } };
+            Sport firstSport = new Sport(name, teamList);
+            Sport secondSport = new Sport(name, teamList);
 
-        //    Assert.IsTrue(firstTeam.Equals(secondTeam));
-        //}
+            Assert.IsTrue(firstSport.Equals(secondSport));
+        }
 
-        //[TestMethod]
-        //public void TeamsInstancesAreNotEqual()
-        //{
-        //    string name1 = Constants.Team.NAME_TEST;
-        //    byte[] photo1 = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+        [TestMethod]
+        public void SportsInstancesAreNotEqual()
+        {
+            string name1 = Constants.Sport.NAME_SPORT_FUTBOL;
+            var teamList1 = new List<Team>() { new Team() { Name = "Racing" } };
 
-        //    string name2 = Constants.Team.NAME_TEST_PENIAROL;
-        //    byte[] photo2 = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            string name2 = Constants.Sport.NAME_SPORT_TENIS;
+            var teamList2 = new List<Team>() { new Team() { Name = "River" } };
 
-        //    Team firstTeam = new Team(name1, photo1);
-        //    Team secondTeam = new Team(name2, photo2);
+            Sport firstSport = new Sport(name1, teamList1);
+            Sport secondSport = new Sport(name2, teamList2);
 
-        //    Assert.IsFalse(firstTeam.Equals(secondTeam));
-        //}
+            Assert.IsFalse(firstSport.Equals(secondSport));
+        }
     }
 }
