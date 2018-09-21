@@ -56,31 +56,17 @@ namespace UnitTests
             }
         }
 
-        //[TestMethod]
-        //public void CreateTeamPhotoInvalid()
-        //{
-        //    var expectedName = Constants.Team.NAME_TEST;
-        //    var expectedPhoto = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+        [TestMethod]
+        public void CreateTeamWithParameters()
+        {
+            var expectedName = Constants.Sport.NAME_SPORT;
+            var expectedTeamList = new List<Team>() { new Team() { Name = "Racing" } };
 
-        //    Team team = new Team();
-        //    team.Name = expectedName;
-        //    team.Photo = expectedPhoto;
+            Sport sport = new Sport(expectedName, expectedTeamList);
 
-        //    Assert.AreEqual(team.Name, expectedName);
-        //    Assert.AreEqual(team.Photo, expectedPhoto);
-        //}
-        
-        //[TestMethod]
-        //public void CreateTeamWithParameters()
-        //{
-        //    var expectedName = Constants.Team.NAME_TEST;
-        //    var expectedPhoto = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
-        //    Team team = new Team(expectedName, expectedPhoto);
-
-        //    Assert.AreEqual(expectedName, team.Name);
-        //    Assert.AreEqual(expectedPhoto, team.Photo);
-        //}
+            Assert.AreEqual(expectedName, sport.Name);
+            Assert.AreEqual(expectedTeamList, sport.TeamsList);
+        }
 
         //[TestMethod]
         //public void TeamsInstancesAreEqual()
