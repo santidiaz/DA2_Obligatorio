@@ -363,7 +363,7 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
-                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
+                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
                 mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
@@ -376,7 +376,7 @@ namespace UnitTests.LogicTests
                     Email = mockedOriginalUser.Email,
                     IsAdmin = mockedOriginalUser.IsAdmin,
                     UserName = mockedOriginalUser.UserName,
-                    Password = mockedOriginalUser.Password
+                    Password = "123456"
                 };
 
                 bool result = userLogic.ModifyUser(modifiedUser);
