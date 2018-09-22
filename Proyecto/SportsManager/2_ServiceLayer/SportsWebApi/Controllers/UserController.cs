@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessContracts;
 using BusinessEntities;
+using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Models;
+using SportsWebApi.Utilities;
 
 namespace SportsWebApi.Controllers
 {
@@ -75,6 +77,42 @@ namespace SportsWebApi.Controllers
                     return Ok();
                 
                 return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("{userName}")]
+        public IActionResult ModifyUser(string userName,
+            [FromBody] ModifyUserInput modyUserInput)
+        {
+            try
+            {
+                if (modyUserInput == null)
+                    return BadRequest();
+
+                User userModifications = new User
+                {
+                    UserName = userName,
+                    Name = modyUserInput.Name,
+                    LastName = modyUserInput.LastName,
+                    Email = modyUserInput.Email,
+                    IsAdmin = modyUserInput.IsAdmin,
+                    Password = modyUserInput.Password,
+                };
+
+                bool modificationResponse = this.userOperations.ModifyUser(userModifications);
+
+                if (modificationResponse)
+                    return Accepted();// No modifications were made.
+
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
             }
             catch (Exception ex)
             {

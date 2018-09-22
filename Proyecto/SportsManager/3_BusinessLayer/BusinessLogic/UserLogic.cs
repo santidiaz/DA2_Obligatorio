@@ -1,5 +1,6 @@
 ﻿using BusinessContracts;
 using BusinessEntities;
+using BusinessEntities.Exceptions;
 using CommonUtilities;
 using DataContracts;
 using System;
@@ -30,10 +31,9 @@ namespace BusinessLogic
             this.persistanceProvider.AddUser(newUser);
         }
 
-        // Si no encuentra el usuario retorna null.
         public User GetUserByUserName(string userName)
         {
-            return this.persistanceProvider.GetUserByUserName(userName); ;
+            return this.persistanceProvider.GetUserByUserName(userName);
         }
 
         public bool DeleteUserByUserName(string userName)
@@ -63,14 +63,10 @@ namespace BusinessLogic
                 bool changesWereMade = false;
                 User userToModify = this.GetUserByUserName(userWithModifications.UserName);
 
-                bool nameWasModified = this.ModifyName(userToModify, userWithModifications.Name);
-                bool lastNameWasModified = this.ModifyLastName(userToModify, userWithModifications.LastName);
-                bool emailWasModified = this.ModifyEmail(userToModify, userWithModifications.Email);
-                bool passwordWasModified = this.ModifyPassword(userToModify, userWithModifications.Password);
-                bool isAdminFlagWasModified = userWithModifications.IsAdmin != userToModify.IsAdmin;
+                if (userToModify == null)
+                    throw new EntitiesException(Constants.Errors.USER_NOT_FOUND, ExceptionStatusCode.NotFound);               
 
-                if (nameWasModified || lastNameWasModified || emailWasModified ||
-                    passwordWasModified || isAdminFlagWasModified)
+                if (this.CheckForModifications(userToModify, userWithModifications))
                 {
                     this.persistanceProvider.ModifyUser(userToModify);
                     changesWereMade = true;
@@ -85,6 +81,17 @@ namespace BusinessLogic
         }
 
         #region Private Methods
+        private bool CheckForModifications(User userToModify, User userWithModifications)
+        {
+            bool nameWasModified = this.ModifyName(userToModify, userWithModifications.Name);
+            bool lastNameWasModified = this.ModifyLastName(userToModify, userWithModifications.LastName);
+            bool emailWasModified = this.ModifyEmail(userToModify, userWithModifications.Email);
+            bool passwordWasModified = this.ModifyPassword(userToModify, userWithModifications.Password);
+            bool isAdminFlagWasModified = userWithModifications.IsAdmin != userToModify.IsAdmin;
+
+            return (nameWasModified || lastNameWasModified || emailWasModified ||
+                    passwordWasModified || isAdminFlagWasModified);
+        }
         private bool ModifyName(User userToModify, string newName)
         {
             bool wasModifed = false;

@@ -6,17 +6,30 @@ namespace BusinessEntities.Exceptions
 {
     public class EntitiesException : Exception
     {
-        public enum ExceptionStatusCode
+        
+        public ExceptionStatusCode StatusCode { get; private set; }
+
+        public EntitiesException()
         {
-            NotFound,
-            InvalidData
+            this.StatusCode = ExceptionStatusCode.Undefined;
         }
-        public EntitiesException() { }
 
         public EntitiesException(string message, ExceptionStatusCode statusCode)
-        : base(message) { }
+        : base(message)
+        {
+            this.StatusCode = statusCode;
+        }
 
-        public EntitiesException(string message, Exception inner)
-        : base(message, inner) { }
+        public EntitiesException(string message, ExceptionStatusCode statusCode, Exception inner)
+        : base(message, inner)
+        {
+            this.StatusCode = statusCode;
+        }
+    }
+    public enum ExceptionStatusCode
+    {
+        Undefined,
+        NotFound,
+        InvalidData
     }
 }

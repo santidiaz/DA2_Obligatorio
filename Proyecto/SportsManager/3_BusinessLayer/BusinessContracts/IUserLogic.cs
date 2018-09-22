@@ -11,5 +11,6 @@ namespace BusinessContracts
         void AddUser(User newUser);
         User GetUserByUserName(string userName);
         bool DeleteUserByUserName(string userName);
+        bool ModifyUser(User userWithModifications);
     }
 }
