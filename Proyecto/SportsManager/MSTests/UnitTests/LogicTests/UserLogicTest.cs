@@ -255,39 +255,107 @@ namespace UnitTests.LogicTests
             }
         }
 
-        //[TestMethod]
-        //public void ModifyEmailTest()
-        //{
-        //    try
-        //    {
-        //        var mock = new Mock<IUserPersistance>();
-        //        User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
+        [TestMethod]
+        public void ModifyEmailTest()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
 
-        //        mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
-        //        mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
+                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
+                mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
 
-        //        UserLogic userLogic = new UserLogic(mock.Object);
-        //        User modifiedUser = new User
-        //        {
-        //            Name = mockedOriginalUser.Name,
-        //            LastName = mockedOriginalUser.LastName,
-        //            Email = "qwer@zxc.com",
-        //            IsAdmin = mockedOriginalUser.IsAdmin,
-        //            UserName = mockedOriginalUser.UserName,
-        //            Password = mockedOriginalUser.Password
-        //        };
+                UserLogic userLogic = new UserLogic(mock.Object);
+                User modifiedUser = new User
+                {
+                    Name = mockedOriginalUser.Name,
+                    LastName = mockedOriginalUser.LastName,
+                    Email = "qwer@zxc.com",
+                    IsAdmin = mockedOriginalUser.IsAdmin,
+                    UserName = mockedOriginalUser.UserName,
+                    Password = mockedOriginalUser.Password
+                };
 
-        //        /* Only email was modified, so if ModifyUser is called
-        //            its because ModifEmail was OK */
-        //        bool result = userLogic.ModifyUser(modifiedUser);
+                /* Only email was modified, so if ModifyUser is called
+                    its because ModifEmail was OK */
+                bool result = userLogic.ModifyUser(modifiedUser);
 
-        //        Assert.IsTrue(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Assert.Fail(ex.Message);
-        //    }
-        //}
+                Assert.IsTrue(result);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [TestMethod]
+        public void ModifyAdminToFanTest()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
+
+                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
+                mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                User modifiedUser = new User
+                {
+                    Name = mockedOriginalUser.Name,
+                    LastName = mockedOriginalUser.LastName,
+                    Email = mockedOriginalUser.Email,
+                    IsAdmin = !mockedOriginalUser.IsAdmin,
+                    UserName = mockedOriginalUser.UserName,
+                    Password = mockedOriginalUser.Password
+                };
+
+                /* Only isAdmin was modified, so if ModifyUser is called
+                 * then the flag was correctly modified */
+                bool result = userLogic.ModifyUser(modifiedUser);
+
+                Assert.IsTrue(result);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void ModifyPasswordTest()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
+
+                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
+                mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                User modifiedUser = new User
+                {
+                    Name = mockedOriginalUser.Name,
+                    LastName = mockedOriginalUser.LastName,
+                    Email = mockedOriginalUser.Email,
+                    IsAdmin = mockedOriginalUser.IsAdmin,
+                    UserName = mockedOriginalUser.UserName,
+                    Password = "32165885"
+                };
+
+                /* Only password was modified, so if ModifyUser is called
+                 * then the ModifyPassword returned true */
+                bool result = userLogic.ModifyUser(modifiedUser);
+
+                Assert.IsTrue(result);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [TestMethod]
         public void ModifyUserSuccess()
