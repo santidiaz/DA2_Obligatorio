@@ -9,6 +9,6 @@ namespace DataContracts
         void AddUser(User newUser);
         User GetUserByUserName(string userName);
         void DeleteUser(User userToDelete);
-        //void ModifyUser(User userToModify);
+        void ModifyUser(User userToModify);
     }
 }

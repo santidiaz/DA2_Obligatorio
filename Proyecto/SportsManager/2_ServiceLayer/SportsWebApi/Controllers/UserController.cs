@@ -25,12 +25,14 @@ namespace SportsWebApi.Controllers
                 if (string.IsNullOrEmpty(userName))
                     return NotFound();
 
-                User result = userOperations.GetUserByUserName(userName);
-                return Ok(result);
+                User searchedUser = userOperations.GetUserByUserName(userName);
+                if (searchedUser == null)
+                    return NotFound();
+
+                return Ok(searchedUser);
             }
             catch (Exception ex)
             {
-                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
                 return this.StatusCode(500, ex.Message);
             }
         }
@@ -47,13 +49,13 @@ namespace SportsWebApi.Controllers
                     Email = addUserInput.Email,
                     Name = addUserInput.Name,
                     LastName = addUserInput.LastName,
-                    SetPassword = addUserInput.Password,
+                    Password = addUserInput.Password,
                     UserName = addUserInput.UserName,
                     IsAdmin = addUserInput.IsAdmin
                 };
 
                 userOperations.AddUser(newUser);
-                return Ok();
+                return Ok();//201 Created
             }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
@@ -66,8 +68,13 @@ namespace SportsWebApi.Controllers
         {
             try
             {
-                this.userOperations.DeleteUserByUserName(userName);
-                return Ok();
+                if (string.IsNullOrEmpty(userName))
+                    return NotFound();
+
+                if (this.userOperations.DeleteUserByUserName(userName))
+                    return Ok();
+                
+                return NotFound();
             }
             catch (Exception ex)
             {

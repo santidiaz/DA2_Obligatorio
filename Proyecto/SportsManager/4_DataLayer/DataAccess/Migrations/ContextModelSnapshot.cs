@@ -92,6 +92,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Password");
+
                     b.Property<string>("UserName");
 
                     b.HasKey("UserOID");

@@ -1,9 +1,6 @@
 ﻿using CommonUtilities;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
-using System.Linq;
 
 namespace BusinessEntities
 {
@@ -63,14 +60,15 @@ namespace BusinessEntities
             }
         }
         public bool IsAdmin { get; set; } = false;
-        public string  SetPassword
+        public string  Password
         {
+            get { return this._password; }
             set
             {
                 if (string.IsNullOrEmpty(value))
                     throw new Exception(Constants.Errors.PASSWORD_REQUIRED);
 
-                this._password = this.GenerateHash(value);
+                this._password = value;
             }
         }
         #endregion
@@ -91,7 +89,7 @@ namespace BusinessEntities
             this.Name = name;
             this.LastName = lastName;
             this.UserName = userName;
-            this.SetPassword = password;
+            this.Password = password;
             this.Email = email;
             this._favouriteTeams = new List<Team>();
             this.IsAdmin = isAdmin;
@@ -102,10 +100,6 @@ namespace BusinessEntities
         public List<Team> GetFavouritesTeams()
         {
             return this._favouriteTeams;
-        }
-        public bool ComparePassword(string passwordToCompare)
-        {
-            return this._password.Equals(passwordToCompare);
         }
         #endregion
 
@@ -120,19 +114,6 @@ namespace BusinessEntities
             catch
             {
                 throw new Exception(Constants.Errors.INVALID_EMAIL_FORMAT);
-            }
-        }
-        private string GenerateHash(string input)
-        {
-            using (SHA1Managed sha1 = new SHA1Managed())
-            {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
-                var sb = new StringBuilder(hash.Length * 2);
-
-                foreach (byte b in hash)
-                    sb.Append(b.ToString("X2"));
-
-                return sb.ToString();
             }
         }
         #endregion 

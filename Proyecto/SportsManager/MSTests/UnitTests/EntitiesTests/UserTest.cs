@@ -35,12 +35,12 @@ namespace UnitTests
         [TestMethod]
         public void CompareHashedUserPassword()
         {
-            string expectedCorrectPassword = Utility.GenerateHash("123456");
-            string expectedWrongPassword = "123456";
-            User user = new User { SetPassword = "123456" };
+            string expectedCorrectPassword = "123456";
+            string expectedWrongPassword = "654321";
+            User user = new User { Password = "123456" };
 
-            Assert.IsTrue(user.ComparePassword(expectedCorrectPassword));
-            Assert.IsFalse(user.ComparePassword(expectedWrongPassword));
+            Assert.IsTrue(user.Password.Equals(expectedCorrectPassword));
+            Assert.IsFalse(user.Password.Equals(expectedWrongPassword));
         }
 
         [TestMethod]
@@ -51,16 +51,16 @@ namespace UnitTests
             string expectedUserName = "santidiaz";
             bool expectedIsAdminFlag = false;
             string expectedEmail = "santidiaz.uy@gmail.com";
-            string expectedPassword = Utility.GenerateHash("123456");
+            string expectedPassword = "123456";
             List<Team> expectedFavouriteTeams = new List<Team>();
 
-            User user = new User(expectedName, expectedLastName, expectedUserName, "123456", expectedEmail, expectedIsAdminFlag);
+            User user = new User(expectedName, expectedLastName, expectedUserName, expectedPassword, expectedEmail, expectedIsAdminFlag);
 
             Assert.AreEqual(expectedName, user.Name);
             Assert.AreEqual(expectedLastName, user.LastName);
             Assert.AreEqual(expectedUserName, user.UserName);
             Assert.AreEqual(expectedEmail, user.Email);
-            Assert.IsTrue(user.ComparePassword(expectedPassword));
+            Assert.IsTrue(user.Password.Equals(expectedPassword));
             Assert.AreEqual(expectedIsAdminFlag, user.IsAdmin);
 
             List<Team> actualFavouritesTeams = user.GetFavouritesTeams();
@@ -126,7 +126,7 @@ namespace UnitTests
             {
                 string emptyPassword = null;
                 User user = new User();
-                user.SetPassword = emptyPassword;
+                user.Password = emptyPassword;
             }
             catch (Exception ex)
             {

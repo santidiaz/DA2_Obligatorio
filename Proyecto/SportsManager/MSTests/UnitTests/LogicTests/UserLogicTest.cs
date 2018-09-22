@@ -112,11 +112,11 @@ namespace UnitTests.LogicTests
                 string userToBeSearch = "santidiaz";
                 User foundUser = userLogic.GetUserByUserName(userToBeSearch);
 
-                Assert.Fail();
+                Assert.IsTrue(foundUser == null);
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.Errors.USER_NOT_FOUND));
+                Assert.Fail(ex.Message);
             }
         }
 
@@ -145,27 +145,172 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
-        public void ModifyUserSuccess()
+        public void TryDeleteUserByUserNameThatNotExists()
         {
             try
             {
-                //// Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
-                //var mock = new Mock<IUserPersistance>();
-                //User mockedUserToDelete = Utility.GenerateRandomUser("santidiaz");
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<IUserPersistance>();
+                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns((User)null);
 
-                //mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedUserToDelete);
-                //mock.Setup(up => up.DeleteUser(mockedUserToDelete)).Verifiable();
+                UserLogic userLogic = new UserLogic(mock.Object);
+                string userToBeDeleted = "santidiaz";
+                bool result = userLogic.DeleteUserByUserName(userToBeDeleted);
 
-                //UserLogic userLogic = new UserLogic(mock.Object);
-                //string userToBeDeleted = "santidiaz";
-                //userLogic.DeleteUser(userToBeDeleted);
-
-                //Assert.IsTrue(true);
+                Assert.IsTrue(!result);
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void TryDeleteUserByUserNameThatGenerateException()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<IUserPersistance>();
+
+                mock.Setup(up => up.GetUserByUserName(It.IsAny<string>())).Throws(new Exception());
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                string userToBeDeleted = "santidiaz";
+                userLogic.DeleteUserByUserName(userToBeDeleted);
+
+                Assert.Fail();
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void ModifyNameTest()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
+
+                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
+                mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                User modifiedUser = new User
+                {
+                    Name = "goku",
+                    LastName = mockedOriginalUser.LastName,
+                    Email = mockedOriginalUser.Email,
+                    IsAdmin = mockedOriginalUser.IsAdmin,
+                    UserName = mockedOriginalUser.UserName,
+                    Password = mockedOriginalUser.Password
+                };
+
+                /* Only name was modified, so if ModifyUser is called
+                    its because ModifyName method was OK */
+                bool result = userLogic.ModifyUser(modifiedUser);
+
+                Assert.IsTrue(result);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        //[TestMethod]
+        //public void ModifyLastNameTest()
+        //{
+        //    try
+        //    {
+        //        var mock = new Mock<IUserPersistance>();
+        //        User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
+
+        //        mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
+        //        mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
+
+        //        UserLogic userLogic = new UserLogic(mock.Object);
+        //        User modifiedUser = new User
+        //        {
+        //            Name = mockedOriginalUser.Name,
+        //            LastName = "asdfg",
+        //            Email = mockedOriginalUser.Email,
+        //            IsAdmin = mockedOriginalUser.IsAdmin,
+        //            UserName = mockedOriginalUser.UserName,
+        //            Password = mockedOriginalUser.Password
+        //        };
+
+        //        /* Only lastName was modified, so if ModifyUser is called
+        //            its because ModifLast method was OK */
+        //        bool result = userLogic.ModifyUser(modifiedUser);
+
+        //        Assert.IsTrue(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //}
+
+        //[TestMethod]
+        //public void ModifyEmailTest()
+        //{
+        //    try
+        //    {
+        //        var mock = new Mock<IUserPersistance>();
+        //        User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
+
+        //        mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
+        //        mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
+
+        //        UserLogic userLogic = new UserLogic(mock.Object);
+        //        User modifiedUser = new User
+        //        {
+        //            Name = mockedOriginalUser.Name,
+        //            LastName = mockedOriginalUser.LastName,
+        //            Email = "qwer@zxc.com",
+        //            IsAdmin = mockedOriginalUser.IsAdmin,
+        //            UserName = mockedOriginalUser.UserName,
+        //            Password = mockedOriginalUser.Password
+        //        };
+
+        //        /* Only email was modified, so if ModifyUser is called
+        //            its because ModifEmail was OK */
+        //        bool result = userLogic.ModifyUser(modifiedUser);
+
+        //        Assert.IsTrue(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.Fail(ex.Message);
+        //    }
+        //}
+
+        [TestMethod]
+        public void ModifyUserSuccess()
+        {
+            //try
+            //{
+            //    // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+            //    var mock = new Mock<IUserPersistance>();
+            //    User mockedUserToDelete = Utility.GenerateRandomUser("santidiaz");
+
+            //    mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedUserToDelete);
+            //    mock.Setup(up => up.DeleteUser(mockedUserToDelete)).Verifiable();
+
+            //    UserLogic userLogic = new UserLogic(mock.Object);
+            //    string userToBeDeleted = "santidiaz";
+            //    userLogic.DeleteUser(userToBeDeleted);
+
+            //    Assert.IsTrue(true);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Assert.Fail(ex.Message);
+            //}
         }
     }
 }

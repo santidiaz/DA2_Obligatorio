@@ -45,5 +45,19 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
+
+        public void ModifyUser(User userToModify)
+        {
+            using (Context context = new Context())
+            {
+                var userOnDB = context.Users.OfType<User>().Where(u => u.UserOID.Equals(userToModify.UserOID)).FirstOrDefault();
+
+                userOnDB.Name = userToModify.Name;
+                userOnDB.LastName = userToModify.LastName;
+                userOnDB.Email = userToModify.Email;
+
+                context.SaveChanges();
+            }
+        }
     }
 }

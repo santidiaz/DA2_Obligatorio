@@ -18,6 +18,7 @@ namespace CommonUtilities
             public const string PASSWORD_REQUIRED = "Password is required.";
             public const string USER_ALREDY_EXISTS = "UserName alredy exists.";
             public const string USER_NOT_FOUND = "User not found.";
+            public const string NO_MODIFICATIONS = "No modifications have been made.";
             #endregion
         }
     }
