@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess
 {
-    internal class Context : DbContext
+    public class Context : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Team> Teams { get; set; }
@@ -29,6 +29,11 @@ namespace DataAccess
 
             //modelBuilder.Entity<Teacher>().ToTable("Teachers");
             //modelBuilder.Entity<Student>().ToTable("Students");
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=SportsManagerDB;Trusted_Connection=True;");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ProviderManager;
 
 namespace SportsWebApi.Controllers
 {
@@ -21,6 +22,12 @@ namespace SportsWebApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
+
+            BusinessContracts.IUserLogic subjectsOperations = Provider.GetInstance.GetUserOperations();
+            bool result = subjectsOperations.DoesUserExists("userTest");
+
+
+
             return "value";
         }
 
