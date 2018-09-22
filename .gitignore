@@ -333,3 +333,6 @@ ASALocalRun/
 
 # Ignore Migrations folder
 Proyecto/SportsManager/4_DataLayer/DataAccess/Migrations/
+
+# Ignore Visual Studio Code folder
+Proyecto/SportsManager/.vscode/

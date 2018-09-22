@@ -388,29 +388,5 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
-
-        [TestMethod]
-        public void ModifyUserSuccess()
-        {
-            //try
-            //{
-            //    // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
-            //    var mock = new Mock<IUserPersistance>();
-            //    User mockedUserToDelete = Utility.GenerateRandomUser("santidiaz");
-
-            //    mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedUserToDelete);
-            //    mock.Setup(up => up.DeleteUser(mockedUserToDelete)).Verifiable();
-
-            //    UserLogic userLogic = new UserLogic(mock.Object);
-            //    string userToBeDeleted = "santidiaz";
-            //    userLogic.DeleteUser(userToBeDeleted);
-
-            //    Assert.IsTrue(true);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Assert.Fail(ex.Message);
-            //}
-        }
     }
 }

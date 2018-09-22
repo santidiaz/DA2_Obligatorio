@@ -2,7 +2,6 @@
 using BusinessEntities;
 using CommonUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProviderManager;
 using System;
 using System.Collections.Generic;
 using System.Text;
