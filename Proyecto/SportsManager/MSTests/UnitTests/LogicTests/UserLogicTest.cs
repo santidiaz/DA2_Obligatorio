@@ -358,6 +358,38 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
+        public void TryToModifyUserWithNoModifications()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
+
+                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
+                mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                User modifiedUser = new User
+                {
+                    Name = mockedOriginalUser.Name,
+                    LastName = mockedOriginalUser.LastName,
+                    Email = mockedOriginalUser.Email,
+                    IsAdmin = mockedOriginalUser.IsAdmin,
+                    UserName = mockedOriginalUser.UserName,
+                    Password = mockedOriginalUser.Password
+                };
+
+                bool result = userLogic.ModifyUser(modifiedUser);
+
+                Assert.IsFalse(result);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
         public void ModifyUserSuccess()
         {
             //try
