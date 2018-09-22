@@ -23,7 +23,7 @@ namespace BusinessEntities
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.Errors.NAME_REQUIRED);
+                    throw new Exception(Constants.UserError.NAME_REQUIRED);
 
                 this._name = value;
             }
@@ -34,7 +34,7 @@ namespace BusinessEntities
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.Errors.LAST_NAME_REQUIRED);
+                    throw new Exception(Constants.UserError.LAST_NAME_REQUIRED);
 
                 this._lastName = value;
             }
@@ -45,7 +45,7 @@ namespace BusinessEntities
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.Errors.USER_NAME_REQUIRED);
+                    throw new Exception(Constants.UserError.USER_NAME_REQUIRED);
 
                 this._userName = value;
             }
@@ -66,7 +66,7 @@ namespace BusinessEntities
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.Errors.PASSWORD_REQUIRED);
+                    throw new Exception(Constants.UserError.PASSWORD_REQUIRED);
 
                 this._password = value;
             }
@@ -113,7 +113,7 @@ namespace BusinessEntities
             }
             catch
             {
-                throw new Exception(Constants.Errors.INVALID_EMAIL_FORMAT);
+                throw new Exception(Constants.UserError.INVALID_EMAIL_FORMAT);
             }
         }
         #endregion 

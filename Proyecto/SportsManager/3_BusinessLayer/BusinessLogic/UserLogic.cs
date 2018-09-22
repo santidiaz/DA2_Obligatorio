@@ -26,7 +26,7 @@ namespace BusinessLogic
         public void AddUser(User newUser)
         {
             if (this.DoesUserExists(newUser.UserName))
-                throw new Exception(Constants.Errors.USER_ALREDY_EXISTS);
+                throw new Exception(Constants.UserError.USER_ALREDY_EXISTS);
 
             this.persistanceProvider.AddUser(newUser);
         }
@@ -64,7 +64,7 @@ namespace BusinessLogic
                 User userToModify = this.GetUserByUserName(userWithModifications.UserName);
 
                 if (userToModify == null)
-                    throw new EntitiesException(Constants.Errors.USER_NOT_FOUND, ExceptionStatusCode.NotFound);               
+                    throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);               
 
                 if (this.CheckForModifications(userToModify, userWithModifications))
                 {
