@@ -105,7 +105,7 @@ namespace SportsWebApi.Controllers
 
                 bool modificationResponse = this.userOperations.ModifyUser(userModifications);
 
-                if (modificationResponse)
+                if (!modificationResponse)
                     return Accepted();// No modifications were made.
 
                 return Ok();

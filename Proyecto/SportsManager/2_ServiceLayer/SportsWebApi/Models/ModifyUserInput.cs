@@ -8,23 +8,23 @@ namespace SportsWebApi.Models
 {
     public class ModifyUserInput
     {
-        [Required]
+        [Required(ErrorMessage = "Name is required.")]
         [StringLength(15)]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "LastName is required.")]
         [StringLength(15)]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is required.")]
         [StringLength(25)]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
         [StringLength(15)]
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "IsAdmin need to be specified.")]
         public bool IsAdmin { get; set; } = false;
     }
 }

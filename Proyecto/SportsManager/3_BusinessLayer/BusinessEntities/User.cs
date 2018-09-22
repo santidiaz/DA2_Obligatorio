@@ -12,7 +12,7 @@ namespace BusinessEntities
         private string _userName;
         private string _email;
         private string _password;
-        private List<Team> _favouriteTeams;
+        private List<Team> favouriteTeams;
         #endregion
 
         #region Public attributes
@@ -82,7 +82,7 @@ namespace BusinessEntities
             this._email = string.Empty;
             this._password = string.Empty;
             this.IsAdmin = false;
-            this._favouriteTeams = new List<Team>();
+            this.favouriteTeams = new List<Team>();
         }
         public User(string name, string lastName, string userName, string password, string email, bool isAdmin = false)
         {
@@ -91,7 +91,7 @@ namespace BusinessEntities
             this.UserName = userName;
             this.Password = password;
             this.Email = email;
-            this._favouriteTeams = new List<Team>();
+            this.favouriteTeams = new List<Team>();
             this.IsAdmin = isAdmin;
         }
         #endregion
@@ -99,7 +99,7 @@ namespace BusinessEntities
         #region Methods
         public List<Team> GetFavouritesTeams()
         {
-            return this._favouriteTeams;
+            return this.favouriteTeams;
         }
         #endregion
 
