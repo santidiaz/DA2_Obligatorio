@@ -50,9 +50,36 @@ namespace BusinessEntities
             return this._teams;
         }
 
+        public Team GetFirstTeam()
+        {
+            return this._teams[0];
+        }
+
+        public Team GetSecondTeam()
+        {
+            return this._teams[1];
+        }
+
         public List<Comment> GetComments()
         {
             return this._comments;
+        }
+
+        public void AddComment(Comment newComment)
+        {
+            this._comments.Add(newComment);
+        }
+
+        public bool ModifyTeams(Team firstTeam, Team secondTeam)
+        {
+            bool result = false;
+            if (this.AreValidTeams(firstTeam, secondTeam))
+            {
+                this._teams[0] = firstTeam;
+                this._teams[1] = secondTeam;
+                result = true;
+            }
+            return result;
         }
         /*
         + Team():
@@ -62,5 +89,25 @@ namespace BusinessEntities
         + ModifyTeams(firstTeam:Team, secondTeam:Team)
         + AddComment(comment:string, userName:string)
          */
+
+        #region Private methods
+        private bool AreValidTeams(Team firstTeam, Team secondTeam)
+        {
+            bool result = firstTeam != null && secondTeam != null
+                && !firstTeam.Equals(secondTeam);
+
+            // If validations are true so far, 
+            // i check that the 1st team belong to the sport
+            result = result ? this.Sport.TeamsList
+                       .Exists(t => t.Name.Equals(firstTeam.Name)) : result;
+
+            // If validations are true so far, 
+            // i check that the 2nd team belong to the sport
+                result = result ? this.Sport.TeamsList
+                       .Exists(t => t.Name.Equals(secondTeam.Name)) : result;
+
+            return result;
+        }
+        #endregion
     }
 }
