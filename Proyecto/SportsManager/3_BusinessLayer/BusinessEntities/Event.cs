@@ -2,6 +2,7 @@
 using CommonUtilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusinessEntities
@@ -45,6 +46,7 @@ namespace BusinessEntities
             this.Sport = sport;
         }
 
+        #region Public methods
         public Team[] GetTeams()
         {
             return this._teams;
@@ -62,7 +64,7 @@ namespace BusinessEntities
 
         public List<Comment> GetComments()
         {
-            return this._comments;
+            return this._comments.OrderByDescending(c => c.DatePosted).ToList();
         }
 
         public void AddComment(Comment newComment)
@@ -81,14 +83,7 @@ namespace BusinessEntities
             }
             return result;
         }
-        /*
-        + Team():
-        + Team(date:DateTime, sport:Sport, firstTeam:Team, secondTeam:Team)
-        + GetTeams(): Team[2]
-        + AddTeams(firstTeam:Team, secondTeam:Team)
-        + ModifyTeams(firstTeam:Team, secondTeam:Team)
-        + AddComment(comment:string, userName:string)
-         */
+        #endregion
 
         #region Private methods
         private bool AreValidTeams(Team firstTeam, Team secondTeam)
@@ -103,8 +98,8 @@ namespace BusinessEntities
 
             // If validations are true so far, 
             // i check that the 2nd team belong to the sport
-                result = result ? this.Sport.TeamsList
-                       .Exists(t => t.Name.Equals(secondTeam.Name)) : result;
+            result = result ? this.Sport.TeamsList
+                   .Exists(t => t.Name.Equals(secondTeam.Name)) : result;
 
             return result;
         }

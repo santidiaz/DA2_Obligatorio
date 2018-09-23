@@ -6,10 +6,20 @@ namespace BusinessEntities
 {
     public class Comment
     {
+        private DateTime _datePosted;
+
         public int CommentOID { get; set; } // [Object Id] This id is used by EntityFramework.
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         public string CreatorName { get; set; }
-        public DateTime DatePosted { get; set; }
+        public DateTime DatePosted
+        {
+            get { return this._datePosted; }
+        }
+
+        public Comment()
+        {
+            this._datePosted = DateTime.Now;
+        }
 
         public override bool Equals(object obj)
         {
