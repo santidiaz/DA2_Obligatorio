@@ -79,5 +79,29 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void DeleteSportByName()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<ISportPersistance>();
+                Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
+
+                mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToDelete });
+                mock.Setup(mr => mr.DeleteSportByName(It.IsAny<string>())).Verifiable();
+
+                SportLogic sportLogic = new SportLogic(mock.Object);
+                string userToBeDeleted = Constants.Sport.NAME_SPORT_FUTBOL;
+                sportLogic.DeleteSportByName(userToBeDeleted);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

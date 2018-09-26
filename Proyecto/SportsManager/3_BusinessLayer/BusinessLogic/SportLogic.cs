@@ -1,4 +1,5 @@
-﻿using BusinessEntities;
+﻿using BusinessContracts;
+using BusinessEntities;
 using CommonUtilities;
 using DataContracts;
 using System;
@@ -24,7 +25,7 @@ namespace BusinessLogic
                 this.persistanceProvider.AddSport(sportToAdd);
         }
 
-        private bool IsSportInSystem(Sport sport)
+        public bool IsSportInSystem(Sport sport)
         {
             bool result = false;
             List<Sport> systemSports = this.persistanceProvider.GetSports();
@@ -52,6 +53,15 @@ namespace BusinessLogic
             if (sport == null)
                 throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS);
             return sport;
+        }
+
+        public void DeleteSportByName(string name)
+        {
+            var systemSports = this.persistanceProvider.GetSports();
+            var sportToDelete = systemSports.Find(t => t.Name == name);
+            if (sportToDelete == null)
+                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS);
+            this.persistanceProvider.DeleteSportByName(name);
         }
     }
 }
