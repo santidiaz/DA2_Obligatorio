@@ -82,6 +82,7 @@ namespace BusinessLogic
 
         public Guid AuthenticateUser(string userName, string userPassword)
         {
+
             // Valido que exita usuario y pass
                 // Si OK
                      // Crea un Guid y actuizo user..
@@ -89,7 +90,7 @@ namespace BusinessLogic
                 //sino tiro error
 
 
-            return null;
+            return new Guid();
         }
 
         #region Private Methods

@@ -22,7 +22,7 @@ namespace BusinessEntities
             get { return this._initialDate; }
             set
             {
-                if (value < DateTime.Now)
+                if (value.Date < DateTime.Now.Date)
                     throw new EntitiesException(Constants.EventError.INVALID_DATE, ExceptionStatusCode.InvalidData);
 
                 this._initialDate = value;

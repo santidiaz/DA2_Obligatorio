@@ -37,7 +37,7 @@ namespace BusinessLogic
         }
 
         #region Private methods
-        public bool DoesTeamsEventExists(Event eventToValidate)
+        private bool DoesTeamsEventExists(Event eventToValidate)
         {
             List<Event> todayEvents = this.PersistanceProvider.GetTodayEvents();
             return todayEvents.Exists(te => te.GetFirstTeam().Equals(eventToValidate.GetFirstTeam())
