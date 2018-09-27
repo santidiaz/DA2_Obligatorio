@@ -32,16 +32,12 @@ namespace DataAccess.Implementations
 
         public Team GetTeamByName(string name)
         {
-            Team teamFound;
+            Team foundTeam;
             using (Context context = new Context())
             {
-                var queryResult = (from team in (context.Teams).Include("Teams")
-                                   where team.Name.Equals(name)
-                                   select team).FirstOrDefault();
-
-                teamFound = queryResult;
+                foundTeam = context.Teams.OfType<Team>().FirstOrDefault(u => u.Name.Equals(name));
             }
-            return teamFound;
+            return foundTeam;
         }
 
         public List<Team> GetTeams()
@@ -49,14 +45,7 @@ namespace DataAccess.Implementations
             var teams = new List<Team>();
             using (Context context = new Context())
             {
-                var query = from team in context.Teams.Include("Teams")
-                            select team;
-
-                if (query != null)
-                {
-                    foreach (var team in query)
-                        teams.Add(team);
-                }
+                teams = context.Teams.OfType<Team>().ToList();
             }
             return teams;
         }

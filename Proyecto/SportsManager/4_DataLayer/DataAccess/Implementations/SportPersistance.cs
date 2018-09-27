@@ -32,16 +32,12 @@ namespace DataAccess.Implementations
 
         public Sport GetSportByName(string name)
         {
-            Sport sportFound;
+            Sport foundSport;
             using (Context context = new Context())
             {
-                var queryResult = (from sport in (context.Sports).Include("Sports")
-                                   where sport.Name.Equals(name)
-                                   select sport).FirstOrDefault();
-
-                sportFound = queryResult;
+                foundSport = context.Sports.OfType<Sport>().FirstOrDefault(u => u.Name.Equals(name));
             }
-            return sportFound;
+            return foundSport;
         }
 
         public List<Sport> GetSports()
@@ -49,14 +45,7 @@ namespace DataAccess.Implementations
             var sports = new List<Sport>();
             using (Context context = new Context())
             {
-                var query = from sport in context.Sports.Include("Sports")
-                            select sport;
-
-                if (query != null)
-                {
-                    foreach (var sport in query)
-                        sports.Add(sport);
-                }
+                sports = context.Sports.OfType<Sport>().ToList();
             }
             return sports;
         }
