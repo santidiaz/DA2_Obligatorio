@@ -8,6 +8,7 @@ using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
+using SportsWebApi.Filters;
 using SportsWebApi.Models;
 using SportsWebApi.Utilities;
 
@@ -19,6 +20,7 @@ namespace SportsWebApi.Controllers
     {
         private IUserLogic userOperations = Provider.GetInstance.GetUserOperations();
 
+        [PermissionFilter(true)]
         [HttpGet("{userName}")]
         public IActionResult GetUserByUserName(string userName)
         {

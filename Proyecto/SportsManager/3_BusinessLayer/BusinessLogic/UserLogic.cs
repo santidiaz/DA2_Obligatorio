@@ -80,6 +80,18 @@ namespace BusinessLogic
             }
         }
 
+        public Guid AuthenticateUser(string userName, string userPassword)
+        {
+            // Valido que exita usuario y pass
+                // Si OK
+                     // Crea un Guid y actuizo user..
+                     // devuelvo guid
+                //sino tiro error
+
+
+            return null;
+        }
+
         #region Private Methods
         private bool CheckForModifications(User userToModify, User userWithModifications)
         {

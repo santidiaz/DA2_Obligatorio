@@ -27,6 +27,7 @@ namespace CommonUtilities
         {
             public const string INVALID_DATE = "Date must be equal or greather than today.";
             public const string SPORT_REQUIRED = "Must specify a sport.";
+            public const string ALREADY_EXISTS = "An event for the selected teams already exists today.";
         }
 
         public static class Team

@@ -12,8 +12,10 @@ namespace BusinessEntities
         private string _userName;
         private string _email;
         private string _password;
-        private List<Team> favouriteTeams;
+        private List<Team> favouriteTeams; 
         #endregion
+
+        public Guid Token { get; set; }
 
         #region Public attributes
         public int UserOID { get; set; } // [Object Id] This id is used by EntityFramework.

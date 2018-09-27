@@ -59,5 +59,15 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
+
+        /*-----*/
+        public bool ValidateUserPermisson(Guid token, bool adminRequired)
+        {
+            using (Context context = new Context())
+            {
+                return context.Users.OfType<User>().Where(u => u.Token.Equals(token) && u.IsAdmin.Equals(adminRequired)).Any();
+            }
+        }
+
     }
 }
