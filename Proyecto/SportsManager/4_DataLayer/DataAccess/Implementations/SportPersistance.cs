@@ -19,11 +19,10 @@ namespace DataAccess.Implementations
             }
         }
 
-        public void DeleteSportByName(string name)
+        public void DeleteSportByName(Sport sportToDelete)
         {
             using (Context context = new Context())
             {
-                Sport sportToDelete = new Sport() { Name = name };
                 context.Sports.Attach(sportToDelete);
                 context.Sports.Remove(sportToDelete);
                 context.SaveChanges();

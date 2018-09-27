@@ -11,6 +11,6 @@ namespace BusinessContracts
         bool IsSportInSystem(Sport sport);
         void ModifySportByName(string nameSport, Sport sport);
         Sport GetSportByName(string name);
-        void DeleteSportByName(string userToBeDeleted);
+        bool DeleteSportByName(string userToBeDeleted);
     }
 }

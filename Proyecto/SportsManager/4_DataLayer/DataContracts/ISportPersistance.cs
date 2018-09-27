@@ -11,7 +11,7 @@ namespace DataContracts
         List<Sport> GetSports();
         void ModifySportByName(string name, Sport newSport);
         Sport GetSportByName(string name);
-        void DeleteSportByName(string name);
+        void DeleteSportByName(Sport name);
         bool IsSportInSystem(Sport Sport);
     }
 }

@@ -91,7 +91,7 @@ namespace UnitTests.LogicTests
                 Team teamToDelete = Utility.GenerateRandomTeam(Constants.Team.NAME_TEST);
 
                 mock.Setup(up => up.GetTeams()).Returns(new List<Team>() { teamToDelete });
-                mock.Setup(mr => mr.DeleteTeamByName(It.IsAny<string>())).Verifiable();
+                mock.Setup(mr => mr.DeleteTeamByName(It.IsAny<Team>())).Verifiable();
 
                 TeamLogic teamLogic = new TeamLogic(mock.Object);
                 string userToBeDeleted = Constants.Team.NAME_TEST;

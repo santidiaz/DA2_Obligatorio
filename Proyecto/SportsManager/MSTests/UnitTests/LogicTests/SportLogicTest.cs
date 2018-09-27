@@ -90,7 +90,7 @@ namespace UnitTests.LogicTests
                 Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
 
                 mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToDelete });
-                mock.Setup(mr => mr.DeleteSportByName(It.IsAny<string>())).Verifiable();
+                mock.Setup(mr => mr.DeleteSportByName(It.IsAny<Sport>())).Verifiable();
 
                 SportLogic sportLogic = new SportLogic(mock.Object);
                 string userToBeDeleted = Constants.Sport.NAME_SPORT_FUTBOL;

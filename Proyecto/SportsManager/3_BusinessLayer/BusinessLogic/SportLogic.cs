@@ -55,13 +55,24 @@ namespace BusinessLogic
             return sport;
         }
 
-        public void DeleteSportByName(string name)
+        public bool DeleteSportByName(string name)
         {
-            var systemSports = this.persistanceProvider.GetSports();
-            var sportToDelete = systemSports.Find(t => t.Name == name);
-            if (sportToDelete == null)
-                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS);
-            this.persistanceProvider.DeleteSportByName(name);
+            try
+            {
+                bool result = true;
+                Sport sportToDelete = this.GetSportByName(name);
+
+                if (sportToDelete != null)
+                    this.persistanceProvider.DeleteSportByName(sportToDelete);
+                else
+                    result = false;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ex);
+            }
         }
     }
 }

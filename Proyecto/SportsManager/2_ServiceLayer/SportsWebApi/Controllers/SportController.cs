@@ -55,5 +55,19 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
+
+        [HttpDelete("{sportName}")]
+        public IActionResult DeleteSportByUserName(string sportName)
+        {
+            try
+            {
+                this.sportOperations.DeleteSportByName(sportName);
+                return Ok();
+            }
+            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
     }
 }

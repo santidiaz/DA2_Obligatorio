@@ -19,11 +19,10 @@ namespace DataAccess.Implementations
             }
         }
 
-        public void DeleteTeamByName(string name)
+        public void DeleteTeamByName(Team teamToDelete)
         {
             using (Context context = new Context())
             {
-                Team teamToDelete = new Team() { Name = name };
                 context.Teams.Attach(teamToDelete);
                 context.Teams.Remove(teamToDelete);
                 context.SaveChanges();
