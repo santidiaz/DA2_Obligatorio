@@ -40,9 +40,9 @@ namespace PermissionLogic
             return newToken;
         }
 
-        public void LogOut(Guid token)
+        public void LogOut(string userName)
         {
-            throw new NotImplementedException();
+            this.permissionPersistance.LogOut(userName);
         }
 
         #region Private methods

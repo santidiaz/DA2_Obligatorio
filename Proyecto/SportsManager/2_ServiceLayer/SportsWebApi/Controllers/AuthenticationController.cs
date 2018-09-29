@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PermissionContracts;
 using ProviderManager;
+using SportsWebApi.Filters;
 using SportsWebApi.Models.AuthenticationModel;
 using SportsWebApi.Utilities;
 
@@ -18,7 +19,7 @@ namespace SportsWebApi.Controllers
     {
         private IPermissionLogic permissionOperations = Provider.GetInstance.GetPermissionOperations();
 
-        [HttpPost()]
+        [HttpPost(nameof(LogIn))]
         public IActionResult LogIn([FromBody] LogInInput input)
         {
             try
@@ -27,6 +28,26 @@ namespace SportsWebApi.Controllers
 
                 Guid token = permissionOperations.LogIn(input.UserName, input.Password);
                 return Ok(token);
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost(nameof(LogOut))]
+        public IActionResult LogOut([FromBody] LogOutInput input)
+        {
+            try
+            {
+                if (input == null) return BadRequest();
+
+                permissionOperations.LogOut(input.UserName);
+                return Ok();
             }
             catch (EntitiesException eEx)
             {

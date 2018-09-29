@@ -33,14 +33,16 @@ namespace DataAccess.Implementations
             }           
         }
 
-        public void LogOut(Guid token)
+        public void LogOut(string userName)
         {
             using (Context context = new Context())
             {
-                var userOnDB = context.Users.OfType<User>().Where(u => u.Token.Equals(token)).FirstOrDefault();
-                userOnDB.Token = Guid.Empty;
-
-                context.SaveChanges();
+                var userOnDB = context.Users.OfType<User>().Where(u => u.UserName.Equals(userName)).FirstOrDefault();
+                if (userOnDB != null)
+                {
+                    userOnDB.Token = Guid.Empty;
+                    context.SaveChanges();
+                }
             }
         }
     }
