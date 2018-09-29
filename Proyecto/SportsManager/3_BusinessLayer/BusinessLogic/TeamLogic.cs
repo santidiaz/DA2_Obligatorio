@@ -33,7 +33,7 @@ namespace BusinessLogic
                 if (teamAux.Equals(team)) { result = true; };
                 
             }
-            return result;// systemTeams.Exists(item => item.Equals(team));
+            return result;
         }
 
         public List<Team> GetTeams()
@@ -65,6 +65,7 @@ namespace BusinessLogic
             var teamToDelete = systemTeams.Find(t => t.Name == name);
             if (teamToDelete == null)
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
+
             this.persistanceProvider.DeleteTeamByName(name);
         }
     }

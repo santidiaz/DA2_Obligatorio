@@ -19,13 +19,34 @@ namespace DataAccess.Implementations
             }
         }
 
+        public void DeleteEvent(Event eventToBeDeleted)
+        {
+            using (Context context = new Context())
+            {
+                context.Events.Attach(eventToBeDeleted);
+                context.Events.Remove(eventToBeDeleted);
+                context.SaveChanges();
+            }
+        }
+
+        public Event GetEventById(int eventId)
+        {
+            Event foundEvent;
+            using (Context context = new Context())
+            {
+                foundEvent = context.Events.OfType<Event>()
+                    .FirstOrDefault(e => e.EventOID.Equals(eventId));
+            }
+            return foundEvent;
+        }
+
         public List<Event> GetAllEvents()
         {
             List<Event> events;
             using (Context context = new Context())
             {
                 events = (from anEvent in context.Events.OfType<Event>().Include("Teams")
-                        select anEvent).ToList();
+                          select anEvent).ToList();
             }
             return events;
         }

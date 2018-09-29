@@ -1,4 +1,5 @@
 ﻿using BusinessEntities;
+using BusinessEntities.Exceptions;
 using BusinessLogic;
 using CommonUtilities;
 using DataContracts;
@@ -151,13 +152,17 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<IUserPersistance>();
-                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns((User)null);
+                mock.Setup(up => up.GetUserByUserName(It.IsAny<string>())).Returns((User)null);
 
                 UserLogic userLogic = new UserLogic(mock.Object);
                 string userToBeDeleted = "santidiaz";
-                bool result = userLogic.DeleteUserByUserName(userToBeDeleted);
+                userLogic.DeleteUserByUserName(userToBeDeleted);
 
-                Assert.IsTrue(!result);
+                Assert.Fail();
+            }
+            catch(EntitiesException eEx)
+            {
+                Assert.IsTrue(eEx.Message.Equals(Constants.UserError.USER_NOT_FOUND));
             }
             catch (Exception ex)
             {
@@ -209,11 +214,12 @@ namespace UnitTests.LogicTests
                     Password = mockedOriginalUser.Password
                 };
 
-                /* Only name was modified, so if ModifyUser is called
-                    its because ModifyName method was OK */
-                bool result = userLogic.ModifyUser(modifiedUser);
-
-                Assert.IsTrue(result);
+                userLogic.ModifyUser(modifiedUser);
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
             }
             catch (Exception ex)
             {
@@ -243,11 +249,12 @@ namespace UnitTests.LogicTests
                     Password = mockedOriginalUser.Password
                 };
 
-                /* Only lastName was modified, so if ModifyUser is called
-                    its because ModifLast method was OK */
-                bool result = userLogic.ModifyUser(modifiedUser);
-
-                Assert.IsTrue(result);
+                userLogic.ModifyUser(modifiedUser);
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
             }
             catch (Exception ex)
             {
@@ -277,11 +284,12 @@ namespace UnitTests.LogicTests
                     Password = mockedOriginalUser.Password
                 };
 
-                /* Only email was modified, so if ModifyUser is called
-                    its because ModifEmail was OK */
-                bool result = userLogic.ModifyUser(modifiedUser);
-
-                Assert.IsTrue(result);
+                userLogic.ModifyUser(modifiedUser);
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
             }
             catch (Exception ex)
             {
@@ -290,7 +298,7 @@ namespace UnitTests.LogicTests
         }
         
         [TestMethod]
-        public void ModifyAdminToFanTest()
+        public void ModifyAdminToFollowerTest()
         {
             try
             {
@@ -311,11 +319,12 @@ namespace UnitTests.LogicTests
                     Password = mockedOriginalUser.Password
                 };
 
-                /* Only isAdmin was modified, so if ModifyUser is called
-                 * then the flag was correctly modified */
-                bool result = userLogic.ModifyUser(modifiedUser);
-
-                Assert.IsTrue(result);
+                userLogic.ModifyUser(modifiedUser);
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
             }
             catch (Exception ex)
             {
@@ -345,11 +354,12 @@ namespace UnitTests.LogicTests
                     Password = "32165885"
                 };
 
-                /* Only password was modified, so if ModifyUser is called
-                 * then the ModifyPassword returned true */
-                bool result = userLogic.ModifyUser(modifiedUser);
-
-                Assert.IsTrue(result);
+                userLogic.ModifyUser(modifiedUser);
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
             }
             catch (Exception ex)
             {
@@ -379,9 +389,12 @@ namespace UnitTests.LogicTests
                     Password = "123456"
                 };
 
-                bool result = userLogic.ModifyUser(modifiedUser);
-
-                Assert.IsFalse(result);
+                userLogic.ModifyUser(modifiedUser);
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.IsTrue(eEx.Message.Equals(Constants.UserError.NO_CHANGES));
             }
             catch (Exception ex)
             {

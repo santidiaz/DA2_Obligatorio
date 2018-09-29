@@ -26,7 +26,7 @@ namespace BusinessLogic
         public void AddUser(User newUser)
         {
             if (this.DoesUserExists(newUser.UserName))
-                throw new Exception(Constants.UserError.USER_ALREDY_EXISTS);
+                throw new EntitiesException(Constants.UserError.USER_ALREDY_EXISTS, ExceptionStatusCode.Conflict);
 
             this.persistanceProvider.AddUser(newUser);
         }
@@ -36,58 +36,35 @@ namespace BusinessLogic
             return this.persistanceProvider.GetUserByUserName(userName);
         }
 
-        public bool DeleteUserByUserName(string userName)
+        public void DeleteUserByUserName(string userName)
         {
-            try
-            {
-                bool result = true;
-                User userToDelete = this.GetUserByUserName(userName);
+            User userToDelete = this.GetUserByUserName(userName);
+            if (userToDelete == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-                if (userToDelete != null)
-                    this.persistanceProvider.DeleteUser(userToDelete);
-                else
-                    result = false;
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(Constants.Errors.UNEXPECTED, ex);
-            }            
+            this.persistanceProvider.DeleteUser(userToDelete);
         }
 
-        public bool ModifyUser(User userWithModifications)
+        public void ModifyUser(User userWithModifications)
         {
-            try
-            {
-                bool changesWereMade = false;
-                User userToModify = this.GetUserByUserName(userWithModifications.UserName);
+            User userToModify = this.GetUserByUserName(userWithModifications.UserName);
+            if (userToModify == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-                if (userToModify == null)
-                    throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);               
+            if (!this.CheckForModifications(userToModify, userWithModifications))
+                throw new EntitiesException(Constants.UserError.NO_CHANGES, ExceptionStatusCode.NotModified);
 
-                if (this.CheckForModifications(userToModify, userWithModifications))
-                {
-                    this.persistanceProvider.ModifyUser(userToModify);
-                    changesWereMade = true;
-                }                
-
-                return changesWereMade;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(Constants.Errors.UNEXPECTED, ex);
-            }
+            this.persistanceProvider.ModifyUser(userToModify);
         }
 
         public Guid AuthenticateUser(string userName, string userPassword)
         {
 
             // Valido que exita usuario y pass
-                // Si OK
-                     // Crea un Guid y actuizo user..
-                     // devuelvo guid
-                //sino tiro error
+            // Si OK
+            // Crea un Guid y actuizo user..
+            // devuelvo guid
+            //sino tiro error
 
 
             return new Guid();
@@ -108,7 +85,7 @@ namespace BusinessLogic
         private bool ModifyName(User userToModify, string newName)
         {
             bool wasModifed = false;
-            if (!string.IsNullOrEmpty(userToModify.Name) 
+            if (!string.IsNullOrEmpty(userToModify.Name)
                 && !userToModify.Name.Equals(newName))
             {
                 userToModify.Name = newName;

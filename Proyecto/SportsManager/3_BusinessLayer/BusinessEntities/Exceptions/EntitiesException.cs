@@ -28,8 +28,10 @@ namespace BusinessEntities.Exceptions
     }
     public enum ExceptionStatusCode
     {
-        Undefined,
-        NotFound,
-        InvalidData
+        Undefined = 500,
+        NotFound = 404,
+        InvalidData = 400,
+        Conflict = 409,
+        NotModified = 304
     }
 }

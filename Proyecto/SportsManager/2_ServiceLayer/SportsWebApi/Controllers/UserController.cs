@@ -59,9 +59,13 @@ namespace SportsWebApi.Controllers
                 };
 
                 userOperations.AddUser(newUser);
-                return Ok();//201 Created
+                return Ok();
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }
@@ -75,10 +79,12 @@ namespace SportsWebApi.Controllers
                 if (string.IsNullOrEmpty(userName))
                     return NotFound();
 
-                if (this.userOperations.DeleteUserByUserName(userName))
-                    return Ok();
-                
-                return NotFound();
+                this.userOperations.DeleteUserByUserName(userName);
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
             }
             catch (Exception ex)
             {
@@ -105,11 +111,7 @@ namespace SportsWebApi.Controllers
                     Password = modyUserInput.Password,
                 };
 
-                bool modificationResponse = this.userOperations.ModifyUser(userModifications);
-
-                if (!modificationResponse)
-                    return Accepted();// No modifications were made.
-
+                this.userOperations.ModifyUser(userModifications);
                 return Ok();
             }
             catch (EntitiesException eEx)

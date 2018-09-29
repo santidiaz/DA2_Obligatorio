@@ -9,6 +9,8 @@ namespace BusinessContracts
     public interface IEventLogic
     {
         void AddEvent(Event newEvent);
+        void DeleteEventById(int eventId);
+        Event GetEventById(int eventId);
         List<Event> GenerateFixture(IFixture fixtureGenerator);
     }
 }

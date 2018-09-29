@@ -83,6 +83,14 @@ namespace BusinessEntities
             }
             return result;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Event)
+                return this.EventOID.Equals(((Event)obj).EventOID);
+            else
+                return false;
+        }
         #endregion
 
         #region Private methods

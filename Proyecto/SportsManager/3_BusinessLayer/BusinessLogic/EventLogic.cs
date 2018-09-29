@@ -26,6 +26,27 @@ namespace BusinessLogic
             this.PersistanceProvider.AddEvent(newEvent);
         }
 
+        public Event GetEventById(int eventId)
+        {
+            return this.PersistanceProvider.GetEventById(eventId);
+        }
+
+        public void DeleteEventById(int eventId)
+        {
+            try
+            {
+                Event eventToBeDeleted = this.GetEventById(eventId);
+                if (eventToBeDeleted == null)
+                    throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
+
+                this.PersistanceProvider.DeleteEvent(eventToBeDeleted);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Constants.Errors.UNEXPECTED, ex);
+            }
+        }
+
         public List<Event> GenerateFixture(IFixture fixtureGenerator)
         {
 
