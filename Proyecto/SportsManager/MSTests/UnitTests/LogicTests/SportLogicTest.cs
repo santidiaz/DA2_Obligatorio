@@ -126,5 +126,28 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void GetEventsBySportThatNotExists()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<ISportPersistance>();
+                Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
+
+                //TODO : Como mockeo un retorno NULL ?
+                mock.Setup(up => up.GetSportByName(It.IsAny<string>())).Returns((new Sport()));
+
+                SportLogic sportLogic = new SportLogic(mock.Object);
+                sportLogic.GetEventsBySport(sportToDelete.Name);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
+            }
+        }
     }
 }
