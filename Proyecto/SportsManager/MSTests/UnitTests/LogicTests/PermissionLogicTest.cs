@@ -8,6 +8,7 @@ using PermissionLogic;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UnitTests.Utilities;
 
 namespace UnitTests.LogicTests
 {
@@ -37,6 +38,37 @@ namespace UnitTests.LogicTests
             catch (EntitiesException eEx)
             {
                 Assert.IsTrue(eEx.Message.Equals(Constants.PermissionError.USER_NOT_FOUND));
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void TryToLogInInvalidUserPassword()
+        {
+            try
+            {
+                var premissionsPersistanceMock = new Mock<IPermissionPersistance>();
+                var userPersistanceMock = new Mock<IUserPersistance>();
+
+                string userName = "santidiaz";
+                var mockedUser = Utility.GenerateRandomUser(userName);
+                userPersistanceMock
+                    .Setup(up =>
+                        up.GetUserByUserName(userName)).Returns(mockedUser);
+
+                var permissionLogic = new PermissionLogic.PermissionLogic(premissionsPersistanceMock.Object, userPersistanceMock.Object);
+                string somePassword = "321654";
+
+                permissionLogic.LogIn(userName, somePassword);
+
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.IsTrue(eEx.Message.Equals(Constants.PermissionError.INVALID_PASSWORD));
             }
             catch (Exception ex)
             {
