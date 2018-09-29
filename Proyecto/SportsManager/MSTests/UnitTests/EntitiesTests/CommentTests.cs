@@ -78,5 +78,17 @@ namespace UnitTests.EntitiesTests
 
             Assert.IsTrue(firstComment.Description == secondComment.Description && secondComment.CreatorName == secondComment.CreatorName);
         }
+
+        [TestMethod]
+        public void CommentsInstancesAreNotEqua()
+        {
+            string description = Constants.Comment.DESCRIPTION_TEST;
+            string creatorUser = Constants.Comment.CREATORNAME_TEST;
+
+            Comment firstComment = new Comment(description, creatorUser);
+            Comment secondComment = new Comment("prueba", creatorUser);
+
+            Assert.IsFalse(firstComment.Description == secondComment.Description && secondComment.CreatorName == secondComment.CreatorName);
+        }
     }
 }
