@@ -1,4 +1,5 @@
-﻿using BusinessEntities;
+﻿using BusinessContracts;
+using BusinessEntities;
 using CommonUtilities;
 using DataContracts;
 using System;
@@ -59,13 +60,24 @@ namespace BusinessLogic
             return team;
         }
 
-        public void DeleteTeamByName(string name)
+        public bool DeleteTeamByName(string name)
         {
-            var systemTeams = this.persistanceProvider.GetTeams();
-            var teamToDelete = systemTeams.Find(t => t.Name == name);
-            if (teamToDelete == null)
-                throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
-            this.persistanceProvider.DeleteTeamByName(name);
+            try
+            {
+                bool result = true;
+                Team teamToDelete = this.GetTeamByName(name);
+
+                if (teamToDelete != null)
+                    this.persistanceProvider.DeleteTeamByName(teamToDelete);
+                else
+                    result = false;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ex);
+            }
         }
     }
 }
