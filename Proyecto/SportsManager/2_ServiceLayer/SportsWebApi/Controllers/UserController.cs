@@ -8,6 +8,7 @@ using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
+using SportsWebApi.Filters;
 using SportsWebApi.Models;
 using SportsWebApi.Utilities;
 
@@ -19,6 +20,7 @@ namespace SportsWebApi.Controllers
     {
         private IUserLogic userOperations = Provider.GetInstance.GetUserOperations();
 
+        [PermissionFilter(true)]
         [HttpGet("{userName}")]
         public IActionResult GetUserByUserName(string userName)
         {
@@ -39,6 +41,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(true)]
         [HttpPost()]
         public IActionResult AddUser([FromBody] AddUserInput addUserInput)
         {
@@ -57,14 +60,19 @@ namespace SportsWebApi.Controllers
                 };
 
                 userOperations.AddUser(newUser);
-                return Ok();//201 Created
+                return Ok();
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }
         }
 
+        [PermissionFilter(true)]
         [HttpDelete("{userName}")]
         public IActionResult DeleteUserByUserName(string userName)
         {
@@ -73,10 +81,12 @@ namespace SportsWebApi.Controllers
                 if (string.IsNullOrEmpty(userName))
                     return NotFound();
 
-                if (this.userOperations.DeleteUserByUserName(userName))
-                    return Ok();
-                
-                return NotFound();
+                this.userOperations.DeleteUserByUserName(userName);
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
             }
             catch (Exception ex)
             {
@@ -84,6 +94,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(true)]
         [HttpPut("{userName}")]
         public IActionResult ModifyUser(string userName,
             [FromBody] ModifyUserInput modyUserInput)
@@ -103,11 +114,7 @@ namespace SportsWebApi.Controllers
                     Password = modyUserInput.Password,
                 };
 
-                bool modificationResponse = this.userOperations.ModifyUser(userModifications);
-
-                if (!modificationResponse)
-                    return Accepted();// No modifications were made.
-
+                this.userOperations.ModifyUser(userModifications);
                 return Ok();
             }
             catch (EntitiesException eEx)

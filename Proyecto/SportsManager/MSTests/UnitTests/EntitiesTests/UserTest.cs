@@ -81,7 +81,7 @@ namespace UnitTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.Errors.INVALID_EMAIL_FORMAT));
+                Assert.IsTrue(ex.Message.Equals(Constants.UserError.INVALID_EMAIL_FORMAT));
             }
         }
 
@@ -115,7 +115,7 @@ namespace UnitTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.Errors.USER_NAME_REQUIRED));
+                Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_NAME_REQUIRED));
             }
         }
 
@@ -130,7 +130,7 @@ namespace UnitTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.Errors.PASSWORD_REQUIRED));
+                Assert.IsTrue(ex.Message.Equals(Constants.UserError.PASSWORD_REQUIRED));
             }
         }
 
@@ -145,7 +145,7 @@ namespace UnitTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.Errors.NAME_REQUIRED));
+                Assert.IsTrue(ex.Message.Equals(Constants.UserError.NAME_REQUIRED));
             }
         }
 
@@ -160,7 +160,7 @@ namespace UnitTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.Errors.LAST_NAME_REQUIRED));
+                Assert.IsTrue(ex.Message.Equals(Constants.UserError.LAST_NAME_REQUIRED));
             }
         }
     }

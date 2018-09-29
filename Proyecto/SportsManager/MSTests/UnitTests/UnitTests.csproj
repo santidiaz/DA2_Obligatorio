@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\3_BusinessLayer\BusinessEntities\BusinessEntities.csproj" />
     <ProjectReference Include="..\..\3_BusinessLayer\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\..\4_DataLayer\DataContracts\DataContracts.csproj" />
+    <ProjectReference Include="..\..\PermissionLogic\PermissionLogic.csproj" />
   </ItemGroup>
 
 </Project>

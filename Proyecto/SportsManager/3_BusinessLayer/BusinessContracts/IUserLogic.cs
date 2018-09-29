@@ -10,7 +10,7 @@ namespace BusinessContracts
         bool DoesUserExists(string userName);
         void AddUser(User newUser);
         User GetUserByUserName(string userName);
-        bool DeleteUserByUserName(string userName);
-        bool ModifyUser(User userWithModifications);
+        void DeleteUserByUserName(string userName);
+        void ModifyUser(User userWithModifications);
     }
 }

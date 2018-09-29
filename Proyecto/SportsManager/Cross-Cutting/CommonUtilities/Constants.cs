@@ -10,8 +10,11 @@ namespace CommonUtilities
         public static class Errors
         {
             public const string UNEXPECTED = "Unexpected error.";
+            public const string NO_MODIFICATIONS = "No modifications have been made.";
+        }
 
-            #region User Errors
+        public static class UserError
+        {
             public const string INVALID_EMAIL_FORMAT = "Invalid email format.";
             public const string NAME_REQUIRED = "Name is required.";
             public const string LAST_NAME_REQUIRED = "Last name is required.";
@@ -19,8 +22,15 @@ namespace CommonUtilities
             public const string PASSWORD_REQUIRED = "Password is required.";
             public const string USER_ALREDY_EXISTS = "UserName alredy exists.";
             public const string USER_NOT_FOUND = "User not found.";
-            public const string NO_MODIFICATIONS = "No modifications have been made.";
-            #endregion
+            public const string NO_CHANGES = "No changes were made.";
+        }
+
+        public static class EventError
+        {
+            public const string INVALID_DATE = "Date must be equal or greather than today.";
+            public const string SPORT_REQUIRED = "Must specify a sport.";
+            public const string ALREADY_EXISTS = "An event for the selected teams already exists today.";
+            public const string NOT_FOUND = "Event was not found.";
         }
 
         public static class Team
@@ -50,6 +60,12 @@ namespace CommonUtilities
             public const string TEAMLIST_REQUIRED = "Team list required";
             public const string ERROR_SPORT_ALREADY_EXISTS = "Sport already exists";
             public const string ERROR_SPORT_NOT_EXISTS = "Sport not exists";
+        }
+
+        public static class PermissionError
+        {
+            public const string USER_NOT_FOUND = "User not found.";
+            public const string INVALID_PASSWORD = "Invalid password.";
         }
     }
 }
