@@ -75,5 +75,41 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void SuccessfulLoginTest()
+        {
+            try
+            {
+                var premissionsPersistanceMock = new Mock<IPermissionPersistance>();
+                var userPersistanceMock = new Mock<IUserPersistance>();
+
+                // Mocks configuration
+                string expectedUserName = "santidiaz";
+                string hashedPassword = HashTool.GenerateHash("123456");
+                var mockedUser = Utility.GenerateRandomUser(expectedUserName, hashedPassword);
+                userPersistanceMock
+                    .Setup(up =>
+                        up.GetUserByUserName(expectedUserName)).Returns(mockedUser);
+
+                premissionsPersistanceMock
+                    .Setup(pp => 
+                    pp.LogIn(expectedUserName, It.IsAny<Guid>())).Verifiable();
+
+                //Start test
+                var permissionLogic = new PermissionLogic.PermissionLogic(premissionsPersistanceMock.Object, userPersistanceMock.Object);
+
+                Guid result = permissionLogic.LogIn(expectedUserName, "123456");
+                Assert.IsTrue(!result.Equals(Guid.Empty));
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

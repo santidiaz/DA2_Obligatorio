@@ -34,7 +34,7 @@ namespace PermissionLogic
             if (!isValid)
                 throw new EntitiesException(Constants.PermissionError.INVALID_PASSWORD, ExceptionStatusCode.Unauthorized);
 
-            newToken = new Guid();
+            newToken = Guid.NewGuid();
             this.permissionPersistance.LogIn(userToBeLogedIn.UserName, newToken);
 
             return newToken;
