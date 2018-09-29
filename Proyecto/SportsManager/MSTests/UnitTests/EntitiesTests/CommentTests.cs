@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UnitTests.Utilities;
 
 namespace UnitTests.EntitiesTests
 {
@@ -64,6 +65,18 @@ namespace UnitTests.EntitiesTests
 
             Assert.AreEqual(expectedDescription, comment.Description);
             Assert.AreEqual(expectedCreatorName, comment.CreatorName);
+        }
+
+        [TestMethod]
+        public void CommentsInstancesAreEqual()
+        {
+            string description = Constants.Comment.DESCRIPTION_TEST;
+            string creatorUser = Constants.Comment.CREATORNAME_TEST;
+            
+            Comment firstComment = new Comment(description, creatorUser);
+            Comment secondComment = new Comment(description, creatorUser);
+
+            Assert.IsTrue(firstComment.Description == secondComment.Description && secondComment.CreatorName == secondComment.CreatorName);
         }
     }
 }
