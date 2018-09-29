@@ -12,6 +12,7 @@ namespace DataAccess
         public DbSet<Team> Teams { get; set; }
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,6 +26,7 @@ namespace DataAccess
             modelBuilder.Entity<Team>().HasKey(t => t.TeamOID);
             modelBuilder.Entity<Sport>().HasKey(s => s.SportOID);
             modelBuilder.Entity<Event>().HasKey(e => e.EventOID);
+            modelBuilder.Entity<Comment>().HasKey(e => e.CommentOID);
 
             modelBuilder.Entity<Team>().ToTable("Teams");
             
