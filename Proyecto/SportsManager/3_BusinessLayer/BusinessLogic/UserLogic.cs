@@ -26,7 +26,7 @@ namespace BusinessLogic
         public void AddUser(User newUser)
         {
             if (this.DoesUserExists(newUser.UserName))
-                throw new Exception(Constants.Errors.USER_ALREDY_EXISTS);
+                throw new Exception(Constants.UserError.USER_ALREDY_EXISTS);
 
             this.persistanceProvider.AddUser(newUser);
         }
@@ -64,7 +64,7 @@ namespace BusinessLogic
                 User userToModify = this.GetUserByUserName(userWithModifications.UserName);
 
                 if (userToModify == null)
-                    throw new EntitiesException(Constants.Errors.USER_NOT_FOUND, ExceptionStatusCode.NotFound);               
+                    throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);               
 
                 if (this.CheckForModifications(userToModify, userWithModifications))
                 {
@@ -138,20 +138,7 @@ namespace BusinessLogic
         private bool CheckForPasswordChanges(string userPasword, ref string newPassword)
         {
             return !string.IsNullOrEmpty(newPassword)
-                && !userPasword.Equals(this.GenerateHash(newPassword));
-        }
-        private string GenerateHash(string input)
-        {
-            using (SHA1Managed sha1 = new SHA1Managed())
-            {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
-                var sb = new StringBuilder(hash.Length * 2);
-
-                foreach (byte b in hash)
-                    sb.Append(b.ToString("X2"));
-
-                return sb.ToString();
-            }
+                && !userPasword.Equals(HashTool.GenerateHash(newPassword));
         }
         #endregion
     }

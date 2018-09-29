@@ -75,7 +75,7 @@ namespace UnitTests.LogicTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.Errors.USER_ALREDY_EXISTS));
+                Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_ALREDY_EXISTS));
             }
         }
 
