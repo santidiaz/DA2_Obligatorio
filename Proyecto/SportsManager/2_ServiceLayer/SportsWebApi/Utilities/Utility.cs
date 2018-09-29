@@ -13,11 +13,17 @@ namespace SportsWebApi.Utilities
             int response = 500;
             switch (exception.StatusCode)
             {
+                case ExceptionStatusCode.NotModified:
+                    response = 304;
+                    break;
                 case ExceptionStatusCode.NotFound:
                     response = 404;
                     break;
                 case ExceptionStatusCode.InvalidData:
-                    response = 404;
+                    response = 400;
+                    break;
+                case ExceptionStatusCode.Conflict:
+                    response = 409; // Conflict with the resource, for example trying to add an object that already exists in DB.
                     break;
                 case ExceptionStatusCode.Undefined:
                     response = 500;
