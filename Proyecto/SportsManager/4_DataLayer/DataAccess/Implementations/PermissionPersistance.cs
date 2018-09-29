@@ -16,7 +16,7 @@ namespace DataAccess.Implementations
                 return context.Users.OfType<User>()
                     .Where(u => 
                         u.Token != null && 
-                        u.Token.Equals(Guid.Empty) && 
+                        !u.Token.Equals(Guid.Empty) && 
                         u.Token.Equals(token) && 
                         u.IsAdmin.Equals(adminRequired)).Any();
             }

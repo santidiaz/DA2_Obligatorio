@@ -26,6 +26,17 @@ namespace DataAccess
             modelBuilder.Entity<Sport>().HasKey(s => s.SportOID);
             modelBuilder.Entity<Event>().HasKey(e => e.EventOID);
 
+            modelBuilder.Entity<User>().HasData(new User()
+            {
+                Email = "aaa@bbb.com",
+                Password = CommonUtilities.HashTool.GenerateHash("123456"),
+                IsAdmin = true,
+                Name = "defaultName",
+                LastName = "defaultLastName",
+                UserName = "superadmin",
+                Token = Guid.NewGuid(),
+                UserOID = 1
+            });
 
             //modelBuilder.Entity<Teacher>().ToTable("Teachers");
             //modelBuilder.Entity<Student>().ToTable("Students");

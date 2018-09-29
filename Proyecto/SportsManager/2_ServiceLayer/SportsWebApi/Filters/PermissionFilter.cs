@@ -20,6 +20,11 @@ namespace SportsWebApi.Filters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            // No action required
+        }
+
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
             // Get token from header.
             string token = context.HttpContext.Request.Headers["Authorization"];
 
@@ -32,20 +37,14 @@ namespace SportsWebApi.Filters
                 };
             }
 
-            Guid requestGuid = new Guid(token);
-            // VALIDAMOS EL TOKEN
-            if (!this.permissions.HasPermission(requestGuid, _adminRequired))
+            // Valido si tiene permisos el endpoint que se quiere consumir.
+            if (context.Result == null && !this.permissions.HasPermission(new Guid(token), _adminRequired))
             {
                 context.Result = new ContentResult()
                 {
-                    Content = "Invalid Token",
+                    Content = "User don't have permission for this operation.",
                 };
             }
-        }
-
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
-            throw new NotImplementedException();
         }
     }
 }
