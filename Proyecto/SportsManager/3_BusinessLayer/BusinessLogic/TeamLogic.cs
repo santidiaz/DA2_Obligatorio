@@ -79,5 +79,23 @@ namespace BusinessLogic
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ex);
             }
         }
+        
+        public List<Event> GetEventsByTeam(string teamName)
+        {
+            try
+            {
+                List<Event> events = new List<Event>();
+                Team team = this.GetTeamByName(teamName);
+
+                if (team != null)
+                    return this.persistanceProvider.GetEventsByTeam(team);
+                else
+                    return events;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ex);
+            }
+        }
     }
 }

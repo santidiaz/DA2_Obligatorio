@@ -73,5 +73,20 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
+        
+        public List<Event> GetEventsByTeam(Team team)
+        {
+            List<Event> result = new List<Event>();
+            using (Context context = new Context())
+            {
+                List<Event> teamOnDB1 = context.Events.OfType<Event>().Where(a => a.Team1.Equals(team.TeamOID)).ToList();
+                List<Event> teamOnDB2 = context.Events.OfType<Event>().Where(a => a.Team2.Equals(team.TeamOID)).ToList();
+
+                if (teamOnDB1 != null) result.AddRange(teamOnDB1);
+                if (teamOnDB2 != null) result.AddRange(teamOnDB2);
+            }
+            return result;
+        }
+
     }
 }

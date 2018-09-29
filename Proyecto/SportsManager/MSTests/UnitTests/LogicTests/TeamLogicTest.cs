@@ -103,5 +103,52 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void GetEventsByTeam()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<ITeamPersistance>();
+                Team team = Utility.GenerateRandomTeam(Constants.Team.NAME_TEST);
+
+                mock.Setup(up => up.GetTeamByName(It.IsAny<string>())).Returns(new Team());
+                mock.Setup(up => up.GetEventsByTeam(It.IsAny<Team>())).Returns(new List<Event>());
+
+                TeamLogic sportLogic = new TeamLogic(mock.Object);
+                sportLogic.GetEventsByTeam(team.Name);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void GetEventsByTeamThatNotExists()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<ITeamPersistance>();
+                Team team = Utility.GenerateRandomTeam(Constants.Team.NAME_TEST);
+
+                //TODO : Como mockeo un retorno NULL ?
+                mock.Setup(up => up.GetTeamByName(It.IsAny<string>())).Returns(new Team());
+                mock.Setup(up => up.GetEventsByTeam(It.IsAny<Team>())).Returns(new List<Event>());
+
+                TeamLogic sportLogic = new TeamLogic(mock.Object);
+                sportLogic.GetEventsByTeam(team.Name);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

@@ -107,5 +107,23 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [HttpGet("{sportName}/events")]
+        public IActionResult GetEventsByTeam(string sportName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(sportName))
+                    return NotFound();
+
+                List<Event> result = teamOperations.GetEventsByTeam(sportName);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
