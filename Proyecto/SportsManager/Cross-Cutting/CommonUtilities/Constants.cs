@@ -51,5 +51,17 @@ namespace CommonUtilities
             public const string ERROR_SPORT_ALREADY_EXISTS = "Sport already exists";
             public const string ERROR_SPORT_NOT_EXISTS = "Sport not exists";
         }
+
+        public static class CommentError
+        {
+            public const string DESCRIPTION_REQUIRED = "Description required";
+            public const string CREATORNAME_REQUIRED = "CreatorName required";
+        }
+
+        public static class Comment
+        {
+            public const string DESCRIPTION_TEST = "Description example";
+            public const string CREATORNAME_TEST = "Santiago";
+        }
     }
 }
