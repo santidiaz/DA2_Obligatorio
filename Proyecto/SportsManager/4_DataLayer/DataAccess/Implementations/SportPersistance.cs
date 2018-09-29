@@ -61,14 +61,14 @@ namespace DataAccess.Implementations
             return result;
         }
 
-        public void ModifySportByName(string name, Sport sportToModify)
+        public void ModifySportByName(Sport sportToModify)
         {
             using (Context context = new Context())
             {
-                var sportOnDB = context.Sports.OfType<Sport>().Include("Sports").Where(a => a.SportOID.Equals(sportToModify.SportOID)).FirstOrDefault();
-
+                var sportOnDB = context.Sports.OfType<Sport>().Include("Teams").Where(a => a.SportOID.Equals(sportToModify.SportOID)).FirstOrDefault();
+                //var sportOnDB = context.Sports.OfType<Sport>().FirstOrDefault(u => u.SportOID.Equals(sportToModify.SportOID));
                 sportOnDB.Name = sportToModify.Name;
-                sportOnDB.TeamsList = sportToModify.TeamsList;
+                sportOnDB.TeamsList = sportToModify.TeamsList != null ? sportToModify.TeamsList : new List<Team>();
 
                 context.SaveChanges();
             }

@@ -69,5 +69,26 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPut()]
+        public IActionResult ModifySportByName([FromBody] ModifySportInput modifySportInput)
+        {
+            try
+            {
+                if (modifySportInput == null) return BadRequest();
+
+                Sport modifySport = new Sport
+                {
+                    Name = modifySportInput.NewName
+                };
+                
+                sportOperations.ModifySportByName(modifySportInput.OldName, modifySport);
+                return Ok();
+            }
+            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
     }
 }

@@ -40,10 +40,14 @@ namespace BusinessLogic
         public void ModifySportByName(string nameSport, Sport sport)
         {
             Sport sportToModify = this.GetSportByName(nameSport);
+            
             if (sportToModify == null)
                 throw new Exception(Constants.SportErrors.ERROR_SPORT_ALREADY_EXISTS);
             else
-                this.persistanceProvider.ModifySportByName(nameSport, sport);
+            {
+                sport.SportOID = sportToModify.SportOID;
+                this.persistanceProvider.ModifySportByName(sport);
+            }
         }
 
         public Sport GetSportByName(string name)

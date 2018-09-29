@@ -19,7 +19,7 @@ namespace UnitTests.LogicTests
         [TestMethod]
         public void AddSportThatNotExists()
         {
-            // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+            // Creo el objeto mock, en este caso una implementacion mockeada de ISportPersistance.
             var mock = new Mock<ISportPersistance>();
             mock.Setup(up => up.GetSports()).Returns(new List<Sport>());
             mock.Setup(mr => mr.AddSport(It.IsAny<Sport>())).Verifiable();
@@ -65,7 +65,7 @@ namespace UnitTests.LogicTests
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ISportPersistance>();
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>())).Returns(new Sport());
-                mock.Setup(mr => mr.ModifySportByName(It.IsAny<string>(), It.IsAny<Sport>())).Verifiable();
+                mock.Setup(mr => mr.ModifySportByName(It.IsAny<Sport>())).Verifiable();
 
                 // Instancio SportLogic con el mock como parametro.
                 SportLogic userLogic = new SportLogic(mock.Object);

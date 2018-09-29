@@ -26,7 +26,8 @@ namespace DataAccess
             modelBuilder.Entity<Sport>().HasKey(s => s.SportOID);
             modelBuilder.Entity<Event>().HasKey(e => e.EventOID);
 
-
+            modelBuilder.Entity<Team>().ToTable("Teams");
+            
             //modelBuilder.Entity<Teacher>().ToTable("Teachers");
             //modelBuilder.Entity<Student>().ToTable("Students");
         }
