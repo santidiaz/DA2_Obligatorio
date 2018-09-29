@@ -138,6 +138,7 @@ namespace UnitTests.LogicTests
 
                 //TODO : Como mockeo un retorno NULL ?
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>())).Returns((new Sport()));
+                mock.Setup(up => up.GetEventsBySport(It.IsAny<Sport>())).Returns(new List<Event>());
 
                 SportLogic sportLogic = new SportLogic(mock.Object);
                 sportLogic.GetEventsBySport(sportToDelete.Name);
