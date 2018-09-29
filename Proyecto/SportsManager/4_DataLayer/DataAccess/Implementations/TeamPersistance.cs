@@ -73,5 +73,11 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
+        
+        public List<Event> GetEventsByTeam(Team team)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

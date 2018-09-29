@@ -13,5 +13,6 @@ namespace DataContracts
         Team GetTeamByName(string name);
         void DeleteTeamByName(Team team);
         bool IsTeamInSystem(Team team);
+        List<Event> GetEventsByTeam(Team team);
     }
 }
