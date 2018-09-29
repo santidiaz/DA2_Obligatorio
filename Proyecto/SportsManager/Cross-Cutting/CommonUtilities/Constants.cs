@@ -56,6 +56,7 @@ namespace CommonUtilities
         {
             public const string DESCRIPTION_REQUIRED = "Description required";
             public const string CREATORNAME_REQUIRED = "CreatorName required";
+            public const string ERROR_CREATOR_NAME_NOT_EXISTS = "CreatorName not exists";
         }
 
         public static class Comment
