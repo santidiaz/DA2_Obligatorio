@@ -14,10 +14,9 @@ namespace BusinessEntities
         private string _password;
         #endregion
 
-        public Guid Token { get; set; }
-
         #region Public attributes
         public int UserOID { get; set; } // [Object Id] This id is used by EntityFramework.
+        public Guid Token { get; set; }
         public string Name
         {
             get { return this._name; }
@@ -61,7 +60,7 @@ namespace BusinessEntities
             }
         }
         public bool IsAdmin { get; set; } = false;
-        public string  Password
+        public string Password
         {
             get { return this._password; }
             set
@@ -72,7 +71,7 @@ namespace BusinessEntities
                 this._password = value;
             }
         }
-        public virtual List<Team> FavouriteTeams { get; set; } // Virtual implies that the list will be lazy-loaded unless you specifically mark them otherwise.
+        public virtual List<Team> FavouriteTeams { get; set; }// Virtual implies that the list will be lazy-loaded unless you specifically mark them otherwise.
         #endregion
 
         #region Constructors
@@ -101,7 +100,7 @@ namespace BusinessEntities
         #region Methods
         public void AddFavouriteTeam(Team newTeam)
         {
-            if(!this.FavouriteTeams.Contains(newTeam))
+            if (!this.FavouriteTeams.Contains(newTeam))
                 this.FavouriteTeams.Add(newTeam);
         }
         #endregion

@@ -48,7 +48,7 @@ namespace ProviderManager
             this.userLogic = new UserLogic(userPersistance, teamPersistance);
             this.teamLogic = new TeamLogic(teamPersistance);
             this.sportLogic = new SportLogic(sportPersistance);
-            this.eventLogic = new EventLogic(eventPersistance);
+            this.eventLogic = new EventLogic(eventPersistance, sportPersistance, teamPersistance);
         }
 
         public static Provider GetInstance

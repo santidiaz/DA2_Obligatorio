@@ -22,14 +22,11 @@ namespace DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>().HasKey(u => u.UserOID);
             modelBuilder.Entity<Team>().HasKey(t => t.TeamOID);
+            modelBuilder.Entity<Comment>().HasKey(c => c.CommentOID);
+            modelBuilder.Entity<User>().HasKey(u => u.UserOID);            
             modelBuilder.Entity<Sport>().HasKey(s => s.SportOID);
             modelBuilder.Entity<Event>().HasKey(e => e.EventOID);
-            modelBuilder.Entity<Comment>().HasKey(c => c.CommentOID);
-
-            //modelBuilder.Entity<Teacher>().ToTable("Teachers");
-            //modelBuilder.Entity<Student>().ToTable("Students");
         }
     }
 }

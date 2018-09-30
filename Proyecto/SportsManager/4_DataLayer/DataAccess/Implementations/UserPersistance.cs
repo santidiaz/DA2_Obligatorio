@@ -22,6 +22,7 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
+                context.Users.Attach(newUser);
                 context.Users.Add(newUser);
                 context.SaveChanges();
             }
@@ -35,7 +36,7 @@ namespace DataAccess.Implementations
                 if (!useEagerLoading)
                     foundUser = context.Users.OfType<User>().FirstOrDefault(u => u.UserName.Equals(userName));
                 else
-                    foundUser = context.Users.OfType<User>().Include("Teams").Where(u => u.UserName.Equals(userName)).FirstOrDefault();
+                    foundUser = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserName.Equals(userName)).FirstOrDefault();
             }
             return foundUser;
         }
@@ -68,7 +69,7 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var userOnDB = context.Users.Include("Teams").Where(u => u.UserOID.Equals(userToModify.UserOID)).FirstOrDefault();
+                var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID.Equals(userToModify.UserOID)).FirstOrDefault();
 
                 var teamsToBeDeleted = userOnDB.FavouriteTeams;
                 teamsToBeDeleted = new List<Team>();

@@ -12,5 +12,6 @@ namespace DataContracts
         Event GetEventById(int eventId);
         List<Event> GetTodayEvents();
         List<Event> GetAllEvents();
+        List<Event> GetEventsByDate(DateTime eventDate);
     }
 }

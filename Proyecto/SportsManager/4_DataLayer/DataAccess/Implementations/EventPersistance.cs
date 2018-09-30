@@ -62,5 +62,17 @@ namespace DataAccess.Implementations
             }
             return todaysEvents;
         }
+
+        public List<Event> GetEventsByDate(DateTime eventDate)
+        {
+            List<Event> events;
+            using (Context context = new Context())
+            {
+                events = (from anEvent in context.Events.OfType<Event>().Include(e => e.Teams)
+                                where anEvent.InitialDate.Equals(eventDate.Date)
+                                select anEvent).ToList();
+            }
+            return events;
+        }
     }
 }
