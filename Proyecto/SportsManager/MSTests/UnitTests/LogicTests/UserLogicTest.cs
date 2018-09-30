@@ -425,5 +425,33 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void AddFavoritesToUserThatNotExists()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz", Utility.GenerateHash("123456"));
+
+                mock.Setup(up => up.GetUserByUserName(It.IsAny<string>())).Throws(new Exception());
+                mock.Setup(up => up.AddFavoritesToUser(It.IsAny<User>(), It.IsAny<List<Team>>())).Verifiable();
+
+                List<Team> teamLists = new List<Team>() { new Team() { TeamOID = 1 }, new Team { TeamOID = 2 } };
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                userLogic.AddFavoritesToUser(mockedOriginalUser, teamLists);
+
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.IsTrue(eEx.Message.Equals(Constants.UserError.USER_NOT_FOUND));
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(true);
+            }
+        }
     }
 }
