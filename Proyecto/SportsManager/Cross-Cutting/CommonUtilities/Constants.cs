@@ -45,6 +45,7 @@ namespace CommonUtilities
             public const string ERROR_TEAM_NOT_EXISTS = "Team not exists.";
             public const string NAME_REQUIRED = "Name required";
             public const string PHOTO_INVALID = "Invalid photo";
+            public const string TEAM_NAME_NOT_FOUND = "The team '{0}' was not found";
         }
     }
 }

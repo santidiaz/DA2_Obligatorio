@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Implementations
 {
@@ -26,12 +27,15 @@ namespace DataAccess.Implementations
             }
         }
 
-        public User GetUserByUserName(string userName)
+        public User GetUserByUserName(string userName, bool useEagerLoading = false)
         {
             User foundUser;
             using (Context context = new Context())
             {
-                foundUser = context.Users.OfType<User>().FirstOrDefault(u => u.UserName.Equals(userName));
+                if (!useEagerLoading)
+                    foundUser = context.Users.OfType<User>().FirstOrDefault(u => u.UserName.Equals(userName));
+                else
+                    foundUser = context.Users.OfType<User>().Include("Teams").Where(u => u.UserName.Equals(userName)).FirstOrDefault();
             }
             return foundUser;
         }
@@ -60,14 +64,39 @@ namespace DataAccess.Implementations
             }
         }
 
-        /*-----*/
-        public bool ValidateUserPermisson(Guid token, bool adminRequired)
+        public void ModifyUserFavouriteTeams(User userToModify, List<Team> newFavouriteTeams)
         {
             using (Context context = new Context())
             {
-                return context.Users.OfType<User>().Where(u => u.Token.Equals(token) && u.IsAdmin.Equals(adminRequired)).Any();
+                var userOnDB = context.Users.Include("Teams").Where(u => u.UserOID.Equals(userToModify.UserOID)).FirstOrDefault();
+
+                var teamsToBeDeleted = userOnDB.GetFavouritesTeams();
+                teamsToBeDeleted = new List<Team>();
+
+                foreach (Team t in newFavouriteTeams)
+                {
+                    if (context.Entry(t).State == EntityState.Detached)
+                        context.Teams.Attach(t);
+
+                    userOnDB.AddFavouriteTeam(t);
+                }
+
+                context.SaveChanges();
             }
         }
 
+        /*
+         private void UpdateTeachers(Context context, Subject subjectOnDB, List<Teacher> addedTeachers, List<Teacher> deletedTeachers)
+        {
+            deletedTeachers.ForEach(c => subjectOnDB.Teachers.Remove(c));
+            foreach (Teacher t in addedTeachers)
+            {
+                if (context.Entry(t).State == EntityState.Detached)
+                    context.people.Attach(t);
+
+                subjectOnDB.Teachers.Add(t);
+            }
+        }
+         */
     }
 }

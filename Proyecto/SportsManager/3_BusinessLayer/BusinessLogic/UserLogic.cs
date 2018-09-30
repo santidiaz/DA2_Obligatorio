@@ -4,6 +4,7 @@ using BusinessEntities.Exceptions;
 using CommonUtilities;
 using DataContracts;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -11,16 +12,18 @@ namespace BusinessLogic
 {
     public class UserLogic : IUserLogic
     {
-        private IUserPersistance persistanceProvider;
+        private IUserPersistance userProvider;
+        private ITeamPersistance teamProvider;
 
-        public UserLogic(IUserPersistance provider)
+        public UserLogic(IUserPersistance userPersistanceProvider, ITeamPersistance teamPersistanceProvider)
         {
-            this.persistanceProvider = provider;
+            this.userProvider = userPersistanceProvider;
+            this.teamProvider = teamPersistanceProvider;
         }
 
         public bool DoesUserExists(string userName)
         {
-            return this.persistanceProvider.DoesUserExists(userName);
+            return this.userProvider.DoesUserExists(userName);
         }
 
         public void AddUser(User newUser)
@@ -28,12 +31,12 @@ namespace BusinessLogic
             if (this.DoesUserExists(newUser.UserName))
                 throw new EntitiesException(Constants.UserError.USER_ALREDY_EXISTS, ExceptionStatusCode.Conflict);
 
-            this.persistanceProvider.AddUser(newUser);
+            this.userProvider.AddUser(newUser);
         }
 
         public User GetUserByUserName(string userName)
         {
-            return this.persistanceProvider.GetUserByUserName(userName);
+            return this.userProvider.GetUserByUserName(userName);
         }
 
         public void DeleteUserByUserName(string userName)
@@ -42,7 +45,7 @@ namespace BusinessLogic
             if (userToDelete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.persistanceProvider.DeleteUser(userToDelete);
+            this.userProvider.DeleteUser(userToDelete);
         }
 
         public void ModifyUser(User userWithModifications)
@@ -54,20 +57,27 @@ namespace BusinessLogic
             if (!this.CheckForModifications(userToModify, userWithModifications))
                 throw new EntitiesException(Constants.UserError.NO_CHANGES, ExceptionStatusCode.NotModified);
 
-            this.persistanceProvider.ModifyUser(userToModify);
+            this.userProvider.ModifyUser(userToModify);
         }
 
-        public Guid AuthenticateUser(string userName, string userPassword)
+        public void ModifyUserFavouriteTeams(string userName, List<string> teamNames)
         {
+            User foundUser = this.userProvider.GetUserByUserName(userName, true);
+            if(foundUser == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            // Valido que exita usuario y pass
-            // Si OK
-            // Crea un Guid y actuizo user..
-            // devuelvo guid
-            //sino tiro error
+            List<Team> newFavouriteTeams = new List<Team>();
+            Team foundTeam;
+            foreach (string teamName in teamNames)
+            {
+                foundTeam = this.teamProvider.GetTeamByName(teamName);
+                if (foundTeam == null)
+                    throw new EntitiesException(string.Concat(Constants.TeamErrors.TEAM_NAME_NOT_FOUND, teamName), ExceptionStatusCode.NotFound);
 
+                newFavouriteTeams.Add(foundTeam);
+            }
 
-            return new Guid();
+            this.userProvider.ModifyUserFavouriteTeams(foundUser, newFavouriteTeams);
         }
 
         #region Private Methods

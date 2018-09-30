@@ -103,6 +103,11 @@ namespace BusinessEntities
         {
             return this.favouriteTeams;
         }
+        public void AddFavouriteTeam(Team newTeam)
+        {
+            if(!favouriteTeams.Contains(newTeam))
+                this.favouriteTeams.Add(newTeam);
+        }
         #endregion
 
         #region Private Methods

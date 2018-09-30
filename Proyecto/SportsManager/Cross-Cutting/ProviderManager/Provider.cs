@@ -1,6 +1,7 @@
 ﻿using BusinessContracts;
 using BusinessLogic;
 using DataAccess.Implementations;
+using DataContracts;
 using ProviderManager.Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,22 +11,46 @@ namespace ProviderManager
 {
     public class Provider
     {
+        #region Private properties
         private IUserLogic userLogic;
         private ITeamLogic teamLogic;
         private ISportLogic sportLogic;
         private IEventLogic eventLogic;
-        private IFixture fixture;        
+        private IFixture fixture;
+
+        private IUserPersistance userPersistance;
+        private ITeamPersistance teamPersistance;
+        private ISportPersistance sportPersistance;
+        private IEventPersistance eventPersistance;
+        #endregion
 
         #region Singleton
         // Variable estática para la instancia, se necesita utilizar una función lambda ya que el constructor es privado.
         private static readonly Lazy<Provider> currentInstance = new Lazy<Provider>(() => new Provider());
         private Provider()
         {
-            this.userLogic = new UserLogic(new UserPersistance());
-            this.teamLogic = new TeamLogic(new TeamPersistance());
-            this.sportLogic = new SportLogic(new SportPersistance());
-            this.eventLogic = new EventLogic(new EventPersistance());
+            this.Initialize();
         }
+        private void Initialize()
+        {
+            this.CreatePersistances();
+            this.CreateLogics();
+        }
+        private void CreatePersistances()
+        {
+            this.userPersistance = new UserPersistance();
+            this.teamPersistance = new TeamPersistance();
+            this.sportPersistance = new SportPersistance();
+            this.eventPersistance = new EventPersistance();
+        }
+        private void CreateLogics()
+        {
+            this.userLogic = new UserLogic(userPersistance, teamPersistance);
+            this.teamLogic = new TeamLogic(teamPersistance);
+            this.sportLogic = new SportLogic(sportPersistance);
+            this.eventLogic = new EventLogic(eventPersistance);
+        }
+
         public static Provider GetInstance
         {
             get
@@ -54,7 +79,6 @@ namespace ProviderManager
         {
             return this.eventLogic;
         }
-
         public IFixture GetFixtureGenerator(FixtureType fixtureType)
         {
             IFixture fixtureGenerationAlgorithm;

@@ -10,6 +10,7 @@ namespace BusinessEntities
         #region Private attributes
         private string _name;
         private byte[] _photo;
+        private Sport sport;
         #endregion
         public Team()
         {

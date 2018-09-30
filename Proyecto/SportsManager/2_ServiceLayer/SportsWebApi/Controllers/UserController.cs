@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Filters;
 using SportsWebApi.Models;
+using SportsWebApi.Models.UserModel;
 using SportsWebApi.Utilities;
 
 namespace SportsWebApi.Controllers
@@ -112,6 +113,37 @@ namespace SportsWebApi.Controllers
                 };
 
                 this.userOperations.ModifyUser(userModifications);
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut(nameof(ModifyUserFavouriteTeams))]
+        public IActionResult ModifyUserFavouriteTeams([FromBody] ModifyUserFavouriteTeamsInput input)
+        {
+            try
+            {
+                if (input == null)
+                    return BadRequest();
+
+                //User userModifications = new User
+                //{
+                //    UserName = userName,
+                //    Name = modyUserInput.Name,
+                //    LastName = modyUserInput.LastName,
+                //    Email = modyUserInput.Email,
+                //    IsAdmin = modyUserInput.IsAdmin,
+                //    Password = modyUserInput.Password,
+                //};
+
+                //this.userOperations.ModifyUser(userModifications);
                 return Ok();
             }
             catch (EntitiesException eEx)
