@@ -38,7 +38,7 @@ namespace UnitTests
             Sport expectedSport = new Sport
             {
                 Name = "Football",
-                TeamsList = expectedTeamList
+                Teams = expectedTeamList
             };            
 
             Event newEvent = new Event(expectedDate, expectedSport, team1, team2);
@@ -61,7 +61,7 @@ namespace UnitTests
                 Sport sport = new Sport
                 {
                     Name = "Football",
-                    TeamsList = teamList
+                    Teams = teamList
                 };
 
                 Event newEvent = new Event(badDate, sport, team1, team2);
@@ -90,7 +90,7 @@ namespace UnitTests
             Sport sport = new Sport
             {
                 Name = "Football",
-                TeamsList = expectedTeamList
+                Teams = expectedTeamList
             };
 
             Event newEvent = new Event(expectedDate, sport, team1, team2);// Original event
@@ -115,12 +115,12 @@ namespace UnitTests
             Sport sport1 = new Sport
             {
                 Name = "Football",
-                TeamsList = footballTeams
+                Teams = footballTeams
             };
             Sport sport2 = new Sport
             {
                 Name = "Basketball",
-                TeamsList = basketTeams
+                Teams = basketTeams
             };
 
             Event newEvent = new Event(expectedDate, sport1, team1, team2);// Original event
@@ -142,12 +142,12 @@ namespace UnitTests
             Sport sport1 = new Sport
             {
                 Name = "Football",
-                TeamsList = footballTeams
+                Teams = footballTeams
             };
             Sport sport2 = new Sport
             {
                 Name = "Basketball",
-                TeamsList = basketTeams
+                Teams = basketTeams
             };
 
             Event newEvent = new Event(expectedDate, sport1, team1, team2);// Original event

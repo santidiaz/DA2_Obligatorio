@@ -12,7 +12,6 @@ namespace BusinessEntities
         private string _userName;
         private string _email;
         private string _password;
-        private List<Team> favouriteTeams; 
         #endregion
 
         public Guid Token { get; set; }
@@ -73,6 +72,7 @@ namespace BusinessEntities
                 this._password = value;
             }
         }
+        public virtual List<Team> FavouriteTeams { get; set; } // Virtual implies that the list will be lazy-loaded unless you specifically mark them otherwise.
         #endregion
 
         #region Constructors
@@ -84,7 +84,7 @@ namespace BusinessEntities
             this._email = string.Empty;
             this._password = string.Empty;
             this.IsAdmin = false;
-            this.favouriteTeams = new List<Team>();
+            this.FavouriteTeams = new List<Team>();
         }
         public User(string name, string lastName, string userName, string password, string email, bool isAdmin = false)
         {
@@ -93,20 +93,16 @@ namespace BusinessEntities
             this.UserName = userName;
             this.Password = password;
             this.Email = email;
-            this.favouriteTeams = new List<Team>();
+            this.FavouriteTeams = new List<Team>();
             this.IsAdmin = isAdmin;
         }
         #endregion
 
         #region Methods
-        public List<Team> GetFavouritesTeams()
-        {
-            return this.favouriteTeams;
-        }
         public void AddFavouriteTeam(Team newTeam)
         {
-            if(!favouriteTeams.Contains(newTeam))
-                this.favouriteTeams.Add(newTeam);
+            if(!this.FavouriteTeams.Contains(newTeam))
+                this.FavouriteTeams.Add(newTeam);
         }
         #endregion
 

@@ -47,13 +47,14 @@ namespace SportsWebApi.Controllers
                     Name = addTeamInput.Name
                 };
 
-                var file = HttpContext.Request.Form.Files.GetFile("image");
-                
-                using (var memoryStream = new MemoryStream())
-                {
-                    file.CopyTo(memoryStream);
-                    newTeam.Photo = memoryStream.ToArray();
-                }
+                //var file = HttpContext.Request.Form.Files.GetFile("image");
+
+                //using (var memoryStream = new MemoryStream())
+                //{
+                //    file.CopyTo(memoryStream);
+                //    newTeam.Photo = memoryStream.ToArray();
+                //}
+                newTeam.Photo = new byte[5];
 
                 teamOperations.AddTeam(newTeam);
                 return Ok();

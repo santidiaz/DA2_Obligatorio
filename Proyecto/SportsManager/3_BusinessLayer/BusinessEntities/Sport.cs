@@ -11,19 +11,8 @@ namespace BusinessEntities
         private string _name;
         private List<Team> _teamList;
         #endregion
+
         public int SportOID { get; set; } // [Object Id] This id is team by EntityFramework.
-
-        public Sport()
-        {
-            this._name = string.Empty;
-            this._teamList = new List<Team>();
-        }
-        public Sport(string name, List<Team> teams)
-        {
-            this.Name = name;
-            this.TeamsList = teams;
-        }
-
         public string Name
         {
             get { return this._name; }
@@ -35,7 +24,7 @@ namespace BusinessEntities
                 this._name = value;
             }
         }
-        public List<Team> TeamsList
+        public virtual List<Team> Teams
         {
             get { return this._teamList; }
             set
@@ -45,6 +34,17 @@ namespace BusinessEntities
 
                 this._teamList = value;
             }
+        }
+
+        public Sport()
+        {
+            this._name = string.Empty;
+            this._teamList = new List<Team>();
+        }
+        public Sport(string name, List<Team> teams)
+        {
+            this.Name = name;
+            this.Teams = teams;
         }
     }
 }

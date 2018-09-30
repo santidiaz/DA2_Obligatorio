@@ -19,11 +19,10 @@ namespace DataAccess.Implementations
             }
         }
 
-        public void DeleteTeamByName(string name)
+        public void DeleteTeamByName(Team teamToDelete)
         {
             using (Context context = new Context())
             {
-                Team teamToDelete = new Team() { Name = name };
                 context.Teams.Attach(teamToDelete);
                 context.Teams.Remove(teamToDelete);
                 context.SaveChanges();
@@ -32,16 +31,12 @@ namespace DataAccess.Implementations
 
         public Team GetTeamByName(string name)
         {
-            Team teamFound;
+            Team foundTeam;
             using (Context context = new Context())
             {
-                var queryResult = (from team in (context.Teams).Include("Teams")
-                                   where team.Name.Equals(name)
-                                   select team).FirstOrDefault();
-
-                teamFound = queryResult;
+                foundTeam = context.Teams.OfType<Team>().FirstOrDefault(u => u.Name.Equals(name));
             }
-            return teamFound;
+            return foundTeam;
         }
 
         public List<Team> GetTeams()
@@ -49,14 +44,7 @@ namespace DataAccess.Implementations
             var teams = new List<Team>();
             using (Context context = new Context())
             {
-                var query = from team in context.Teams.Include("Teams")
-                            select team;
-
-                if (query != null)
-                {
-                    foreach (var team in query)
-                        teams.Add(team);
-                }
+                teams = context.Teams.OfType<Team>().ToList();
             }
             return teams;
         }
@@ -78,12 +66,27 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 var teamOnDB = context.Teams.OfType<Team>().Include("Teams").Where(a => a.TeamOID.Equals(teamToModify.TeamOID)).FirstOrDefault();
-                
+
                 teamOnDB.Name = teamToModify.Name;
                 teamOnDB.Photo = teamToModify.Photo;
 
                 context.SaveChanges();
             }
         }
+
+        public List<Event> GetEventsByTeam(Team team)
+        {
+            List<Event> result = new List<Event>();
+            using (Context context = new Context())
+            {
+                List<Event> teamOnDB1 = context.Events.OfType<Event>().Where(a => a.GetFirstTeam().Equals(team.TeamOID)).ToList();
+                List<Event> teamOnDB2 = context.Events.OfType<Event>().Where(a => a.GetSecondTeam().Equals(team.TeamOID)).ToList();
+
+                if (teamOnDB1 != null) result.AddRange(teamOnDB1);
+                if (teamOnDB2 != null) result.AddRange(teamOnDB2);
+            }
+            return result;
+        }
+
     }
 }

@@ -70,7 +70,7 @@ namespace DataAccess.Implementations
             {
                 var userOnDB = context.Users.Include("Teams").Where(u => u.UserOID.Equals(userToModify.UserOID)).FirstOrDefault();
 
-                var teamsToBeDeleted = userOnDB.GetFavouritesTeams();
+                var teamsToBeDeleted = userOnDB.FavouriteTeams;
                 teamsToBeDeleted = new List<Team>();
 
                 foreach (Team t in newFavouriteTeams)

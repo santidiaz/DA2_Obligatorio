@@ -17,10 +17,10 @@ namespace UnitTests
 
             Sport sport = new Sport();
             sport.Name = expectedName;
-            sport.TeamsList = expectedTeamsList;
+            sport.Teams = expectedTeamsList;
 
             Assert.AreEqual(sport.Name, expectedName);
-            Assert.AreEqual(sport.TeamsList, expectedTeamsList);
+            Assert.AreEqual(sport.Teams, expectedTeamsList);
         }
     }
 }

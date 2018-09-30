@@ -132,18 +132,8 @@ namespace SportsWebApi.Controllers
             {
                 if (input == null)
                     return BadRequest();
-
-                //User userModifications = new User
-                //{
-                //    UserName = userName,
-                //    Name = modyUserInput.Name,
-                //    LastName = modyUserInput.LastName,
-                //    Email = modyUserInput.Email,
-                //    IsAdmin = modyUserInput.IsAdmin,
-                //    Password = modyUserInput.Password,
-                //};
-
-                //this.userOperations.ModifyUser(userModifications);
+                
+                this.userOperations.ModifyUserFavouriteTeams(input.UserName, input.TeamNames);
                 return Ok();
             }
             catch (EntitiesException eEx)

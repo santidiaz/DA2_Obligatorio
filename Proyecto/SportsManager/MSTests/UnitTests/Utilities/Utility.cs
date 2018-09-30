@@ -50,7 +50,7 @@ namespace UnitTests.Utilities
             Sport sport1 = new Sport
             {
                 Name = GetRandomSportName(),
-                TeamsList = teams
+                Teams = teams
             };
 
             return new Event(randomDate, sport1, team1, team2);
