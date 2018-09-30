@@ -20,12 +20,13 @@ namespace UnitTests.LogicTests
             // Creo el objeto mock, en este caso una implementacion mockeada de ISportPersistance.
             var mock = new Mock<ICommentPersistance>();
             mock.Setup(mr => mr.UserCreatorExists(It.IsAny<string>())).Returns(true);
-            mock.Setup(mr => mr.AddComment(It.IsAny<Comment>())).Verifiable();
+            mock.Setup(mr => mr.AddComment(It.IsAny<Comment>(), It.IsAny<int>())).Verifiable();
 
             // Instancio SportLogic con el mock como parametro.
             CommentLogic userLogic = new CommentLogic(mock.Object);
             Comment commentToAdd = new Comment() { Description = "Comment1", CreatorName = "goku" };
-            userLogic.AddComment(commentToAdd);
+
+            userLogic.AddComment(commentToAdd, 1);
 
             Assert.IsTrue(true);
         }
@@ -38,12 +39,12 @@ namespace UnitTests.LogicTests
                 // Creo el objeto mock, en este caso una implementacion mockeada de ISportPersistance.
                 var mock = new Mock<ICommentPersistance>();
                 mock.Setup(mr => mr.UserCreatorExists(It.IsAny<string>())).Returns(false);
-                mock.Setup(mr => mr.AddComment(It.IsAny<Comment>())).Verifiable();
+                mock.Setup(mr => mr.AddComment(It.IsAny<Comment>(), It.IsAny<int>())).Verifiable();
 
                 // Instancio SportLogic con el mock como parametro.
                 CommentLogic userLogic = new CommentLogic(mock.Object);
                 Comment commentToAdd = new Comment() { Description = "Comment1", CreatorName = "goku" };
-                userLogic.AddComment(commentToAdd);
+                userLogic.AddComment(commentToAdd, 1);
                 
             }
             catch (Exception ex)

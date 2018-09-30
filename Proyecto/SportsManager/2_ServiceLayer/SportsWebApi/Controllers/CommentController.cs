@@ -29,7 +29,7 @@ namespace SportsWebApi.Controllers
                     CreatorName = addCommentInput.CreatorName
                 };
 
-                commentOperations.AddComment(newComment);
+                commentOperations.AddComment(newComment, addCommentInput.EventOID);
                 return Ok();
             }
             catch (Exception ex)//TODO: Ver como manejar los errores. 

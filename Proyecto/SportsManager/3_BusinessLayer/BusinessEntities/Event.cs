@@ -11,6 +11,6 @@ namespace BusinessEntities
         public Sport Sport { get; set; }
         public Team Team1 { get; set; }
         public Team Team2 { get; set; }
-        public string Comments { get; set; } //esto va a ser una lista de Comment
+        public List<Comment> Comments { get; set; } //esto va a ser una lista de Comment
     }
 }

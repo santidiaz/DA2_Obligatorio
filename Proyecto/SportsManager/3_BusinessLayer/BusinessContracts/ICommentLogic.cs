@@ -7,7 +7,7 @@ namespace BusinessContracts
 {
     public interface ICommentLogic
     {
-        void AddComment(Comment commentToAdd);
+        void AddComment(Comment commentToAdd, int eventOID);
         bool UserCreatorExists(Comment commentToAdd);
     }
 }

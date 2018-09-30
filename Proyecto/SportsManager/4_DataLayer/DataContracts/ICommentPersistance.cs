@@ -7,7 +7,7 @@ namespace DataContracts
 {
     public interface ICommentPersistance
     {
-        void AddComment(Comment comment);
+        void AddComment(Comment comment, int eventOID);
         bool UserCreatorExists(string creatorName);
     }
 }

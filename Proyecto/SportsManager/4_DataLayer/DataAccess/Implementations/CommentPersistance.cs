@@ -1,5 +1,6 @@
 ﻿using BusinessEntities;
 using DataContracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +10,13 @@ namespace DataAccess.Implementations
 {
     public class CommentPersistance : ICommentPersistance
     {
-        public void AddComment(Comment comment)
+        public void AddComment(Comment comment, int eventOID)
         {
             using (Context context = new Context())
             {
-                context.Comments.Add(comment);
+                Event foundEvent;
+                foundEvent = context.Events.OfType<Event>().Include("Comments").Where(a => a.EventOID.Equals(eventOID)).FirstOrDefault();
+                foundEvent.Comments.Add(comment);
                 context.SaveChanges();
             }
         }
@@ -21,7 +24,7 @@ namespace DataAccess.Implementations
         public bool UserCreatorExists(string creatorName)
         {
             User foundUser;
-            using (Context context = new Context())
+            using (Context context = new Context()) 
             {
                 foundUser = context.Users.OfType<User>().FirstOrDefault(u => u.UserName.Equals(creatorName));
             }

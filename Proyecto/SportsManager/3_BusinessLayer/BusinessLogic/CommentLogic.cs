@@ -17,12 +17,12 @@ namespace BusinessLogic
             this.persistanceProvider = provider;
         }
 
-        public void AddComment(Comment commentToAdd)
+        public void AddComment(Comment commentToAdd, int eventOID)
         {
             if (!this.UserCreatorExists(commentToAdd))
                 throw new Exception(Constants.CommentError.ERROR_CREATOR_NAME_NOT_EXISTS);
             else
-                this.persistanceProvider.AddComment(commentToAdd);
+                this.persistanceProvider.AddComment(commentToAdd, eventOID);
         }
 
         public bool UserCreatorExists(Comment commentToAdd)

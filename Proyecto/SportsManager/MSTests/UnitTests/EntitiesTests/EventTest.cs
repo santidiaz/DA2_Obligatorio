@@ -16,7 +16,7 @@ namespace UnitTests
             var expectedSport = new Sport();
             var exceptedTeam1 = new Team();
             var exceptedTeam2 = new Team();
-            var exceptedComments = "comments";
+            var exceptedComments = new List<Comment>();
 
             Event _event = new Event();
             _event.Date = expectedDate;
