@@ -70,5 +70,11 @@ namespace DataAccess.Implementations
             }
             throw new NotImplementedException();
         }
+
+        public List<Team> GetFavoritesTeamsByUserName(string userName)
+        {
+            throw new NotImplementedException();
+        }
+        
     }
 }

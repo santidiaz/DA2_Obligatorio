@@ -140,6 +140,15 @@ namespace BusinessLogic
 
             this.persistanceProvider.AddFavoritesToUser(mockedOriginalUser, teamLists);
         }
+
+        public void GetFavoritesTeamsByUserName(string userName)
+        {
+            User userToDelete = this.GetUserByUserName(userName);
+            if (userToDelete == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            this.persistanceProvider.GetFavoritesTeamsByUserName(userName);
+        }
         #endregion
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnitTests.Utilities;
+using Moq.Language;
 
 namespace UnitTests.LogicTests
 {
@@ -454,5 +455,48 @@ namespace UnitTests.LogicTests
             }
         }
 
+        [TestMethod]
+        public void GetFavoritesTeamsByUserName()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
+
+                mock.Setup(up => up.GetUserByUserName("userName")).Verifiable();
+                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<string>())).Returns(new List<Team>());
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                userLogic.GetFavoritesTeamsByUserName("userName");
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS));
+            }
+        }
+
+        [TestMethod]
+        public void GetFavoritesTeamsByUserNameThatNotExists()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
+
+                mock.Setup(up => up.GetUserByUserName("userName")).Returns(mockedOriginalUser);
+                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<string>())).Throws(new Exception());
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                userLogic.GetFavoritesTeamsByUserName("userName");
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_NOT_FOUND));
+            }
+        }
     }
 }
