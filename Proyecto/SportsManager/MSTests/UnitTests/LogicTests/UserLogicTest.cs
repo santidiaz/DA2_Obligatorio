@@ -401,5 +401,29 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void AddFavoritesToUser()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz", Utility.GenerateHash("123456"));
+
+                mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
+                mock.Setup(up => up.AddFavoritesToUser(It.IsAny<User>(), It.IsAny<List<Team>>())).Verifiable();
+
+                List<Team> teamLists = new List<Team>() { new Team() { TeamOID = 1 }, new Team { TeamOID = 2 } };
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                userLogic.AddFavoritesToUser(mockedOriginalUser, teamLists);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

@@ -59,5 +59,10 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
+
+        public void AddFavoritesToUser(User user, List<Team> list)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

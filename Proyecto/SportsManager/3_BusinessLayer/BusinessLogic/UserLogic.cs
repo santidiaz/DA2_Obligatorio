@@ -4,6 +4,7 @@ using BusinessEntities.Exceptions;
 using CommonUtilities;
 using DataContracts;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -129,6 +130,15 @@ namespace BusinessLogic
 
                 return sb.ToString();
             }
+        }
+
+        public void AddFavoritesToUser(User mockedOriginalUser, List<Team> teamLists)
+        {
+            User userToDelete = this.GetUserByUserName(mockedOriginalUser.UserName);
+            if (userToDelete == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            this.persistanceProvider.AddFavoritesToUser(mockedOriginalUser, teamLists);
         }
         #endregion
     }
