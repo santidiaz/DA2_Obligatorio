@@ -143,13 +143,13 @@ namespace SportsWebApi.Controllers
                 {
                     listTeans.Add(teamOperations.GetTeamByOID(item));
                 }
+                this.userOperations.AddFavoritesToUser(user, listTeans);
+                return Ok();
             }
             catch (Exception ex)
             {
                 return this.StatusCode(404, ex.Message);
             }
-            
-            return null;
         }
     }
 }
