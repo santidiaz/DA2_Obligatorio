@@ -67,5 +67,18 @@ namespace CommonUtilities
             public const string USER_NOT_FOUND = "User not found.";
             public const string INVALID_PASSWORD = "Invalid password.";
         }
+		
+		public static class CommentError
+        {
+            public const string DESCRIPTION_REQUIRED = "Description required";
+            public const string CREATORNAME_REQUIRED = "CreatorName required";
+            public const string ERROR_CREATOR_NAME_NOT_EXISTS = "CreatorName not exists";
+        }
+
+        public static class Comment
+        {
+            public const string DESCRIPTION_TEST = "Description example";
+            public const string CREATORNAME_TEST = "Santiago";
+        }
     }
 }
