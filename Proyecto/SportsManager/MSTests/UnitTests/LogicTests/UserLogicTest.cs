@@ -524,5 +524,30 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void DeleteFavoriteTeamByUserThatNotExists()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                User mockedUserToDelete = Utility.GenerateRandomUser("userName");
+
+                mock.Setup(up => up.GetUserByUserName("userName")).Verifiable();
+                mock.Setup(up => up.DeleteFavoriteTeamByUser(It.IsAny<int>(), mockedUserToDelete)).Verifiable();
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                string userToBeDeleted = "userName";
+                int teamOID = 1;
+
+                userLogic.DeleteFavoriteTeamByUser(teamOID, userToBeDeleted);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_NOT_FOUND));
+            }
+        }
     }
 }
