@@ -42,9 +42,7 @@ namespace UnitTests.LogicTests
                 teamMock.Setup(tm => tm.GetTeamByName(team3.Name)).Returns(team2);
                 #endregion
 
-                // Instancio UserLogic con el mock como parametro.
                 EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-
                 eventLogic.AddEvent(sport.Name, team1.Name, team3.Name, event1.InitialDate);
 
                 Assert.Fail();
@@ -81,14 +79,15 @@ namespace UnitTests.LogicTests
                 // Todays event that will be returned.
                 List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
 
-                eventMock.Setup(up => up.GetTodayEvents()).Returns(todaysMockedEvents);
+                eventMock.Setup(em => em.GetEventsByDate(event1.InitialDate)).Returns(todaysMockedEvents);
+                sportMock.Setup(sm => sm.GetSportByName(sport.Name, true)).Returns(sport);
+                teamMock.Setup(tm => tm.GetTeamByName(team1.Name)).Returns(team1);
+                teamMock.Setup(tm => tm.GetTeamByName(team2.Name)).Returns(team2);
                 #endregion
 
                 // Instancio UserLogic con el mock como parametro.
                 EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-                Event eventToValidate = new Event(DateTime.Now, sport, team1, team2);
-
-                //eventLogic.AddEvent(eventToValidate);
+                eventLogic.AddEvent(sport.Name, team1.Name, team2.Name, event1.InitialDate);
 
                 Assert.IsTrue(true);
             }
