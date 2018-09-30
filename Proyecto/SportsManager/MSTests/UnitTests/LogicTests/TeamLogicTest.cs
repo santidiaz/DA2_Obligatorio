@@ -171,5 +171,25 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void GetTeamByOIDAndNotExists()
+        {
+            try
+            {
+                var mock = new Mock<ITeamPersistance>();
+
+                mock.Setup(up => up.GetTeamByOID(It.IsAny<int>())).Verifiable();
+
+                TeamLogic userLogic = new TeamLogic(mock.Object);
+                userLogic.GetTeamByOID(1);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS));
+            }
+        }
     }
 }
