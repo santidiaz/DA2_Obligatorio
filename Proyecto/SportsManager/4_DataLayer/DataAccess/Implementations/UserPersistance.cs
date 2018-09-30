@@ -75,6 +75,10 @@ namespace DataAccess.Implementations
         {
             throw new NotImplementedException();
         }
-        
+
+        public void DeleteFavoriteTeamByUser(int teamOID, User mockedUserToDelete)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -498,5 +498,31 @@ namespace UnitTests.LogicTests
                 Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_NOT_FOUND));
             }
         }
+
+        [TestMethod]
+        public void DeleteFavoriteTeamByUser()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<IUserPersistance>();
+                User mockedUserToDelete = Utility.GenerateRandomUser("userName");
+
+                mock.Setup(up => up.GetUserByUserName("userName")).Returns(mockedUserToDelete);
+                mock.Setup(up => up.DeleteFavoriteTeamByUser(It.IsAny<int>(), mockedUserToDelete)).Verifiable();
+
+                UserLogic userLogic = new UserLogic(mock.Object);
+                string userToBeDeleted = "userName";
+                int teamOID = 1;
+
+                userLogic.DeleteFavoriteTeamByUser(teamOID, userToBeDeleted);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
