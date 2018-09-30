@@ -62,6 +62,12 @@ namespace DataAccess.Implementations
 
         public void AddFavoritesToUser(User user, List<Team> list)
         {
+            using (Context context = new Context())
+            {
+                var userOnDB = context.Users.OfType<User>().Where(u => u.UserName.Equals(user.UserName)).FirstOrDefault();
+                userOnDB.FavouriteTeams.AddRange(list);
+                context.SaveChanges();
+            }
             throw new NotImplementedException();
         }
     }

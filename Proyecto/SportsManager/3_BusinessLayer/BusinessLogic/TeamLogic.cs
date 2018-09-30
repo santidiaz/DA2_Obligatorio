@@ -60,6 +60,15 @@ namespace BusinessLogic
             return team;
         }
 
+        public Team GetTeamByOID(int oid)
+        {
+            var team = this.persistanceProvider.GetTeamByOID(oid);
+
+            if (team == null)
+                throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
+            return team;
+        }
+
         public bool DeleteTeamByName(string name)
         {
             try

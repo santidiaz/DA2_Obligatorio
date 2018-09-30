@@ -41,8 +41,8 @@ namespace DataAccess
             });
 
             modelBuilder.Entity<Team>().ToTable("Teams");
-            
-            //modelBuilder.Entity<Teacher>().ToTable("Teachers");
+            modelBuilder.Entity<Comment>().ToTable("Comments");
+            //
             //modelBuilder.Entity<Student>().ToTable("Students");
         }
     }

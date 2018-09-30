@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Filters;
 using SportsWebApi.Models;
+using SportsWebApi.Models.UserModel;
 using SportsWebApi.Utilities;
 
 namespace SportsWebApi.Controllers
@@ -19,6 +20,7 @@ namespace SportsWebApi.Controllers
     public class UserController : ControllerBase
     {
         private IUserLogic userOperations = Provider.GetInstance.GetUserOperations();
+        private ITeamLogic teamOperations = Provider.GetInstance.GetTeamOperations();
 
         [PermissionFilter(true)]
         [HttpGet("{userName}")]
@@ -125,6 +127,29 @@ namespace SportsWebApi.Controllers
             {
                 return this.StatusCode(500, ex.Message);
             }
+        }
+
+        //[PermissionFilter(true)]
+        [HttpPost]
+        [Route("{userName}/addfavorites")]
+        public IActionResult AddFavoritesToUser([FromBody]AddFavoritesToUser app)
+        {
+            try
+            {
+                User user = this.userOperations.GetUserByUserName(app.UserName);
+                List<Team> listTeans = new List<Team>();
+
+                foreach (var item in app.NetFavouriteTeamsOID)
+                {
+                    listTeans.Add(teamOperations.GetTeamByOID(item));
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(404, ex.Message);
+            }
+            
+            return null;
         }
     }
 }

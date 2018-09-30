@@ -98,9 +98,13 @@ namespace BusinessEntities
         #endregion
 
         #region Methods
-        public List<Team> GetFavouritesTeams()
+        public List<Team> FavouriteTeams
         {
-            return this.favouriteTeams;
+            get { return this.favouriteTeams; }
+            set
+            {
+                this.favouriteTeams = value;
+            }
         }
         #endregion
 
