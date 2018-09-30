@@ -11,7 +11,11 @@ namespace DataAccess.Implementations
     {
         public void AddComment(Comment comment)
         {
-            throw new NotImplementedException();
+            using (Context context = new Context())
+            {
+                context.Comments.Add(comment);
+                context.SaveChanges();
+            }
         }
 
         public bool UserCreatorExists(string creatorName)

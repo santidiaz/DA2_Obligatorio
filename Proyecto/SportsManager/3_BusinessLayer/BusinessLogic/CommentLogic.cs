@@ -25,9 +25,10 @@ namespace BusinessLogic
                 this.persistanceProvider.AddComment(commentToAdd);
         }
 
-        private bool UserCreatorExists(Comment commentToAdd)
+        public bool UserCreatorExists(Comment commentToAdd)
         {
             return this.persistanceProvider.UserCreatorExists(commentToAdd.CreatorName);
         }
+
     }
 }

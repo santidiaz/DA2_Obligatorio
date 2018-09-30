@@ -15,16 +15,17 @@ namespace BusinessEntities
         public DateTime DatePosted
         {
             get { return this._datePosted; }
+            set { this._datePosted = value; }
         }
 
         public Comment()
         {
-            this._datePosted = DateTime.Now;
+            this.DatePosted = DateTime.Now;
         }
 
         public Comment(string exceptedDescription, string exceptedCreatorName)
         {
-            this._datePosted = DateTime.Now;
+            this.DatePosted = DateTime.Now;
             this.Description = exceptedDescription;
             this.CreatorName = exceptedCreatorName;
         }
