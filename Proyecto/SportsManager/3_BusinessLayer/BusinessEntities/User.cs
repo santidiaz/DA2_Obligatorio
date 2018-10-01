@@ -1,4 +1,5 @@
-﻿using CommonUtilities;
+﻿using BusinessEntities.JoinEntities;
+using CommonUtilities;
 using System;
 using System.Collections.Generic;
 
@@ -71,7 +72,9 @@ namespace BusinessEntities
                 this._password = value;
             }
         }
-        public virtual List<Team> FavouriteTeams { get; set; }// Virtual implies that the list will be lazy-loaded unless you specifically mark them otherwise.
+        //public virtual List<Team> FavouriteTeams { get; set; }// Virtual implies that the list will be lazy-loaded unless you specifically mark them otherwise.
+
+        public virtual List<UserTeam> FavouriteTeams { get; set; }
         #endregion
 
         #region Constructors
@@ -83,7 +86,7 @@ namespace BusinessEntities
             this._email = string.Empty;
             this._password = string.Empty;
             this.IsAdmin = false;
-            this.FavouriteTeams = new List<Team>();
+            this.FavouriteTeams = new List<UserTeam>();
         }
         public User(string name, string lastName, string userName, string password, string email, bool isAdmin = false)
         {
@@ -92,13 +95,13 @@ namespace BusinessEntities
             this.UserName = userName;
             this.Password = password;
             this.Email = email;
-            this.FavouriteTeams = new List<Team>();
+            this.FavouriteTeams = new List<UserTeam>();
             this.IsAdmin = isAdmin;
         }
         #endregion
 
         #region Methods
-        public void AddFavouriteTeam(Team newTeam)
+        public void AddFavouriteTeam(UserTeam newTeam)
         {
             if (!this.FavouriteTeams.Contains(newTeam))
                 this.FavouriteTeams.Add(newTeam);

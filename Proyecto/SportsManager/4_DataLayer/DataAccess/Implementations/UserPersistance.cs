@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using BusinessEntities.JoinEntities;
 
 namespace DataAccess.Implementations
 {
@@ -71,15 +72,10 @@ namespace DataAccess.Implementations
             {
                 var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID.Equals(userToModify.UserOID)).FirstOrDefault();
 
-                var teamsToBeDeleted = userOnDB.FavouriteTeams;
-                teamsToBeDeleted = new List<Team>();
-
+                userOnDB.FavouriteTeams = new List<UserTeam>();
                 foreach (Team t in newFavouriteTeams)
                 {
-                    if (context.Entry(t).State == EntityState.Detached)
-                        context.Teams.Attach(t);
-
-                    userOnDB.AddFavouriteTeam(t);
+                    userOnDB.FavouriteTeams.Add(new UserTeam { TeamOID = t.TeamOID, UserOID = userOnDB.UserOID });
                 }
 
                 context.SaveChanges();
