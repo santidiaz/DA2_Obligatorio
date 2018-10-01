@@ -11,7 +11,7 @@ namespace PermissionLogic
     {
         private readonly IPermissionPersistance permissionPersistance;
         private readonly IUserPersistance usersPersistance;
-            
+
         public PermissionLogic(IPermissionPersistance permissionProvider, IUserPersistance usersProvider)
         {
             this.permissionPersistance = permissionProvider;

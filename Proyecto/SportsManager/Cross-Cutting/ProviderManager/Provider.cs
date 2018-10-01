@@ -19,6 +19,7 @@ namespace ProviderManager
         private IEventLogic eventLogic;
         private IPermissionLogic permissionLogic;
 		private ICommentLogic commentLogic;
+
         private IUserPersistance userPersistance;
         private ITeamPersistance teamPersistance;
         private ISportPersistance sportPersistance;
@@ -53,6 +54,7 @@ namespace ProviderManager
             this.sportLogic = new SportLogic(sportPersistance);
             this.eventLogic = new EventLogic(eventPersistance);
 			this.commentLogic = new CommentLogic(new CommentPersistance());
+            this.permissionLogic = new PermissionLogic.PermissionLogic(permissionPersistance, userPersistance);
         }
 
         public static Provider GetInstance
