@@ -48,7 +48,7 @@ namespace UnitTests
             {
                 Sport sport = new Sport();
                 sport.Name = Utilities.Utility.GetRandomSportName();
-                sport.TeamsList = null;
+                sport.Teams = null;
             }
             catch (Exception ex)
             {
@@ -65,7 +65,7 @@ namespace UnitTests
             Sport sport = new Sport(expectedName, expectedTeamList);
 
             Assert.AreEqual(expectedName, sport.Name);
-            Assert.AreEqual(expectedTeamList, sport.TeamsList);
+            Assert.AreEqual(expectedTeamList, sport.Teams);
         }
 
         [TestMethod]

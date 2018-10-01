@@ -61,7 +61,7 @@ namespace DataAccess.Implementations
                 var sportOnDB = context.Sports.OfType<Sport>().Include("Teams").Where(a => a.SportOID.Equals(sportToModify.SportOID)).FirstOrDefault();
                 //var sportOnDB = context.Sports.OfType<Sport>().FirstOrDefault(u => u.SportOID.Equals(sportToModify.SportOID));
                 sportOnDB.Name = sportToModify.Name;
-                sportOnDB.TeamsList = sportToModify.TeamsList != null ? sportToModify.TeamsList : new List<Team>();
+                sportOnDB.Teams = sportToModify.Teams != null ? sportToModify.Teams : new List<Team>();
 
                 context.SaveChanges();
             }

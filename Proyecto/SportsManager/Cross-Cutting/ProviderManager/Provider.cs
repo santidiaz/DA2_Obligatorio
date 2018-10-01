@@ -20,19 +20,13 @@ namespace ProviderManager
         private IEventLogic eventLogic;
         private IPermissionLogic permissionLogic;
 		private ICommentLogic commentLogic;
-
-        private IUserPersistance userPersistance;
-        private ITeamPersistance teamPersistance;
-        private ISportPersistance sportPersistance;
-        private IEventPersistance eventPersistance;
-        private IPermissionPersistance permissionPersistance;
-        #endregion
         private IFixture fixture;
 
         private IUserPersistance userPersistance;
         private ITeamPersistance teamPersistance;
         private ISportPersistance sportPersistance;
         private IEventPersistance eventPersistance;
+        private IPermissionPersistance permissionPersistance;
         #endregion
 
         #region Singleton
@@ -60,7 +54,7 @@ namespace ProviderManager
             this.userLogic = new UserLogic(userPersistance, teamPersistance);
             this.teamLogic = new TeamLogic(teamPersistance);
             this.sportLogic = new SportLogic(sportPersistance);
-            this.eventLogic = new EventLogic(eventPersistance);
+            this.eventLogic = new EventLogic(eventPersistance, sportPersistance, teamPersistance);
 			this.commentLogic = new CommentLogic(new CommentPersistance());
             this.permissionLogic = new PermissionLogic.PermissionLogic(permissionPersistance, userPersistance);
         }
@@ -103,6 +97,7 @@ namespace ProviderManager
         {
             return this.commentLogic;
         }
+
         public IFixture GetFixtureGenerator(FixtureType fixtureType)
         {
             IFixture fixtureGenerationAlgorithm;

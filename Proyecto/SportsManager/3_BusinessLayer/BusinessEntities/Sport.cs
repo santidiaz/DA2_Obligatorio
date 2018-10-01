@@ -9,7 +9,7 @@ namespace BusinessEntities
     {
         #region Private attributes
         private string _name;
-        private List<Team> _teamList;
+        private List<Team> _teams;
         #endregion
 
         public int SportOID { get; set; } // [Object Id] This id is team by EntityFramework.
@@ -24,27 +24,27 @@ namespace BusinessEntities
                 this._name = value;
             }
         }
-        public List<Team> TeamsList
+        public List<Team> Teams
         {
-            get { return this._teamList; }
+            get { return this._teams; }
             set
             {
                 if (value == null || value.Count == 0)
                     throw new Exception(Constants.SportErrors.TEAMLIST_REQUIRED);
 
-                this._teamList = value;
+                this._teams = value;
             }
         }
 
         public Sport()
         {
             this._name = string.Empty;
-            this._teamList = new List<Team>();
+            this._teams = new List<Team>();
         }
-        public Sport(string expectedName, List<Team> expectedListTeam)
+        public Sport(string newName, List<Team> newTeams)
         {
-            this.Name = expectedName;
-            this.TeamsList = expectedListTeam;
+            this.Name = newName;
+            this.Teams = newTeams;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace UnitTests.LogicTests
 
                 userPersistanceMock
                     .Setup(up =>
-                        up.GetUserByUserName(It.IsAny<string>())).Returns((User)null);
+                        up.GetUserByUserName(It.IsAny<string>(), true)).Returns((User)null);
 
                 var permissionLogic = new PermissionLogic.PermissionLogic(premissionsPersistanceMock.Object, userPersistanceMock.Object);
                 string someUserName = "santidiaz";
@@ -57,7 +57,7 @@ namespace UnitTests.LogicTests
                 var mockedUser = Utility.GenerateRandomUser(userName);
                 userPersistanceMock
                     .Setup(up =>
-                        up.GetUserByUserName(userName)).Returns(mockedUser);
+                        up.GetUserByUserName(userName, true)).Returns(mockedUser);
 
                 var permissionLogic = new PermissionLogic.PermissionLogic(premissionsPersistanceMock.Object, userPersistanceMock.Object);
                 string somePassword = "321654";
@@ -90,7 +90,7 @@ namespace UnitTests.LogicTests
                 var mockedUser = Utility.GenerateRandomUser(expectedUserName, hashedPassword);
                 userPersistanceMock
                     .Setup(up =>
-                        up.GetUserByUserName(expectedUserName)).Returns(mockedUser);
+                        up.GetUserByUserName(expectedUserName, true)).Returns(mockedUser);
 
                 premissionsPersistanceMock
                     .Setup(pp => 

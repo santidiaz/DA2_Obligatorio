@@ -89,10 +89,6 @@ namespace SportsWebApi.Controllers
             {
                 return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
             }
-            catch (EntitiesException eEx)
-            {
-                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
-            }
             catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);

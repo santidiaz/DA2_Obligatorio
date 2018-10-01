@@ -14,6 +14,6 @@ namespace DataContracts
         void DeleteSportByName(Sport name);
         bool IsSportInSystem(Sport Sport);
         List<Event> GetEventsBySport(Sport sport);
-        Sport GetSportByName(string name, bool eageLoad);
+        Sport GetSportByName(string name, bool eageLoad = false);
     }
 }

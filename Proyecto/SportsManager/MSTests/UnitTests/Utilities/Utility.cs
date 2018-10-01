@@ -18,17 +18,6 @@ namespace UnitTests.Utilities
         private static string[] teamNames = new string[10] { "Juventud", "Rampla", "Tanque", "Albion", "Salus", "Lakers", "GSW", "Celtics", "Chicago Bulls", "Miami Heats" };
         private static string[] sportNames = new string[5] { "Football", "Basketball", "Baseball", "Hockey", "Rugby" };
 
-        public static bool CompareLists<T>(List<T> real, List<T> toBeCompareWith)
-            where T : class
-        {
-            bool result = real.Count == toBeCompareWith.Count;
-            for (var index = 0; (index < real.Count || !result); index++)
-            {
-                result = real.ElementAt(index).Equals(toBeCompareWith.ElementAt(index));
-            }
-            return result;
-        }
-
         public static User GenerateRandomUser(string userName = null, string password = null)
         {
             string randomUserName;
@@ -66,7 +55,6 @@ namespace UnitTests.Utilities
 
             return new Event(randomDate, sport1, team1, team2);
         }
-                          
 
         public static string GetRandomTeamName(string avoidName = null)
         {
@@ -84,6 +72,19 @@ namespace UnitTests.Utilities
         public static string GetRandomSportName()
         {
             return sportNames[GetRandomNumber(sportNames.Length)]; ;
+        }
+
+        public static Sport GenerateRandomSport(string sportName = null)
+        {
+            string randomSportName;
+            if (string.IsNullOrEmpty(sportName))
+                randomSportName = GetRandomSportName();
+            else
+                randomSportName = sportName;
+
+            List<Team> teamList = new List<Team>() { new Team() { Name = "Racing" } };
+            Sport randomSport = new Sport(randomSportName, teamList);
+            return randomSport;
         }
 
         public static Team GenerateRandomTeam(string teamName = null)
