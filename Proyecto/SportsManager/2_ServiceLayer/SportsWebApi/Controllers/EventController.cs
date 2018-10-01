@@ -48,5 +48,26 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
+
+        [HttpDelete("{eventId}")]
+        public IActionResult DeleteUserByUserName(int eventId)
+        {
+            try
+            {
+                if (eventId <= 0)
+                    return NotFound();
+
+                this.eventOperations.DeleteEventById(eventId);
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
     }
 }
