@@ -13,5 +13,6 @@ namespace BusinessContracts
         Team GetTeamByName(string name);
         bool DeleteTeamByName(string name);
         List<Event> GetEventsByTeam(string team);
+        Team GetTeamByOID(int oid);
     }
 }

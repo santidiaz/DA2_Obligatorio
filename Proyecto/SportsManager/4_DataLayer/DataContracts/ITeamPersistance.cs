@@ -14,5 +14,6 @@ namespace DataContracts
         void DeleteTeamByName(Team team);
         bool IsTeamInSystem(Team team);
         List<Event> GetEventsByTeam(Team team);
+        Team GetTeamByOID(int oid);
     }
 }

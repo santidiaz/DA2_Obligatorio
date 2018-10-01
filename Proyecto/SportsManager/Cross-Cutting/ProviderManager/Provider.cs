@@ -49,7 +49,7 @@ namespace ProviderManager
         }
         private void CreateLogics()
         {
-            this.userLogic = new UserLogic(userPersistance);
+            this.userLogic = new UserLogic(userPersistance, teamPersistance);
             this.teamLogic = new TeamLogic(teamPersistance);
             this.sportLogic = new SportLogic(sportPersistance);
             this.eventLogic = new EventLogic(eventPersistance);

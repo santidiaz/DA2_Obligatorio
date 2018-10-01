@@ -88,5 +88,14 @@ namespace DataAccess.Implementations
             return result;
         }
 
+        public Team GetTeamByOID(int oid)
+        {
+            Team foundTeam;
+            using (Context context = new Context())
+            {
+                foundTeam = context.Teams.OfType<Team>().FirstOrDefault(u => u.TeamOID.Equals(oid));
+            }
+            return foundTeam;
+        }
     }
 }
