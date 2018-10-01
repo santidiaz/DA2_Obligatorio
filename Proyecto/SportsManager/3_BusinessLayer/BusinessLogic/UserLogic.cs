@@ -12,16 +12,18 @@ namespace BusinessLogic
 {
     public class UserLogic : IUserLogic
     {
-        private IUserPersistance persistanceProvider;
+        private IUserPersistance persistanceProviderUser;
+        private ITeamPersistance persistanceProviderTeam;
 
-        public UserLogic(IUserPersistance provider)
+        public UserLogic(IUserPersistance providerUser, ITeamPersistance provideTeam)
         {
-            this.persistanceProvider = provider;
+            this.persistanceProviderUser = providerUser;
+            this.persistanceProviderTeam = provideTeam;
         }
 
         public bool DoesUserExists(string userName)
         {
-            return this.persistanceProvider.DoesUserExists(userName);
+            return this.persistanceProviderUser.DoesUserExists(userName);
         }
 
         public void AddUser(User newUser)
@@ -29,12 +31,12 @@ namespace BusinessLogic
             if (this.DoesUserExists(newUser.UserName))
                 throw new EntitiesException(Constants.UserError.USER_ALREDY_EXISTS, ExceptionStatusCode.Conflict);
 
-            this.persistanceProvider.AddUser(newUser);
+            this.persistanceProviderUser.AddUser(newUser);
         }
 
         public User GetUserByUserName(string userName)
         {
-            return this.persistanceProvider.GetUserByUserName(userName);
+            return this.persistanceProviderUser.GetUserByUserName(userName);
         }
 
         public void DeleteUserByUserName(string userName)
@@ -43,7 +45,7 @@ namespace BusinessLogic
             if (userToDelete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.persistanceProvider.DeleteUser(userToDelete);
+            this.persistanceProviderUser.DeleteUser(userToDelete);
         }
 
         public void ModifyUser(User userWithModifications)
@@ -55,7 +57,7 @@ namespace BusinessLogic
             if (!this.CheckForModifications(userToModify, userWithModifications))
                 throw new EntitiesException(Constants.UserError.NO_CHANGES, ExceptionStatusCode.NotModified);
 
-            this.persistanceProvider.ModifyUser(userToModify);
+            this.persistanceProviderUser.ModifyUser(userToModify);
         }
 
         #region Private Methods
@@ -138,25 +140,29 @@ namespace BusinessLogic
             if (userToDelete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.persistanceProvider.AddFavoritesToUser(mockedOriginalUser, teamLists);
+            this.persistanceProviderUser.AddFavoritesToUser(mockedOriginalUser, teamLists);
         }
 
         public void GetFavoritesTeamsByUserName(string userName)
         {
-            User userToDelete = this.GetUserByUserName(userName);
-            if (userToDelete == null)
+            User user = this.GetUserByUserName(userName);
+            if (user == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.persistanceProvider.GetFavoritesTeamsByUserName(userName);
+            this.persistanceProviderUser.GetFavoritesTeamsByUserName(user);
         }
 
-        public void DeleteFavoriteTeamByUser(int teamOID, string userToBeDeleted)
+        public void DeleteFavoriteTeamByUser(int teamOID, string user)
         {
-            User userToDelete = this.GetUserByUserName(userToBeDeleted);
-            if (userToDelete == null)
+            User userComplete = this.GetUserByUserName(user);
+            if (userComplete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.persistanceProvider.DeleteFavoriteTeamByUser(teamOID, userToDelete);
+            Team teamComplete = this.persistanceProviderTeam.GetTeamByOID(teamOID);
+            if (teamComplete == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            this.persistanceProviderUser.DeleteFavoriteTeamByUser(teamComplete, userComplete);
         }
         #endregion
     }

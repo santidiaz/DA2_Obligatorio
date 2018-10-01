@@ -20,12 +20,13 @@ namespace UnitTests.LogicTests
         public void DoesUserExistsMethodTest()
         {
             // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+            var mockTeam = new Mock<ITeamPersistance>();
             var mock = new Mock<IUserPersistance>();
             var mockUserName = "santidiaz";
             mock.Setup(up => up.DoesUserExists(mockUserName)).Returns(true);
 
             // Instancio UserLogic con el mock como parametro.
-            UserLogic userLogic = new UserLogic(mock.Object);
+            UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
 
             string userNameThatExists = "santidiaz";
             string userNameThatDoNotExists = "abcdef";
@@ -43,11 +44,13 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
+
                 mock.Setup(up => up.DoesUserExists(It.IsAny<string>())).Returns(false);
                 mock.Setup(mr => mr.AddUser(It.IsAny<User>())).Verifiable();
 
                 // Instancio UserLogic con el mock como parametro.
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 User userToAdd = Utility.GenerateRandomUser();
                 userLogic.AddUser(userToAdd);
 
@@ -66,10 +69,11 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 mock.Setup(up => up.DoesUserExists(It.IsAny<string>())).Returns(true);
                 mock.Setup(mr => mr.AddUser(It.IsAny<User>())).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 User userToAdd = Utility.GenerateRandomUser();
                 userLogic.AddUser(userToAdd);
 
@@ -87,10 +91,11 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedUser = Utility.GenerateRandomUser("santidiaz");
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedUser);
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 string userToBeSearch = "santidiaz";
                 User foundUser = userLogic.GetUserByUserName(userToBeSearch);
 
@@ -108,9 +113,11 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
+
                 mock.Setup(up => up.GetUserByUserName(It.IsAny<string>())).Returns((User)null);
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 string userToBeSearch = "santidiaz";
                 User foundUser = userLogic.GetUserByUserName(userToBeSearch);
 
@@ -129,12 +136,14 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
+
                 User mockedUserToDelete = Utility.GenerateRandomUser("santidiaz");
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedUserToDelete);
                 mock.Setup(up => up.DeleteUser(mockedUserToDelete)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 string userToBeDeleted = "santidiaz";
                 userLogic.DeleteUserByUserName(userToBeDeleted);
 
@@ -153,9 +162,10 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 mock.Setup(up => up.GetUserByUserName(It.IsAny<string>())).Returns((User)null);
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 string userToBeDeleted = "santidiaz";
                 userLogic.DeleteUserByUserName(userToBeDeleted);
 
@@ -178,10 +188,11 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
 
                 mock.Setup(up => up.GetUserByUserName(It.IsAny<string>())).Throws(new Exception());
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 string userToBeDeleted = "santidiaz";
                 userLogic.DeleteUserByUserName(userToBeDeleted);
 
@@ -199,12 +210,14 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
+
                 User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
                 mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 User modifiedUser = new User
                 {
                     Name = "goku",
@@ -234,12 +247,13 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
                 mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 User modifiedUser = new User
                 {
                     Name = mockedOriginalUser.Name,
@@ -269,12 +283,13 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
                 mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 User modifiedUser = new User
                 {
                     Name = mockedOriginalUser.Name,
@@ -304,12 +319,13 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
                 mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 User modifiedUser = new User
                 {
                     Name = mockedOriginalUser.Name,
@@ -339,12 +355,13 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz");
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
                 mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 User modifiedUser = new User
                 {
                     Name = mockedOriginalUser.Name,
@@ -373,13 +390,14 @@ namespace UnitTests.LogicTests
         {
             try
             {
+                var mockTeam = new Mock<ITeamPersistance>();
                 var mock = new Mock<IUserPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
                 mock.Setup(up => up.ModifyUser(mockedOriginalUser)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 User modifiedUser = new User
                 {
                     Name = mockedOriginalUser.Name,
@@ -409,6 +427,7 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName("santidiaz")).Returns(mockedOriginalUser);
@@ -416,7 +435,7 @@ namespace UnitTests.LogicTests
 
                 List<Team> teamLists = new List<Team>() { new Team() { TeamOID = 1 }, new Team { TeamOID = 2 } };
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.AddFavoritesToUser(mockedOriginalUser, teamLists);
 
                 Assert.IsTrue(true);
@@ -433,6 +452,7 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("santidiaz", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName(It.IsAny<string>())).Throws(new Exception());
@@ -440,7 +460,7 @@ namespace UnitTests.LogicTests
 
                 List<Team> teamLists = new List<Team>() { new Team() { TeamOID = 1 }, new Team { TeamOID = 2 } };
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.AddFavoritesToUser(mockedOriginalUser, teamLists);
 
                 Assert.IsTrue(true);
@@ -461,12 +481,13 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName("userName")).Verifiable();
-                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<string>())).Returns(new List<Team>());
+                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<User>())).Returns(new List<Team>());
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.GetFavoritesTeamsByUserName("userName");
 
                 Assert.IsTrue(true);
@@ -483,12 +504,13 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName("userName")).Returns(mockedOriginalUser);
-                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<string>())).Throws(new Exception());
+                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<User>())).Throws(new Exception());
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.GetFavoritesTeamsByUserName("userName");
 
                 Assert.IsTrue(true);
@@ -506,12 +528,13 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedUserToDelete = Utility.GenerateRandomUser("userName");
 
                 mock.Setup(up => up.GetUserByUserName("userName")).Returns(mockedUserToDelete);
-                mock.Setup(up => up.DeleteFavoriteTeamByUser(It.IsAny<int>(), mockedUserToDelete)).Verifiable();
+                mock.Setup(up => up.DeleteFavoriteTeamByUser(It.IsAny<Team>(), mockedUserToDelete)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 string userToBeDeleted = "userName";
                 int teamOID = 1;
 
@@ -531,12 +554,13 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
                 User mockedUserToDelete = Utility.GenerateRandomUser("userName");
 
                 mock.Setup(up => up.GetUserByUserName("userName")).Verifiable();
-                mock.Setup(up => up.DeleteFavoriteTeamByUser(It.IsAny<int>(), mockedUserToDelete)).Verifiable();
+                mock.Setup(up => up.DeleteFavoriteTeamByUser(It.IsAny<Team>(), mockedUserToDelete)).Verifiable();
 
-                UserLogic userLogic = new UserLogic(mock.Object);
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 string userToBeDeleted = "userName";
                 int teamOID = 1;
 

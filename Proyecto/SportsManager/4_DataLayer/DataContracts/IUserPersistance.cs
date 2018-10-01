@@ -12,7 +12,7 @@ namespace DataContracts
         void DeleteUser(User userToDelete);
         void ModifyUser(User userToModify);
         void AddFavoritesToUser(User user, List<Team> list);
-        List<Team> GetFavoritesTeamsByUserName(string userName);
-        void DeleteFavoriteTeamByUser(int teamOID, User mockedUserToDelete);
+        List<Team> GetFavoritesTeamsByUserName(User userName);
+        void DeleteFavoriteTeamByUser(Team team, User user);
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Implementations
 {
@@ -65,20 +66,34 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 var userOnDB = context.Users.OfType<User>().Where(u => u.UserName.Equals(user.UserName)).FirstOrDefault();
-                userOnDB.FavouriteTeams.AddRange(list);
+                foreach (var item in list)
+                {
+                    userOnDB.FavouriteTeams.Add(new Team() { TeamOID = item.TeamOID } );
+                }
+                
                 context.SaveChanges();
             }
-            throw new NotImplementedException();
         }
 
-        public List<Team> GetFavoritesTeamsByUserName(string userName)
+        public List<Team> GetFavoritesTeamsByUserName(User user)
         {
-            throw new NotImplementedException();
+            List<Team> listTeams;
+            using (Context context = new Context())
+            {
+                listTeams = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID == user.UserOID).FirstOrDefault().FavouriteTeams;
+            }
+            return listTeams;
         }
 
-        public void DeleteFavoriteTeamByUser(int teamOID, User mockedUserToDelete)
+        public void DeleteFavoriteTeamByUser(Team team, User user)
         {
-            throw new NotImplementedException();
+            user.FavouriteTeams.Remove(team);
+            using (Context context = new Context())
+            {
+                var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID == user.UserOID).FirstOrDefault();
+                userOnDB.FavouriteTeams.Remove(team);
+                context.SaveChanges();
+            }
         }
     }
 }
