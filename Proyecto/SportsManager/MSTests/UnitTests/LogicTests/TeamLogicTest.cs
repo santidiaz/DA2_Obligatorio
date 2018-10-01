@@ -31,7 +31,7 @@ namespace UnitTests.LogicTests
 
             Assert.IsTrue(true);
         }
-        
+
         [TestMethod]
         public void TryToAddTeamThatAlreadyExistsToSystem()
         {

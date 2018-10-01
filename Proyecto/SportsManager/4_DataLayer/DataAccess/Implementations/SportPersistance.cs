@@ -3,6 +3,7 @@ using DataContracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Linq;
 
@@ -29,15 +30,7 @@ namespace DataAccess.Implementations
             }
         }
 
-        public Sport GetSportByName(string name)
-        {
-            Sport foundSport;
-            using (Context context = new Context())
-            {
-                foundSport = context.Sports.OfType<Sport>().FirstOrDefault(u => u.Name.Equals(name));
-            }
-            return foundSport;
-        }
+        
 
         public List<Sport> GetSports()
         {
@@ -86,5 +79,17 @@ namespace DataAccess.Implementations
             return result;
         }
 
+        public Sport GetSportByName(string name, bool eageLoad)
+        {
+            Sport foundSport;
+            using (Context context = new Context())
+            {
+                if(eageLoad)
+                    foundSport = context.Sports.OfType<Sport>().Include(s => s.Teams).FirstOrDefault(u => u.Name.Equals(name));
+                else
+                    foundSport = context.Sports.OfType<Sport>().FirstOrDefault(u => u.Name.Equals(name));
+            }
+            return foundSport;
+        }
     }
 }

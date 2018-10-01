@@ -12,5 +12,6 @@ namespace BusinessContracts
         User GetUserByUserName(string userName);
         void DeleteUserByUserName(string userName);
         void ModifyUser(User userWithModifications);
+        void ModifyUserFavouriteTeams(string userName, List<string> teamNames);
     }
 }

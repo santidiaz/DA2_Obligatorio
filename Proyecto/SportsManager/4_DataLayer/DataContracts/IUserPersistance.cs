@@ -1,5 +1,6 @@
 ﻿using BusinessEntities;
 using System;
+using System.Collections.Generic;
 
 namespace DataContracts
 {
@@ -7,8 +8,9 @@ namespace DataContracts
     {
         bool DoesUserExists(string userName);
         void AddUser(User newUser);
-        User GetUserByUserName(string userName);
+        User GetUserByUserName(string userName, bool userEagerLoading = false);
         void DeleteUser(User userToDelete);
         void ModifyUser(User userToModify);
+        void ModifyUserFavouriteTeams(User userToModify, List<Team> newFavouriteTeams);
     }
 }

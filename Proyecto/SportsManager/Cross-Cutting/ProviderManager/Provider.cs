@@ -2,6 +2,7 @@
 using BusinessLogic;
 using DataAccess.Implementations;
 using DataContracts;
+using ProviderManager.Helpers;
 using PermissionContracts;
 using PermissionLogic;
 using System;
@@ -26,6 +27,13 @@ namespace ProviderManager
         private IEventPersistance eventPersistance;
         private IPermissionPersistance permissionPersistance;
         #endregion
+        private IFixture fixture;
+
+        private IUserPersistance userPersistance;
+        private ITeamPersistance teamPersistance;
+        private ISportPersistance sportPersistance;
+        private IEventPersistance eventPersistance;
+        #endregion
 
         #region Singleton
         // Variable estática para la instancia, se necesita utilizar una función lambda ya que el constructor es privado.
@@ -49,7 +57,7 @@ namespace ProviderManager
         }
         private void CreateLogics()
         {
-            this.userLogic = new UserLogic(userPersistance);
+            this.userLogic = new UserLogic(userPersistance, teamPersistance);
             this.teamLogic = new TeamLogic(teamPersistance);
             this.sportLogic = new SportLogic(sportPersistance);
             this.eventLogic = new EventLogic(eventPersistance);
@@ -94,6 +102,23 @@ namespace ProviderManager
 		public ICommentLogic GetCommentOperations()
         {
             return this.commentLogic;
+        }
+        public IFixture GetFixtureGenerator(FixtureType fixtureType)
+        {
+            IFixture fixtureGenerationAlgorithm;
+            switch (fixtureType)
+            {
+                case FixtureType.Groups:
+                    fixtureGenerationAlgorithm = new GroupFixture();
+                    break;
+                case FixtureType.RoundTrip:
+                    fixtureGenerationAlgorithm = null;
+                    break;
+                default:
+                    fixtureGenerationAlgorithm = null;
+                    break;
+            }
+            return fixtureGenerationAlgorithm;
         }
     }
 }
