@@ -160,7 +160,7 @@ namespace BusinessLogic
             if (userToDelete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.persistanceProviderUser.AddFavoritesToUser(mockedOriginalUser, teamLists);
+            this.userProvider.AddFavoritesToUser(mockedOriginalUser, teamLists);
         }
 
         public void GetFavoritesTeamsByUserName(string userName)
@@ -169,7 +169,7 @@ namespace BusinessLogic
             if (user == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.persistanceProviderUser.GetFavoritesTeamsByUserName(user);
+            this.userProvider.GetFavoritesTeamsByUserName(user);
         }
 
         public void DeleteFavoriteTeamByUser(int teamOID, string user)
@@ -178,11 +178,11 @@ namespace BusinessLogic
             if (userComplete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            Team teamComplete = this.persistanceProviderTeam.GetTeamByOID(teamOID);
+            Team teamComplete = this.teamProvider.GetTeamByOID(teamOID);
             if (teamComplete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.persistanceProviderUser.DeleteFavoriteTeamByUser(teamComplete, userComplete);
+            this.userProvider.DeleteFavoriteTeamByUser(teamComplete, userComplete);
         }
         #endregion
     }

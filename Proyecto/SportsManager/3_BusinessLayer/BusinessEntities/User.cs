@@ -102,17 +102,18 @@ namespace BusinessEntities
         #endregion
 
         #region Methods
-        public List<Team> GetFavouritesTeams()
-        {
-            if (!this.FavouriteTeams.Contains(newTeam))
-            return this.favouriteTeams;
-            set
-            {
-                this.favouriteTeams = value;
-            }
-        }
-		
-		#region Methods
+        //public List<Team> GetFavouritesTeams()
+        //{
+        //    if (!this.FavouriteTeams.Contains(newTeam))
+        //        return this.favouriteTeams;
+        //    set
+        //    {
+        //        this.favouriteTeams = value;
+        //    }
+        //}
+        #endregion
+
+        #region Methods
         public void AddFavouriteTeam(UserTeam newTeam)
         {
             if (!this.FavouriteTeams.Contains(newTeam))
