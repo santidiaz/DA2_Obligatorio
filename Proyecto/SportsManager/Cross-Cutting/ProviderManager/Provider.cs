@@ -2,6 +2,7 @@
 using BusinessLogic;
 using DataAccess.Implementations;
 using DataContracts;
+using ProviderManager.Helpers;
 using PermissionContracts;
 using PermissionLogic;
 using System;
@@ -19,6 +20,7 @@ namespace ProviderManager
         private IEventLogic eventLogic;
         private IPermissionLogic permissionLogic;
 		private ICommentLogic commentLogic;
+        private IFixture fixture;
 
         private IUserPersistance userPersistance;
         private ITeamPersistance teamPersistance;
@@ -52,7 +54,7 @@ namespace ProviderManager
             this.userLogic = new UserLogic(userPersistance, teamPersistance);
             this.teamLogic = new TeamLogic(teamPersistance);
             this.sportLogic = new SportLogic(sportPersistance);
-            this.eventLogic = new EventLogic(eventPersistance);
+            this.eventLogic = new EventLogic(eventPersistance, sportPersistance, teamPersistance);
 			this.commentLogic = new CommentLogic(new CommentPersistance());
             this.permissionLogic = new PermissionLogic.PermissionLogic(permissionPersistance, userPersistance);
         }
@@ -94,6 +96,24 @@ namespace ProviderManager
 		public ICommentLogic GetCommentOperations()
         {
             return this.commentLogic;
+        }
+
+        public IFixture GetFixtureGenerator(FixtureType fixtureType)
+        {
+            IFixture fixtureGenerationAlgorithm;
+            switch (fixtureType)
+            {
+                case FixtureType.Groups:
+                    fixtureGenerationAlgorithm = new GroupFixture();
+                    break;
+                case FixtureType.RoundTrip:
+                    fixtureGenerationAlgorithm = null;
+                    break;
+                default:
+                    fixtureGenerationAlgorithm = null;
+                    break;
+            }
+            return fixtureGenerationAlgorithm;
         }
     }
 }

@@ -64,7 +64,7 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ISportPersistance>();
-                mock.Setup(up => up.GetSportByName(It.IsAny<string>())).Returns(new Sport());
+                mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns(new Sport());
                 mock.Setup(mr => mr.ModifySportByName(It.IsAny<Sport>())).Verifiable();
 
                 // Instancio SportLogic con el mock como parametro.
@@ -113,7 +113,7 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ISportPersistance>();
                 Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
 
-                mock.Setup(up => up.GetSportByName(It.IsAny<string>())).Returns(new Sport());
+                mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns(new Sport());
                 mock.Setup(up => up.GetEventsBySport(It.IsAny<Sport>())).Returns(new List<Event>());
 
                 SportLogic sportLogic = new SportLogic(mock.Object);
@@ -137,7 +137,7 @@ namespace UnitTests.LogicTests
                 Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
 
                 //TODO : Como mockeo un retorno NULL ?
-                mock.Setup(up => up.GetSportByName(It.IsAny<string>())).Returns((new Sport()));
+                mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns((new Sport()));
                 mock.Setup(up => up.GetEventsBySport(It.IsAny<Sport>())).Returns(new List<Event>());
 
                 SportLogic sportLogic = new SportLogic(mock.Object);

@@ -21,7 +21,11 @@ namespace UnitTests
             List<Team> expectedFavouriteTeams = new List<Team>();
 
             User user = new User();
+<<<<<<< HEAD
+            List<Team> actualFavouriteTeams = user.FavouriteTeams;
+=======
             List<Team> actualFavouriteTeams = null;// user.FavouriteTeams;
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
 
             Assert.AreEqual(expectedName, user.Name);
             Assert.AreEqual(expectedLastName, user.LastName);
@@ -63,7 +67,11 @@ namespace UnitTests
             Assert.IsTrue(user.Password.Equals(expectedPassword));
             Assert.AreEqual(expectedIsAdminFlag, user.IsAdmin);
 
+<<<<<<< HEAD
+            List<Team> actualFavouritesTeams = user.FavouriteTeams;
+=======
             List<Team> actualFavouritesTeams = null;//user.FavouriteTeams;
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
             Assert.IsTrue(Utility.CompareLists(actualFavouritesTeams, expectedFavouriteTeams));
         }
 

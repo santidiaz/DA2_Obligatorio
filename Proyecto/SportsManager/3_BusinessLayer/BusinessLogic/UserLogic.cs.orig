@@ -12,6 +12,15 @@ namespace BusinessLogic
 {
     public class UserLogic : IUserLogic
     {
+<<<<<<< HEAD
+        private IUserPersistance persistanceProviderUser;
+        private ITeamPersistance persistanceProviderTeam;
+
+        public UserLogic(IUserPersistance providerUser, ITeamPersistance provideTeam)
+        {
+            this.persistanceProviderUser = providerUser;
+            this.persistanceProviderTeam = provideTeam;
+=======
         private IUserPersistance userProvider;
         private ITeamPersistance teamProvider;
 
@@ -19,11 +28,16 @@ namespace BusinessLogic
         {
             this.userProvider = userPersistanceProvider;
             this.teamProvider = teamPersistanceProvider;
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
         }
 
         public bool DoesUserExists(string userName)
         {
+<<<<<<< HEAD
+            return this.persistanceProviderUser.DoesUserExists(userName);
+=======
             return this.userProvider.DoesUserExists(userName);
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
         }
 
         public void AddUser(User newUser)
@@ -31,12 +45,20 @@ namespace BusinessLogic
             if (this.DoesUserExists(newUser.UserName))
                 throw new EntitiesException(Constants.UserError.USER_ALREDY_EXISTS, ExceptionStatusCode.Conflict);
 
+<<<<<<< HEAD
+            this.persistanceProviderUser.AddUser(newUser);
+=======
             this.userProvider.AddUser(newUser);
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
         }
 
         public User GetUserByUserName(string userName)
         {
+<<<<<<< HEAD
+            return this.persistanceProviderUser.GetUserByUserName(userName);
+=======
             return this.userProvider.GetUserByUserName(userName);
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
         }
 
         public void DeleteUserByUserName(string userName)
@@ -45,7 +67,11 @@ namespace BusinessLogic
             if (userToDelete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
+<<<<<<< HEAD
+            this.persistanceProviderUser.DeleteUser(userToDelete);
+=======
             this.userProvider.DeleteUser(userToDelete);
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
         }
 
         public void ModifyUser(User userWithModifications)
@@ -57,6 +83,9 @@ namespace BusinessLogic
             if (!this.CheckForModifications(userToModify, userWithModifications))
                 throw new EntitiesException(Constants.UserError.NO_CHANGES, ExceptionStatusCode.NotModified);
 
+<<<<<<< HEAD
+            this.persistanceProviderUser.ModifyUser(userToModify);
+=======
             this.userProvider.ModifyUser(userToModify);
         }
 
@@ -78,6 +107,7 @@ namespace BusinessLogic
             }
 
             this.userProvider.ModifyUserFavouriteTeams(foundUser, newFavouriteTeams);
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
         }
 
         #region Private Methods

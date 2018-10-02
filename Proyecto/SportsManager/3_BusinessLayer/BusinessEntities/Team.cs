@@ -12,15 +12,6 @@ namespace BusinessEntities
         private byte[] _photo;
         private Sport sport;
         #endregion
-        public Team()
-        {
-
-        }
-        public Team(string expectedName, byte[] expectedPhoto)
-        {
-            this.Name = expectedName;
-            this.Photo = expectedPhoto;
-        }
 
         public int TeamOID { get; set; } // [Object Id] This id is team by EntityFramework.
         public string Name
@@ -46,12 +37,27 @@ namespace BusinessEntities
             }
         } //ver como guardar foto.
 
+        public Team()
+        {
+            this._name = string.Empty;
+        }
+        public Team(string expectedName, byte[] expectedPhoto)
+        {
+            this.Name = expectedName;
+            this.Photo = expectedPhoto;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is Team)
                 return this.Name.Equals(((Team)obj).Name);
             else
                 return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

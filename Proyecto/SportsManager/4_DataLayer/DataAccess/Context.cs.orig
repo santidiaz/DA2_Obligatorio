@@ -43,7 +43,14 @@ namespace DataAccess
                 UserOID = 1
             });
 
+<<<<<<< HEAD
+            modelBuilder.Entity<Team>().ToTable("Teams");
+            modelBuilder.Entity<Comment>().ToTable("Comments");
+            //
+            //modelBuilder.Entity<Student>().ToTable("Students");
+=======
             modelBuilder.Entity<UserTeam>().HasKey(ut => new { ut.UserOID, ut.TeamOID });
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
         }
     }
 }

@@ -27,7 +27,7 @@ namespace SportsWebApi.Utilities
                     break;
                 case ExceptionStatusCode.Undefined:
                     response = 500;
-                    break;
+                    break;                
                 default:
                     break;
             }

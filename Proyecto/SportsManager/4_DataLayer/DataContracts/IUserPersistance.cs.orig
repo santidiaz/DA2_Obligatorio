@@ -11,9 +11,12 @@ namespace DataContracts
         User GetUserByUserName(string userName, bool userEagerLoading = false);
         void DeleteUser(User userToDelete);
         void ModifyUser(User userToModify);
-        void ModifyUserFavouriteTeams(User userToModify, List<Team> newFavouriteTeams);
-		void AddFavoritesToUser(User user, List<Team> list);
+<<<<<<< HEAD
+        void AddFavoritesToUser(User user, List<Team> list);
         List<Team> GetFavoritesTeamsByUserName(User userName);
         void DeleteFavoriteTeamByUser(Team team, User user);
+=======
+        void ModifyUserFavouriteTeams(User userToModify, List<Team> newFavouriteTeams);
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
     }
 }

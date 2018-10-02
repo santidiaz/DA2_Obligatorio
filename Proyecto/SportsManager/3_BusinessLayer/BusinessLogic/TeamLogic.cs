@@ -32,7 +32,7 @@ namespace BusinessLogic
             foreach (var teamAux in systemTeams)
             {
                 if (teamAux.Equals(team)) { result = true; };
-                
+
             }
             return result;// systemTeams.Exists(item => item.Equals(team));
         }
@@ -54,7 +54,7 @@ namespace BusinessLogic
         public Team GetTeamByName(string name)
         {
             var team = this.persistanceProvider.GetTeamByName(name);
-            
+
             if (team == null)
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
             return team;

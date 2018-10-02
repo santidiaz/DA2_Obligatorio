@@ -129,6 +129,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+<<<<<<< HEAD
         //[PermissionFilter(true)]
         [HttpPost]
         [Route("{userName}/addfavorites")]
@@ -149,10 +150,8 @@ namespace SportsWebApi.Controllers
             catch (Exception ex)
             {
                 return this.StatusCode(404, ex.Message);
-            }
-        }
-		
-		[HttpPut(nameof(ModifyUserFavouriteTeams))]
+=======
+        [HttpPut(nameof(ModifyUserFavouriteTeams))]
         public IActionResult ModifyUserFavouriteTeams([FromBody] ModifyUserFavouriteTeamsInput input)
         {
             try
@@ -170,6 +169,7 @@ namespace SportsWebApi.Controllers
             catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
             }
         }
     }

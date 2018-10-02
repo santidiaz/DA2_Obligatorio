@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
+=======
 using BusinessEntities.JoinEntities;
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
 
 namespace DataAccess.Implementations
 {
@@ -66,6 +69,18 @@ namespace DataAccess.Implementations
             }
         }
 
+<<<<<<< HEAD
+        public void AddFavoritesToUser(User user, List<Team> list)
+        {
+            using (Context context = new Context())
+            {
+                var userOnDB = context.Users.OfType<User>().Where(u => u.UserName.Equals(user.UserName)).FirstOrDefault();
+                foreach (var item in list)
+                {
+                    userOnDB.FavouriteTeams.Add(new Team() { TeamOID = item.TeamOID } );
+                }
+                
+=======
         public void ModifyUserFavouriteTeams(User userToModify, List<Team> newFavouriteTeams)
         {
             using (Context context = new Context())
@@ -78,39 +93,12 @@ namespace DataAccess.Implementations
                     userOnDB.FavouriteTeams.Add(new UserTeam { TeamOID = t.TeamOID, UserOID = userOnDB.UserOID });
                 }
 
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
                 context.SaveChanges();
             }
         }
 
-        /*
-         private void UpdateTeachers(Context context, Subject subjectOnDB, List<Teacher> addedTeachers, List<Teacher> deletedTeachers)
-        {
-            deletedTeachers.ForEach(c => subjectOnDB.Teachers.Remove(c));
-            foreach (Teacher t in addedTeachers)
-            {
-                if (context.Entry(t).State == EntityState.Detached)
-                    context.people.Attach(t);
-
-                subjectOnDB.Teachers.Add(t);
-            }
-        }
-         */
-		 
-		 
-        public void AddFavoritesToUser(User user, List<Team> list)
-        {
-            using (Context context = new Context())
-            {
-                var userOnDB = context.Users.OfType<User>().Where(u => u.UserName.Equals(user.UserName)).FirstOrDefault();
-                foreach (var item in list)
-                {
-                    userOnDB.FavouriteTeams.Add(new Team() { TeamOID = item.TeamOID } );
-                }
-                
-                context.SaveChanges();
-            }
-        }
-
+<<<<<<< HEAD
         public List<Team> GetFavoritesTeamsByUserName(User user)
         {
             List<Team> listTeams;
@@ -131,5 +119,20 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
+=======
+        /*
+         private void UpdateTeachers(Context context, Subject subjectOnDB, List<Teacher> addedTeachers, List<Teacher> deletedTeachers)
+        {
+            deletedTeachers.ForEach(c => subjectOnDB.Teachers.Remove(c));
+            foreach (Teacher t in addedTeachers)
+            {
+                if (context.Entry(t).State == EntityState.Detached)
+                    context.people.Attach(t);
+
+                subjectOnDB.Teachers.Add(t);
+            }
+        }
+         */
+>>>>>>> e82336c30b85827fe0b5744ddf641fc828000f62
     }
 }
