@@ -14,7 +14,9 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                context.Teams.Add(newTeam);
+                var sportOnDB = context.Sports.Where(u => u.SportOID.Equals(sportOID)).FirstOrDefault();
+                sportOnDB.Teams.Add(newTeam);
+                //context.Teams.Add(newTeam);
                 context.SaveChanges();
             }
         }
