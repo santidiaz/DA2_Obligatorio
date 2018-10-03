@@ -56,7 +56,7 @@ namespace SportsWebApi.Controllers
                 //}
                 newTeam.Photo = new byte[5];
 
-                teamOperations.AddTeam(newTeam);
+                teamOperations.AddTeam(newTeam, addTeamInput.SportOID);
                 return Ok();
             }
             catch (Exception ex)//TODO: Ver como manejar los errores. 

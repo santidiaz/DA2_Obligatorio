@@ -47,6 +47,7 @@ namespace CommonUtilities
             public const string NAME_REQUIRED = "Name required";
             public const string PHOTO_INVALID = "Invalid photo";
             public const string TEAM_NAME_NOT_FOUND = "The team '{0}' was not found";
+            public const string TEAM_SPORTOID_FAIL = "The sport to add are invalid";
         }
 
         public static class Sport

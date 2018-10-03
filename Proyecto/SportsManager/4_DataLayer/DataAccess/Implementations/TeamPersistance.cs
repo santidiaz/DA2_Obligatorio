@@ -10,7 +10,7 @@ namespace DataAccess.Implementations
 {
     public class TeamPersistance : ITeamPersistance
     {
-        public void AddTeam(Team newTeam)
+        public void AddTeam(Team newTeam, int sportOID)
         {
             using (Context context = new Context())
             {

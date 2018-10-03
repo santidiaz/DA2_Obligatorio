@@ -8,5 +8,6 @@ namespace SportsWebApi.Models.TeamModel
     public class AddTeamInput
     {
         public string Name { get; set; }
+        public int SportOID { get; set; }
     }
 }
