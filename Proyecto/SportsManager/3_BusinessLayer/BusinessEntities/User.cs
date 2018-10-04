@@ -13,7 +13,6 @@ namespace BusinessEntities
         private string _userName;
         private string _email;
         private string _password;
-        private List<Team> favouriteTeams;
         #endregion
 
         #region Public attributes
@@ -73,8 +72,6 @@ namespace BusinessEntities
                 this._password = value;
             }
         }
-        //public virtual List<Team> FavouriteTeams { get; set; }// Virtual implies that the list will be lazy-loaded unless you specifically mark them otherwise.
-
         public virtual List<UserTeam> FavouriteTeams { get; set; }
         #endregion
 
@@ -87,7 +84,7 @@ namespace BusinessEntities
             this._email = string.Empty;
             this._password = string.Empty;
             this.IsAdmin = false;
-            this.favouriteTeams = new List<Team>();
+            this.FavouriteTeams = new List<UserTeam>();
         }
         public User(string name, string lastName, string userName, string password, string email, bool isAdmin = false)
         {
@@ -96,21 +93,9 @@ namespace BusinessEntities
             this.UserName = userName;
             this.Password = password;
             this.Email = email;
-            this.favouriteTeams = new List<Team>();
+            this.FavouriteTeams = new List<UserTeam>();
             this.IsAdmin = isAdmin;
         }
-        #endregion
-
-        #region Methods
-        //public List<Team> GetFavouritesTeams()
-        //{
-        //    if (!this.FavouriteTeams.Contains(newTeam))
-        //        return this.favouriteTeams;
-        //    set
-        //    {
-        //        this.favouriteTeams = value;
-        //    }
-        //}
         #endregion
 
         #region Methods

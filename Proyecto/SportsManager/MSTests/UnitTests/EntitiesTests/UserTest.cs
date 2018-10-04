@@ -4,6 +4,7 @@ using BusinessEntities;
 using UnitTests.Utilities;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BusinessEntities.JoinEntities;
 
 namespace UnitTests
 {
@@ -18,10 +19,10 @@ namespace UnitTests
             string expectedUserName = string.Empty;
             bool expectedIsAdminFlag = false;
             string expectedEmail = string.Empty;
-            List<Team> expectedFavouriteTeams = new List<Team>();
+            List<UserTeam> expectedFavouriteTeams = new List<UserTeam>();
 
             User user = new User();
-            List<Team> actualFavouriteTeams = null;// user.FavouriteTeams;
+            List<UserTeam> actualFavouriteTeams = user.FavouriteTeams;
 
             Assert.AreEqual(expectedName, user.Name);
             Assert.AreEqual(expectedLastName, user.LastName);
