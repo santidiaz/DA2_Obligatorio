@@ -15,5 +15,6 @@ namespace DataContracts
         bool IsTeamInSystem(Team team);
         List<Event> GetEventsByTeam(Team team);
         Team GetTeamByOID(int oid);
+        bool ValidateTeamOnEvents(Team team);
     }
 }
