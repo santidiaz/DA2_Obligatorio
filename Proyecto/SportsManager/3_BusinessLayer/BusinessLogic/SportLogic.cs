@@ -94,5 +94,10 @@ namespace BusinessLogic
                 throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ex);
             }
         }
+
+        public bool ValidateSportOnTeams(Sport sport)
+        {
+            return persistanceProvider.ValidateSportOnTeams(sport);
+        }
     }
 }

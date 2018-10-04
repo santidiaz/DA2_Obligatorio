@@ -150,5 +150,29 @@ namespace UnitTests.LogicTests
                 Assert.IsTrue(ex.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
             }
         }
+
+        [TestMethod]
+        public void ValidateTeamOnEvents()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<ISportPersistance>();
+                mock.Setup(up => up.ValidateSportOnTeams(It.IsAny<Sport>())).Returns(true);
+
+                // Instancio SportLogic con el mock como parametro.
+                SportLogic userLogic = new SportLogic(mock.Object);
+                Sport sportToAdd = Utility.GenerateRandomSport();
+                bool result = userLogic.ValidateSportOnTeams(sportToAdd);
+
+                Assert.IsTrue(result);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
+            }
+        }
+
+
     }
 }

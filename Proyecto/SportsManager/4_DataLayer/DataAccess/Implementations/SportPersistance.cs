@@ -89,5 +89,10 @@ namespace DataAccess.Implementations
             }
             return foundSport;
         }
+
+        public bool ValidateSportOnTeams(Sport sport)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
