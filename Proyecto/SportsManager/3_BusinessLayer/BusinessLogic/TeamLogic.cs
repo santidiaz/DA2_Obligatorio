@@ -10,25 +10,31 @@ namespace BusinessLogic
 {
     public class TeamLogic : BusinessContracts.ITeamLogic
     {
-        private ITeamPersistance persistanceProvider;
+        private ITeamPersistance persistanceProvideTeam;
+        private ISportPersistance persistanceProvideSport;
 
-        public TeamLogic(ITeamPersistance provider)
+        public TeamLogic(ITeamPersistance provider, ISportPersistance providerSport)
         {
-            this.persistanceProvider = provider;
+            this.persistanceProvideTeam = provider;
+            this.persistanceProvideSport = providerSport;
         }
 
-        public void AddTeam(Team newTeam)
+        public void AddTeam(Team newTeam, int sportOID)
         {
             if (this.IsTeamInSystem(newTeam))
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS);
+            else if (sportOID == null || sportOID <= 0)
+                throw new Exception(Constants.TeamErrors.TEAM_SPORTOID_FAIL);
+            else if (this.persistanceProvideSport.GetSports().Find(s => s.SportOID == sportOID) == null)
+                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS);
             else
-                this.persistanceProvider.AddTeam(newTeam);
+                this.persistanceProvideTeam.AddTeam(newTeam, sportOID);
         }
 
         private bool IsTeamInSystem(Team team)
         {
             bool result = false;
-            List<Team> systemTeams = this.persistanceProvider.GetTeams();
+            List<Team> systemTeams = this.persistanceProvideTeam.GetTeams();
             foreach (var teamAux in systemTeams)
             {
                 if (teamAux.Equals(team)) { result = true; };
@@ -39,7 +45,7 @@ namespace BusinessLogic
 
         public List<Team> GetTeams()
         {
-            return this.persistanceProvider.GetTeams();
+            return this.persistanceProvideTeam.GetTeams();
         }
 
         public void ModifyTeamByName(string name, Team team)
@@ -48,12 +54,13 @@ namespace BusinessLogic
             if (teamToModify == null)
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS);
             else
-                this.persistanceProvider.ModifyTeamByName(name, team);
+                team.TeamOID = teamToModify.TeamOID;
+                this.persistanceProvideTeam.ModifyTeamByName(name, team);
         }
 
         public Team GetTeamByName(string name)
         {
-            var team = this.persistanceProvider.GetTeamByName(name);
+            var team = this.persistanceProvideTeam.GetTeamByName(name);
 
             if (team == null)
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
@@ -62,7 +69,7 @@ namespace BusinessLogic
 
         public Team GetTeamByOID(int oid)
         {
-            var team = this.persistanceProvider.GetTeamByOID(oid);
+            var team = this.persistanceProvideTeam.GetTeamByOID(oid);
 
             if (team == null)
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
@@ -76,8 +83,8 @@ namespace BusinessLogic
                 bool result = true;
                 Team teamToDelete = this.GetTeamByName(name);
 
-                if (teamToDelete != null)
-                    this.persistanceProvider.DeleteTeamByName(teamToDelete);
+                if (teamToDelete != null && !this.ValidateTeamOnEvents(teamToDelete))
+                    this.persistanceProvideTeam.DeleteTeamByName(teamToDelete);
                 else
                     result = false;
 
@@ -97,7 +104,7 @@ namespace BusinessLogic
                 Team team = this.GetTeamByName(teamName);
 
                 if (team != null)
-                    return this.persistanceProvider.GetEventsByTeam(team);
+                    return this.persistanceProvideTeam.GetEventsByTeam(team);
                 else
                     return events;
             }
@@ -105,6 +112,11 @@ namespace BusinessLogic
             {
                 throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ex);
             }
+        }
+
+        public bool ValidateTeamOnEvents(Team team)
+        {
+            return persistanceProvideTeam.ValidateTeamOnEvents(team);
         }
     }
 }

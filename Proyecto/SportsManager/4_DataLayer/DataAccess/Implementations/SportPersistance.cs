@@ -47,7 +47,7 @@ namespace DataAccess.Implementations
             bool result = false;
             using (Context context = new Context())
             {
-                var sportOnDB = context.Sports.OfType<Sport>().Include("Sports").Where(a => a.SportOID.Equals(sport.SportOID)).FirstOrDefault();
+                var sportOnDB = context.Sports.OfType<Sport>().Where(a => a.SportOID.Equals(sport.SportOID)).FirstOrDefault();
 
                 result = sportOnDB != null ? true : false;
             }
@@ -58,10 +58,8 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var sportOnDB = context.Sports.OfType<Sport>().Include("Teams").Where(a => a.SportOID.Equals(sportToModify.SportOID)).FirstOrDefault();
-                //var sportOnDB = context.Sports.OfType<Sport>().FirstOrDefault(u => u.SportOID.Equals(sportToModify.SportOID));
+                var sportOnDB = context.Sports.OfType<Sport>().Where(a => a.SportOID.Equals(sportToModify.SportOID)).FirstOrDefault();
                 sportOnDB.Name = sportToModify.Name;
-                sportOnDB.Teams = sportToModify.Teams != null ? sportToModify.Teams : new List<Team>();
 
                 context.SaveChanges();
             }

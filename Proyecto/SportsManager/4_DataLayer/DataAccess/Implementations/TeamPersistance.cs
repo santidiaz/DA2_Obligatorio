@@ -10,11 +10,13 @@ namespace DataAccess.Implementations
 {
     public class TeamPersistance : ITeamPersistance
     {
-        public void AddTeam(Team newTeam)
+        public void AddTeam(Team newTeam, int sportOID)
         {
             using (Context context = new Context())
             {
-                context.Teams.Add(newTeam);
+                var sportOnDB = context.Sports.Where(u => u.SportOID.Equals(sportOID)).FirstOrDefault();
+                sportOnDB.Teams.Add(newTeam);
+                //context.Teams.Add(newTeam);
                 context.SaveChanges();
             }
         }
@@ -65,7 +67,7 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var teamOnDB = context.Teams.OfType<Team>().Include("Teams").Where(a => a.TeamOID.Equals(teamToModify.TeamOID)).FirstOrDefault();
+                var teamOnDB = context.Teams.OfType<Team>().Where(a => a.TeamOID.Equals(teamToModify.TeamOID)).FirstOrDefault();
 
                 teamOnDB.Name = teamToModify.Name;
                 teamOnDB.Photo = teamToModify.Photo;
@@ -96,6 +98,20 @@ namespace DataAccess.Implementations
                 foundTeam = context.Teams.OfType<Team>().FirstOrDefault(u => u.TeamOID.Equals(oid));
             }
             return foundTeam;
+        }
+
+        public bool ValidateTeamOnEvents(Team team)
+        {
+            bool result = false;
+            using (Context context = new Context())
+            {
+                Event teamOnDB1 = context.Events.OfType<Event>().Where(a => a.GetFirstTeam().Equals(team.TeamOID)).FirstOrDefault();
+                Event teamOnDB2 = context.Events.OfType<Event>().Where(a => a.GetSecondTeam().Equals(team.TeamOID)).FirstOrDefault();
+
+                if (teamOnDB1 != null) result = true;
+                if (teamOnDB2 != null) result = true;
+            }
+            return result;
         }
     }
 }

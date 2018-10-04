@@ -56,7 +56,7 @@ namespace SportsWebApi.Controllers
                 //}
                 newTeam.Photo = new byte[5];
 
-                teamOperations.AddTeam(newTeam);
+                teamOperations.AddTeam(newTeam, addTeamInput.SportOID);
                 return Ok();
             }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
@@ -65,14 +65,14 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [HttpDelete("{userName}")]
+        [HttpDelete("{teamName}")]
         public IActionResult DeleteTeamByUserName(string teamName)
         {
             try
             {
                 this.teamOperations.DeleteTeamByName(teamName);
                 return Ok();
-            }
+            }   
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
                 return this.StatusCode(500, ex.Message);
@@ -91,14 +91,15 @@ namespace SportsWebApi.Controllers
                     Name = modifyTeamInput.NewName
                 };
 
-                var file = HttpContext.Request.Form.Files.GetFile("image");
+                //var file = HttpContext.Request.Form.Files.GetFile("image");
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    file.CopyTo(memoryStream);
-                    modifyTeam.Photo = memoryStream.ToArray();
-                }
+                //using (var memoryStream = new MemoryStream())
+                //{
 
+                //    file.CopyTo(memoryStream);
+                //    modifyTeam.Photo = memoryStream.ToArray();
+                //}
+                modifyTeam.Photo = new byte[5];
                 teamOperations.ModifyTeamByName(modifyTeamInput.OldName, modifyTeam);
                 return Ok();
             }
