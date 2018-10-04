@@ -67,7 +67,7 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var teamOnDB = context.Teams.OfType<Team>().Include("Teams").Where(a => a.TeamOID.Equals(teamToModify.TeamOID)).FirstOrDefault();
+                var teamOnDB = context.Teams.OfType<Team>().Where(a => a.TeamOID.Equals(teamToModify.TeamOID)).FirstOrDefault();
 
                 teamOnDB.Name = teamToModify.Name;
                 teamOnDB.Photo = teamToModify.Photo;

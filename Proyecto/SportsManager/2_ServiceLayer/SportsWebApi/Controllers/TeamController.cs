@@ -91,14 +91,15 @@ namespace SportsWebApi.Controllers
                     Name = modifyTeamInput.NewName
                 };
 
-                var file = HttpContext.Request.Form.Files.GetFile("image");
+                //var file = HttpContext.Request.Form.Files.GetFile("image");
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    file.CopyTo(memoryStream);
-                    modifyTeam.Photo = memoryStream.ToArray();
-                }
+                //using (var memoryStream = new MemoryStream())
+                //{
 
+                //    file.CopyTo(memoryStream);
+                //    modifyTeam.Photo = memoryStream.ToArray();
+                //}
+                modifyTeam.Photo = new byte[5];
                 teamOperations.ModifyTeamByName(modifyTeamInput.OldName, modifyTeam);
                 return Ok();
             }

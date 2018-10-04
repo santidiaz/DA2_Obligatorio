@@ -54,6 +54,7 @@ namespace BusinessLogic
             if (teamToModify == null)
                 throw new Exception(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS);
             else
+                team.TeamOID = teamToModify.TeamOID;
                 this.persistanceProvideTeam.ModifyTeamByName(name, team);
         }
 
