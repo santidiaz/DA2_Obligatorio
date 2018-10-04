@@ -65,14 +65,14 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [HttpDelete("{userName}")]
+        [HttpDelete("{teamName}")]
         public IActionResult DeleteTeamByUserName(string teamName)
         {
             try
             {
                 this.teamOperations.DeleteTeamByName(teamName);
                 return Ok();
-            }
+            }   
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
                 return this.StatusCode(500, ex.Message);

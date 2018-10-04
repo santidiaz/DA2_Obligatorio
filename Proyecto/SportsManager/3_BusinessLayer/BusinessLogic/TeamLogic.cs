@@ -83,7 +83,7 @@ namespace BusinessLogic
                 bool result = true;
                 Team teamToDelete = this.GetTeamByName(name);
 
-                if (teamToDelete != null)
+                if (teamToDelete != null && !this.ValidateTeamOnEvents(teamToDelete))
                     this.persistanceProvideTeam.DeleteTeamByName(teamToDelete);
                 else
                     result = false;
