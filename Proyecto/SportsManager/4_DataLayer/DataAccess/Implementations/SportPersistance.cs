@@ -92,7 +92,15 @@ namespace DataAccess.Implementations
 
         public bool ValidateSportOnTeams(Sport sport)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            using (Context context = new Context())
+            {
+                //Team teamOnDB1 = context.Teams.OfType<Team>().Where(a => a.Sport.SportOID.Equals(sport.SportOID)).FirstOrDefault();
+                Sport sports = context.Sports.OfType<Sport>().Where(a => a.SportOID.Equals(sport.SportOID)).FirstOrDefault();
+                //Team team = sports.Find(s => s.Teams.Find(t => t.))
+                if (sports.Teams != null && sports.Teams.Count > 0) result = true;
+            }
+            return result;
         }
     }
 }

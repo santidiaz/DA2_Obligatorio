@@ -10,10 +10,10 @@ namespace BusinessEntities
         #region Private attributes
         private string _name;
         private byte[] _photo;
-        private Sport sport;
         #endregion
 
         public int TeamOID { get; set; } // [Object Id] This id is team by EntityFramework.
+        public Sport Sport { get; set; }
         public string Name
         {
             get { return this._name; }

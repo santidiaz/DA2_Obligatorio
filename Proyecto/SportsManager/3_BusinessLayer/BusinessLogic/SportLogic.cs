@@ -64,7 +64,7 @@ namespace BusinessLogic
                 bool result = true;
                 Sport sportToDelete = this.GetSportByName(name);
 
-                if (sportToDelete != null)
+                if (sportToDelete != null && !this.ValidateSportOnTeams(sportToDelete))
                     this.persistanceProvider.DeleteSportByName(sportToDelete);
                 else
                     result = false;
