@@ -101,12 +101,14 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var userOnDB = context.Users.OfType<User>().Where(u => u.UserName.Equals(user.UserName)).FirstOrDefault();
-                foreach (var item in list)
+                var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID.Equals(user.UserOID)).FirstOrDefault();
+
+                userOnDB.FavouriteTeams = new List<UserTeam>();
+                foreach (Team t in list)
                 {
-                    //userOnDB.FavouriteTeams.Add(new Team() { TeamOID = item.TeamOID } );
+                    userOnDB.FavouriteTeams.Add(new UserTeam { TeamOID = t.TeamOID, UserOID = userOnDB.UserOID });
                 }
-                
+
                 context.SaveChanges();
             }
         }
