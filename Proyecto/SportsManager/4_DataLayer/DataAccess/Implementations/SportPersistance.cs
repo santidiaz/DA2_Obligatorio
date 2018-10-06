@@ -69,9 +69,11 @@ namespace DataAccess.Implementations
             List<Event> result = new List<Event>();
             using (Context context = new Context())
             {
-                List<Event> sportOnDB1 = context.Events.OfType<Event>().Where(a => a.Sport.Equals(sport.SportOID)).ToList();
+                List<Event> sportOnDB1 = context.Events.OfType<Event>().Include(s => s.Sport).Include(t => t.Away).Include(t => t.Local).ToList();
 
-                if (sportOnDB1 != null) result.AddRange(sportOnDB1);
+                if (sportOnDB1 != null && sportOnDB1.Count > 0)
+                    result.AddRange(sportOnDB1.Where(s => s.Sport.SportOID == sport.SportOID));
+                
             }
             return result;
         }
