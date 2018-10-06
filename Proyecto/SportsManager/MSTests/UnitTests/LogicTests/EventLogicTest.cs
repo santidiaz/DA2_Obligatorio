@@ -109,7 +109,7 @@ namespace UnitTests.LogicTests
                 var eventMock = new Mock<IEventPersistance>();
                 var sportMock = new Mock<ISportPersistance>();
                 var teamMock = new Mock<ITeamPersistance>();
-                eventMock.Setup(ep => ep.GetEventById(It.IsAny<int>())).Returns((Event)null);
+                eventMock.Setup(ep => ep.GetEventById(It.IsAny<int>(), false)).Returns((Event)null);
 
                 EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
                 int eventToSearch = 3;

@@ -57,15 +57,29 @@ namespace BusinessLogic
             }
         }
 
-        public List<Event> GenerateFixture(IFixture fixtureGenerator)
-        {
+        //public void ModifyEvent(int eventId, string localTeamName, string awayTeamName, DateTime initialDate)
+        //{
+        //    Event eventToModify = this.eventProvider.GetEventById(eventId);
+        //    if (eventToModify == null)
+        //        throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
 
+        //    List<Team> sportTeams = eventToModify.Sport.Teams;
+        //    Team teamA = sportTeams.Find(t => t.Name.Equals(localTeamName));
+        //    if (teamA == null)
+        //        throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, localTeamName), ExceptionStatusCode.InvalidData);
 
+        //    Team teamB = sportTeams.Find(t => t.Name.Equals(awayTeamName));
+        //    if (teamB == null)
+        //        throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, awayTeamName), ExceptionStatusCode.InvalidData);
 
+        //    if (this.DoesTeamsEventExists(teamA, teamB, initialDate))
+        //        throw new EntitiesException(Constants.EventError.ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
 
-            return null;
-            //return fixtureGenerator.GenerateFixture(anEvent.Sport);
-        }
+        //    eventToModify.Local = teamA;
+        //    eventToModify.Away = teamB;
+        //    eventToModify.InitialDate = initialDate;
+        //    this.eventProvider.ModifyEvent(eventToModify);
+        //}
 
         #region Private methods
         private bool DoesTeamsEventExists(Team firstTeam, Team secondTeam, DateTime eventDate)
@@ -74,7 +88,7 @@ namespace BusinessLogic
             return events?.Exists(te => te.GetLocalTeam().Equals(firstTeam)
                                          && te.GetAwayTeam().Equals(secondTeam)) ?? false;
         }
-        
+
         private Sport FindSport(string sportName)
         {
             Sport foundSport = this.sportProvider.GetSportByName(sportName, true);

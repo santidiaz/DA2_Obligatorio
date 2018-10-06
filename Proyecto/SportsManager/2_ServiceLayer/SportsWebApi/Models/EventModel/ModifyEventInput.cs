@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 
 namespace SportsWebApi.Models.EventModel
 {
-    public class AddEventInput
+    public class ModifyEventInput
     {
-        [Required]        
-        public string SportName { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = "Local team required.")]
         public string LocalTeamName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Away team required.")]
         public string AwayTeamName { get; set; }
 
-        [Required]
-        public DateTime EventDate { get; set; }
+        [Required(ErrorMessage = "Initial date required.")]
+        public DateTime InitialDate { get; set; }
     }
 }

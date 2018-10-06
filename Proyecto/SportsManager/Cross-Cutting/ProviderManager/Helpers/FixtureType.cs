@@ -7,7 +7,7 @@ namespace ProviderManager.Helpers
     public enum FixtureType
     {
         Undefined = 0,
-        Groups = 1,
+        FinalPhase = 1,
         RoundTrip = 2
     }
 }

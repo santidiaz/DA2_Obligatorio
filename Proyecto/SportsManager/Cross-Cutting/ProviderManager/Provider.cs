@@ -105,8 +105,8 @@ namespace ProviderManager
             IFixture fixtureGenerationAlgorithm;
             switch (fixtureType)
             {
-                case FixtureType.Groups:
-                    fixtureGenerationAlgorithm = null;//new GroupFixture();
+                case FixtureType.FinalPhase:
+                    fixtureGenerationAlgorithm = new FinalPhaseLogic();
                     break;
                 case FixtureType.RoundTrip:
                     fixtureGenerationAlgorithm = new RoundRobinLogic();

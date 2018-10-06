@@ -2,6 +2,7 @@
 using BusinessEntities;
 using BusinessEntities.Exceptions;
 using CommonUtilities;
+using FixtureLogic.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace FixtureLogic
         public List<Event> GenerateFixture(Sport aSport, DateTime initialDate)
         {
             List<Team> sportTeams = aSport.Teams;
-            if ((sportTeams.Count % 2) != 0)
+            if (this.HasEnoughTeams(sportTeams.Count))
                 throw new EntitiesException(Constants.SportErrors.NOT_ENOUGH_TEAMS, ExceptionStatusCode.InvalidData);
 
             int gamesPerDay = (sportTeams.Count / 2);
@@ -24,6 +25,11 @@ namespace FixtureLogic
         }
 
         #region Private Methods
+        private bool HasEnoughTeams(int teamsCount)
+        {
+            return (teamsCount % 2) != 0;
+        }
+
         private List<Match> GenerateAvailableMatches(List<Team> teams)
         {
             List<Match> matches = new List<Match>();
@@ -99,12 +105,5 @@ namespace FixtureLogic
             return !availableMatches.TrueForAll(am => !am.IsAvailable);
         }
         #endregion
-    }
-
-    internal class Match
-    {
-        public Team Local { get; set; }
-        public Team Away { get; set; }
-        public bool IsAvailable { get; set; }
     }
 }
