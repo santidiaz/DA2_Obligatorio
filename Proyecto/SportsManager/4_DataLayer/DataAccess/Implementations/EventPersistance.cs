@@ -68,7 +68,9 @@ namespace DataAccess.Implementations
             List<Event> events;
             using (Context context = new Context())
             {
-                events = (from anEvent in context.Events.OfType<Event>().Include(e => e.Teams)
+                events = (from anEvent in context.Events.OfType<Event>()
+                          .Include(e => e.Away)
+                          .Include(e => e.Local)
                                 where anEvent.InitialDate.Date.Equals(eventDate.Date)
                                 select anEvent).ToList();
             }

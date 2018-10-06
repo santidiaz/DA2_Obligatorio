@@ -16,27 +16,40 @@ namespace FixtureLogic
             if ((sportTeams.Count % 2) != 0)
                 throw new EntitiesException(Constants.SportErrors.NOT_ENOUGH_TEAMS, ExceptionStatusCode.InvalidData);
 
-            var availableMatches = new List<Match>();
-            for (int i = 0; i < sportTeams.Count; i++)
+            int gamesPerDay = (sportTeams.Count / 2);
+            List<Match> availableMatches = this.GenerateAvailableMatches(sportTeams);            
+            List<Event> events = this.GenerateEvents(aSport, availableMatches, initialDate, gamesPerDay);
+
+            return events;
+        }
+
+        #region Private Methods
+        private List<Match> GenerateAvailableMatches(List<Team> teams)
+        {
+            List<Match> matches = new List<Match>();
+            for (int i = 0; i < teams.Count; i++)
             {
-                for (int j = 0; j < sportTeams.Count; j++)
+                for (int j = 0; j < teams.Count; j++)
                 {
-                    if (sportTeams[i] != sportTeams[j])
+                    if (teams[i] != teams[j])
                     {
-                        availableMatches.Add(
+                        matches.Add(
                             new Match
                             {
                                 IsAvailable = true,
-                                Local = sportTeams[i],
-                                Away = sportTeams[j]
+                                Local = teams[i],
+                                Away = teams[j]
                             });
                     }
                 }
             }
+            return matches;
+        }
 
-            int gamesPerDay = (sportTeams.Count / 2);
-            int addedGames = 1; // First iteration is alredy counted.
+        private List<Event> GenerateEvents(Sport aSport, List<Match> availableMatches, DateTime initialDate, int gamesPerDay)
+        {
             List<Event> events = new List<Event>();
+            int addedGames = 1; // First iteration is alredy counted.
             do
             {
                 foreach (Match aMatch in availableMatches)
@@ -46,38 +59,46 @@ namespace FixtureLogic
                         if (events.Count != 0)
                         {
                             if (addedGames.Equals(gamesPerDay))
-                            { // Si alcanze el maximo posible de encuentros por dia (segun la cantidad de equipos que tengo).. aumento la fecha de inicio
+                            { // If max events per day is reached, update date.
                                 initialDate = initialDate.AddDays(1);
                                 addedGames = 1;
                             }
                             else
                             {
-                                // Si para la FECHA DE HOY, existe alguno de los equipos del MATCH en iteracion, lo skipeo.
-                                if (!events.Exists(ev =>
-                                             ev.InitialDate.Date.Equals(initialDate.Date) &&
-                                             (ev.GetFirstTeam().Equals(aMatch.Local) ||
-                                              ev.GetSecondTeam().Equals(aMatch.Local) ||
-                                              ev.GetFirstTeam().Equals(aMatch.Away) || 
-                                              ev.GetSecondTeam().Equals(aMatch.Away))
-                                              ))
+                                if (this.DoesTodayTeamMatchExists(events, aMatch, initialDate))
                                 {
                                     events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
                                     aMatch.IsAvailable = false;
                                     addedGames++;
                                 }
-                            }                            
+                            }
                         }
                         else
-                        {// First iteration
+                        {   // First iteration
                             events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
                             aMatch.IsAvailable = false;
                         }
                     }
                 }
-            } while (!availableMatches.TrueForAll(am => !am.IsAvailable));
+            } while (this.ExistsAvailableMatches(availableMatches));
 
             return events;
         }
+
+        private bool DoesTodayTeamMatchExists(List<Event> events, Match aMatch, DateTime initialDate)
+        {
+            return !events.Exists(ev => ev.InitialDate.Date.Equals(initialDate.Date) &&
+                                        (ev.GetLocalTeam().Equals(aMatch.Local) ||
+                                        ev.GetAwayTeam().Equals(aMatch.Local) ||
+                                        ev.GetLocalTeam().Equals(aMatch.Away) ||
+                                        ev.GetAwayTeam().Equals(aMatch.Away)));
+        }
+
+        private bool ExistsAvailableMatches(List<Match> availableMatches)
+        {
+            return !availableMatches.TrueForAll(am => !am.IsAvailable);
+        }
+        #endregion
     }
 
     internal class Match

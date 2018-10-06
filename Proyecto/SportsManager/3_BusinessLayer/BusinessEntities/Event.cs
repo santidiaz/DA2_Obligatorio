@@ -28,38 +28,34 @@ namespace BusinessEntities
         }
         public Sport Sport { get; set; }
         public virtual List<Comment> Comments { get; set; }
-        public virtual Team[] Teams { get; set; }
+        public Team Local { get; set; }
+        public Team Away { get; set; }
         #endregion
 
         public Event()
         {
             this.Comments = new List<Comment>();
-            this.Teams = new Team[2];
             this._initialDate = DateTime.Now;
         }
 
-        public Event(DateTime date, Sport sport, Team firstTeam, Team secondTeam)
+        public Event(DateTime date, Sport sport, Team localTeam, Team awayTeam)
         {
             this.Comments = new List<Comment>();
-            this.Teams = new Team[2] { firstTeam, secondTeam };
+            this.Local = localTeam;
+            this.Away = awayTeam;
             this.InitialDate = date;
             this.Sport = sport;
         }
 
         #region Public methods
-        public Team[] GetTeams()
+        public Team GetLocalTeam()
         {
-            return this.Teams;
+            return this.Local;
         }
 
-        public Team GetFirstTeam()
+        public Team GetAwayTeam()
         {
-            return this.Teams[0];
-        }
-
-        public Team GetSecondTeam()
-        {
-            return this.Teams[1];
+            return this.Away;
         }
 
         public List<Comment> GetComments()
@@ -72,13 +68,13 @@ namespace BusinessEntities
             this.Comments.Add(newComment);
         }
 
-        public bool ModifyTeams(Team firstTeam, Team secondTeam)
+        public bool ModifyTeams(Team localTeam, Team awayTeam)
         {
             bool result = false;
-            if (this.AreValidTeams(firstTeam, secondTeam))
+            if (this.AreValidTeams(localTeam, awayTeam))
             {
-                this.Teams[0] = firstTeam;
-                this.Teams[1] = secondTeam;
+                this.Local = localTeam;
+                this.Away = awayTeam;
                 result = true;
             }
             return result;
@@ -94,20 +90,20 @@ namespace BusinessEntities
         #endregion
 
         #region Private methods
-        private bool AreValidTeams(Team firstTeam, Team secondTeam)
+        private bool AreValidTeams(Team localTeam, Team awayTeam)
         {
-            bool result = firstTeam != null && secondTeam != null
-                && !firstTeam.Equals(secondTeam);
+            bool result = localTeam != null && awayTeam != null
+                && !localTeam.Equals(awayTeam);
 
             // If validations are true so far, 
             // i check that the 1st team belong to the sport
             result = result ? this.Sport.Teams
-                       .Exists(t => t.Name.Equals(firstTeam.Name)) : result;
+                       .Exists(t => t.Name.Equals(localTeam.Name)) : result;
 
             // If validations are true so far, 
             // i check that the 2nd team belong to the sport
             result = result ? this.Sport.Teams
-                   .Exists(t => t.Name.Equals(secondTeam.Name)) : result;
+                   .Exists(t => t.Name.Equals(awayTeam.Name)) : result;
 
             return result;
         }
