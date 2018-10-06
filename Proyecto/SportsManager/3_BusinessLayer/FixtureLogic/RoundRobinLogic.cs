@@ -47,19 +47,25 @@ namespace FixtureLogic
                         {
                             if (addedGames.Equals(gamesPerDay))
                             { // Si alcanze el maximo posible de encuentros por dia (segun la cantidad de equipos que tengo).. aumento la fecha de inicio
-                                initialDate.AddDays(1);
+                                initialDate = initialDate.AddDays(1);
+                                addedGames = 1;
                             }
-
-                            // Si para la FECHA DE HOY, existe alguno de los equipos del MATCH en iteracion, lo skipeo.
-                            if (!events.Exists(ev =>
-                                         ev.InitialDate.Date.Equals(initialDate.Date) &&
-                                         (ev.GetFirstTeam().Equals(aMatch.Local) || ev.GetSecondTeam().Equals(aMatch.Local)) &&
-                                         (ev.GetFirstTeam().Equals(aMatch.Away) || ev.GetSecondTeam().Equals(aMatch.Away))
-                                        ))
+                            else
                             {
-                                events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
-                                aMatch.IsAvailable = false;
-                            }
+                                // Si para la FECHA DE HOY, existe alguno de los equipos del MATCH en iteracion, lo skipeo.
+                                if (!events.Exists(ev =>
+                                             ev.InitialDate.Date.Equals(initialDate.Date) &&
+                                             (ev.GetFirstTeam().Equals(aMatch.Local) ||
+                                              ev.GetSecondTeam().Equals(aMatch.Local) ||
+                                              ev.GetFirstTeam().Equals(aMatch.Away) || 
+                                              ev.GetSecondTeam().Equals(aMatch.Away))
+                                              ))
+                                {
+                                    events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
+                                    aMatch.IsAvailable = false;
+                                    addedGames++;
+                                }
+                            }                            
                         }
                         else
                         {// First iteration
@@ -68,12 +74,10 @@ namespace FixtureLogic
                         }
                     }
                 }
-            } while (availableMatches.TrueForAll(am => !am.IsAvailable));
-
+            } while (!availableMatches.TrueForAll(am => !am.IsAvailable));
 
             return events;
         }
-
     }
 
     internal class Match

@@ -53,16 +53,15 @@ namespace UnitTests.LogicTests
                 Team team2 = new Team { Name = "Defensor" };
                 Team team3 = new Team { Name = "FC Barcelona" };
                 Team team4 = new Team { Name = "Sevilla" };
-                List<Team> teams = new List<Team> { team1, team2, team3 };
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
                 Sport sport = new Sport("Football", teams);
-                //Event event1 = new Event(DateTime.Now, sport, team1, team3);
-                //Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
                 #endregion
 
                 RoundRobinLogic eventLogic = new RoundRobinLogic();
                 List<Event> generatedEvents = eventLogic.GenerateFixture(sport, DateTime.Now);
 
                 Assert.IsNotNull(generatedEvents);
+                Assert.AreEqual(generatedEvents.Count, 12); // This should return 12 events.
             }
             catch (Exception ex)
             {
