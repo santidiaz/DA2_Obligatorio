@@ -115,7 +115,11 @@ namespace UnitTests.LogicTests
                 int eventToSearch = 3;
                 Event foundEvent = eventLogic.GetEventById(eventToSearch);
 
-                Assert.IsTrue(foundEvent == null);
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, Constants.EventError.NOT_FOUND);
             }
             catch (Exception ex)
             {
@@ -321,7 +325,7 @@ namespace UnitTests.LogicTests
 
                 EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
                 string dummySportNameA = team1.Name;
-                string dummySportNameB = team4.Name; // New team
+                string dummySportNameB = team3.Name;
 
                 eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now.AddHours(10));
                 Assert.Fail();

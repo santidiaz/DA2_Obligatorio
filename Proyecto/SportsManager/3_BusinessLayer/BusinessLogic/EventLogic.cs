@@ -38,7 +38,11 @@ namespace BusinessLogic
 
         public Event GetEventById(int eventId)
         {
-            return this.eventProvider.GetEventById(eventId);
+            Event foundEvent = this.eventProvider.GetEventById(eventId, true);
+            if (foundEvent == null)
+                throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            return foundEvent;
         }
 
         public void DeleteEventById(int eventId)
@@ -59,24 +63,15 @@ namespace BusinessLogic
 
         public void ModifyEvent(int eventId, string localTeamName, string awayTeamName, DateTime initialDate)
         {
-            Event eventToModify = this.eventProvider.GetEventById(eventId, true);
-            if (eventToModify == null)
-                throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
-
-            List<Team> sportTeams = eventToModify.Sport.Teams;
-            Team teamA = sportTeams.Find(t => t.Name.Equals(localTeamName));
-            if (teamA == null)
-                throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, localTeamName), ExceptionStatusCode.InvalidData);
-
-            Team teamB = sportTeams.Find(t => t.Name.Equals(awayTeamName));
-            if (teamB == null)
-                throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, awayTeamName), ExceptionStatusCode.InvalidData);
-
-            if (this.DoesTeamsEventExists(teamA, teamB, initialDate))
+            Event eventToModify = this.GetEventById(eventId);
+            Team foundTeamA = this.FindTeamOnSport(eventToModify.Sport, localTeamName);
+            Team foundTeamB = this.FindTeamOnSport(eventToModify.Sport, awayTeamName);
+            
+            if (this.DoesTeamsEventExists(foundTeamA, foundTeamB, initialDate))
                 throw new EntitiesException(Constants.EventError.ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
 
-            eventToModify.Local = teamA;
-            eventToModify.Away = teamB;
+            eventToModify.Local = foundTeamA;
+            eventToModify.Away = foundTeamB;
             eventToModify.InitialDate = initialDate;
             this.eventProvider.ModifyEvent(eventToModify);
         }
@@ -102,7 +97,7 @@ namespace BusinessLogic
         {
             Team foundTeam = aSport.Teams.Find(t => t.Name.Equals(teamName));
             if (foundTeam == null)
-                throw new EntitiesException(string.Format(Constants.TeamErrors.TEAM_NAME_NOT_FOUND, foundTeam), ExceptionStatusCode.NotFound);
+                throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, teamName), ExceptionStatusCode.NotFound);
 
             return foundTeam;
         }
