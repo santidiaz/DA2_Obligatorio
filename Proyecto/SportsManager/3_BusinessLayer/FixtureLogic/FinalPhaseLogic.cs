@@ -34,7 +34,7 @@ namespace FixtureLogic
 
         private bool DoesTeamMatchExists(List<Match> matches, Team teamA, Team teamB)
         {
-            return matches.Exists(m => m.Away.Equals(teamA) ||
+            return !matches.Exists(m => m.Away.Equals(teamA) ||
                                         m.Local.Equals(teamA) ||
                                         m.Away.Equals(teamB) ||
                                         m.Local.Equals(teamB));

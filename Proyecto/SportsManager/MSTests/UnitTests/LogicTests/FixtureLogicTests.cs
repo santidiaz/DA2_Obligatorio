@@ -42,7 +42,7 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
-        public void RoundRobinTest()
+        public void RoundRobinAlgorithmTest()
         {
             try
             {
@@ -113,7 +113,7 @@ namespace UnitTests.LogicTests
                 Sport sport = new Sport("Football", teams);
                 #endregion
 
-                RoundRobinLogic eventLogic = new RoundRobinLogic();
+                FinalPhaseLogic eventLogic = new FinalPhaseLogic();
                 List<Event> generatedEvents = eventLogic.GenerateFixture(sport, DateTime.Now);
 
                 Assert.IsNotNull(generatedEvents);
