@@ -3,6 +3,7 @@ using BusinessEntities;
 using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
+using SportsWebApi.Filters;
 using SportsWebApi.Models.CommentModel;
 using SportsWebApi.Utilities;
 using System;
@@ -18,6 +19,7 @@ namespace SportsWebApi.Controllers
     {
         private ICommentLogic commentOperations = Provider.GetInstance.GetCommentOperations();
 
+        [PermissionFilter(false)]
         [HttpPost()]
         public IActionResult AddComment([FromBody] AddCommentInput addCommentInput)
         {

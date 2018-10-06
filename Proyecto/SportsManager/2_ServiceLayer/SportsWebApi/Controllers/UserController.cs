@@ -103,8 +103,7 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(true)]
         [HttpPut("{userName}")]
-        public IActionResult ModifyUser(string userName,
-            [FromBody] ModifyUserInput modyUserInput)
+        public IActionResult ModifyUser(string userName, [FromBody] ModifyUserInput modyUserInput)
         {
             try
             {
@@ -134,7 +133,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        //[PermissionFilter(true)]
+        [PermissionFilter(false)]
         [HttpPost]
         [Route("{userName}/addfavorites")]
         public IActionResult AddFavoritesToUser([FromBody]AddFavoritesToUser app)
@@ -156,8 +155,9 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(404, ex.Message);
             }
         }
-		
-		[HttpPut(nameof(ModifyUserFavouriteTeams))]
+
+        [PermissionFilter(false)]
+        [HttpPut(nameof(ModifyUserFavouriteTeams))]
         public IActionResult ModifyUserFavouriteTeams([FromBody] ModifyUserFavouriteTeamsInput input)
         {
             try
@@ -178,7 +178,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        //[PermissionFilter(true)]
+        [PermissionFilter(false)]
         [HttpGet("{userName}/favorites")]
         public IActionResult GetFavoritesTeamsByUserName(string userName)
         {
@@ -199,7 +199,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        //[PermissionFilter(true)]
+        [PermissionFilter(false)]
         [HttpDelete("{userName}/favorite/{teamOID}")]
         public IActionResult DeleteFavoriteTeamByUser(string userName, int teamOID)
         {
@@ -223,7 +223,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        //[PermissionFilter(true)]
+        [PermissionFilter(false)]
         [HttpGet("{userName}/favoriteTeamComments")]
         public IActionResult GetCommentsOfUserFavouriteTemasEvents(string userName)
         {

@@ -97,6 +97,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(false)]
         [HttpGet()]
         public IActionResult GetAllEvents()
         {
@@ -114,6 +115,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(false)]
         [HttpGet("{eventId}")]
         public IActionResult GetEventById(int eventId)
         {
@@ -136,15 +138,14 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(true)]
         [HttpPut("{eventId}")]
-        public IActionResult ModifyUser(int eventId,
-            [FromBody] ModifyEventInput modifyEventInput)
+        public IActionResult ModifyUser(int eventId, [FromBody] ModifyEventInput input)
         {
             try
             {
-                if (modifyEventInput == null)
+                if (input == null)
                     return BadRequest();
-                
-                //this.userOperations.ModifyUser(userModifications);
+
+                this.eventOperations.ModifyEvent(eventId, input.LocalTeamName, input.AwayTeamName, input.InitialDate);
                 return Ok();
             }
             catch (EntitiesException eEx)

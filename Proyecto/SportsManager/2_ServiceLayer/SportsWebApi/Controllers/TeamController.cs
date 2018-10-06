@@ -8,6 +8,7 @@ using BusinessEntities;
 using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
+using SportsWebApi.Filters;
 using SportsWebApi.Models.TeamModel;
 using SportsWebApi.Utilities;
 
@@ -19,6 +20,7 @@ namespace SportsWebApi.Controllers
     {
         private ITeamLogic teamOperations = Provider.GetInstance.GetTeamOperations();
 
+        [PermissionFilter(false)]
         [HttpGet("{teamName}")]
         public IActionResult GetTeamByUserName(string teamName)
         {
@@ -41,6 +43,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(true)]
         [HttpPost()]
         public IActionResult AddTeam([FromBody] AddTeamInput addTeamInput)
         {
@@ -75,6 +78,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(true)]
         [HttpDelete("{teamName}")]
         public IActionResult DeleteTeamByUserName(string teamName)
         {
@@ -93,6 +97,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(true)]
         [HttpPut()]
         public IActionResult ModifyTeamByName([FromBody] ModifyTeamInput modifyTeamInput)
         {
@@ -127,6 +132,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(false)]
         [HttpGet("{sportName}/events")]
         public IActionResult GetEventsByTeam(string sportName)
         {
@@ -149,6 +155,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(false)]
         [HttpGet()]
         public IActionResult GetTeams(bool orderAsc, string teamName)
         {
