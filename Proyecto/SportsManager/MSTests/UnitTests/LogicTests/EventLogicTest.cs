@@ -315,7 +315,8 @@ namespace UnitTests.LogicTests
                 // Events that will be returned for today.
                 List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
 
-                eventMock.Setup(em => em.GetEventsByDate(event1.InitialDate)).Returns(todaysMockedEvents);
+                eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(event1);
+                eventMock.Setup(em => em.GetEventsByDate(It.IsAny<DateTime>())).Returns(todaysMockedEvents);
                 #endregion
 
                 EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
