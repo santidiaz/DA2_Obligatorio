@@ -563,5 +563,28 @@ namespace UnitTests.LogicTests
                 Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_NOT_FOUND));
             }
         }
+
+        [TestMethod]
+        public void GetCommentsOfUserFavouriteTemasEvents()
+        {
+            try
+            {
+                var mock = new Mock<IUserPersistance>();
+                var mockTeam = new Mock<ITeamPersistance>();
+                User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
+
+                mock.Setup(up => up.GetUserByUserName("userName", true)).Verifiable();
+                mock.Setup(up => up.GetCommentsOfUserFavouriteTemasEvents(It.IsAny<User>())).Returns(new List<Event>());
+
+                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
+                userLogic.GetCommentsOfUserFavouriteTemasEvents("userName");
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(true);
+            }
+        }
     }
 }

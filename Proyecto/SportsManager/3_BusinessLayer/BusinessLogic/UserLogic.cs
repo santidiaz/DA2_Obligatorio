@@ -81,6 +81,8 @@ namespace BusinessLogic
             this.userProvider.ModifyUserFavouriteTeams(foundUser, newFavouriteTeams);
         }
 
+
+
         #region Private Methods
         private bool CheckForModifications(User userToModify, User userWithModifications)
         {
@@ -184,6 +186,15 @@ namespace BusinessLogic
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
             this.userProvider.DeleteFavoriteTeamByUser(teamComplete, userComplete);
+        }
+
+        public List<Event> GetCommentsOfUserFavouriteTemasEvents(string userName)
+        {
+            User user = this.GetUserByUserName(userName);
+            if (user == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            return this.userProvider.GetCommentsOfUserFavouriteTemasEvents(user);
         }
         #endregion
     }
