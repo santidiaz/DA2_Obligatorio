@@ -292,5 +292,47 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void TryToModifyEventThatAlredyExists()
+        {
+            try
+            {
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
+
+                Team team1 = new Team { Name = "Nacional" };
+                Team team2 = new Team { Name = "Defensor" };
+                Team team3 = new Team { Name = "Barcelona" };
+                Team team4 = new Team { Name = "Sevilla" };
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
+                Event event1 = new Event(DateTime.Now, sport, team1, team3);
+                Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
+
+                // Events that will be returned for today.
+                List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
+
+                eventMock.Setup(em => em.GetEventsByDate(event1.InitialDate)).Returns(todaysMockedEvents);
+                #endregion
+
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                string dummySportNameA = team1.Name;
+                string dummySportNameB = team4.Name; // New team
+
+                eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now.AddHours(10));
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, Constants.EventError.ALREADY_EXISTS);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
