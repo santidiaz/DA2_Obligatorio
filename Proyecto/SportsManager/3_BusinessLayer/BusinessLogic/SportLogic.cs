@@ -31,7 +31,7 @@ namespace BusinessLogic
             bool result = false;
             List<Sport> systemSports = this.persistanceProvider.GetSports();
             foreach (var sportAux in systemSports)
-                if (sportAux.Equals(sport)) result = true;
+                if (sportAux.Name == sport.Name) result = true;
 
             return result;
         }
