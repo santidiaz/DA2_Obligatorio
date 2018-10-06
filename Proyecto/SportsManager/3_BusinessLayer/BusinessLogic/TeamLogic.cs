@@ -35,7 +35,7 @@ namespace BusinessLogic
         private bool IsTeamInSystem(Team team)
         {
             bool result = false;
-            List<Team> systemTeams = this.persistanceProvideTeam.GetTeams();
+            List<Team> systemTeams = this.persistanceProvideTeam.GetTeams(true, string.Empty);
             foreach (var teamAux in systemTeams)
             {
                 if (teamAux.Equals(team)) { result = true; };
@@ -44,9 +44,9 @@ namespace BusinessLogic
             return result;// systemTeams.Exists(item => item.Equals(team));
         }
 
-        public List<Team> GetTeams()
+        public List<Team> GetTeams(bool asc, string teamName)
         {
-            return this.persistanceProvideTeam.GetTeams();
+            return this.persistanceProvideTeam.GetTeams(asc, teamName);
         }
 
         public void ModifyTeamByName(string name, Team team)
@@ -120,5 +120,6 @@ namespace BusinessLogic
         {
             return persistanceProvideTeam.ValidateTeamOnEvents(team);
         }
+
     }
 }

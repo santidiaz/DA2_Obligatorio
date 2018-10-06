@@ -41,12 +41,31 @@ namespace DataAccess.Implementations
             return foundTeam;
         }
 
-        public List<Team> GetTeams()
+        public List<Team> GetTeams(bool asc, string teamName)
         {
             var teams = new List<Team>();
             using (Context context = new Context())
             {
-                teams = context.Teams.OfType<Team>().ToList();
+                //Ordeno ascendente y por numbre de equipo.
+                if (asc && !string.IsNullOrEmpty(teamName))
+                {
+                    teams = context.Teams.OfType<Team>().Where(t => t.Name.Contains(teamName)).OrderBy(o => o.Name).ToList();
+                }
+                //Ordeno descendente y por numbre de equipo.
+                else if (!asc && !string.IsNullOrEmpty(teamName))
+                {
+                    teams = context.Teams.OfType<Team>().Where(t => t.Name.Contains(teamName)).OrderByDescending(o => o.Name).ToList();
+                }
+                //Ordeno solo ascendente.
+                else if (asc)
+                {
+                    teams = context.Teams.OfType<Team>().OrderBy(o => o.Name).ToList();
+                }
+                //Ordeno solo descendente.
+                else
+                {
+                    teams = context.Teams.OfType<Team>().OrderByDescending(o => o.Name).ToList();
+                }
             }
             return teams;
         }
@@ -113,5 +132,7 @@ namespace DataAccess.Implementations
             }
             return result;
         }
+
+
     }
 }

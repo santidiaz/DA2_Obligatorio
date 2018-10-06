@@ -60,7 +60,7 @@ namespace SportsWebApi.Controllers
                 //    file.CopyTo(memoryStream);
                 //    newTeam.Photo = memoryStream.ToArray();
                 //}
-                newTeam.Photo = new byte[5];
+                newTeam.Photo = new byte[5];    
 
                 teamOperations.AddTeam(newTeam, addTeamInput.SportOID);
                 return Ok();
@@ -136,6 +136,25 @@ namespace SportsWebApi.Controllers
                     return NotFound();
 
                 List<Event> result = teamOperations.GetEventsByTeam(sportName);
+                return Ok(result);
+            }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet()]
+        public IActionResult GetTeams(bool orderAsc, string teamName)
+        {
+            try
+            {
+                List<Team> result = teamOperations.GetTeams(orderAsc, teamName);
                 return Ok(result);
             }
             catch (EntitiesException ex)
