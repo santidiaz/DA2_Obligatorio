@@ -12,7 +12,6 @@ namespace BusinessContracts
         void DeleteEventById(int eventId);
         Event GetEventById(int eventId);
         List<Event> GetAllEvents();
-        List<Event> GenerateFixture(IFixture fixtureGenerator);
         //void ModifyEvent(int eventId, string localTeamName, string awayTeamName, DateTime initialDate);
     }
 }
