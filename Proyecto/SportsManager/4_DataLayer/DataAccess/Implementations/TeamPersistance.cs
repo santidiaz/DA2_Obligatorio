@@ -105,8 +105,8 @@ namespace DataAccess.Implementations
             bool result = false;
             using (Context context = new Context())
             {
-                Event teamOnDB1 = context.Events.OfType<Event>().Where(a => a.GetFirstTeam().Equals(team.TeamOID)).FirstOrDefault();
-                Event teamOnDB2 = context.Events.OfType<Event>().Where(a => a.GetSecondTeam().Equals(team.TeamOID)).FirstOrDefault();
+                Event teamOnDB1 = context.Events.OfType<Event>().Where(a => a.GetLocalTeam().Equals(team.TeamOID)).FirstOrDefault();
+                Event teamOnDB2 = context.Events.OfType<Event>().Where(a => a.GetAwayTeam().Equals(team.TeamOID)).FirstOrDefault();
 
                 if (teamOnDB1 != null) result = true;
                 if (teamOnDB2 != null) result = true;

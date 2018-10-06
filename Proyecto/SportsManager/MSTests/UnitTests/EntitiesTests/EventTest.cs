@@ -24,8 +24,8 @@ namespace UnitTests
 
             Assert.AreEqual(expectedDate.ToString("dd/MM/yyyy HH:mm:ss"), newEvent.InitialDate.ToString("dd/MM/yyyy HH:mm:ss"));
             Assert.IsTrue(Utility.CompareLists(expectedComments, newEvent.GetComments()));
-            Assert.IsNotNull(newEvent.GetLocalTeam());
-            Assert.IsNotNull(newEvent.GetAwayTeam());
+            Assert.IsNull(newEvent.GetLocalTeam());
+            Assert.IsNull(newEvent.GetAwayTeam());
         }
 
         [TestMethod]
