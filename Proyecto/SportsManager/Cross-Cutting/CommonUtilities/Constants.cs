@@ -46,7 +46,7 @@ namespace CommonUtilities
             public const string ERROR_TEAM_NOT_EXISTS = "Team not exists.";
             public const string NAME_REQUIRED = "Name required";
             public const string PHOTO_INVALID = "Invalid photo";
-            public const string TEAM_NAME_NOT_FOUND = "The team '{0}' was not found";
+            public const string TEAM_NAME_NOT_FOUND = "The team <{0}> was not found";
             public const string TEAM_SPORTOID_FAIL = "The sport to add are invalid";
         }
 
@@ -63,6 +63,7 @@ namespace CommonUtilities
             public const string ERROR_SPORT_ALREADY_EXISTS = "Sport already exists";
             public const string ERROR_SPORT_NOT_EXISTS = "Sport not exists";
             public const string NOT_ENOUGH_TEAMS = "Not enough teams in the sport";
+            public const string TEAM_NOT_IN_SPORT = "Team <{0}> does no belong to sport";
         }
 
         public static class PermissionError

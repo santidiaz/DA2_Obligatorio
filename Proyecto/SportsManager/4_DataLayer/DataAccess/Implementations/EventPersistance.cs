@@ -31,13 +31,23 @@ namespace DataAccess.Implementations
             }
         }
 
-        public Event GetEventById(int eventId)
+        public Event GetEventById(int eventId, bool eagerLoad = false)
         {
             Event foundEvent;
             using (Context context = new Context())
             {
-                foundEvent = context.Events.OfType<Event>()
+                if (eagerLoad)
+                {
+                    foundEvent = context.Events.OfType<Event>()
+                        .Include(e => e.Away)
+                        .Include(e => e.Local)
                     .FirstOrDefault(e => e.EventOID.Equals(eventId));
+                }
+                else
+                {
+                    foundEvent = context.Events.OfType<Event>()
+                    .FirstOrDefault(e => e.EventOID.Equals(eventId));
+                }
             }
             return foundEvent;
         }
@@ -77,6 +87,23 @@ namespace DataAccess.Implementations
                                 select anEvent).ToList();
             }
             return events;
+        }
+
+        public void ModifyEvent(Event eventToModify)
+        {
+            using (Context context = new Context())
+            {
+                var eventOnDB = context.Events
+                    .Include(e => e.Away)
+                    .Include(e => e.Local)
+                    .Where(e => e.EventOID.Equals(eventToModify.EventOID)).FirstOrDefault();
+
+                eventOnDB.Local = eventToModify.Local;
+                eventOnDB.Away = eventToModify.Away;
+                eventOnDB.InitialDate = eventToModify.InitialDate;
+
+                context.SaveChanges();
+            }
         }
     }
 }

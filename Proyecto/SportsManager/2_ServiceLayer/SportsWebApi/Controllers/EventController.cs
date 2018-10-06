@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using ProviderManager.Helpers;
+using SportsWebApi.Filters;
 using SportsWebApi.Models.EventModel;
 using SportsWebApi.Utilities;
 
@@ -21,7 +22,8 @@ namespace SportsWebApi.Controllers
         private IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
         private ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
 
-        [HttpPost(nameof(GenerateFixture))]
+        [PermissionFilter(true)]
+        [HttpGet(nameof(GenerateFixture))]
         public IActionResult GenerateFixture([FromQuery] GenerateFixtureInput input)
         {
             try
@@ -45,6 +47,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
+        [PermissionFilter(true)]
         [HttpPost()]
         public IActionResult AddEvent([FromBody] AddEventInput input)
         {
@@ -53,10 +56,32 @@ namespace SportsWebApi.Controllers
                 if (input == null)
                     return BadRequest();
 
-                if (input.FirstTeamName.Equals(input.SecondTeamName))
+                if (input.LocalTeamName.Equals(input.AwayTeamName))
                     return BadRequest("Teams must be different.");
 
-                eventOperations.AddEvent(input.SportName, input.FirstTeamName, input.SecondTeamName, input.EventDate);
+                eventOperations.AddEvent(input.SportName, input.LocalTeamName, input.AwayTeamName, input.EventDate);
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+        
+        [PermissionFilter(true)]
+        [HttpDelete("{eventId}")]
+        public IActionResult DeleteEventById(int eventId)
+        {
+            try
+            {
+                if (eventId <= 0)
+                    return NotFound();
+
+                this.eventOperations.DeleteEventById(eventId);
                 return Ok();
             }
             catch (EntitiesException eEx)
@@ -69,15 +94,17 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [HttpDelete("{eventId}")]
-        public IActionResult DeleteEventById(int eventId)
+        [PermissionFilter(true)]
+        [HttpPut("{eventId}")]
+        public IActionResult ModifyUser(int eventId,
+            [FromBody] ModifyEventInput modifyEventInput)
         {
             try
             {
-                if (eventId <= 0)
-                    return NotFound();
-
-                this.eventOperations.DeleteEventById(eventId);
+                if (modifyEventInput == null)
+                    return BadRequest();
+                
+                //this.userOperations.ModifyUser(userModifications);
                 return Ok();
             }
             catch (EntitiesException eEx)

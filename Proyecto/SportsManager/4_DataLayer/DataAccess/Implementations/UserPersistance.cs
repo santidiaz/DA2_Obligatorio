@@ -81,21 +81,6 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
-
-        /*
-         private void UpdateTeachers(Context context, Subject subjectOnDB, List<Teacher> addedTeachers, List<Teacher> deletedTeachers)
-        {
-            deletedTeachers.ForEach(c => subjectOnDB.Teachers.Remove(c));
-            foreach (Teacher t in addedTeachers)
-            {
-                if (context.Entry(t).State == EntityState.Detached)
-                    context.people.Attach(t);
-
-                subjectOnDB.Teachers.Add(t);
-            }
-        }
-         */
-		 
 		 
         public void AddFavoritesToUser(User user, List<Team> list)
         {

@@ -13,7 +13,6 @@ namespace BusinessEntities
         #endregion
 
         public int TeamOID { get; set; } // [Object Id] This id is team by EntityFramework.
-        public Sport Sport { get; set; }
         public string Name
         {
             get { return this._name; }

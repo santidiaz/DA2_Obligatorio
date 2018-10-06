@@ -87,6 +87,11 @@ namespace BusinessEntities
             else
                 return false;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         #endregion
 
         #region Private methods
