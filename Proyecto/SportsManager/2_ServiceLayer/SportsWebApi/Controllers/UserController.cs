@@ -194,5 +194,29 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
+
+        //[PermissionFilter(true)]
+        [HttpDelete("{userName}/favorite/{teamOID}")]
+        public IActionResult DeleteFavoriteTeamByUser(string userName, int teamOID)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userName))
+                    return NotFound();
+                if (teamOID == null || teamOID <= 0)
+                    return NotFound();
+
+                this.userOperations.DeleteFavoriteTeamByUser(teamOID, userName);
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
     }
 }

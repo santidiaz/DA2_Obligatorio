@@ -125,11 +125,10 @@ namespace DataAccess.Implementations
 
         public void DeleteFavoriteTeamByUser(Team team, User user)
         {
-            //user.FavouriteTeams.Remove(team);
             using (Context context = new Context())
             {
-                var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID == user.UserOID).FirstOrDefault();
-                //userOnDB.FavouriteTeams.Remove(team);
+                var userOnDB = context.UserTeams.Where(u => u.UserOID == user.UserOID && u.TeamOID == team.TeamOID).FirstOrDefault();
+                context.UserTeams.Remove(userOnDB);
                 context.SaveChanges();
             }
         }

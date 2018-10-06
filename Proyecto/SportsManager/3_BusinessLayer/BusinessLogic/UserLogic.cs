@@ -185,11 +185,6 @@ namespace BusinessLogic
 
             this.userProvider.DeleteFavoriteTeamByUser(teamComplete, userComplete);
         }
-
-        public void DeleteFavoriteTeamByUser(Team team, User user)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
     }
 }
