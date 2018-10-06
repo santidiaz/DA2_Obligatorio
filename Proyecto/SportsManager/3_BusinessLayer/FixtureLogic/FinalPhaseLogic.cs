@@ -15,7 +15,7 @@ namespace FixtureLogic
         public List<Event> GenerateFixture(Sport aSport, DateTime initialDate)
         {
             List<Team> teams = aSport.Teams;
-            if (this.HasEnoughTeams(teams.Count))
+            if (HasEnoughTeams(teams.Count))
                 throw new EntitiesException(Constants.SportErrors.NOT_ENOUGH_TEAMS, ExceptionStatusCode.InvalidData);
 
             List<Match> availableMatches = this.GenerateAvailableMatches(teams);
@@ -26,10 +26,10 @@ namespace FixtureLogic
         }
 
         #region Private Methods
-        private bool HasEnoughTeams(int teamsCount)
+        private static bool HasEnoughTeams(int teamsCount)
         {
             // Number of teams has to be power of 2. (2, 4, 8, 16...)
-            return (teamsCount != 0) && ((teamsCount & (teamsCount - 1)) == 0);
+            return !((teamsCount != 0) && ((teamsCount & (teamsCount - 1)) == 0));
         }
 
         private bool DoesTeamMatchExists(List<Match> matches, Team teamA, Team teamB)
