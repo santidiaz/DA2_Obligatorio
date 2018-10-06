@@ -252,5 +252,45 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void TryToModifyEventWithWrongTeamB()
+        {
+            try
+            {
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
+
+                Team team1 = new Team { Name = "Nacional" };
+                Team team2 = new Team { Name = "Defensor" };
+                Team team3 = new Team { Name = "Barcelona" };
+                Team team4 = new Team { Name = "Sevilla" };
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
+
+                Event mockedEvent = new Event(DateTime.Now, sport, team1, team4);
+
+                eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(mockedEvent);
+                #endregion
+
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                string dummySportNameA = team3.Name;
+                string dummySportNameB = "Aguada";
+
+                eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now);
+
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, "Aguada"));
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
