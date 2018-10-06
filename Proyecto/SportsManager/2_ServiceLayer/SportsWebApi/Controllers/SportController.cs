@@ -1,8 +1,10 @@
 ﻿using BusinessContracts;
 using BusinessEntities;
+using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Models.TeamModel;
+using SportsWebApi.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,6 +34,10 @@ namespace SportsWebApi.Controllers
                 sportOperations.AddSport(newSport);
                 return Ok();
             }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
                 return this.StatusCode(500, ex.Message);
@@ -49,6 +55,10 @@ namespace SportsWebApi.Controllers
                 Sport result = sportOperations.GetSportByName(sportName);
                 return Ok(result);
             }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
             catch (Exception ex)
             {
                 // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
@@ -63,6 +73,10 @@ namespace SportsWebApi.Controllers
             {
                 this.sportOperations.DeleteSportByName(sportName);
                 return Ok();
+            }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
@@ -85,6 +99,10 @@ namespace SportsWebApi.Controllers
                 sportOperations.ModifySportByName(modifySportInput.OldName, modifySport);
                 return Ok();
             }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
                 return this.StatusCode(500, ex.Message);
@@ -101,6 +119,10 @@ namespace SportsWebApi.Controllers
 
                 List<Event> result = sportOperations.GetEventsBySport(sportName);
                 return Ok(result);
+            }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
             catch (Exception ex)
             {

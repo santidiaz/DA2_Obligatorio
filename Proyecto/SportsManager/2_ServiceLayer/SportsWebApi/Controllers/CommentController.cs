@@ -1,8 +1,10 @@
 ﻿using BusinessContracts;
 using BusinessEntities;
+using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Models.CommentModel;
+using SportsWebApi.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,10 @@ namespace SportsWebApi.Controllers
 
                 commentOperations.AddComment(newComment);
                 return Ok();
+            }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {

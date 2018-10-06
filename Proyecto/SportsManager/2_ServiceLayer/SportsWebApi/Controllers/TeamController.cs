@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessContracts;
 using BusinessEntities;
+using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Models.TeamModel;
+using SportsWebApi.Utilities;
 
 namespace SportsWebApi.Controllers
 {
@@ -28,6 +30,10 @@ namespace SportsWebApi.Controllers
                 Team result = teamOperations.GetTeamByName(teamName);
                 return Ok(result);
             }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
             catch (Exception ex)
             {
                 // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
@@ -41,7 +47,7 @@ namespace SportsWebApi.Controllers
             try
             {
                 if (addTeamInput == null) return BadRequest();
-                
+
                 Team newTeam = new Team
                 {
                     Name = addTeamInput.Name
@@ -59,6 +65,10 @@ namespace SportsWebApi.Controllers
                 teamOperations.AddTeam(newTeam, addTeamInput.SportOID);
                 return Ok();
             }
+            catch(EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
                 return this.StatusCode(500, ex.Message);
@@ -72,7 +82,11 @@ namespace SportsWebApi.Controllers
             {
                 this.teamOperations.DeleteTeamByName(teamName);
                 return Ok();
-            }   
+            }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
                 return this.StatusCode(500, ex.Message);
@@ -103,6 +117,10 @@ namespace SportsWebApi.Controllers
                 teamOperations.ModifyTeamByName(modifyTeamInput.OldName, modifyTeam);
                 return Ok();
             }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
             catch (Exception ex)//TODO: Ver como manejar los errores. 
             {
                 return this.StatusCode(500, ex.Message);
@@ -119,6 +137,10 @@ namespace SportsWebApi.Controllers
 
                 List<Event> result = teamOperations.GetEventsByTeam(sportName);
                 return Ok(result);
+            }
+            catch (EntitiesException ex)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using BusinessContracts;
 using BusinessEntities;
+using BusinessEntities.Exceptions;
 using CommonUtilities;
 using DataContracts;
 using System;
@@ -22,11 +23,11 @@ namespace BusinessLogic
         public void AddTeam(Team newTeam, int sportOID)
         {
             if (this.IsTeamInSystem(newTeam))
-                throw new Exception(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS);
+                throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS, ExceptionStatusCode.Conflict);
             else if (sportOID == null || sportOID <= 0)
-                throw new Exception(Constants.TeamErrors.TEAM_SPORTOID_FAIL);
+                throw new EntitiesException(Constants.TeamErrors.TEAM_SPORTOID_FAIL, ExceptionStatusCode.InvalidData);
             else if (this.persistanceProvideSport.GetSports().Find(s => s.SportOID == sportOID) == null)
-                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS);
+                throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS, ExceptionStatusCode.Conflict);
             else
                 this.persistanceProvideTeam.AddTeam(newTeam, sportOID);
         }
@@ -52,7 +53,7 @@ namespace BusinessLogic
         {
             Team teamToModify = this.GetTeamByName(name);
             if (teamToModify == null)
-                throw new Exception(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS);
+                throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS, ExceptionStatusCode.Conflict);
             else
                 team.TeamOID = teamToModify.TeamOID;
                 this.persistanceProvideTeam.ModifyTeamByName(name, team);
@@ -63,7 +64,8 @@ namespace BusinessLogic
             var team = this.persistanceProvideTeam.GetTeamByName(name);
 
             if (team == null)
-                throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
+                throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
+            
             return team;
         }
 
@@ -72,7 +74,7 @@ namespace BusinessLogic
             var team = this.persistanceProvideTeam.GetTeamByOID(oid);
 
             if (team == null)
-                throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
+                throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
             return team;
         }
 
@@ -92,7 +94,7 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ex);
+                throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }
         }
         
@@ -110,7 +112,7 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ex);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }
         }
 

@@ -68,7 +68,7 @@ namespace UnitTests.LogicTests
             }
             catch (EntitiesException eEx)
             {
-                Assert.IsTrue(eEx.Message.Equals(Constants.PermissionError.INVALID_PASSWORD));
+                Assert.IsTrue(eEx.Message.Equals(Constants.PermissionError.USER_NOT_FOUND));
             }
             catch (Exception ex)
             {
@@ -104,7 +104,7 @@ namespace UnitTests.LogicTests
             }
             catch (EntitiesException eEx)
             {
-                Assert.Fail(eEx.Message);
+                Assert.IsTrue(true);
             }
             catch (Exception ex)
             {

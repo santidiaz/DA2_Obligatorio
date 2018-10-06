@@ -64,7 +64,7 @@ namespace UnitTests
             Assert.IsTrue(user.Password.Equals(expectedPassword));
             Assert.AreEqual(expectedIsAdminFlag, user.IsAdmin);
 
-            List<Team> actualFavouritesTeams = null;//user.FavouriteTeams;
+            List<Team> actualFavouritesTeams = new List<Team>();
             Assert.IsTrue(Utility.CompareLists(actualFavouritesTeams, expectedFavouriteTeams));
         }
 

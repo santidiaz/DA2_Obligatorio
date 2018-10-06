@@ -1,5 +1,6 @@
 ﻿using BusinessContracts;
 using BusinessEntities;
+using BusinessEntities.Exceptions;
 using CommonUtilities;
 using DataContracts;
 using System;
@@ -20,7 +21,7 @@ namespace BusinessLogic
         public void AddSport(Sport sportToAdd)
         {
             if (this.IsSportInSystem(sportToAdd))
-                throw new Exception(Constants.SportErrors.ERROR_SPORT_ALREADY_EXISTS);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
 
             this.persistanceProvider.AddSport(sportToAdd);
         }
@@ -40,7 +41,7 @@ namespace BusinessLogic
             Sport sportToModify = this.GetSportByName(nameSport);
             
             if (sportToModify == null)
-                throw new Exception(Constants.SportErrors.ERROR_SPORT_ALREADY_EXISTS);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
             else
             {
                 sport.SportOID = sportToModify.SportOID;
@@ -52,7 +53,7 @@ namespace BusinessLogic
         {
             var sport = this.persistanceProvider.GetSportByName(name);
             if (sport == null)
-                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
             return sport;
         }
@@ -73,7 +74,7 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ex);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }
         }
 
@@ -91,7 +92,7 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ex);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }
         }
 

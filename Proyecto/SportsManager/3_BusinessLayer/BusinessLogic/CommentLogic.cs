@@ -1,5 +1,6 @@
 ﻿using BusinessContracts;
 using BusinessEntities;
+using BusinessEntities.Exceptions;
 using CommonUtilities;
 using DataContracts;
 using System;
@@ -20,7 +21,7 @@ namespace BusinessLogic
         public void AddComment(Comment commentToAdd)
         {
             if (!this.UserCreatorExists(commentToAdd))
-                throw new Exception(Constants.CommentError.ERROR_CREATOR_NAME_NOT_EXISTS);
+                throw new EntitiesException(Constants.CommentError.ERROR_CREATOR_NAME_NOT_EXISTS, ExceptionStatusCode.NotFound);
             else
                 this.persistanceProvider.AddComment(commentToAdd);
         }
