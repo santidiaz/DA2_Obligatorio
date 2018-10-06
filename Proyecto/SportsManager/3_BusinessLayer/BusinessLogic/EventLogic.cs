@@ -57,29 +57,29 @@ namespace BusinessLogic
             }
         }
 
-        //public void ModifyEvent(int eventId, string localTeamName, string awayTeamName, DateTime initialDate)
-        //{
-        //    Event eventToModify = this.eventProvider.GetEventById(eventId);
-        //    if (eventToModify == null)
-        //        throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
+        public void ModifyEvent(int eventId, string localTeamName, string awayTeamName, DateTime initialDate)
+        {
+            Event eventToModify = this.eventProvider.GetEventById(eventId);
+            if (eventToModify == null)
+                throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
 
-        //    List<Team> sportTeams = eventToModify.Sport.Teams;
-        //    Team teamA = sportTeams.Find(t => t.Name.Equals(localTeamName));
-        //    if (teamA == null)
-        //        throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, localTeamName), ExceptionStatusCode.InvalidData);
+            List<Team> sportTeams = eventToModify.Sport.Teams;
+            Team teamA = sportTeams.Find(t => t.Name.Equals(localTeamName));
+            if (teamA == null)
+                throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, localTeamName), ExceptionStatusCode.InvalidData);
 
-        //    Team teamB = sportTeams.Find(t => t.Name.Equals(awayTeamName));
-        //    if (teamB == null)
-        //        throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, awayTeamName), ExceptionStatusCode.InvalidData);
+            Team teamB = sportTeams.Find(t => t.Name.Equals(awayTeamName));
+            if (teamB == null)
+                throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, awayTeamName), ExceptionStatusCode.InvalidData);
 
-        //    if (this.DoesTeamsEventExists(teamA, teamB, initialDate))
-        //        throw new EntitiesException(Constants.EventError.ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
+            if (this.DoesTeamsEventExists(teamA, teamB, initialDate))
+                throw new EntitiesException(Constants.EventError.ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
 
-        //    eventToModify.Local = teamA;
-        //    eventToModify.Away = teamB;
-        //    eventToModify.InitialDate = initialDate;
-        //    this.eventProvider.ModifyEvent(eventToModify);
-        //}
+            eventToModify.Local = teamA;
+            eventToModify.Away = teamB;
+            eventToModify.InitialDate = initialDate;
+            this.eventProvider.ModifyEvent(eventToModify);
+        }
 
         #region Private methods
         private bool DoesTeamsEventExists(Team firstTeam, Team secondTeam, DateTime eventDate)

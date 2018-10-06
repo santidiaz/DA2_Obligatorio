@@ -182,5 +182,35 @@ namespace UnitTests.LogicTests
             }
         }
 
+        [TestMethod]
+        public void TryToModifyEventThatDoNotExists()
+        {
+            try
+            {
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
+
+                eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns((Event)null);
+                #endregion
+
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                string dummySportNameA = string.Empty;
+                string dummySportNameB = string.Empty;
+
+                eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now);
+
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, Constants.EventError.NOT_FOUND);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
