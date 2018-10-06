@@ -38,7 +38,7 @@ namespace SportsWebApi.Controllers
                 Sport foundSport = sportOperations.GetSportByName(input.SportName);
                 IFixture fixtureOption = Provider.GetInstance.GetFixtureGenerator((FixtureType)input.FixtureType);
                 List<Event> generatedEvents = fixtureOption.GenerateFixture(foundSport, input.InitialDate);
-                
+
                 return Ok(new StringContent(JArray.FromObject(generatedEvents).ToString(), Encoding.UTF8, "application/json"));
             }
             catch (EntitiesException eEx)
@@ -102,6 +102,26 @@ namespace SportsWebApi.Controllers
             try
             {
                 return Ok(this.eventOperations.GetAllEvents());
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("{eventId}")]
+        public IActionResult GetEventById(int eventId)
+        {
+            try
+            {
+                if (eventId <= 0)
+                    return NotFound();
+
+                return Ok(this.eventOperations.GetEventById(eventId));
             }
             catch (EntitiesException eEx)
             {
