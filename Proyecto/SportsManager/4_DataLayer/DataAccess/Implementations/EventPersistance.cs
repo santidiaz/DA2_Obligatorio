@@ -14,6 +14,8 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
+                context.Teams.Attach(newEvent.Away);
+                context.Teams.Attach(newEvent.Local);
                 context.Events.Add(newEvent);
                 context.SaveChanges();
             }

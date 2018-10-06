@@ -21,11 +21,8 @@ namespace SportsWebApi.Controllers
         private IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
         private ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
 
-        // TODO: Add multiple events
-
-
         [HttpPost(nameof(GenerateFixture))]
-        public IActionResult GenerateFixture([FromBody] GenerateFixtureInput input)
+        public IActionResult GenerateFixture([FromQuery] GenerateFixtureInput input)
         {
             try
             {
@@ -73,7 +70,7 @@ namespace SportsWebApi.Controllers
         }
 
         [HttpDelete("{eventId}")]
-        public IActionResult DeleteUserByUserName(int eventId)
+        public IActionResult DeleteEventById(int eventId)
         {
             try
             {
