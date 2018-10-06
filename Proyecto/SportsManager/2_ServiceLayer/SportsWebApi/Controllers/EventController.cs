@@ -95,5 +95,22 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet()]
+        public IActionResult GetAllEvents()
+        {
+            try
+            {
+                return Ok(this.eventOperations.GetAllEvents());
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
     }
 }
