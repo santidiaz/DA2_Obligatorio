@@ -134,7 +134,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [PermissionFilter(true)]
+        //[PermissionFilter(true)]
         [HttpPost]
         [Route("{userName}/addfavorites")]
         public IActionResult AddFavoritesToUser([FromBody]AddFavoritesToUser app)
@@ -212,6 +212,31 @@ namespace SportsWebApi.Controllers
 
                 this.userOperations.DeleteFavoriteTeamByUser(teamOID, userName);
                 return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        //[PermissionFilter(true)]
+        [HttpGet("{userName}/favoriteTeamComments")]
+        public IActionResult GetCommentsOfUserFavouriteTemasEvents(string userName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userName))
+                    return NotFound();
+
+                List<Event> searchedEvents = userOperations.GetCommentsOfUserFavouriteTemasEvents(userName);
+                if (searchedEvents == null)
+                    return NotFound();
+
+                return Ok(searchedEvents);
             }
             catch (EntitiesException eEx)
             {

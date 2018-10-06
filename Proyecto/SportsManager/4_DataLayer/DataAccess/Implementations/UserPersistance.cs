@@ -81,22 +81,7 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
-
-        /*
-         private void UpdateTeachers(Context context, Subject subjectOnDB, List<Teacher> addedTeachers, List<Teacher> deletedTeachers)
-        {
-            deletedTeachers.ForEach(c => subjectOnDB.Teachers.Remove(c));
-            foreach (Teacher t in addedTeachers)
-            {
-                if (context.Entry(t).State == EntityState.Detached)
-                    context.people.Attach(t);
-
-                subjectOnDB.Teachers.Add(t);
-            }
-        }
-         */
-		 
-		 
+        
         public void AddFavoritesToUser(User user, List<Team> list)
         {
             using (Context context = new Context())
@@ -131,6 +116,30 @@ namespace DataAccess.Implementations
                 context.UserTeams.Remove(userOnDB);
                 context.SaveChanges();
             }
+        }
+
+        public List<Event> GetCommentsOfUserFavouriteTemasEvents(User user)
+        {
+            List<Event> result = new List<Event>();
+            List<UserTeam> listTeams = new List<UserTeam>();
+            using (Context context = new Context())
+            {
+                listTeams = context.UserTeams.Where(u => u.UserOID == user.UserOID).ToList();
+                foreach (var item in listTeams)
+                {
+                    List<Event> eventOnDB1 = context.Events.OfType<Event>().Include(s => s.Sport).Include(t => t.Away).Include(t => t.Local).Include(c => c.Comments).ToList();
+
+                    if (eventOnDB1 != null && eventOnDB1.Count > 0)
+                    {
+                        Event aux = eventOnDB1.Where(s => s.Away.TeamOID == item.TeamOID).FirstOrDefault();
+                        if (aux != null && (result.Find(r => r.EventOID == aux.EventOID) == null)) result.Add(aux);
+
+                        Event aux2 = eventOnDB1.Where(s => s.Local.TeamOID == item.TeamOID).FirstOrDefault();
+                        if (aux2 != null && (result.Find(r => r.EventOID == aux2.EventOID) == null)) result.Add(aux2);
+                    }
+                }
+            }
+            return result;
         }
     }
 }
