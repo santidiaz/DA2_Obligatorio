@@ -24,6 +24,8 @@ namespace SportsWebApi.Controllers
             try
             {
                 if (addCommentInput == null) return BadRequest();
+                if (addCommentInput.EventOID == null || addCommentInput.EventOID <= 0) return BadRequest();
+                if (string.IsNullOrEmpty(addCommentInput.Description)) return BadRequest();
 
                 Comment newComment = new Comment
                 {
@@ -31,7 +33,7 @@ namespace SportsWebApi.Controllers
                     CreatorName = addCommentInput.CreatorName
                 };
 
-                commentOperations.AddComment(newComment);
+                commentOperations.AddComment(newComment, addCommentInput.EventOID);
                 return Ok();
             }
             catch (EntitiesException ex)

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using BusinessContracts;
 using BusinessEntities;
 using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using ProviderManager;
 using ProviderManager.Helpers;
 using SportsWebApi.Models.EventModel;
@@ -24,8 +27,8 @@ namespace SportsWebApi.Controllers
         // TODO: Add multiple events
 
 
-        [HttpPost(nameof(GenerateFixture))]
-        public IActionResult GenerateFixture([FromBody] GenerateFixtureInput input)
+        [HttpGet(nameof(GenerateFixture))]
+        public IActionResult GenerateFixture([FromQuery] GenerateFixtureInput input)
         {
             try
             {
@@ -35,8 +38,8 @@ namespace SportsWebApi.Controllers
                 Sport foundSport = sportOperations.GetSportByName(input.SportName);
                 IFixture fixtureOption = Provider.GetInstance.GetFixtureGenerator((FixtureType)input.FixtureType);
                 List<Event> generatedEvents = fixtureOption.GenerateFixture(foundSport, input.InitialDate);
-
-                return Ok(generatedEvents);
+                
+                return Ok(new StringContent(JArray.FromObject(generatedEvents).ToString(), Encoding.UTF8, "application/json"));
             }
             catch (EntitiesException eEx)
             {

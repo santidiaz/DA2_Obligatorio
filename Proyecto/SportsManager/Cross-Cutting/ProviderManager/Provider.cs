@@ -27,6 +27,7 @@ namespace ProviderManager
         private ISportPersistance sportPersistance;
         private IEventPersistance eventPersistance;
         private IPermissionPersistance permissionPersistance;
+        private ICommentPersistance commentPersistance;
         #endregion
 
         #region Singleton
@@ -48,6 +49,7 @@ namespace ProviderManager
             this.sportPersistance = new SportPersistance();
             this.eventPersistance = new EventPersistance();
             this.permissionPersistance = new PermissionPersistance();
+            this.commentPersistance = new CommentPersistance();
         }
         private void CreateLogics()
         {
@@ -55,7 +57,7 @@ namespace ProviderManager
             this.teamLogic = new TeamLogic(teamPersistance, sportPersistance);
             this.sportLogic = new SportLogic(sportPersistance);
             this.eventLogic = new EventLogic(eventPersistance, sportPersistance, teamPersistance);
-			this.commentLogic = new CommentLogic(new CommentPersistance());
+			this.commentLogic = new CommentLogic(commentPersistance, eventPersistance);
             this.permissionLogic = new PermissionLogic.PermissionLogic(permissionPersistance, userPersistance);
         }
 

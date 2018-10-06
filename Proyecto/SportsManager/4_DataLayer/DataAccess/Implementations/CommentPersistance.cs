@@ -4,16 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Implementations
 {
     public class CommentPersistance : ICommentPersistance
     {
-        public void AddComment(Comment comment)
+        public void AddComment(Comment comment, int eventOID)
         {
             using (Context context = new Context())
             {
-                context.Comments.Add(comment);
+                Event foundEvent = context.Events.OfType<Event>().Include(e => e.Comments)
+                    .FirstOrDefault(e => e.EventOID.Equals(eventOID));
+
+                foundEvent.Comments.Add(comment);
                 context.SaveChanges();
             }
         }

@@ -51,7 +51,7 @@ namespace BusinessLogic
 
         public Sport GetSportByName(string name)
         {
-            var sport = this.persistanceProvider.GetSportByName(name);
+            var sport = this.persistanceProvider.GetSportByName(name, true);
             if (sport == null)
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
 

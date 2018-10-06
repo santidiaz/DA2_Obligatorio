@@ -62,12 +62,7 @@ namespace BusinessEntities
         {
             return this.Comments.OrderByDescending(c => c.DatePosted).ToList();
         }
-
-        public void AddComment(Comment newComment)
-        {
-            this.Comments.Add(newComment);
-        }
-
+        
         public bool ModifyTeams(Team localTeam, Team awayTeam)
         {
             bool result = false;
