@@ -37,6 +37,10 @@ namespace SportsWebApi.Controllers
 
                 return Ok(searchedUser);
             }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
             catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
@@ -129,7 +133,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        //[PermissionFilter(true)]
+        [PermissionFilter(true)]
         [HttpPost]
         [Route("{userName}/addfavorites")]
         public IActionResult AddFavoritesToUser([FromBody]AddFavoritesToUser app)

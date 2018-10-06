@@ -7,6 +7,6 @@ namespace BusinessContracts
 {
     public interface IFixture
     {
-        List<Event> GenerateFixture(Sport aSport);
+        List<Event> GenerateFixture(Sport aSport, DateTime initialDate);
     }
 }

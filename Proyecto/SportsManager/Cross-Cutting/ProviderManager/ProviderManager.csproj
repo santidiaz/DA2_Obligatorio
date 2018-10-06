@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\3_BusinessLayer\BusinessContracts\BusinessContracts.csproj" />
     <ProjectReference Include="..\..\3_BusinessLayer\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\..\3_BusinessLayer\FixtureLogic\FixtureLogic.csproj" />
     <ProjectReference Include="..\..\3_BusinessLayer\PermissionContracts\PermissionContracts.csproj" />
     <ProjectReference Include="..\..\3_BusinessLayer\PermissionLogic\PermissionLogic.csproj" />
     <ProjectReference Include="..\..\4_DataLayer\DataAccess\DataAccess.csproj" />

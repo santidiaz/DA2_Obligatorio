@@ -8,6 +8,7 @@ using PermissionLogic;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FixtureLogic;
 
 namespace ProviderManager
 {
@@ -20,7 +21,6 @@ namespace ProviderManager
         private IEventLogic eventLogic;
         private IPermissionLogic permissionLogic;
 		private ICommentLogic commentLogic;
-        private IFixture fixture;
 
         private IUserPersistance userPersistance;
         private ITeamPersistance teamPersistance;
@@ -104,10 +104,10 @@ namespace ProviderManager
             switch (fixtureType)
             {
                 case FixtureType.Groups:
-                    fixtureGenerationAlgorithm = new GroupFixture();
+                    fixtureGenerationAlgorithm = null;//new GroupFixture();
                     break;
                 case FixtureType.RoundTrip:
-                    fixtureGenerationAlgorithm = null;
+                    fixtureGenerationAlgorithm = new RoundRobinLogic();
                     break;
                 default:
                     fixtureGenerationAlgorithm = null;
