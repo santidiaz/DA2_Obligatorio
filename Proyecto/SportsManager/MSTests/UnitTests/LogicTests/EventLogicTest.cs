@@ -335,5 +335,49 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void ModifyEventCorrectly()
+        {
+            try
+            {
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
+
+                Team team1 = new Team { Name = "Nacional" };
+                Team team2 = new Team { Name = "Defensor" };
+                Team team3 = new Team { Name = "Barcelona" };
+                Team team4 = new Team { Name = "Sevilla" };
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
+                Event event1 = new Event(DateTime.Now, sport, team1, team3);
+                Event event2 = new Event(DateTime.Now.AddHours(3), sport, team3, team1);
+
+                // Events that will be returned for today.
+                List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
+
+                eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(event1);
+                eventMock.Setup(em => em.GetEventsByDate(It.IsAny<DateTime>())).Returns(todaysMockedEvents);
+                eventMock.Setup(em => em.ModifyEvent(It.IsAny<Event>())).Verifiable();
+                #endregion
+
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                string dummySportNameA = team2.Name;
+                string dummySportNameB = team4.Name;
+
+                eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now.AddHours(10));
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
