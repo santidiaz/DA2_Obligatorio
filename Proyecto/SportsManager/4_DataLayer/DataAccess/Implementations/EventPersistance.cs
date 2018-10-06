@@ -37,7 +37,7 @@ namespace DataAccess.Implementations
             Event foundEvent;
             using (Context context = new Context())
             {
-                foundEvent = context.Events.OfType<Event>()
+                foundEvent = context.Events.OfType<Event>().Include(t => t.Away).Include(t => t.Local).Include(c => c.Comments)
                     .FirstOrDefault(e => e.EventOID.Equals(eventId));
             }
             return foundEvent;
@@ -48,7 +48,7 @@ namespace DataAccess.Implementations
             List<Event> events;
             using (Context context = new Context())
             {
-                events = (from anEvent in context.Events.OfType<Event>()
+                events = (from anEvent in context.Events.OfType<Event>().Include(t => t.Away).Include(t => t.Local)
                           select anEvent).ToList();
             }
             return events;

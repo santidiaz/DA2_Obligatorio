@@ -159,5 +159,28 @@ namespace UnitTests.LogicTests
             //    Assert.Fail(ex.Message);
             //}
         }
+
+        [TestMethod]
+        public void GetAllEvents()
+        {
+            try
+            {
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
+                eventMock.Setup(ep => ep.GetAllEvents()).Returns(new List<Event>());
+
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                //int eventToSearch = 3;
+                List<Event> foundEvent = eventLogic.GetAllEvents();
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
     }
 }

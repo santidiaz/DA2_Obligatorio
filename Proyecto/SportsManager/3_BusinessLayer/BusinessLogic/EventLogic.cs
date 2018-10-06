@@ -92,6 +92,11 @@ namespace BusinessLogic
 
             return foundTeam;
         }
+
+        public List<Event> GetAllEvents()
+        {
+            return this.eventProvider.GetAllEvents();
+        }
         #endregion
     }
 }
