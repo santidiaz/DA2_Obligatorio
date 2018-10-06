@@ -59,7 +59,7 @@ namespace BusinessLogic
 
         public void ModifyEvent(int eventId, string localTeamName, string awayTeamName, DateTime initialDate)
         {
-            Event eventToModify = this.eventProvider.GetEventById(eventId);
+            Event eventToModify = this.eventProvider.GetEventById(eventId, true);
             if (eventToModify == null)
                 throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
 

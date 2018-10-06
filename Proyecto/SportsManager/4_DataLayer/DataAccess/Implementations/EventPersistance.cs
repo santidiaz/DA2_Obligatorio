@@ -42,6 +42,8 @@ namespace DataAccess.Implementations
                     foundEvent = context.Events.OfType<Event>()
                         .Include(e => e.Away)
                         .Include(e => e.Local)
+                        .Include(e => e.Sport)
+                        .Include(e => e.Sport.Teams)
                         .Include(e => e.Comments)
                     .FirstOrDefault(e => e.EventOID.Equals(eventId));
                 }
