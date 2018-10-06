@@ -113,12 +113,12 @@ namespace DataAccess.Implementations
             }
         }
 
-        public List<Team> GetFavoritesTeamsByUserName(User user)
+        public List<UserTeam> GetFavoritesTeamsByUserName(User user)
         {
-            List<Team> listTeams = new List<Team>();
+            List<UserTeam> listTeams = new List<UserTeam>();
             using (Context context = new Context())
             {
-                //listTeams = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID == user.UserOID).FirstOrDefault().FavouriteTeams;
+                listTeams = context.UserTeams.Where(u => u.UserOID == user.UserOID).ToList();
             }
             return listTeams;
         }

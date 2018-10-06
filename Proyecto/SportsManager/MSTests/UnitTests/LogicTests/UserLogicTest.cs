@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnitTests.Utilities;
 using Moq.Language;
+using BusinessEntities.JoinEntities;
 
 namespace UnitTests.LogicTests
 {
@@ -474,7 +475,7 @@ namespace UnitTests.LogicTests
                 User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName("userName", true)).Verifiable();
-                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<User>())).Returns(new List<Team>());
+                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<User>())).Returns(new List<UserTeam>());
 
                 UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.GetFavoritesTeamsByUserName("userName");

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessContracts;
 using BusinessEntities;
 using BusinessEntities.Exceptions;
+using BusinessEntities.JoinEntities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
@@ -166,6 +167,27 @@ namespace SportsWebApi.Controllers
             catch (EntitiesException eEx)
             {
                 return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        //[PermissionFilter(true)]
+        [HttpGet("{userName}/favorites")]
+        public IActionResult GetFavoritesTeamsByUserName(string userName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userName))
+                    return NotFound();
+
+                List<UserTeam> searchedUser = userOperations.GetFavoritesTeamsByUserName(userName);
+                if (searchedUser == null)
+                    return NotFound();
+
+                return Ok(searchedUser);
             }
             catch (Exception ex)
             {

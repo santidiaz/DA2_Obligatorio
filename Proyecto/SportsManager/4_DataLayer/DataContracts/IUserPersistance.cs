@@ -1,4 +1,5 @@
 ﻿using BusinessEntities;
+using BusinessEntities.JoinEntities;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace DataContracts
         void ModifyUser(User userToModify);
         void ModifyUserFavouriteTeams(User userToModify, List<Team> newFavouriteTeams);
 		void AddFavoritesToUser(User user, List<Team> list);
-        List<Team> GetFavoritesTeamsByUserName(User userName);
+        List<UserTeam> GetFavoritesTeamsByUserName(User userName);
         void DeleteFavoriteTeamByUser(Team team, User user);
     }
 }

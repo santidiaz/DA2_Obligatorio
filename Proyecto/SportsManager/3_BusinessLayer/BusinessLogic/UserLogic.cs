@@ -1,6 +1,7 @@
 ﻿using BusinessContracts;
 using BusinessEntities;
 using BusinessEntities.Exceptions;
+using BusinessEntities.JoinEntities;
 using CommonUtilities;
 using DataContracts;
 using System;
@@ -163,13 +164,13 @@ namespace BusinessLogic
             this.userProvider.AddFavoritesToUser(mockedOriginalUser, teamLists);
         }
 
-        public void GetFavoritesTeamsByUserName(string userName)
+        public List<UserTeam> GetFavoritesTeamsByUserName(string userName)
         {
             User user = this.GetUserByUserName(userName);
             if (user == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            this.userProvider.GetFavoritesTeamsByUserName(user);
+            return this.userProvider.GetFavoritesTeamsByUserName(user);
         }
 
         public void DeleteFavoriteTeamByUser(int teamOID, string user)
@@ -183,6 +184,11 @@ namespace BusinessLogic
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
             this.userProvider.DeleteFavoriteTeamByUser(teamComplete, userComplete);
+        }
+
+        public void DeleteFavoriteTeamByUser(Team team, User user)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
