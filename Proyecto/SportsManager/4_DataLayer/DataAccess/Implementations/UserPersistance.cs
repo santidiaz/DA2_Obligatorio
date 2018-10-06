@@ -81,22 +81,7 @@ namespace DataAccess.Implementations
                 context.SaveChanges();
             }
         }
-
-        /*
-         private void UpdateTeachers(Context context, Subject subjectOnDB, List<Teacher> addedTeachers, List<Teacher> deletedTeachers)
-        {
-            deletedTeachers.ForEach(c => subjectOnDB.Teachers.Remove(c));
-            foreach (Teacher t in addedTeachers)
-            {
-                if (context.Entry(t).State == EntityState.Detached)
-                    context.people.Attach(t);
-
-                subjectOnDB.Teachers.Add(t);
-            }
-        }
-         */
-		 
-		 
+        
         public void AddFavoritesToUser(User user, List<Team> list)
         {
             using (Context context = new Context())
@@ -131,6 +116,25 @@ namespace DataAccess.Implementations
                 context.UserTeams.Remove(userOnDB);
                 context.SaveChanges();
             }
+        }
+
+        public List<Event> GetCommentsOfUserFavouriteTemasEvents(User user)
+        {
+            List<Event> result = new List<Event>();
+            List<UserTeam> listTeams = new List<UserTeam>();
+            using (Context context = new Context())
+            {
+                listTeams = context.UserTeams.Where(u => u.UserOID == user.UserOID).ToList();
+                foreach (var item in listTeams)
+                {
+                    List<Event> teamOnDB1 = context.Events.Include(e => e.Comments).OfType<Event>().Where(a => a.GetFirstTeam().Equals(item.TeamOID)).ToList();
+                    List<Event> teamOnDB2 = context.Events.Include(e => e.Comments).OfType<Event>().Where(a => a.GetSecondTeam().Equals(item.TeamOID)).ToList();
+
+                    if (teamOnDB1 != null) result.AddRange(teamOnDB1);
+                    if (teamOnDB2 != null) result.AddRange(teamOnDB2);
+                }
+            }
+            return result;
         }
     }
 }

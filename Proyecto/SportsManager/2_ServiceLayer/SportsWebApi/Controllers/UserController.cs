@@ -218,5 +218,30 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
+
+        //[PermissionFilter(true)]
+        [HttpGet("{userName}/favoriteTeamComments")]
+        public IActionResult GetCommentsOfUserFavouriteTemasEvents(string userName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userName))
+                    return NotFound();
+
+                List<Event> searchedUser = userOperations.GetCommentsOfUserFavouriteTemasEvents(userName);
+                if (searchedUser == null)
+                    return NotFound();
+
+                return Ok(searchedUser);
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
     }
 }
