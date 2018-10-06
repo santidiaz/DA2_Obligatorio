@@ -100,11 +100,13 @@ namespace DataAccess.Implementations
             List<Event> result = new List<Event>();
             using (Context context = new Context())
             {
-                List<Event> teamOnDB1 = context.Events.OfType<Event>().Where(a => a.GetLocalTeam().Equals(team.TeamOID)).ToList();
-                List<Event> teamOnDB2 = context.Events.OfType<Event>().Where(a => a.GetAwayTeam().Equals(team.TeamOID)).ToList();
+                List<Event> sportOnDB1 = context.Events.OfType<Event>().Include(s => s.Sport).Include(t => t.Away).Include(t => t.Local).ToList();
 
-                if (teamOnDB1 != null) result.AddRange(teamOnDB1);
-                if (teamOnDB2 != null) result.AddRange(teamOnDB2);
+                if (sportOnDB1 != null && sportOnDB1.Count > 0)
+                {
+                    result.AddRange(sportOnDB1.Where(s => s.Away.TeamOID == team.TeamOID));
+                    result.AddRange(sportOnDB1.Where(s => s.Local.TeamOID == team.TeamOID));
+                }
             }
             return result;
         }
