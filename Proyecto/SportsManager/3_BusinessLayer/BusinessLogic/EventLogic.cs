@@ -71,8 +71,8 @@ namespace BusinessLogic
         private bool DoesTeamsEventExists(Team firstTeam, Team secondTeam, DateTime eventDate)
         {
             List<Event> events = this.eventProvider.GetEventsByDate(eventDate);
-            return events?.Exists(te => te.GetFirstTeam().Equals(firstTeam)
-                                         && te.GetSecondTeam().Equals(secondTeam)) ?? false;
+            return events?.Exists(te => te.GetLocalTeam().Equals(firstTeam)
+                                         && te.GetAwayTeam().Equals(secondTeam)) ?? false;
         }
         
         private Sport FindSport(string sportName)

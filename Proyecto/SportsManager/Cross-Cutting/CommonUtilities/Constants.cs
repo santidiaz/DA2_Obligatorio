@@ -62,6 +62,7 @@ namespace CommonUtilities
             public const string TEAMLIST_REQUIRED = "Team list required";
             public const string ERROR_SPORT_ALREADY_EXISTS = "Sport already exists";
             public const string ERROR_SPORT_NOT_EXISTS = "Sport not exists";
+            public const string NOT_ENOUGH_TEAMS = "Not enough teams in the sport";
         }
 
         public static class PermissionError

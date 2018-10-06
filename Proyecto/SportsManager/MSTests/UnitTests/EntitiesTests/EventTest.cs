@@ -24,7 +24,8 @@ namespace UnitTests
 
             Assert.AreEqual(expectedDate.ToString("dd/MM/yyyy HH:mm:ss"), newEvent.InitialDate.ToString("dd/MM/yyyy HH:mm:ss"));
             Assert.IsTrue(Utility.CompareLists(expectedComments, newEvent.GetComments()));
-            Assert.IsTrue(newEvent.GetTeams().Length == 2);
+            Assert.IsNotNull(newEvent.GetLocalTeam());
+            Assert.IsNotNull(newEvent.GetAwayTeam());
         }
 
         [TestMethod]
@@ -44,8 +45,8 @@ namespace UnitTests
             Event newEvent = new Event(expectedDate, expectedSport, team1, team2);
 
             Assert.AreEqual(expectedDate.ToString("dd/MM/yyyy HH:mm:ss"), newEvent.InitialDate.ToString("dd/MM/yyyy HH:mm:ss"));
-            Assert.IsTrue(newEvent.GetFirstTeam().Equals(team1));
-            Assert.IsTrue(newEvent.GetSecondTeam().Equals(team2));
+            Assert.IsTrue(newEvent.GetLocalTeam().Equals(team1));
+            Assert.IsTrue(newEvent.GetAwayTeam().Equals(team2));
             Assert.IsTrue(newEvent.Sport.Equals(expectedSport));
         }
 
@@ -96,10 +97,11 @@ namespace UnitTests
             Event newEvent = new Event(expectedDate, sport, team1, team2);// Original event
             bool modificationResult = newEvent.ModifyTeams(newTema1, newTema2);// Method to be tested
 
-            Team[] eventTeams = newEvent.GetTeams();
+            Team awayTeam = newEvent.GetAwayTeam();
+            Team localTeam = newEvent.GetLocalTeam();
             Assert.IsTrue(modificationResult);
-            Assert.IsTrue(eventTeams.Contains(newTema1));
-            Assert.IsTrue(eventTeams.Contains(newTema2));
+            Assert.IsTrue(localTeam.Equals(newTema1));
+            Assert.IsTrue(awayTeam.Equals(newTema2));
         }
 
         [TestMethod]

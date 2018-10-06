@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessContracts;
+using BusinessEntities;
 using BusinessEntities.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +19,34 @@ namespace SportsWebApi.Controllers
     public class EventController : ControllerBase
     {
         private IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
+        private ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
 
-        //private void algo()
-        //{
-        //    IFixture fixtureGenerationOption = Provider.GetInstance.GetFixtureGenerator(FixtureType.Groups);
-        //    var generatedEvents = eventOperations.GenerateFixture(fixtureGenerationOption);
-        //}
+        // TODO: Add multiple events
+
+
+        [HttpPost(nameof(GenerateFixture))]
+        public IActionResult GenerateFixture([FromBody] GenerateFixtureInput input)
+        {
+            try
+            {
+                if (input == null)
+                    return BadRequest();
+
+                Sport foundSport = sportOperations.GetSportByName(input.SportName);
+                IFixture fixtureOption = Provider.GetInstance.GetFixtureGenerator((FixtureType)input.FixtureType);
+                List<Event> generatedEvents = fixtureOption.GenerateFixture(foundSport, input.InitialDate);
+
+                return Ok(generatedEvents);
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
 
         [HttpPost()]
         public IActionResult AddEvent([FromBody] AddEventInput input)

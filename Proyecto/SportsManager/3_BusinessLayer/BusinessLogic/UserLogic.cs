@@ -81,6 +81,37 @@ namespace BusinessLogic
             this.userProvider.ModifyUserFavouriteTeams(foundUser, newFavouriteTeams);
         }
 
+        public void AddFavoritesToUser(User mockedOriginalUser, List<Team> teamLists)
+        {
+            User userToDelete = this.GetUserByUserName(mockedOriginalUser.UserName);
+            if (userToDelete == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            this.userProvider.AddFavoritesToUser(mockedOriginalUser, teamLists);
+        }
+
+        public void GetFavoritesTeamsByUserName(string userName)
+        {
+            User user = this.GetUserByUserName(userName);
+            if (user == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            this.userProvider.GetFavoritesTeamsByUserName(user);
+        }
+
+        public void DeleteFavoriteTeamByUser(int teamOID, string user)
+        {
+            User userComplete = this.GetUserByUserName(user);
+            if (userComplete == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            Team teamComplete = this.teamProvider.GetTeamByOID(teamOID);
+            if (teamComplete == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            this.userProvider.DeleteFavoriteTeamByUser(teamComplete, userComplete);
+        }
+
         #region Private Methods
         private bool CheckForModifications(User userToModify, User userWithModifications)
         {
