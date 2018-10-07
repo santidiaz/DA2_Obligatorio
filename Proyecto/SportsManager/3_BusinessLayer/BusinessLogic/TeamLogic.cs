@@ -9,22 +9,22 @@ using System.Text;
 
 namespace BusinessLogic
 {
-    public class TeamLogic : BusinessContracts.ITeamLogic
+    public class TeamLogic : ITeamLogic
     {
         private ITeamPersistance persistanceProvideTeam;
         private ISportPersistance persistanceProvideSport;
 
-        public TeamLogic(ITeamPersistance provider, ISportPersistance providerSport)
+        public TeamLogic(ITeamPersistance teamProvider, ISportPersistance sportProvider)
         {
-            this.persistanceProvideTeam = provider;
-            this.persistanceProvideSport = providerSport;
+            this.persistanceProvideTeam = teamProvider;
+            this.persistanceProvideSport = sportProvider;
         }
 
         public void AddTeam(Team newTeam, int sportOID)
         {
             if (this.IsTeamInSystem(newTeam))
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS, ExceptionStatusCode.Conflict);
-            else if (sportOID == null || sportOID <= 0)
+            else if (sportOID <= 0)
                 throw new EntitiesException(Constants.TeamErrors.TEAM_SPORTOID_FAIL, ExceptionStatusCode.InvalidData);
             else if (this.persistanceProvideSport.GetSports().Find(s => s.SportOID == sportOID) == null)
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.Conflict);
@@ -44,7 +44,7 @@ namespace BusinessLogic
 
                 }
             }
-            return result;// systemTeams.Exists(item => item.Equals(team));
+            return result;
         }
 
         public List<Team> GetTeams(bool asc, string teamName)
@@ -52,18 +52,17 @@ namespace BusinessLogic
             return this.persistanceProvideTeam.GetTeams(asc, teamName);
         }
 
-        public void ModifyTeamByName(string name, Team team)
+        public void ModifyTeamByName(string teamOldName, Team teamWithModifications)
         {
-            Team teamToModify = this.GetTeamByName(name);
-            
-            team.TeamOID = teamToModify.TeamOID;
-            this.persistanceProvideTeam.ModifyTeamByName(name, team);
+            Team teamToModify = this.GetTeamByName(teamOldName);
+
+            teamWithModifications.TeamOID = teamToModify.TeamOID;
+            this.persistanceProvideTeam.ModifyTeam(teamWithModifications);
         }
 
         public Team GetTeamByName(string name)
         {
-            var team = this.persistanceProvideTeam.GetTeamByName(name);
-
+            Team team = this.persistanceProvideTeam.GetTeamByName(name);
             if (team == null)
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
             
@@ -72,10 +71,10 @@ namespace BusinessLogic
 
         public Team GetTeamByOID(int oid)
         {
-            var team = this.persistanceProvideTeam.GetTeamByOID(oid);
-
+            Team team = this.persistanceProvideTeam.GetTeamByOID(oid);
             if (team == null)
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
+
             return team;
         }
 

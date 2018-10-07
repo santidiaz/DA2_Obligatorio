@@ -23,6 +23,7 @@ namespace BusinessLogic
             this.teamProvider = teamPersistance;
         }
 
+        #region Public methods
         public void AddEvent(string sportName, string firstTeamName, string secondTeamName, DateTime eventDate)
         {
             Sport foundSport = this.FindSport(sportName);
@@ -76,6 +77,12 @@ namespace BusinessLogic
             this.eventProvider.ModifyEvent(eventToModify);
         }
 
+        public List<Event> GetAllEvents()
+        {
+            return this.eventProvider.GetAllEvents();
+        }
+        #endregion
+
         #region Private methods
         private bool DoesTeamsEventExists(Team firstTeam, Team secondTeam, DateTime eventDate)
         {
@@ -100,12 +107,7 @@ namespace BusinessLogic
                 throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, teamName), ExceptionStatusCode.NotFound);
 
             return foundTeam;
-        }
-
-        public List<Event> GetAllEvents()
-        {
-            return this.eventProvider.GetAllEvents();
-        }
+        }        
         #endregion
     }
 }

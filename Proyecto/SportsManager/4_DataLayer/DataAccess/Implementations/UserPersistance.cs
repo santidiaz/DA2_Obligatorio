@@ -61,6 +61,8 @@ namespace DataAccess.Implementations
                 userOnDB.Name = userToModify.Name;
                 userOnDB.LastName = userToModify.LastName;
                 userOnDB.Email = userToModify.Email;
+                userOnDB.IsAdmin = userToModify.IsAdmin;
+                userOnDB.Password = userToModify.Password;
 
                 context.SaveChanges();
             }

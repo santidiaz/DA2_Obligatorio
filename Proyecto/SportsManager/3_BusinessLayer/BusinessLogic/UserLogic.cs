@@ -6,8 +6,6 @@ using CommonUtilities;
 using DataContracts;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace BusinessLogic
 {
@@ -22,6 +20,7 @@ namespace BusinessLogic
             this.teamProvider = teamPersistanceProvider;
         }
 
+        #region Public methods
         public bool DoesUserExists(string userName)
         {
             return this.userProvider.DoesUserExists(userName);
@@ -32,6 +31,7 @@ namespace BusinessLogic
             if (this.DoesUserExists(newUser.UserName))
                 throw new EntitiesException(Constants.UserError.USER_ALREDY_EXISTS, ExceptionStatusCode.Conflict);
 
+            newUser.Password = HashTool.GenerateHash(newUser.Password);
             this.userProvider.AddUser(newUser);
         }
 
@@ -64,7 +64,7 @@ namespace BusinessLogic
         public void ModifyUserFavouriteTeams(string userName, List<string> teamNames)
         {
             User foundUser = this.userProvider.GetUserByUserName(userName, true);
-            if(foundUser == null)
+            if (foundUser == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
             List<Team> newFavouriteTeams = new List<Team>();
@@ -112,6 +112,16 @@ namespace BusinessLogic
             this.userProvider.DeleteFavoriteTeamByUser(teamComplete, userComplete);
         }
 
+        public List<Event> GetCommentsOfUserFavouriteTemasEvents(string userName)
+        {
+            User user = this.GetUserByUserName(userName);
+            if (user == null)
+                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            return this.userProvider.GetCommentsOfUserFavouriteTemasEvents(user);
+        }
+        #endregion
+
         #region Private Methods
         private bool CheckForModifications(User userToModify, User userWithModifications)
         {
@@ -119,7 +129,7 @@ namespace BusinessLogic
             bool lastNameWasModified = this.ModifyLastName(userToModify, userWithModifications.LastName);
             bool emailWasModified = this.ModifyEmail(userToModify, userWithModifications.Email);
             bool passwordWasModified = this.ModifyPassword(userToModify, userWithModifications.Password);
-            bool isAdminFlagWasModified = userWithModifications.IsAdmin != userToModify.IsAdmin;
+            bool isAdminFlagWasModified = this.ModifyIsAdmin(userToModify, userWithModifications.IsAdmin);
 
             return (nameWasModified || lastNameWasModified || emailWasModified ||
                     passwordWasModified || isAdminFlagWasModified);
@@ -169,61 +179,19 @@ namespace BusinessLogic
         }
         private bool CheckForPasswordChanges(string userPasword, ref string newPassword)
         {
+            newPassword = HashTool.GenerateHash(newPassword);
             return !string.IsNullOrEmpty(newPassword)
-                && !userPasword.Equals(this.GenerateHash(newPassword));
+                && !userPasword.Equals(newPassword);
         }
-        private string GenerateHash(string input)
+        private bool ModifyIsAdmin(User userToModify, bool newAdminFlagValue)
         {
-            using (SHA1Managed sha1 = new SHA1Managed())
+            bool adminFlagWasModified = false;
+            if(newAdminFlagValue != userToModify.IsAdmin)
             {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
-                var sb = new StringBuilder(hash.Length * 2);
-
-                foreach (byte b in hash)
-                    sb.Append(b.ToString("X2"));
-
-                return sb.ToString();
+                adminFlagWasModified = true;
+                userToModify.IsAdmin = newAdminFlagValue;
             }
-        }
-
-        //public void AddFavoritesToUser(User mockedOriginalUser, List<Team> teamLists)
-        //{
-        //    User userToDelete = this.GetUserByUserName(mockedOriginalUser.UserName);
-        //    if (userToDelete == null)
-        //        throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
-
-        //    this.userProvider.AddFavoritesToUser(mockedOriginalUser, teamLists);
-        //}
-
-        //public List<UserTeam> GetFavoritesTeamsByUserName(string userName)
-        //{
-        //    User user = this.GetUserByUserName(userName);
-        //    if (user == null)
-        //        throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
-
-        //    return this.userProvider.GetFavoritesTeamsByUserName(user);
-        //}
-
-        //public void DeleteFavoriteTeamByUser(int teamOID, string user)
-        //{
-        //    User userComplete = this.GetUserByUserName(user);
-        //    if (userComplete == null)
-        //        throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
-
-        //    Team teamComplete = this.teamProvider.GetTeamByOID(teamOID);
-        //    if (teamComplete == null)
-        //        throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
-
-        //    this.userProvider.DeleteFavoriteTeamByUser(teamComplete, userComplete);
-        //}
-
-        public List<Event> GetCommentsOfUserFavouriteTemasEvents(string userName)
-        {
-            User user = this.GetUserByUserName(userName);
-            if (user == null)
-                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
-
-            return this.userProvider.GetCommentsOfUserFavouriteTemasEvents(user);
+            return adminFlagWasModified;
         }
         #endregion
     }

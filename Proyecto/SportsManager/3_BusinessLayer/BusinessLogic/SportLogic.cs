@@ -18,6 +18,7 @@ namespace BusinessLogic
             this.persistanceProvider = provider;
         }
 
+        #region Public methods
         public void AddSport(Sport sportToAdd)
         {
             if (this.IsSportInSystem(sportToAdd))
@@ -40,8 +41,8 @@ namespace BusinessLogic
         {
             Sport sportToModify = this.GetSportByName(nameSport);
 
-                sport.SportOID = sportToModify.SportOID;
-                this.persistanceProvider.ModifySportByName(sport);
+            sport.SportOID = sportToModify.SportOID;
+            this.persistanceProvider.ModifySportByName(sport);
         }
 
         public Sport GetSportByName(string name)
@@ -53,37 +54,32 @@ namespace BusinessLogic
             return sport;
         }
 
-        public bool DeleteSportByName(string name)
+        public void DeleteSportByName(string name)
         {
-            try
-            {
-                bool result = true;
-                Sport sportToDelete = this.GetSportByName(name);
-
-                if (sportToDelete != null && !this.ValidateSportOnTeams(sportToDelete))
-                    this.persistanceProvider.DeleteSportByName(sportToDelete);
-                else
-                    result = false;
-
-                return result;
-            }
-            catch (Exception ex)
-            {
+            Sport sportToDelete = this.GetSportByName(name);
+            if (sportToDelete == null)
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
-            }
+
+            if (this.ValidateSportOnTeams(sportToDelete))
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_HAS_TEAMS, ExceptionStatusCode.Conflict);
+
+            this.persistanceProvider.DeleteSportByName(sportToDelete);
         }
 
         public List<Event> GetEventsBySport(string sportName)
         {
-                List<Event> events = new List<Event>();
-                Sport sport = this.GetSportByName(sportName);
-                
-                return this.persistanceProvider.GetEventsBySport(sport);
-        }
+            List<Event> events = new List<Event>();
+            Sport sport = this.GetSportByName(sportName);
 
-        public bool ValidateSportOnTeams(Sport sport)
+            return this.persistanceProvider.GetEventsBySport(sport);
+        }
+        #endregion
+
+        #region Private Methods
+        private bool ValidateSportOnTeams(Sport sport)
         {
             return persistanceProvider.ValidateSportOnTeams(sport);
         }
+        #endregion
     }
 }

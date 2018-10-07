@@ -82,7 +82,7 @@ namespace DataAccess.Implementations
             return result;
         }
 
-        public void ModifyTeamByName(string name, Team teamToModify)
+        public void ModifyTeam(Team teamToModify)
         {
             using (Context context = new Context())
             {

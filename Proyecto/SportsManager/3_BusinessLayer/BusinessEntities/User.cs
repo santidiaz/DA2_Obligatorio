@@ -1,4 +1,5 @@
-﻿using BusinessEntities.JoinEntities;
+﻿using BusinessEntities.Exceptions;
+using BusinessEntities.JoinEntities;
 using CommonUtilities;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace BusinessEntities
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.UserError.NAME_REQUIRED);
+                    throw new EntitiesException(Constants.UserError.NAME_REQUIRED, ExceptionStatusCode.InvalidData);
 
                 this._name = value;
             }
@@ -35,7 +36,7 @@ namespace BusinessEntities
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.UserError.LAST_NAME_REQUIRED);
+                    throw new EntitiesException(Constants.UserError.LAST_NAME_REQUIRED, ExceptionStatusCode.InvalidData);
 
                 this._lastName = value;
             }
@@ -46,7 +47,7 @@ namespace BusinessEntities
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.UserError.USER_NAME_REQUIRED);
+                    throw new EntitiesException(Constants.UserError.USER_NAME_REQUIRED, ExceptionStatusCode.InvalidData);
 
                 this._userName = value;
             }
@@ -67,7 +68,7 @@ namespace BusinessEntities
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.UserError.PASSWORD_REQUIRED);
+                    throw new EntitiesException(Constants.UserError.PASSWORD_REQUIRED, ExceptionStatusCode.InvalidData);
 
                 this._password = value;
             }
@@ -116,7 +117,7 @@ namespace BusinessEntities
             }
             catch
             {
-                throw new Exception(Constants.UserError.INVALID_EMAIL_FORMAT);
+                throw new EntitiesException(Constants.UserError.INVALID_EMAIL_FORMAT, ExceptionStatusCode.InvalidData);
             }
         }
         #endregion 

@@ -9,7 +9,7 @@ namespace DataContracts
     {
         void AddTeam(Team newTeam, int sportOID);
         List<Team> GetTeams(bool asc, string teamName);
-        void ModifyTeamByName(string name, Team newTeam);
+        void ModifyTeam(Team teamWithModifications);
         Team GetTeamByName(string name);
         void DeleteTeamByName(Team team);
         bool IsTeamInSystem(Team team);
