@@ -13,12 +13,15 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
+                // Filter DB users with !null && !Emprty tokens on DB
+                // Check if exists a User with the same token as the one given by parameter
+                // If adminRequired check that the user found has [IsAdmin = true] otherwise return OK.
                 return context.Users.OfType<User>()
                     .Where(u => 
                         u.Token != null && 
                         !u.Token.Equals(Guid.Empty) && 
                         u.Token.Equals(token) && 
-                        u.IsAdmin.Equals(adminRequired)).Any();
+                        (adminRequired ? u.IsAdmin.Equals(adminRequired) : true)).Any();
             }
         }
 

@@ -129,7 +129,7 @@ namespace BusinessLogic
             bool lastNameWasModified = this.ModifyLastName(userToModify, userWithModifications.LastName);
             bool emailWasModified = this.ModifyEmail(userToModify, userWithModifications.Email);
             bool passwordWasModified = this.ModifyPassword(userToModify, userWithModifications.Password);
-            bool isAdminFlagWasModified = userWithModifications.IsAdmin != userToModify.IsAdmin;
+            bool isAdminFlagWasModified = this.ModifyIsAdmin(userToModify, userWithModifications.IsAdmin);
 
             return (nameWasModified || lastNameWasModified || emailWasModified ||
                     passwordWasModified || isAdminFlagWasModified);
@@ -179,8 +179,19 @@ namespace BusinessLogic
         }
         private bool CheckForPasswordChanges(string userPasword, ref string newPassword)
         {
+            newPassword = HashTool.GenerateHash(newPassword);
             return !string.IsNullOrEmpty(newPassword)
-                && !userPasword.Equals(HashTool.GenerateHash(newPassword));
+                && !userPasword.Equals(newPassword);
+        }
+        private bool ModifyIsAdmin(User userToModify, bool newAdminFlagValue)
+        {
+            bool adminFlagWasModified = false;
+            if(newAdminFlagValue != userToModify.IsAdmin)
+            {
+                adminFlagWasModified = true;
+                userToModify.IsAdmin = newAdminFlagValue;
+            }
+            return adminFlagWasModified;
         }
         #endregion
     }
