@@ -536,7 +536,33 @@ namespace UnitTests.LogicTests
                 Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_NOT_FOUND));
             }
         }
-        
+
+        [TestMethod]
+        public void TryGetCommentsOfAUserThatDoNotExits()
+        {
+            try
+            {
+                var userMock = new Mock<IUserPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
+                User mockedUser = Utility.GenerateRandomUser();
+
+                userMock.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns((User)null);
+
+                UserLogic userLogic = new UserLogic(userMock.Object, teamMock.Object);
+
+                List<Event> result = userLogic.GetCommentsOfUserFavouriteTemasEvents(mockedUser.UserName);
+                Assert.Fail();
+            }
+            catch(EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, Constants.UserError.USER_NOT_FOUND);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
         [TestMethod]
         public void TryModifyUserThatDoNotExists()
         {
