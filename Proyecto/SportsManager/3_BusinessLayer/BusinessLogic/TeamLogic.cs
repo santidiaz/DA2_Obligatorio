@@ -40,7 +40,7 @@ namespace BusinessLogic
             {
                 foreach (var teamAux in systemTeams)
                 {
-                    if (teamAux.Equals(team)) { result = true; };
+                    if (teamAux.Name == team.Name) { result = true; };
 
                 }
             }
