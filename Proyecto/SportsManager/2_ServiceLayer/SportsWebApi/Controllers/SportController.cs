@@ -104,7 +104,7 @@ namespace SportsWebApi.Controllers
             {
                 return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }
@@ -128,7 +128,6 @@ namespace SportsWebApi.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
                 return this.StatusCode(500, ex.Message);
             }
         }
