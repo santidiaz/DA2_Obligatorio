@@ -99,17 +99,17 @@ namespace BusinessLogic
             return this.userProvider.GetFavoritesTeamsByUserName(user);
         }
 
-        public void DeleteFavoriteTeamByUser(int teamOID, string user)
+        public void DeleteFavoriteTeamByUser(int teamOID, string userName)
         {
-            User userComplete = this.GetUserByUserName(user);
+            User userComplete = this.GetUserByUserName(userName);
             if (userComplete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            Team teamComplete = this.teamProvider.GetTeamByOID(teamOID);
-            if (teamComplete == null)
-                throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
+            Team foundTeam = this.teamProvider.GetTeamByOID(teamOID);
+            if (foundTeam == null)
+                throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
-            this.userProvider.DeleteFavoriteTeamByUser(teamComplete, userComplete);
+            this.userProvider.DeleteFavoriteTeamByUser(foundTeam, userComplete);
         }
 
         public List<Event> GetCommentsOfUserFavouriteTemasEvents(string userName)

@@ -716,5 +716,33 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void TryDeleteUserFavouriteTeamThatDoNotExists()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+
+                User mockedUser = Utility.GenerateRandomUser();
+
+                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
+                mockTeamPersitance.Setup(tm => tm.GetTeamByOID(It.IsAny<int>())).Returns((Team)null);
+
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+
+                userLogic.DeleteFavoriteTeamByUser(1, mockedUser.UserName);
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
