@@ -39,14 +39,9 @@ namespace BusinessLogic
         public void ModifySportByName(string nameSport, Sport sport)
         {
             Sport sportToModify = this.GetSportByName(nameSport);
-            
-            if (sportToModify == null)
-                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
-            else
-            {
+
                 sport.SportOID = sportToModify.SportOID;
                 this.persistanceProvider.ModifySportByName(sport);
-            }
         }
 
         public Sport GetSportByName(string name)
@@ -80,20 +75,10 @@ namespace BusinessLogic
 
         public List<Event> GetEventsBySport(string sportName)
         {
-            try
-            {
                 List<Event> events = new List<Event>();
                 Sport sport = this.GetSportByName(sportName);
-
-                if (sport != null)
-                    return this.persistanceProvider.GetEventsBySport(sport);
-                else
-                    return events;
-            }
-            catch (Exception ex)
-            {
-                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
-            }
+                
+                return this.persistanceProvider.GetEventsBySport(sport);
         }
 
         public bool ValidateSportOnTeams(Sport sport)
