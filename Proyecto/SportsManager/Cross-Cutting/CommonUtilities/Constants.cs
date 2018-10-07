@@ -64,6 +64,7 @@ namespace CommonUtilities
             public const string ERROR_SPORT_NOT_EXISTS = "Sport not exists";
             public const string NOT_ENOUGH_TEAMS = "Not enough teams in the sport";
             public const string TEAM_NOT_IN_SPORT = "Team <{0}> does no belong to sport";
+            public const string ERROR_SPORT_HAS_TEAMS = "Can't delete sport with teams";
         }
 
         public static class PermissionError

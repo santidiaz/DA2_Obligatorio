@@ -34,7 +34,7 @@ namespace BusinessEntities
 
                 this._photo = value;
             }
-        } //ver como guardar foto.
+        }
 
         public Team()
         {

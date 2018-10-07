@@ -22,7 +22,7 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(false)]
         [HttpGet("{teamName}")]
-        public IActionResult GetTeamByUserName(string teamName)
+        public IActionResult GetTeamByName(string teamName)
         {
             try
             {
@@ -38,7 +38,6 @@ namespace SportsWebApi.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
                 return this.StatusCode(500, ex.Message);
             }
         }
@@ -55,10 +54,13 @@ namespace SportsWebApi.Controllers
                 Team newTeam = new Team { Name = input.TeamName };
 
                 var file = HttpContext.Request.Form.Files.GetFile("Image");
-                using (var memoryStream = new MemoryStream())
+                if(file != null)
                 {
-                    file.CopyTo(memoryStream);
-                    newTeam.Photo = memoryStream.ToArray();
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        file.CopyTo(memoryStream);
+                        newTeam.Photo = memoryStream.ToArray();
+                    }
                 }
 
                 teamOperations.AddTeam(newTeam, input.SportID);
@@ -76,7 +78,7 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(true)]
         [HttpDelete("{teamName}")]
-        public IActionResult DeleteTeamByUserName(string teamName)
+        public IActionResult DeleteTeamByName(string teamName)
         {
             try
             {
@@ -87,7 +89,7 @@ namespace SportsWebApi.Controllers
             {
                 return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }
@@ -95,34 +97,32 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(true)]
         [HttpPut()]
-        public IActionResult ModifyTeamByName([FromBody] ModifyTeamInput modifyTeamInput)
+        public IActionResult ModifyTeamByName([FromForm] ModifyTeamInput input)
         {
             try
             {
-                if (modifyTeamInput == null) return BadRequest();
+                if (input == null) return BadRequest();
 
-                Team modifyTeam = new Team
+                Team modifyTeam = new Team { Name = input.NewName };
+
+                var file = HttpContext.Request.Form.Files.GetFile("Image");
+                if (file != null)
                 {
-                    Name = modifyTeamInput.NewName
-                };
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        file.CopyTo(memoryStream);
+                        modifyTeam.Photo = memoryStream.ToArray();
+                    }
+                }
 
-                //var file = HttpContext.Request.Form.Files.GetFile("image");
-
-                //using (var memoryStream = new MemoryStream())
-                //{
-
-                //    file.CopyTo(memoryStream);
-                //    modifyTeam.Photo = memoryStream.ToArray();
-                //}
-                modifyTeam.Photo = new byte[5];
-                teamOperations.ModifyTeamByName(modifyTeamInput.OldName, modifyTeam);
+                teamOperations.ModifyTeamByName(input.OldName, modifyTeam);
                 return Ok();
             }
             catch (EntitiesException ex)
             {
                 return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }
@@ -146,7 +146,6 @@ namespace SportsWebApi.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
                 return this.StatusCode(500, ex.Message);
             }
         }
@@ -166,7 +165,6 @@ namespace SportsWebApi.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
                 return this.StatusCode(500, ex.Message);
             }
         }

@@ -22,16 +22,13 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(true)]
         [HttpPost()]
-        public IActionResult AddSport([FromBody] AddSportInput addSportInput)
+        public IActionResult AddSport([FromBody] AddSportInput input)
         {
             try
             {
-                if (addSportInput == null) return BadRequest();
+                if (input == null) return BadRequest();
 
-                Sport newSport = new Sport
-                {
-                    Name = addSportInput.Name
-                };
+                Sport newSport = new Sport { Name = input.Name };
                 
                 sportOperations.AddSport(newSport);
                 return Ok();
@@ -40,7 +37,7 @@ namespace SportsWebApi.Controllers
             {
                 return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }
@@ -48,7 +45,7 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(false)]
         [HttpGet("{sportName}")]
-        public IActionResult GetSportByUserName(string sportName)
+        public IActionResult GetSportByName(string sportName)
         {
             try
             {
@@ -64,14 +61,13 @@ namespace SportsWebApi.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Ver como manejar las exceptions, por ejemplo si es NOT_FOUND de BL
                 return this.StatusCode(500, ex.Message);
             }
         }
 
         [PermissionFilter(true)]
         [HttpDelete("{sportName}")]
-        public IActionResult DeleteSportByUserName(string sportName)
+        public IActionResult DeleteSportByName(string sportName)
         {
             try
             {
@@ -82,7 +78,7 @@ namespace SportsWebApi.Controllers
             {
                 return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }

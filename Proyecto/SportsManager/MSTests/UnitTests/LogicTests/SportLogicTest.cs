@@ -159,19 +159,26 @@ namespace UnitTests.LogicTests
             try
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
-                var mock = new Mock<ISportPersistance>();
-                mock.Setup(up => up.ValidateSportOnTeams(It.IsAny<Sport>())).Returns(true);
+                var sportMock = new Mock<ISportPersistance>();
+
+                Sport mockedSport = Utility.GenerateRandomSport();
+                sportMock.Setup(sp => sp.GetSportByName(mockedSport.Name, true)).Returns(mockedSport);
+                sportMock.Setup(sp => sp.ValidateSportOnTeams(It.IsAny<Sport>())).Returns(true);
 
                 // Instancio SportLogic con el mock como parametro.
-                SportLogic userLogic = new SportLogic(mock.Object);
-                Sport sportToAdd = Utility.GenerateRandomSport();
-                bool result = userLogic.ValidateSportOnTeams(sportToAdd);
+                SportLogic userLogic = new SportLogic(sportMock.Object);
+                
+                userLogic.DeleteSportByName(mockedSport.Name);
 
-                Assert.IsTrue(result);
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, Constants.SportErrors.ERROR_SPORT_HAS_TEAMS);
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
+                Assert.Fail(ex.Message);
             }
         }
 
