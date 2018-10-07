@@ -45,37 +45,33 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(true)]
         [HttpPost()]
-        public IActionResult AddTeam([FromBody] AddTeamInput addTeamInput)
+        public IActionResult AddTeam([FromForm] AddTeamInput input)
         {
             try
             {
-                if (addTeamInput == null) return BadRequest();
+                if (input == null)
+                    return BadRequest();
 
-                Team newTeam = new Team
+                Team newTeam = new Team { Name = input.TeamName };
+
+                var file = HttpContext.Request.Form.Files.GetFile("Image");
+                using (var memoryStream = new MemoryStream())
                 {
-                    Name = addTeamInput.Name
-                };
+                    file.CopyTo(memoryStream);
+                    newTeam.Photo = memoryStream.ToArray();
+                }
 
-                //var file = HttpContext.Request.Form.Files.GetFile("image");
-
-                //using (var memoryStream = new MemoryStream())
-                //{
-                //    file.CopyTo(memoryStream);
-                //    newTeam.Photo = memoryStream.ToArray();
-                //}
-                newTeam.Photo = new byte[5];    
-
-                teamOperations.AddTeam(newTeam, addTeamInput.SportOID);
+                teamOperations.AddTeam(newTeam, input.SportID);
                 return Ok();
             }
-            catch(EntitiesException ex)
+            catch (EntitiesException eEx)
             {
-                return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (Exception ex) 
             {
                 return this.StatusCode(500, ex.Message);
-            }
+            }           
         }
 
         [PermissionFilter(true)]

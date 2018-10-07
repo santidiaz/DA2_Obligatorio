@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SportsWebApi.Models.TeamModel
 {
     public class AddTeamInput
     {
-        public string Name { get; set; }
-        public int SportOID { get; set; }
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(15)]
+        public string TeamName { get; set; }
+
+        [Required(ErrorMessage = "SportId required.")]
+        public int SportID { get; set; }
     }
 }
