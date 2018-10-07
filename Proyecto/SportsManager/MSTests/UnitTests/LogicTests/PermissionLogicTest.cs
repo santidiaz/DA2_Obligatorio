@@ -111,5 +111,32 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void HasPermissionTest()
+        {
+            try
+            {
+                var permissionMock = new Mock<IPermissionPersistance>();
+                var userPersistanceMock = new Mock<IUserPersistance>();
+
+                permissionMock.Setup(pp =>
+                    pp.HasPermission(It.IsAny<Guid>(), true)).Returns(true);
+
+                //Start test
+                var permissionLogic = new PermissionLogic.PermissionLogic(permissionMock.Object, userPersistanceMock.Object);
+
+                bool result = permissionLogic.HasPermission(Guid.NewGuid(), true);
+                Assert.IsTrue(result);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
