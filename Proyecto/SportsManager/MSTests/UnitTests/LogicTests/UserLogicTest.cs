@@ -510,34 +510,7 @@ namespace UnitTests.LogicTests
                 Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_NOT_FOUND));
             }
         }
-
-        [TestMethod]
-        public void DeleteFavoriteTeamByUser()
-        {
-            try
-            {
-                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
-                var mock = new Mock<IUserPersistance>();
-                var mockTeam = new Mock<ITeamPersistance>();
-                User mockedUserToDelete = Utility.GenerateRandomUser("userName");
-
-                mock.Setup(up => up.GetUserByUserName("userName", true)).Returns(mockedUserToDelete);
-                mock.Setup(up => up.DeleteFavoriteTeamByUser(It.IsAny<Team>(), mockedUserToDelete)).Verifiable();
-
-                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
-                string userToBeDeleted = "userName";
-                int teamOID = 1;
-
-                userLogic.DeleteFavoriteTeamByUser(teamOID, userToBeDeleted);
-
-                Assert.IsTrue(true);
-            }
-            catch (Exception ex)
-            {
-                Assert.IsTrue(true);
-            }
-        }
-
+        
         [TestMethod]
         public void DeleteFavoriteTeamByUserThatNotExists()
         {
@@ -563,30 +536,7 @@ namespace UnitTests.LogicTests
                 Assert.IsTrue(ex.Message.Equals(Constants.UserError.USER_NOT_FOUND));
             }
         }
-
-        [TestMethod]
-        public void GetCommentsOfUserFavouriteTemasEvents()
-        {
-            try
-            {
-                var mock = new Mock<IUserPersistance>();
-                var mockTeam = new Mock<ITeamPersistance>();
-                User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
-
-                mock.Setup(up => up.GetUserByUserName("userName", true)).Verifiable();
-                mock.Setup(up => up.GetCommentsOfUserFavouriteTemasEvents(It.IsAny<User>())).Returns(new List<Event>());
-
-                UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
-                userLogic.GetCommentsOfUserFavouriteTemasEvents("userName");
-
-                Assert.IsTrue(true);
-            }
-            catch (Exception ex)
-            {
-                Assert.IsTrue(true);
-            }
-        }
-
+        
         [TestMethod]
         public void TryModifyUserThatDoNotExists()
         {
@@ -738,6 +688,35 @@ namespace UnitTests.LogicTests
             catch (EntitiesException eEx)
             {
                 Assert.AreEqual(eEx.Message, Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void DeleteFavouriteTeamsByUserTest()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+
+                User mockedUser = Utility.GenerateRandomUser();
+                Team mockedTeam = Utility.GenerateRandomTeam();
+
+                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
+                mockTeamPersitance.Setup(tm => tm.GetTeamByOID(It.IsAny<int>())).Returns(mockedTeam);
+
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+
+                userLogic.DeleteFavoriteTeamByUser(mockedTeam.TeamOID, mockedUser.UserName);
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
             }
             catch (Exception ex)
             {
