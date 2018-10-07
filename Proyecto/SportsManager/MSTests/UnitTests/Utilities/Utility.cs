@@ -100,6 +100,18 @@ namespace UnitTests.Utilities
             return randomUser;
         }
 
+        public static List<Team> GetRandomTeamList()
+        {
+            return new List<Team>
+            {
+                GenerateRandomTeam("teamA"),
+                GenerateRandomTeam("teamB"),
+                GenerateRandomTeam("teamC"),
+                GenerateRandomTeam("teamD"),
+                GenerateRandomTeam("teamE")
+            };
+        }
+
         public static string GetRandomName()
         {
             Random randomNumber = new Random(DateTime.Now.Second);

@@ -586,5 +586,96 @@ namespace UnitTests.LogicTests
                 Assert.IsTrue(true);
             }
         }
+
+        [TestMethod]
+        public void TryModifyUserThatDoNotExists()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+                mockUserPersitance.Setup(up => up.GetUserByUserName(It.IsAny<string>(), false)).Returns((User)null);
+
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+                User modifiedUser = Utility.GenerateRandomUser();
+
+                userLogic.ModifyUser(modifiedUser);
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, Constants.UserError.USER_NOT_FOUND);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void AddFavouritesToUserTest()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+                User mockedUser = Utility.GenerateRandomUser();
+                List<Team> favouriteTeams = Utility.GetRandomTeamList();
+
+                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
+                mockUserPersitance.Setup(up => up.AddFavoritesToUser(mockedUser, favouriteTeams)).Verifiable();
+                
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+                User modifiedUser = Utility.GenerateRandomUser(mockedUser.UserName);
+
+                userLogic.AddFavoritesToUser(modifiedUser, favouriteTeams);
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void GetFavouriteTeamsByUserNameTest()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+
+                User mockedUser = Utility.GenerateRandomUser();
+                List<Team> favouriteTeams = Utility.GetRandomTeamList();
+                Team team1 = Utility.GenerateRandomTeam("t1");
+                Team team2 = Utility.GenerateRandomTeam("t2");
+                Team team3 = Utility.GenerateRandomTeam("t3");
+
+                List<UserTeam> mockedUserTeams = new List<UserTeam>();
+                UserTeam ut1 = new UserTeam { Team = team1, User = mockedUser };
+                UserTeam ut2 = new UserTeam { Team = team2, User = mockedUser };
+                UserTeam ut3 = new UserTeam { Team = team3, User = mockedUser };
+
+                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
+                mockUserPersitance.Setup(up => up.GetFavoritesTeamsByUserName(mockedUser)).Returns(mockedUserTeams);
+
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+
+                List<UserTeam> result = userLogic.GetFavoritesTeamsByUserName(mockedUser.UserName);
+                Assert.IsNotNull(result);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.Fail(eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

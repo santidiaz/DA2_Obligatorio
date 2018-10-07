@@ -1,0 +1,1142 @@
+{
+	"info": {
+		"_postman_id": "274d78fa-9c0b-4f65-9388-6403492408cf",
+		"name": "Obligatorio1_DA2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "SuccessfulLogIn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "60d095a9-eed5-431d-a129-3d0288f0a08d",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"pm.environment.set(\"tokenValue\", data);"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "37eed0e6-65cd-44d3-aa30-4ccbe3e15333",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\":\"superadmin\",\n    \"password\": \"123456\",\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/authentication/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"authentication",
+								"login"
+							]
+						},
+						"description": "SuperAdmin login"
+					},
+					"response": []
+				},
+				{
+					"name": "SuccessfulLogOut",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f207023a-c305-4906-8f46-cf5fbc8e392b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"tokenValue\", \"\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\":\"superadmin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/authentication/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"authentication",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MainPage",
+			"item": [
+				{
+					"name": "GetCommentsOfUserFavouriteTemasEvents",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/user/superadmin/favoriteTeamComments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"superadmin",
+								"favoriteTeamComments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllEvents",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/event/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"event",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserRequests",
+			"item": [
+				{
+					"name": "AddUserRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"userName\":\"vegeta\",\r\n    \"name\": \"donVegeta\",\r\n    \"lastName\": \"king\",\r\n    \"email\": \"ddd@ccc.com\",\r\n    \"password\": \"123456\",\r\n    \"isAdmin\":0\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						},
+						"description": "Add a new user to the system."
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByUserName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\":\"testingUserName\",\n    \"name\": \"nameTest\",\n    \"lastName\": \"lstNametest\",\n    \"email\": \"asda@das.com\",\n    \"password\": \"321654\",\n    \"isAdmin\":1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/goku",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"goku"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserByUserName",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/user/goku",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"goku"
+							]
+						},
+						"description": "Delete a user by a given UserName"
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyUserRequest",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"SonGoku\",\n    \"lastName\": \"changedLastName\",\n    \"email\": \"mail@changed.com\",\n    \"password\": \"123456\",\n    \"isAdmin\":1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/goku",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"goku"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "All request managed by the userController should go here."
+		},
+		{
+			"name": "SportRequests",
+			"item": [
+				{
+					"name": "AddSport",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\":\"Rugby\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/sport/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sport",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSportByName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/sport/football",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sport",
+								"football"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTeamByName",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/sport/Futbol",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sport",
+								"Futbol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifySportByName",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"OldName\":\"Football\",\n\t\"NewName\":\"Futbol\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/sport",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sport"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEventsBySport",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/sport/futbol/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sport",
+								"futbol",
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TeamRequests",
+			"item": [
+				{
+					"name": "GetTeamByName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/team/Nacional",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team",
+								"Nacional"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTeamRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Image",
+									"type": "file"
+								},
+								{
+									"key": "TeamName",
+									"value": "Penarol",
+									"type": "text"
+								},
+								{
+									"key": "SportID",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/team",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyTeamByName",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Image",
+									"type": "file"
+								},
+								{
+									"key": "OldName",
+									"value": "Barcelona",
+									"type": "text"
+								},
+								{
+									"key": "NewName",
+									"value": "FC Barcelona",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/team/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEventsByTeam",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/team/Nacional/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team",
+								"Nacional",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTeamByName",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/team/CNF",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team",
+								"CNF"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTeams",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/team?orderAsc=false&teamName=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team"
+							],
+							"query": [
+								{
+									"key": "orderAsc",
+									"value": "false"
+								},
+								{
+									"key": "teamName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "All requests managed by TeamController should go here."
+		},
+		{
+			"name": "EventRequests",
+			"item": [
+				{
+					"name": "AddEventRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "auth",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"sportName\":\"Baseball\",\n    \"localTeamName\": \"Nacional\",\n    \"awayTeamName\": \"Fenix\",\n    \"eventDate\": \"2018-10-20\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/event/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"event",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEventByIdRequest",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/event/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"event",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyEventRequest",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"localTeamName\":\"Juventus\",\n    \"awayTeamName\": \"Nacional\",\n    \"initialDate\":\"2018-10-20\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/event/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"event",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEventById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/event/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"event",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CommentFolder",
+			"item": [
+				{
+					"name": "AddComment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Description\":\"Descripción 3\",\n\t\"CreatorName\":\"superadmin\",\n\t\"EventOID\":2\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/comment/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comment",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favorites",
+			"item": [
+				{
+					"name": "AddFavoritesToUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserName\": \"superadmin\",\n\t\"NetFavouriteTeamsOID\": [1,2]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/superadmin/addfavorites/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"superadmin",
+								"addfavorites",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyUserFavouriteTeams",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"vegeta\",\n\t\"teamNames\": [\"Fenix\", \"Defensor\"]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/modifyUserFavouriteTeams",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"modifyUserFavouriteTeams"
+							]
+						},
+						"description": "Send a list of team names to be modified, if the list is null/empty, then all user favourite teams will be deleted.\nThis list will override all favourite teams."
+					},
+					"response": []
+				},
+				{
+					"name": "GetFavoritesTeamsByUserName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/user/superadmin/favorites/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"superadmin",
+								"favorites",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteFavoriteTeamByUser",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/user/superadmin/favorite/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"superadmin",
+								"favorite",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FixtureGenerationRequests",
+			"item": [
+				{
+					"name": "GenerateRoundRobin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fixtureType\":2,\n    \"sportName\": \"Futbol\",\n    \"initialDate\":\"2018-10-20\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/event/GenerateFixture?fixtureType=2&sportName=Futbol&initialDate=2018-10-20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"event",
+								"GenerateFixture"
+							],
+							"query": [
+								{
+									"key": "fixtureType",
+									"value": "2"
+								},
+								{
+									"key": "sportName",
+									"value": "Futbol"
+								},
+								{
+									"key": "initialDate",
+									"value": "2018-10-20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GenerateFinalPhase",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{tokenValue}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5000/api/event/GenerateFixture?fixtureType=1&sportName=baseball&initialDate=2018-10-20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"event",
+								"GenerateFixture"
+							],
+							"query": [
+								{
+									"key": "fixtureType",
+									"value": "1"
+								},
+								{
+									"key": "sportName",
+									"value": "baseball"
+								},
+								{
+									"key": "initialDate",
+									"value": "2018-10-20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
