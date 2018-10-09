@@ -11,8 +11,8 @@ namespace BusinessContracts
         List<Team> GetTeams(bool asc, string teamName);
         void ModifyTeamByName(string name, Team team);
         Team GetTeamByName(string name);
+        Team GetTeamByOID(int oid);
         bool DeleteTeamByName(string name);
         List<Event> GetEventsByTeam(string team);
-        Team GetTeamByOID(int oid);
     }
 }

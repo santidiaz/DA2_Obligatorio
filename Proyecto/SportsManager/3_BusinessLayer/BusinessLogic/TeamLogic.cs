@@ -20,6 +20,7 @@ namespace BusinessLogic
             this.persistanceProvideSport = sportProvider;
         }
 
+        #region Public methods
         public void AddTeam(Team newTeam, int sportOID)
         {
             if (this.IsTeamInSystem(newTeam))
@@ -30,21 +31,6 @@ namespace BusinessLogic
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.Conflict);
             else
                 this.persistanceProvideTeam.AddTeam(newTeam, sportOID);
-        }
-
-        private bool IsTeamInSystem(Team team)
-        {
-            bool result = false;
-            List<Team> systemTeams = this.persistanceProvideTeam.GetTeams(true, string.Empty);
-            if (systemTeams != null)
-            {
-                foreach (var teamAux in systemTeams)
-                {
-                    if (teamAux.Name == team.Name) { result = true; };
-
-                }
-            }
-            return result;
         }
 
         public List<Team> GetTeams(bool asc, string teamName)
@@ -65,7 +51,7 @@ namespace BusinessLogic
             Team team = this.persistanceProvideTeam.GetTeamByName(name);
             if (team == null)
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
-            
+
             return team;
         }
 
@@ -97,7 +83,7 @@ namespace BusinessLogic
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }
         }
-        
+
         public List<Event> GetEventsByTeam(string teamName)
         {
             try
@@ -112,11 +98,27 @@ namespace BusinessLogic
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }
         }
+        #endregion
 
-        public bool ValidateTeamOnEvents(Team team)
+        #region Private metods
+        private bool IsTeamInSystem(Team team)
+        {
+            bool result = false;
+            List<Team> systemTeams = this.persistanceProvideTeam.GetTeams(true, string.Empty);
+            if (systemTeams != null)
+            {
+                foreach (var teamAux in systemTeams)
+                {
+                    if (teamAux.Name == team.Name) { result = true; };
+
+                }
+            }
+            return result;
+        }
+        private bool ValidateTeamOnEvents(Team team)
         {
             return persistanceProvideTeam.ValidateTeamOnEvents(team);
         }
-
+        #endregion
     }
 }

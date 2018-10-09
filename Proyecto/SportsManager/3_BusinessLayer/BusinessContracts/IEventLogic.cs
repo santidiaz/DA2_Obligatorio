@@ -9,9 +9,9 @@ namespace BusinessContracts
     public interface IEventLogic
     {
         void AddEvent(string sportName, string firstTeamName, string secondTeamName, DateTime eventDate);
-        void DeleteEventById(int eventId);
         Event GetEventById(int eventId);
-        List<Event> GetAllEvents();
+        void DeleteEventById(int eventId);
         void ModifyEvent(int eventId, string localTeamName, string awayTeamName, DateTime initialDate);
+        List<Event> GetAllEvents();
     }
 }

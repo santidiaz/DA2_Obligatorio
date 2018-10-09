@@ -18,6 +18,7 @@ namespace PermissionLogic
             this.usersPersistance = usersProvider;
         }
 
+        #region Public methods
         public bool HasPermission(Guid token, bool isAdminRequired)
         {
             return this.permissionPersistance.HasPermission(token, isAdminRequired);
@@ -44,6 +45,7 @@ namespace PermissionLogic
         {
             this.permissionPersistance.LogOut(userName);
         }
+        #endregion
 
         #region Private methods
         private bool IsUserPasswordValid(string userPassword, string passwordToBeCompared)

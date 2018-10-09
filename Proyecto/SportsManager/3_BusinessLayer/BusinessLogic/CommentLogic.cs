@@ -11,13 +11,13 @@ namespace BusinessLogic
 {
     public class CommentLogic : ICommentLogic
     {
-        private ICommentPersistance persistanceProvider;
+        private ICommentPersistance commentPersistanceProvider;
         private IEventPersistance eventPersistanceProvider;
 
-        public CommentLogic(ICommentPersistance provider, IEventPersistance eventPersistanceProvider)
+        public CommentLogic(ICommentPersistance commentProvider, IEventPersistance eventProvider)
         {
-            this.persistanceProvider = provider;
-            this.eventPersistanceProvider = eventPersistanceProvider;
+            this.commentPersistanceProvider = commentProvider;
+            this.eventPersistanceProvider = eventProvider;
         }
 
         public void AddComment(Comment commentToAdd, int eventOID)
@@ -33,15 +33,14 @@ namespace BusinessLogic
 
             }
             if (result)
-                this.persistanceProvider.AddComment(commentToAdd, eventOID);
+                this.commentPersistanceProvider.AddComment(commentToAdd, eventOID);
             else
                 throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
         }
 
         public bool UserCreatorExists(Comment commentToAdd)
         {
-            return this.persistanceProvider.UserCreatorExists(commentToAdd.CreatorName);
+            return this.commentPersistanceProvider.UserCreatorExists(commentToAdd.CreatorName);
         }
-
     }
 }
