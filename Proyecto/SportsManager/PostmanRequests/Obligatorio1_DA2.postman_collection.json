@@ -15,21 +15,21 @@
 							"listen": "test",
 							"script": {
 								"id": "60d095a9-eed5-431d-a129-3d0288f0a08d",
-								"type": "text/javascript",
 								"exec": [
 									"var data = JSON.parse(responseBody);",
 									"pm.environment.set(\"tokenValue\", data);"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
 								"id": "37eed0e6-65cd-44d3-aa30-4ccbe3e15333",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -46,12 +46,12 @@
 							"raw": "{\n\t\"userName\":\"superadmin\",\n    \"password\": \"123456\",\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/authentication/login",
+							"raw": "http://localhost:{{portValue}}/api/authentication/login",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"authentication",
@@ -69,10 +69,10 @@
 							"listen": "test",
 							"script": {
 								"id": "f207023a-c305-4906-8f46-cf5fbc8e392b",
-								"type": "text/javascript",
 								"exec": [
 									"pm.environment.set(\"tokenValue\", \"\");"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -89,12 +89,12 @@
 							"raw": "{\n\t\"userName\":\"superadmin\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/authentication/logout",
+							"raw": "http://localhost:{{portValue}}/api/authentication/logout",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"authentication",
@@ -125,12 +125,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/user/superadmin/favoriteTeamComments",
+							"raw": "http://localhost:{{portValue}}/api/user/superadmin/favoriteTeamComments",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -157,12 +157,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/event/",
+							"raw": "http://localhost:{{portValue}}/api/event/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"event",
@@ -196,12 +196,12 @@
 							"raw": "{\r\n\t\"userName\":\"vegeta\",\r\n    \"name\": \"donVegeta\",\r\n    \"lastName\": \"king\",\r\n    \"email\": \"ddd@ccc.com\",\r\n    \"password\": \"123456\",\r\n    \"isAdmin\":0\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/user/",
+							"raw": "http://localhost:{{portValue}}/api/user/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -227,12 +227,12 @@
 							"raw": "{\n\t\"userName\":\"testingUserName\",\n    \"name\": \"nameTest\",\n    \"lastName\": \"lstNametest\",\n    \"email\": \"asda@das.com\",\n    \"password\": \"321654\",\n    \"isAdmin\":1\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/user/goku",
+							"raw": "http://localhost:{{portValue}}/api/user/goku",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -258,12 +258,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/user/goku",
+							"raw": "http://localhost:{{portValue}}/api/user/goku",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -293,12 +293,12 @@
 							"raw": "{\n\t\"name\":\"SonGoku\",\n    \"lastName\": \"changedLastName\",\n    \"email\": \"mail@changed.com\",\n    \"password\": \"123456\",\n    \"isAdmin\":1\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/user/goku",
+							"raw": "http://localhost:{{portValue}}/api/user/goku",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -333,12 +333,12 @@
 							"raw": "{\n\t\"Name\":\"Rugby\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/sport/",
+							"raw": "http://localhost:{{portValue}}/api/sport/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"sport",
@@ -369,12 +369,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/sport/football",
+							"raw": "http://localhost:{{portValue}}/api/sport/football",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"sport",
@@ -400,12 +400,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/sport/Futbol",
+							"raw": "http://localhost:{{portValue}}/api/sport/Futbol",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"sport",
@@ -434,12 +434,12 @@
 							"raw": "{\n\t\"OldName\":\"Football\",\n\t\"NewName\":\"Futbol\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/sport",
+							"raw": "http://localhost:{{portValue}}/api/sport",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"sport"
@@ -464,12 +464,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/sport/futbol/events",
+							"raw": "http://localhost:{{portValue}}/api/sport/futbol/events",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"sport",
@@ -497,12 +497,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/team/Nacional",
+							"raw": "http://localhost:{{portValue}}/api/team/Nacional",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"team",
@@ -546,12 +546,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/team",
+							"raw": "http://localhost:{{portValue}}/api/team",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"team"
@@ -594,12 +594,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/team/",
+							"raw": "http://localhost:{{portValue}}/api/team/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"team",
@@ -625,12 +625,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/team/Nacional/events",
+							"raw": "http://localhost:{{portValue}}/api/team/Nacional/events",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"team",
@@ -657,12 +657,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/team/CNF",
+							"raw": "http://localhost:{{portValue}}/api/team/CNF",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"team",
@@ -688,12 +688,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/team?orderAsc=false&teamName=",
+							"raw": "http://localhost:{{portValue}}/api/team?orderAsc=false&teamName=",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"team"
@@ -737,12 +737,12 @@
 							"raw": "{\n\t\"sportName\":\"Baseball\",\n    \"localTeamName\": \"Nacional\",\n    \"awayTeamName\": \"Fenix\",\n    \"eventDate\": \"2018-10-20\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/event/",
+							"raw": "http://localhost:{{portValue}}/api/event/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"event",
@@ -777,12 +777,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/event/1",
+							"raw": "http://localhost:{{portValue}}/api/event/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"event",
@@ -811,12 +811,12 @@
 							"raw": "{\n\t\"localTeamName\":\"Juventus\",\n    \"awayTeamName\": \"Nacional\",\n    \"initialDate\":\"2018-10-20\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/event/1",
+							"raw": "http://localhost:{{portValue}}/api/event/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"event",
@@ -842,12 +842,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/event/1",
+							"raw": "http://localhost:{{portValue}}/api/event/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"event",
@@ -881,12 +881,12 @@
 							"raw": "{\n\t\"Description\":\"Descripción 3\",\n\t\"CreatorName\":\"superadmin\",\n\t\"EventOID\":2\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/comment/",
+							"raw": "http://localhost:{{portValue}}/api/comment/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"comment",
@@ -920,12 +920,12 @@
 							"raw": "{\n\t\"UserName\": \"superadmin\",\n\t\"NetFavouriteTeamsOID\": [1,2]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/user/superadmin/addfavorites/",
+							"raw": "http://localhost:{{portValue}}/api/user/superadmin/addfavorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -956,12 +956,12 @@
 							"raw": "{\n\t\"userName\": \"vegeta\",\n\t\"teamNames\": [\"Fenix\", \"Defensor\"]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/user/modifyUserFavouriteTeams",
+							"raw": "http://localhost:{{portValue}}/api/user/modifyUserFavouriteTeams",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -988,12 +988,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/user/superadmin/favorites/",
+							"raw": "http://localhost:{{portValue}}/api/user/superadmin/favorites/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -1021,12 +1021,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/user/superadmin/favorite/2",
+							"raw": "http://localhost:{{portValue}}/api/user/superadmin/favorite/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"user",
@@ -1062,12 +1062,12 @@
 							"raw": "{\n\t\"fixtureType\":2,\n    \"sportName\": \"Futbol\",\n    \"initialDate\":\"2018-10-20\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/event/GenerateFixture?fixtureType=2&sportName=Futbol&initialDate=2018-10-20",
+							"raw": "http://localhost:{{portValue}}/api/event/GenerateFixture?fixtureType=2&sportName=Futbol&initialDate=2018-10-20",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"event",
@@ -1107,12 +1107,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5000/api/event/GenerateFixture?fixtureType=1&sportName=baseball&initialDate=2018-10-20",
+							"raw": "http://localhost:{{portValue}}/api/event/GenerateFixture?fixtureType=1&sportName=baseball&initialDate=2018-10-20",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "{{portValue}}",
 							"path": [
 								"api",
 								"event",
