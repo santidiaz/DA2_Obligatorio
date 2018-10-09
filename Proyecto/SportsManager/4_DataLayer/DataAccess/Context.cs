@@ -1,8 +1,12 @@
 ﻿using BusinessEntities;
 using BusinessEntities.JoinEntities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Protocols;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Text;
 
 namespace DataAccess
@@ -18,7 +22,12 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=SportsManagerDB;Trusted_Connection=True;");
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            optionsBuilder.UseSqlServer(config.GetConnectionString("SportManagerCS"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

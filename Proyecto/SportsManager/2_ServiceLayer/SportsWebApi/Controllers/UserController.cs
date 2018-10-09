@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BusinessContracts;
 using BusinessEntities;
 using BusinessEntities.Exceptions;
 using BusinessEntities.JoinEntities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Filters;

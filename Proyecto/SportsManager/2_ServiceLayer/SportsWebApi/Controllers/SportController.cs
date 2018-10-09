@@ -8,9 +8,6 @@ using SportsWebApi.Models.TeamModel;
 using SportsWebApi.Utilities;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportsWebApi.Controllers
 {
