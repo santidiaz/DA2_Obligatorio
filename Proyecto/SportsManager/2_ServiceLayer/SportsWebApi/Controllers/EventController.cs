@@ -38,7 +38,7 @@ namespace SportsWebApi.Controllers
                 IFixture fixtureOption = Provider.GetInstance.GetFixtureGenerator((FixtureType)input.FixtureType);
                 List<Event> generatedEvents = fixtureOption.GenerateFixture(foundSport, input.InitialDate);
 
-                return Ok(new StringContent(JArray.FromObject(generatedEvents).ToString(), Encoding.UTF8, "application/json"));
+                return Ok(generatedEvents);
             }
             catch (EntitiesException eEx)
             {
