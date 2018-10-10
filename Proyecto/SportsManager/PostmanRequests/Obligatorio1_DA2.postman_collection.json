@@ -46,10 +46,10 @@
 							"raw": "{\n\t\"userName\":\"superadmin\",\n    \"password\": \"123456\",\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/authentication/login",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/authentication/login",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -89,10 +89,10 @@
 							"raw": "{\n\t\"userName\":\"superadmin\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/authentication/logout",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/authentication/logout",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -125,10 +125,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/superadmin/favoriteTeamComments",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/superadmin/favoriteTeamComments",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -157,10 +157,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/event/",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/event/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -196,10 +196,10 @@
 							"raw": "{\r\n\t\"userName\":\"vegeta\",\r\n    \"name\": \"donVegeta\",\r\n    \"lastName\": \"king\",\r\n    \"email\": \"ddd@ccc.com\",\r\n    \"password\": \"123456\",\r\n    \"isAdmin\":0\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -227,10 +227,10 @@
 							"raw": "{\n\t\"userName\":\"testingUserName\",\n    \"name\": \"nameTest\",\n    \"lastName\": \"lstNametest\",\n    \"email\": \"asda@das.com\",\n    \"password\": \"321654\",\n    \"isAdmin\":1\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/goku",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/goku",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -258,10 +258,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/goku",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/goku",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -293,10 +293,10 @@
 							"raw": "{\n\t\"name\":\"SonGoku\",\n    \"lastName\": \"changedLastName\",\n    \"email\": \"mail@changed.com\",\n    \"password\": \"123456\",\n    \"isAdmin\":1\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/goku",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/goku",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -333,10 +333,10 @@
 							"raw": "{\n\t\"Name\":\"Rugby\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/sport/",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/sport/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -369,10 +369,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/sport/football",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/sport/football",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -400,10 +400,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/sport/Futbol",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/sport/Futbol",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -434,10 +434,10 @@
 							"raw": "{\n\t\"OldName\":\"Football\",\n\t\"NewName\":\"Futbol\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/sport",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/sport",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -464,10 +464,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/sport/futbol/events",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/sport/futbol/events",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -497,10 +497,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/team/Nacional",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/team/Nacional",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -546,10 +546,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/team",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/team",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -594,10 +594,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/team/",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/team/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -625,10 +625,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/team/Nacional/events",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/team/Nacional/events",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -657,10 +657,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/team/CNF",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/team/CNF",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -688,10 +688,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/team?orderAsc=false&teamName=",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/team?orderAsc=false&teamName=",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -737,10 +737,10 @@
 							"raw": "{\n\t\"sportName\":\"Baseball\",\n    \"localTeamName\": \"Nacional\",\n    \"awayTeamName\": \"Fenix\",\n    \"eventDate\": \"2018-10-20\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/event/",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/event/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -777,10 +777,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/event/1",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/event/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -811,10 +811,10 @@
 							"raw": "{\n\t\"localTeamName\":\"Juventus\",\n    \"awayTeamName\": \"Nacional\",\n    \"initialDate\":\"2018-10-20\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/event/1",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/event/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -842,10 +842,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/event/1",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/event/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -881,10 +881,10 @@
 							"raw": "{\n\t\"Description\":\"Descripción 3\",\n\t\"CreatorName\":\"superadmin\",\n\t\"EventOID\":2\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/comment/",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/comment/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -920,10 +920,10 @@
 							"raw": "{\n\t\"UserName\": \"superadmin\",\n\t\"NetFavouriteTeamsOID\": [1,2]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/superadmin/addfavorites/",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/superadmin/addfavorites/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -956,10 +956,10 @@
 							"raw": "{\n\t\"userName\": \"vegeta\",\n\t\"teamNames\": [\"Fenix\", \"Defensor\"]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/modifyUserFavouriteTeams",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/modifyUserFavouriteTeams",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -988,10 +988,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/superadmin/favorites/",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/superadmin/favorites/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -1021,10 +1021,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/user/superadmin/favorite/2",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/user/superadmin/favorite/2",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -1062,10 +1062,10 @@
 							"raw": "{\n\t\"fixtureType\":2,\n    \"sportName\": \"Futbol\",\n    \"initialDate\":\"2018-10-20\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/event/GenerateFixture?fixtureType=2&sportName=Futbol&initialDate=2018-10-20",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/event/GenerateFixture?fixtureType=2&sportName=Futbol&initialDate=2018-10-20",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
@@ -1107,10 +1107,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:{{portValue}}/api/event/GenerateFixture?fixtureType=1&sportName=baseball&initialDate=2018-10-20",
+							"raw": "http://{{ipValue}}:{{portValue}}/api/event/GenerateFixture?fixtureType=1&sportName=baseball&initialDate=2018-10-20",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ipValue}}"
 							],
 							"port": "{{portValue}}",
 							"path": [
