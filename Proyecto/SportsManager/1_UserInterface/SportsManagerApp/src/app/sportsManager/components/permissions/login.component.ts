@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { BaseComponent } from '../../shared/base.component';
 import { PermissionService } from '../../services/permission.service';
 import { Login } from '../../interfaces/login';
@@ -8,7 +7,7 @@ import { SessionService } from '../../services/session.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent extends BaseComponent {
 
@@ -20,6 +19,8 @@ export class LoginComponent extends BaseComponent {
     this.formModel = { username: '', password: '' };
    }
  
+
+
   onSubmit(){
     let userName = `${this.formModel.username}`;
     let password = `${this.formModel.password}`;
@@ -30,7 +31,7 @@ export class LoginComponent extends BaseComponent {
 
   private handleResponse(response: any){
     let res: any = response;
-    //this._session.setToken(res.token);
+    this._session.setToken(res.token);
   }
 
   private handleError(error: any){

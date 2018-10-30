@@ -1,28 +1,43 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-
-const tokenKey = 'currentToken';
 
 @Injectable()
 export class SessionService {
 
-    private currentToken: string;
-    //tokenChanged = new Subject<string>();
+    private _currentToken: string;
+    private _currentUserName: string;
+    private _isAdmin: boolean;
+
     constructor() { }
 
     isAuthenticated(): boolean {
-        return this.currentToken !== null;
+        return this._currentToken !== null;
     }
 
     setToken(token: string): void {
-        this.currentToken = token;
+        this._currentToken = token;
     }
 
     removeToken(): void {
-        this.currentToken = undefined;
+        this._currentToken = undefined;
     }
 
     getToken(): string {
-        return this.currentToken;
+        return this._currentToken;
+    }
+
+    isAdmin(): boolean {
+        return this._isAdmin;
+    }
+
+    setAdminFlag(value: boolean) {
+        this._isAdmin = value;
+    }
+
+    setUserName(value: string) {
+        this._currentUserName = value;
+    }
+
+    getUserName():string {
+        return this._currentUserName;
     }
 }

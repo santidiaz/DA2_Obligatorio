@@ -5,7 +5,7 @@ import { SessionService } from '../../../services/session.service'
 @Component({
   selector: 'app-eventList',
   templateUrl: './eventList.component.html',
-  styleUrls: ['./eventList.component.scss']
+  styleUrls: ['./eventList.component.css']
 })
 export class EventListComponent extends BaseComponent {
 
