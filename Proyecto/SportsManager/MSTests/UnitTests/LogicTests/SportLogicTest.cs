@@ -75,7 +75,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -100,7 +100,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -123,7 +123,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -201,7 +201,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -227,7 +227,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -254,7 +254,7 @@ namespace UnitTests.LogicTests
             {
                 Assert.IsTrue(eEx.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -280,7 +280,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }

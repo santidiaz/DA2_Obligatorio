@@ -78,7 +78,7 @@ namespace BusinessLogic
 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }
@@ -93,7 +93,7 @@ namespace BusinessLogic
 
                 return this.persistanceProvideTeam.GetEventsByTeam(team);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }

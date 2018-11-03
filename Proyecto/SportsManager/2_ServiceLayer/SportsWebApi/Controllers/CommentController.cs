@@ -22,9 +22,9 @@ namespace SportsWebApi.Controllers
         {
             try
             {
-                if (addCommentInput == null) return BadRequest();
-                if (addCommentInput.EventOID == null || addCommentInput.EventOID <= 0) return BadRequest();
-                if (string.IsNullOrEmpty(addCommentInput.Description)) return BadRequest();
+                if (addCommentInput == null || 
+                    addCommentInput.EventOID <= 0 ||
+                    string.IsNullOrEmpty(addCommentInput.Description)) return BadRequest();
 
                 Comment newComment = new Comment
                 {
@@ -39,7 +39,7 @@ namespace SportsWebApi.Controllers
             {
                 return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
             }
-            catch (Exception ex)//TODO: Ver como manejar los errores. 
+            catch (Exception ex)
             {
                 return this.StatusCode(500, ex.Message);
             }

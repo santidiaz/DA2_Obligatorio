@@ -1,5 +1,4 @@
-﻿using BusinessContracts;
-using BusinessLogic;
+﻿using BusinessLogic;
 using DataAccess.Implementations;
 using DataContracts;
 using ProviderManager.Helpers;
@@ -9,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using FixtureLogic;
+using FixtureContracts;
+using BusinessContracts;
 
 namespace ProviderManager
 {

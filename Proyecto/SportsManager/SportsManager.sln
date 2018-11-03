@@ -39,7 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PermissionLogic", "3_Busine
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixtureLogic", "3_BusinessLayer\FixtureLogic\FixtureLogic.csproj", "{ECD85A94-1E48-4EDC-BE94-4FB36683840B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixtureProvider", "Cross-Cutting\FixtureProvider\FixtureProvider.csproj", "{CD424698-4CB9-490E-81C2-BC6399B945C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixtureProvider", "Cross-Cutting\FixtureProvider\FixtureProvider.csproj", "{CD424698-4CB9-490E-81C2-BC6399B945C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixtureContracts", "3_BusinessLayer\FixtureContracts\FixtureContracts.csproj", "{084B9D1E-65DF-4645-9960-50AD10869CBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{CD424698-4CB9-490E-81C2-BC6399B945C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD424698-4CB9-490E-81C2-BC6399B945C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD424698-4CB9-490E-81C2-BC6399B945C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084B9D1E-65DF-4645-9960-50AD10869CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{084B9D1E-65DF-4645-9960-50AD10869CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{084B9D1E-65DF-4645-9960-50AD10869CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{084B9D1E-65DF-4645-9960-50AD10869CBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +123,7 @@ Global
 		{91EF9F81-54BC-4251-8541-CDE5E5C3F8A6} = {8BEB62C5-D237-49BB-BDE1-063A3093FB11}
 		{ECD85A94-1E48-4EDC-BE94-4FB36683840B} = {8BEB62C5-D237-49BB-BDE1-063A3093FB11}
 		{CD424698-4CB9-490E-81C2-BC6399B945C8} = {4383DAB1-A988-4722-8DA7-005FF95BB887}
+		{084B9D1E-65DF-4645-9960-50AD10869CBE} = {8BEB62C5-D237-49BB-BDE1-063A3093FB11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7102952F-FB2D-4E3F-A3BF-F9D28A507A77}

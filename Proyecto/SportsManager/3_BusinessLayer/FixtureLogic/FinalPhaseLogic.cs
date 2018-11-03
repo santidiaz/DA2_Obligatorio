@@ -1,12 +1,10 @@
-﻿using BusinessContracts;
-using BusinessEntities;
+﻿using BusinessEntities;
 using BusinessEntities.Exceptions;
 using CommonUtilities;
+using FixtureContracts;
 using FixtureLogic.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FixtureLogic
 {

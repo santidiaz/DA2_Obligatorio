@@ -204,7 +204,7 @@ namespace SportsWebApi.Controllers
             {
                 if (string.IsNullOrEmpty(userName))
                     return NotFound();
-                if (teamOID == null || teamOID <= 0)
+                if (teamOID <= 0)
                     return NotFound();
 
                 this.userOperations.DeleteFavoriteTeamByUser(teamOID, userName);

@@ -132,7 +132,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -170,7 +170,6 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 Team team = Utility.GenerateRandomTeam(Constants.Team.NAME_TEST);
 
-                //TODO : Como mockeo un retorno NULL ?
                 mock.Setup(up => up.GetTeamByName(It.IsAny<string>())).Returns((Team)null);
                 mock.Setup(up => up.GetEventsByTeam(It.IsAny<Team>())).Returns(new List<Event>());
 
@@ -267,7 +266,7 @@ namespace UnitTests.LogicTests
                 Team teamToAdd = Utility.GenerateRandomTeam();
                 userLogic.AddTeam(teamToAdd, 1);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -402,7 +401,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -428,7 +427,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }

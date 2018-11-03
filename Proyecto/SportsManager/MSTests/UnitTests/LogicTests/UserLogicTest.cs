@@ -430,7 +430,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -459,7 +459,7 @@ namespace UnitTests.LogicTests
             {
                 Assert.IsTrue(eEx.Message.Equals(Constants.UserError.USER_NOT_FOUND));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
@@ -482,7 +482,7 @@ namespace UnitTests.LogicTests
 
                 Assert.IsTrue(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.IsTrue(true);
             }
