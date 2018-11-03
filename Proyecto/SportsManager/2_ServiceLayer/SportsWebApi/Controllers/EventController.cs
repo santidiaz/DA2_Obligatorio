@@ -19,32 +19,7 @@ namespace SportsWebApi.Controllers
     {
         private IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
         private ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
-
-        [PermissionFilter(true)]
-        [HttpGet(nameof(GenerateFixture))]
-        public IActionResult GenerateFixture([FromQuery] GenerateFixtureInput input)
-        {
-            try
-            {
-                if (input == null)
-                    return BadRequest();
-
-                Sport foundSport = sportOperations.GetSportByName(input.SportName);
-                IFixture fixtureOption = Provider.GetInstance.GetFixtureGenerator((FixtureType)input.FixtureType);
-                List<Event> generatedEvents = fixtureOption.GenerateFixture(foundSport, input.InitialDate);
-
-                return Ok(generatedEvents);
-            }
-            catch (EntitiesException eEx)
-            {
-                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(500, ex.Message);
-            }
-        }
-
+ 
         [PermissionFilter(true)]
         [HttpPost()]
         public IActionResult AddEvent([FromBody] AddEventInput input)

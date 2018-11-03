@@ -25,6 +25,11 @@ namespace FixtureLogic
             return events;
         }
 
+        public string GetDescription()
+        {
+            return "Round Robin";
+        }
+
         #region Private Methods
         private bool HasEnoughTeams(int teamsCount)
         {

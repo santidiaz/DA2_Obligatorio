@@ -23,6 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="FixtureProvider">
+      <HintPath>..\..\Cross-Cutting\FixtureProvider\bin\Debug\netcoreapp2.1\FixtureProvider.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
