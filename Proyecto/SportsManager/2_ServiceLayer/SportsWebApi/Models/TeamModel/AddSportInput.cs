@@ -10,5 +10,8 @@ namespace SportsWebApi.Models.TeamModel
     {
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Specify if multiple teams event can be created for this sport.")]
+        public bool MultipleTeamsAllowed { get; set; }
     }
 }

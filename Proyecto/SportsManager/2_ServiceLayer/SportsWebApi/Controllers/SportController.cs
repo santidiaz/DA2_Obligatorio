@@ -24,8 +24,12 @@ namespace SportsWebApi.Controllers
             try
             {
                 if (input == null) return BadRequest();
-
-                Sport newSport = new Sport { Name = input.Name };
+                
+                Sport newSport = new Sport
+                {
+                    Name = input.Name,
+                    AllowdMultipleTeamsEvents = input.MultipleTeamsAllowed
+                };
                 
                 sportOperations.AddSport(newSport);
                 return Ok();
