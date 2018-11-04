@@ -21,18 +21,6 @@ namespace SportsWebApi.Controllers
         private readonly ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
         private readonly IList<IFixture> fixturesAlhorithms = FixtureProvider.Provider.GetInstance.GetFixturesAlgorithms();
 
-        //[HttpGet("{id}/Fixture", Name = "AddExercise")]
-        //public IActionResult PostExercise(Guid id, [FromBody]ExerciseModel exercise)
-        //{
-        //    var newExercise = homeworks.AddExercise(id, ExerciseModel.ToEntity(exercise));
-        //    if (newExercise == null)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    return CreatedAtRoute("GetExercise", new { id = newExercise.Id }, ExerciseModel.ToModel(newExercise));
-        //}
-
-
         [PermissionFilter(true)]
         [HttpPost()]
         public IActionResult GenerateFixture([FromBody] GenerateFixtureInput input)
