@@ -8,5 +8,6 @@ namespace FixtureContracts
     public interface IFixture
     {
         List<Event> GenerateFixture(Sport aSport, DateTime initialDate);
+        string GetDescription();
     }
 }

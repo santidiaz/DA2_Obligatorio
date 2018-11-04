@@ -23,6 +23,11 @@ namespace FixtureLogic
             return generatedEvents;
         }
 
+        public string GetDescription()
+        {
+            return "Final Phase";
+        }
+
         #region Private Methods
         private static bool HasEnoughTeams(int teamsCount)
         {

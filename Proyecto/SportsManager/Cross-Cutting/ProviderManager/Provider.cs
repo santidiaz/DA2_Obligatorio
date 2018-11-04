@@ -100,23 +100,5 @@ namespace ProviderManager
         {
             return this.commentLogic;
         }
-
-        public IFixture GetFixtureGenerator(FixtureType fixtureType)
-        {
-            IFixture fixtureGenerationAlgorithm;
-            switch (fixtureType)
-            {
-                case FixtureType.FinalPhase:
-                    fixtureGenerationAlgorithm = new FinalPhaseLogic();
-                    break;
-                case FixtureType.RoundTrip:
-                    fixtureGenerationAlgorithm = new RoundRobinLogic();
-                    break;
-                default:
-                    fixtureGenerationAlgorithm = null;
-                    break;
-            }
-            return fixtureGenerationAlgorithm;
-        }
     }
 }

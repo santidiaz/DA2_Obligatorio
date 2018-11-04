@@ -9,7 +9,7 @@ namespace SportsWebApi.Models.EventModel
     public class GenerateFixtureInput
     {
         [Required]
-        public int FixtureType { get; set; }
+        public string FixtureName { get; set; }
 
         [Required]
         public string SportName { get; set; }
