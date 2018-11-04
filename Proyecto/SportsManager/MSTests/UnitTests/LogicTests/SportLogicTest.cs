@@ -66,7 +66,7 @@ namespace UnitTests.LogicTests
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ISportPersistance>();
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns(new Sport());
-                mock.Setup(mr => mr.ModifySportByName(It.IsAny<Sport>())).Verifiable();
+                mock.Setup(mr => mr.ModifySport(It.IsAny<Sport>())).Verifiable();
 
                 // Instancio SportLogic con el mock como parametro.
                 SportLogic userLogic = new SportLogic(mock.Object);
@@ -92,7 +92,7 @@ namespace UnitTests.LogicTests
 
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns(new Sport());
                 mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToDelete });
-                mock.Setup(mr => mr.DeleteSportByName(It.IsAny<Sport>())).Verifiable();
+                mock.Setup(mr => mr.DeleteSport(It.IsAny<Sport>())).Verifiable();
 
                 SportLogic sportLogic = new SportLogic(mock.Object);
                 string userToBeDeleted = Constants.Sport.NAME_SPORT_FUTBOL;
@@ -149,7 +149,7 @@ namespace UnitTests.LogicTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
+                Assert.IsTrue(ex.Message.Equals(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS));
             }
         }
 
@@ -163,7 +163,7 @@ namespace UnitTests.LogicTests
 
                 Sport mockedSport = Utility.GenerateRandomSport();
                 sportMock.Setup(sp => sp.GetSportByName(mockedSport.Name, true)).Returns(mockedSport);
-                sportMock.Setup(sp => sp.ValidateSportOnTeams(It.IsAny<Sport>())).Returns(true);
+                sportMock.Setup(sp => sp.CanBeDeleted(It.IsAny<Sport>())).Returns(true);
 
                 // Instancio SportLogic con el mock como parametro.
                 SportLogic userLogic = new SportLogic(sportMock.Object);
@@ -193,7 +193,7 @@ namespace UnitTests.LogicTests
 
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Verifiable();
                 mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToDelete });
-                mock.Setup(mr => mr.DeleteSportByName(It.IsAny<Sport>())).Verifiable();
+                mock.Setup(mr => mr.DeleteSport(It.IsAny<Sport>())).Verifiable();
 
                 SportLogic sportLogic = new SportLogic(mock.Object);
                 string userToBeDeleted = Constants.Sport.NAME_SPORT_FUTBOL;
@@ -218,8 +218,8 @@ namespace UnitTests.LogicTests
 
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns(new Sport());
                 mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToDelete });
-                mock.Setup(mr => mr.DeleteSportByName(It.IsAny<Sport>())).Verifiable();
-                mock.Setup(up => up.ValidateSportOnTeams(It.IsAny<Sport>())).Returns(false);
+                mock.Setup(mr => mr.DeleteSport(It.IsAny<Sport>())).Verifiable();
+                mock.Setup(up => up.CanBeDeleted(It.IsAny<Sport>())).Returns(false);
 
                 SportLogic sportLogic = new SportLogic(mock.Object);
                 string userToBeDeleted = Constants.Sport.NAME_SPORT_FUTBOL;
@@ -241,7 +241,7 @@ namespace UnitTests.LogicTests
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ISportPersistance>();
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns((Sport)null);
-                mock.Setup(mr => mr.ModifySportByName(It.IsAny<Sport>())).Verifiable();
+                mock.Setup(mr => mr.ModifySport(It.IsAny<Sport>())).Verifiable();
 
                 // Instancio SportLogic con el mock como parametro.
                 SportLogic userLogic = new SportLogic(mock.Object);
@@ -252,7 +252,7 @@ namespace UnitTests.LogicTests
             }
             catch (EntitiesException eEx)
             {
-                Assert.IsTrue(eEx.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
+                Assert.IsTrue(eEx.Message.Equals(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS));
             }
             catch (Exception)
             {
@@ -271,8 +271,8 @@ namespace UnitTests.LogicTests
 
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns(new Sport());
                 mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToDelete });
-                mock.Setup(mr => mr.DeleteSportByName(It.IsAny<Sport>())).Verifiable();
-                mock.Setup(up => up.ValidateSportOnTeams(It.IsAny<Sport>())).Returns(true);
+                mock.Setup(mr => mr.DeleteSport(It.IsAny<Sport>())).Verifiable();
+                mock.Setup(up => up.CanBeDeleted(It.IsAny<Sport>())).Returns(true);
 
                 SportLogic sportLogic = new SportLogic(mock.Object);
                 string userToBeDeleted = Constants.Sport.NAME_SPORT_FUTBOL;

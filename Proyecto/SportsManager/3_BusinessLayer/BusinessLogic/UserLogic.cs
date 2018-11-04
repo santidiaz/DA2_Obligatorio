@@ -96,7 +96,7 @@ namespace BusinessLogic
             if (user == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            return this.userProvider.GetFavoritesTeamsByUserName(user);
+            return this.userProvider.GetUserFavouriteTeams(user);
         }
 
         public void DeleteFavoriteTeamByUser(int teamOID, string userName)
@@ -105,20 +105,20 @@ namespace BusinessLogic
             if (userComplete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            Team foundTeam = this.teamProvider.GetTeamByOID(teamOID);
+            Team foundTeam = this.teamProvider.GetTeamById(teamOID);
             if (foundTeam == null)
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
             this.userProvider.DeleteFavoriteTeamByUser(foundTeam, userComplete);
         }
 
-        public List<Event> GetCommentsOfUserFavouriteTemasEvents(string userName)
+        public List<Event> GetUserFavouriteTeamsEvents(string userName)
         {
             User user = this.GetUserByUserName(userName);
             if (user == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            return this.userProvider.GetCommentsOfUserFavouriteTemasEvents(user);
+            return this.userProvider.GetUserFavouriteTeamsEvents(user);
         }
         #endregion
 

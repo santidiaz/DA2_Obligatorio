@@ -11,10 +11,11 @@ namespace BusinessEntities
     {
         #region Private Attributes
         private DateTime _initialDate;
+        private List<Team> _teams;
+        private List<Comment> _coments;
         #endregion
-
-        #region Public Attributes
-        public int EventOID { get; set; } // [Object Id] This id is Event by EntityFramework.
+        
+        public int EventOID { get; set; } // [Object Id] This id is required by EntityFramework.
         public DateTime InitialDate
         {
             get { return this._initialDate; }
@@ -26,53 +27,65 @@ namespace BusinessEntities
                 this._initialDate = value;
             }
         }
+        public bool MultipleTeamsEvent { get; set; }
         public Sport Sport { get; set; }
-        public virtual List<Comment> Comments { get; set; }
-        public Team Local { get; set; }
-        public Team Away { get; set; }
-        #endregion
-
-        public Event()
+        public List<Team> Teams
         {
-            this.Comments = new List<Comment>();
-            this._initialDate = DateTime.Now;
+            get { return this._teams; }
+            set
+            {
+                if (this.TeamsQuantityIsValid(value))
+                    throw new EntitiesException(Constants.EventError.INVALID_AMOUNT_OF_TEAMS, ExceptionStatusCode.InvalidData);
+
+                this._teams = value;
+            }
+        }
+        public virtual List<Comment> Comments
+        {
+            get { return this._coments?.OrderByDescending(c => c.DatePosted)?.ToList(); }
+            set { this._coments = value; }
         }
 
-        public Event(DateTime date, Sport sport, Team localTeam, Team awayTeam)
+        public Event(DateTime date, Sport sport, List<Team> teams)
         {
-            this.Comments = new List<Comment>();
-            this.Local = localTeam;
-            this.Away = awayTeam;
+            this._coments = new List<Comment>();
             this.InitialDate = date;
             this.Sport = sport;
+            this.MultipleTeamsEvent = sport.AllowdMultipleTeamsEvents;
+            this.Teams = teams;
         }
 
         #region Public methods
         public Team GetLocalTeam()
         {
-            return this.Local;
+            return this.Teams.ElementAt(0);
         }
 
         public Team GetAwayTeam()
         {
-            return this.Away;
-        }
-
-        public List<Comment> GetComments()
-        {
-            return this.Comments.OrderByDescending(c => c.DatePosted).ToList();
+            return this.Teams.ElementAt(1);
         }
         
-        public bool ModifyTeams(Team localTeam, Team awayTeam)
+        public void ModifyTeams(List<Team> newTeams)
         {
-            bool result = false;
-            if (this.AreValidTeams(localTeam, awayTeam))
+            bool result = this.TeamsQuantityIsValid(newTeams);
+            if(!result)
+                throw new EntitiesException(Constants.EventError.INVALID_AMOUNT_OF_TEAMS, ExceptionStatusCode.InvalidData);
+
+            if (this.MultipleTeamsEvent)
             {
-                this.Local = localTeam;
-                this.Away = awayTeam;
-                result = true;
+                this.Teams = newTeams;
             }
-            return result;
+            else
+            {
+                Team local = newTeams.ElementAt(0);
+                Team away = newTeams.ElementAt(1);
+                if (this.AreValidTeams(local, away))
+                {
+                    this.SetLocal(local);
+                    this.SetAway(away);
+                }
+            }
         }
 
         public override bool Equals(object obj)
@@ -90,22 +103,24 @@ namespace BusinessEntities
         #endregion
 
         #region Private methods
-        private bool AreValidTeams(Team localTeam, Team awayTeam)
+        private void SetLocal(Team localTeam)
         {
-            bool result = localTeam != null && awayTeam != null
-                && !localTeam.Equals(awayTeam);
+            this.Teams[0] = localTeam;
+        }
+        private void SetAway(Team awayTeam)
+        {
+            this.Teams[1] = awayTeam;
+        }
+        private bool AreValidTeams(Team local, Team away)
+        {
+            return local != null && away != null
+                && !local.Equals(away);
+        }
 
-            // If validations are true so far, 
-            // i check that the 1st team belong to the sport
-            result = result ? this.Sport.Teams
-                       .Exists(t => t.Name.Equals(localTeam.Name)) : result;
-
-            // If validations are true so far, 
-            // i check that the 2nd team belong to the sport
-            result = result ? this.Sport.Teams
-                   .Exists(t => t.Name.Equals(awayTeam.Name)) : result;
-
-            return result;
+        // Teams must be 2, or if SPORT allow multipleTeamsEvents, count must be 3 or more.
+        private bool TeamsQuantityIsValid(List<Team> teams)
+        {
+            return teams == null || teams.Count < 2 || (!this.MultipleTeamsEvent && teams.Count > 2);
         }
         #endregion
     }

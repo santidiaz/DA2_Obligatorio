@@ -12,7 +12,7 @@ namespace BusinessEntities
         private List<Team> _teams;
         #endregion
 
-        public int SportOID { get; set; } // [Object Id] This id is team by EntityFramework.
+        public int SportOID { get; set; } // [Object Id] This id is required by EntityFramework.
         public string Name
         {
             get { return this._name; }
@@ -24,7 +24,8 @@ namespace BusinessEntities
                 this._name = value;
             }
         }
-        public List<Team> Teams
+        public bool AllowdMultipleTeamsEvents { get; set; }
+        public virtual List<Team> Teams
         {
             get { return this._teams; }
             set
@@ -35,14 +36,15 @@ namespace BusinessEntities
                 this._teams = value;
             }
         }
-
+        
         public Sport()
         {
             this._name = string.Empty;
             this._teams = new List<Team>();
         }
-        public Sport(string newName, List<Team> newTeams)
+        public Sport(string newName, List<Team> newTeams, bool allowManyTeamsEvents)
         {
+            this.AllowdMultipleTeamsEvents = allowManyTeamsEvents;
             this.Name = newName;
             this.Teams = newTeams;
         }

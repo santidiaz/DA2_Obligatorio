@@ -142,7 +142,7 @@ namespace SportsWebApi.Controllers
 
                 foreach (var item in app.NetFavouriteTeamsOID)
                 {
-                    listTeans.Add(teamOperations.GetTeamByOID(item));
+                    listTeans.Add(teamOperations.GetTeamById(item));
                 }
                 this.userOperations.AddFavoritesToUser(user, listTeans);
                 return Ok();
@@ -229,7 +229,7 @@ namespace SportsWebApi.Controllers
                 if (string.IsNullOrEmpty(userName))
                     return NotFound();
 
-                List<Event> searchedEvents = userOperations.GetCommentsOfUserFavouriteTemasEvents(userName);
+                List<Event> searchedEvents = userOperations.GetUserFavouriteTeamsEvents(userName);
                 if (searchedEvents == null)
                     return NotFound();
 

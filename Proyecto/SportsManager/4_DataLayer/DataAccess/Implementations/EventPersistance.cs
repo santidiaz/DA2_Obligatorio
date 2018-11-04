@@ -14,9 +14,6 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                context.Teams.Attach(newEvent.Away);
-                context.Teams.Attach(newEvent.Local);
-                context.Sports.Attach(newEvent.Sport);
                 context.Events.Add(newEvent);
                 context.SaveChanges();
             }
@@ -40,10 +37,8 @@ namespace DataAccess.Implementations
                 if (eagerLoad)
                 {
                     foundEvent = context.Events.OfType<Event>()
-                        .Include(e => e.Away)
-                        .Include(e => e.Local)
+                        .Include(e => e.Teams)
                         .Include(e => e.Sport)
-                        .Include(e => e.Sport.Teams)
                         .Include(e => e.Comments)
                     .FirstOrDefault(e => e.EventOID.Equals(eventId));
                 }
@@ -61,7 +56,9 @@ namespace DataAccess.Implementations
             List<Event> events;
             using (Context context = new Context())
             {
-                events = (from anEvent in context.Events.OfType<Event>().Include(t => t.Away).Include(t => t.Local)
+                events = (from anEvent in context.Events.OfType<Event>()
+                          .Include(t => t.Teams)
+                          .Include(s => s.Sport)
                           select anEvent).ToList();
             }
             return events;
@@ -85,10 +82,9 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 events = (from anEvent in context.Events.OfType<Event>()
-                          .Include(e => e.Away)
-                          .Include(e => e.Local)
-                                where anEvent.InitialDate.Date.Equals(eventDate.Date)
-                                select anEvent).ToList();
+                          .Include(e => e.Teams)
+                        where anEvent.InitialDate.Date.Equals(eventDate.Date)
+                        select anEvent).ToList();
             }
             return events;
         }
@@ -97,13 +93,12 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var eventOnDB = context.Events
-                    .Include(e => e.Away)
-                    .Include(e => e.Local)
-                    .Where(e => e.EventOID.Equals(eventToModify.EventOID)).FirstOrDefault();
+                Event eventOnDB = context.Events
+                    .Include(e => e.Teams)
+                    .Where(e => e.EventOID.Equals(eventToModify.EventOID))
+                    .FirstOrDefault();
 
-                eventOnDB.Local = eventToModify.Local;
-                eventOnDB.Away = eventToModify.Away;
+                eventOnDB.Teams = eventToModify.Teams;
                 eventOnDB.InitialDate = eventToModify.InitialDate;
 
                 context.SaveChanges();

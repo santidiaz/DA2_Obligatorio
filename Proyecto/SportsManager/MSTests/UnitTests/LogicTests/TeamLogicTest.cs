@@ -180,7 +180,7 @@ namespace UnitTests.LogicTests
             }
             catch (EntitiesException eEx)
             {
-                Assert.IsTrue(eEx.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
+                Assert.IsTrue(eEx.Message.Equals(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS));
             }
             catch (Exception ex)
             {
@@ -196,10 +196,10 @@ namespace UnitTests.LogicTests
             {
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 
-                mock.Setup(up => up.GetTeamByOID(It.IsAny<int>())).Returns(new Team());
+                mock.Setup(up => up.GetTeamById(It.IsAny<int>())).Returns(new Team());
 
                 TeamLogic userLogic = new TeamLogic(mock.Object , mockSport.Object);
-                userLogic.GetTeamByOID(1);
+                userLogic.GetTeamById(1);
 
                 Assert.IsTrue(true);
             }
@@ -216,10 +216,10 @@ namespace UnitTests.LogicTests
             {
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
 
-                mock.Setup(up => up.GetTeamByOID(It.IsAny<int>())).Verifiable();
+                mock.Setup(up => up.GetTeamById(It.IsAny<int>())).Verifiable();
 
                 TeamLogic userLogic = new TeamLogic(mock.Object , mockSport.Object);
-                userLogic.GetTeamByOID(1);
+                userLogic.GetTeamById(1);
 
                 Assert.IsTrue(true);
             }
@@ -236,7 +236,7 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>());
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>());
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
 
                 // Instancio TeamLogic con el mock como parametro.
@@ -257,7 +257,7 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>());
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>());
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
                 mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 0 } });
 
@@ -278,13 +278,13 @@ namespace UnitTests.LogicTests
             try
             {
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>());
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>());
 
                 bool asc = true;
                 string teamName = "Nacional";
 
                 TeamLogic userLogic = new TeamLogic(mock.Object, mockSport.Object);
-                userLogic.GetTeams(asc, teamName);
+                userLogic.GetTeams(teamName, asc);
 
                 Assert.IsTrue(true);
             }
@@ -301,7 +301,7 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>() { new Team { Name = "a" } });
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { new Team { Name = "a" } });
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
                 mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
 
@@ -330,7 +330,7 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>() { new Team { Name = "a" } });
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { new Team { Name = "a" } });
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
                 mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
 
@@ -359,7 +359,7 @@ namespace UnitTests.LogicTests
             {
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>() { new Team { Name = "a" } });
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { new Team { Name = "a" } });
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
                 mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
 
@@ -372,7 +372,7 @@ namespace UnitTests.LogicTests
             }
             catch (EntitiesException eEx)
             {
-                Assert.IsTrue(eEx.Message.Equals(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS));
+                Assert.IsTrue(eEx.Message.Equals(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS));
             }
             catch (Exception)
             {
@@ -390,7 +390,7 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 Team teamToDelete = Utility.GenerateRandomTeam(Constants.Team.NAME_TEST);
 
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>() { teamToDelete });
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { teamToDelete });
                 mock.Setup(up => up.GetTeamByName("Nacional")).Returns(teamToDelete);
                 mock.Setup(mr => mr.DeleteTeamByName(It.IsAny<Team>())).Verifiable();
                 mock.Setup(mr => mr.ValidateTeamOnEvents(It.IsAny<Team>())).Returns(false);
@@ -416,7 +416,7 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 Team teamToDelete = Utility.GenerateRandomTeam(Constants.Team.NAME_TEST);
 
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>() { teamToDelete });
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { teamToDelete });
                 mock.Setup(up => up.GetTeamByName("Nacional")).Returns(teamToDelete);
                 mock.Setup(mr => mr.DeleteTeamByName(It.IsAny<Team>())).Verifiable();
                 mock.Setup(mr => mr.ValidateTeamOnEvents(It.IsAny<Team>())).Returns(true);

@@ -14,9 +14,26 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var sportOnDB = context.Sports.Where(u => u.SportOID.Equals(sportOID)).FirstOrDefault();
-                sportOnDB.Teams.Add(newTeam);
-                //context.Teams.Add(newTeam);
+                Sport sportInDB = context.Sports.OfType<Sport>()
+                    .Include(t => t.Teams)
+                    .Where(s => s.SportOID.Equals(sportOID)).FirstOrDefault();
+
+                context.Teams.Add(newTeam);
+                sportInDB.Teams.Add(newTeam);
+                context.SaveChanges();
+            }
+        }
+
+        public void ModifyTeam(Team teamToModify)
+        {
+            using (Context context = new Context())
+            {
+                Team teamOnDB = context.Teams.OfType<Team>()
+                    .Where(t => t.Name.Equals(teamToModify.Name))
+                    .FirstOrDefault();
+
+                teamOnDB.Name = teamToModify.Name;
+                teamOnDB.Photo = teamToModify.Photo;
                 context.SaveChanges();
             }
         }
@@ -31,33 +48,23 @@ namespace DataAccess.Implementations
             }
         }
 
-        public Team GetTeamByName(string name)
-        {
-            Team foundTeam;
-            using (Context context = new Context())
-            {
-                foundTeam = context.Teams.OfType<Team>().FirstOrDefault(u => u.Name.Equals(name));
-            }
-            return foundTeam;
-        }
-
-        public List<Team> GetTeams(bool asc, string teamName)
+        public List<Team> GetTeams(string teamName, bool orderAsc)
         {
             var teams = new List<Team>();
             using (Context context = new Context())
             {
                 //Ordeno ascendente y por numbre de equipo.
-                if (asc && !string.IsNullOrEmpty(teamName))
+                if (orderAsc && !string.IsNullOrEmpty(teamName))
                 {
                     teams = context.Teams.OfType<Team>().Where(t => t.Name.Contains(teamName)).OrderBy(o => o.Name).ToList();
                 }
                 //Ordeno descendente y por numbre de equipo.
-                else if (!asc && !string.IsNullOrEmpty(teamName))
+                else if (!orderAsc && !string.IsNullOrEmpty(teamName))
                 {
                     teams = context.Teams.OfType<Team>().Where(t => t.Name.Contains(teamName)).OrderByDescending(o => o.Name).ToList();
                 }
                 //Ordeno solo ascendente.
-                else if (asc)
+                else if (orderAsc)
                 {
                     teams = context.Teams.OfType<Team>().OrderBy(o => o.Name).ToList();
                 }
@@ -70,53 +77,49 @@ namespace DataAccess.Implementations
             return teams;
         }
 
+        public Team GetTeamByName(string name)
+        {
+            Team foundTeam;
+            using (Context context = new Context())
+            {
+                foundTeam = context.Teams.OfType<Team>().FirstOrDefault(u => u.Name.Equals(name));
+            }
+            return foundTeam;
+        }
+
         public bool IsTeamInSystem(Team team)
         {
             bool result = false;
             using (Context context = new Context())
             {
-                var teamOnDB = context.Teams.OfType<Team>().Include("Teams").Where(a => a.TeamOID.Equals(team.TeamOID)).FirstOrDefault();
-
-                result = teamOnDB != null ? true : false;
+                result = context.Teams.OfType<Team>()
+                    .Where(t => t.Name.Equals(team.Name))
+                    .FirstOrDefault() != null;
             }
             return result;
-        }
-
-        public void ModifyTeam(Team teamToModify)
-        {
-            using (Context context = new Context())
-            {
-                var teamOnDB = context.Teams.OfType<Team>().Where(a => a.TeamOID.Equals(teamToModify.TeamOID)).FirstOrDefault();
-
-                teamOnDB.Name = teamToModify.Name;
-                teamOnDB.Photo = teamToModify.Photo;
-
-                context.SaveChanges();
-            }
         }
 
         public List<Event> GetEventsByTeam(Team team)
         {
-            List<Event> result = new List<Event>();
+            List<Event> teamEvents;
             using (Context context = new Context())
             {
-                List<Event> sportOnDB1 = context.Events.OfType<Event>().Include(s => s.Sport).Include(t => t.Away).Include(t => t.Local).ToList();
-
-                if (sportOnDB1 != null && sportOnDB1.Count > 0)
-                {
-                    result.AddRange(sportOnDB1.Where(s => s.Away.TeamOID == team.TeamOID));
-                    result.AddRange(sportOnDB1.Where(s => s.Local.TeamOID == team.TeamOID));
-                }
+                teamEvents = context.Events.OfType<Event>()
+                    .Include(s => s.Sport)
+                    .Include(t => t.Teams)
+                    .Where(e => e.Teams.Exists(ev_tm => ev_tm.Name.Equals(team.Name)))
+                    .ToList();
             }
-            return result;
+            return teamEvents;
         }
 
-        public Team GetTeamByOID(int oid)
+        public Team GetTeamById(int teamId)
         {
             Team foundTeam;
             using (Context context = new Context())
             {
-                foundTeam = context.Teams.OfType<Team>().FirstOrDefault(u => u.TeamOID.Equals(oid));
+                foundTeam = context.Teams.OfType<Team>()
+                    .FirstOrDefault(u => u.TeamOID.Equals(teamId));
             }
             return foundTeam;
         }
@@ -134,7 +137,5 @@ namespace DataAccess.Implementations
             }
             return result;
         }
-
-
     }
 }

@@ -8,12 +8,14 @@ namespace DataContracts
     public interface ISportPersistance
     {
         void AddSport(Sport newSport);
+        void DeleteSport(Sport sportToDelete);
+        void ModifySport(Sport sportToModify);
         List<Sport> GetSports();
-        void ModifySportByName(Sport newSport);
-        void DeleteSportByName(Sport name);
-        bool IsSportInSystem(Sport Sport);
-        List<Event> GetEventsBySport(Sport sport);
         Sport GetSportByName(string name, bool eageLoad = false);
-        bool ValidateSportOnTeams(Sport sport);
+        Sport GetSportById(int id, bool eagerLoad = false);
+        List<Event> GetEventsBySport(Sport sport);
+
+        bool IsSportInSystem(Sport Sport);            
+        bool CanBeDeleted(Sport sport);
     }
 }

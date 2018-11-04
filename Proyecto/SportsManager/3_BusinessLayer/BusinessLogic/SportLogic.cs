@@ -42,14 +42,14 @@ namespace BusinessLogic
             Sport sportToModify = this.GetSportByName(nameSport);
 
             sport.SportOID = sportToModify.SportOID;
-            this.persistanceProvider.ModifySportByName(sport);
+            this.persistanceProvider.ModifySport(sport);
         }
 
         public Sport GetSportByName(string name)
         {
             var sport = this.persistanceProvider.GetSportByName(name, true);
             if (sport == null)
-                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
             return sport;
         }
@@ -58,12 +58,12 @@ namespace BusinessLogic
         {
             Sport sportToDelete = this.GetSportByName(name);
             if (sportToDelete == null)
-                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
-            if (this.ValidateSportOnTeams(sportToDelete))
+            if (this.CanBeDeleted(sportToDelete))
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_HAS_TEAMS, ExceptionStatusCode.Conflict);
 
-            this.persistanceProvider.DeleteSportByName(sportToDelete);
+            this.persistanceProvider.DeleteSport(sportToDelete);
         }
 
         public List<Event> GetEventsBySport(string sportName)
@@ -76,9 +76,9 @@ namespace BusinessLogic
         #endregion
 
         #region Private Methods
-        private bool ValidateSportOnTeams(Sport sport)
+        private bool CanBeDeleted(Sport sport)
         {
-            return persistanceProvider.ValidateSportOnTeams(sport);
+            return persistanceProvider.CanBeDeleted(sport);
         }
         #endregion
     }

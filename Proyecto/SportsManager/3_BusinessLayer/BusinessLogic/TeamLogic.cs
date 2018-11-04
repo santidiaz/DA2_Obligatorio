@@ -11,31 +11,31 @@ namespace BusinessLogic
 {
     public class TeamLogic : ITeamLogic
     {
-        private ITeamPersistance persistanceProvideTeam;
-        private ISportPersistance persistanceProvideSport;
+        private ITeamPersistance teamPersistance;
+        private ISportPersistance sportPersistance;
 
         public TeamLogic(ITeamPersistance teamProvider, ISportPersistance sportProvider)
         {
-            this.persistanceProvideTeam = teamProvider;
-            this.persistanceProvideSport = sportProvider;
+            this.teamPersistance = teamProvider;
+            this.sportPersistance = sportProvider;
         }
 
         #region Public methods
         public void AddTeam(Team newTeam, int sportOID)
         {
+            Sport foundSport = sportPersistance.GetSportById(sportOID, true);
+            if(foundSport == null)
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.InvalidData);
+
             if (this.IsTeamInSystem(newTeam))
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS, ExceptionStatusCode.Conflict);
-            else if (sportOID <= 0)
-                throw new EntitiesException(Constants.TeamErrors.TEAM_SPORTOID_FAIL, ExceptionStatusCode.InvalidData);
-            else if (this.persistanceProvideSport.GetSports().Find(s => s.SportOID == sportOID) == null)
-                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.Conflict);
-            else
-                this.persistanceProvideTeam.AddTeam(newTeam, sportOID);
+            
+            this.teamPersistance.AddTeam(newTeam, sportOID);
         }
 
-        public List<Team> GetTeams(bool asc, string teamName)
+        public List<Team> GetTeams(string teamName, bool orderAsc)
         {
-            return this.persistanceProvideTeam.GetTeams(asc, teamName);
+            return this.teamPersistance.GetTeams(teamName, orderAsc);
         }
 
         public void ModifyTeamByName(string teamOldName, Team teamWithModifications)
@@ -43,21 +43,21 @@ namespace BusinessLogic
             Team teamToModify = this.GetTeamByName(teamOldName);
 
             teamWithModifications.TeamOID = teamToModify.TeamOID;
-            this.persistanceProvideTeam.ModifyTeam(teamWithModifications);
+            this.teamPersistance.ModifyTeam(teamWithModifications);
         }
 
         public Team GetTeamByName(string name)
         {
-            Team team = this.persistanceProvideTeam.GetTeamByName(name);
+            Team team = this.teamPersistance.GetTeamByName(name);
             if (team == null)
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
             return team;
         }
 
-        public Team GetTeamByOID(int oid)
+        public Team GetTeamById(int teamId)
         {
-            Team team = this.persistanceProvideTeam.GetTeamByOID(oid);
+            Team team = this.teamPersistance.GetTeamById(teamId);
             if (team == null)
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
@@ -72,7 +72,7 @@ namespace BusinessLogic
                 Team teamToDelete = this.GetTeamByName(name);
 
                 if (teamToDelete != null && !this.ValidateTeamOnEvents(teamToDelete))
-                    this.persistanceProvideTeam.DeleteTeamByName(teamToDelete);
+                    this.teamPersistance.DeleteTeamByName(teamToDelete);
                 else
                     result = false;
 
@@ -91,11 +91,11 @@ namespace BusinessLogic
                 List<Event> events = new List<Event>();
                 Team team = this.GetTeamByName(teamName);
 
-                return this.persistanceProvideTeam.GetEventsByTeam(team);
+                return this.teamPersistance.GetEventsByTeam(team);
             }
             catch (Exception)
             {
-                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
             }
         }
         #endregion
@@ -103,21 +103,11 @@ namespace BusinessLogic
         #region Private metods
         private bool IsTeamInSystem(Team team)
         {
-            bool result = false;
-            List<Team> systemTeams = this.persistanceProvideTeam.GetTeams(true, string.Empty);
-            if (systemTeams != null)
-            {
-                foreach (var teamAux in systemTeams)
-                {
-                    if (teamAux.Name == team.Name) { result = true; };
-
-                }
-            }
-            return result;
+            return teamPersistance.GetTeamByName(team.Name) != null;
         }
         private bool ValidateTeamOnEvents(Team team)
         {
-            return persistanceProvideTeam.ValidateTeamOnEvents(team);
+            return teamPersistance.ValidateTeamOnEvents(team);
         }
         #endregion
     }

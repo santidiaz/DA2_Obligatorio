@@ -8,13 +8,13 @@ namespace DataContracts
     public interface ITeamPersistance
     {
         void AddTeam(Team newTeam, int sportOID);
-        List<Team> GetTeams(bool asc, string teamName);
         void ModifyTeam(Team teamWithModifications);
-        Team GetTeamByName(string name);
         void DeleteTeamByName(Team team);
+        List<Team> GetTeams(string teamName, bool orderAsc);        
+        Team GetTeamByName(string name);
         bool IsTeamInSystem(Team team);
         List<Event> GetEventsByTeam(Team team);
-        Team GetTeamByOID(int oid);
+        Team GetTeamById(int teamId);
         bool ValidateTeamOnEvents(Team team);
     }
 }

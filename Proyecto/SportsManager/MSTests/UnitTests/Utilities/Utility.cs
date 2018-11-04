@@ -42,18 +42,19 @@ namespace UnitTests.Utilities
         
         public static Event GenerateRandomEvent()
         {
-            DateTime randomDate = DateTime.Now.AddDays(GetRandomNumber(10));
-            Team team1 = new Team { Name = GetRandomTeamName() };
-            Team team2 = new Team { Name = GetRandomTeamName(team1.Name) };
+            // TODO: Modifiar por refactoreo de eventTeams
+            //DateTime randomDate = DateTime.Now.AddDays(GetRandomNumber(10));
+            //Team team1 = new Team { Name = GetRandomTeamName() };
+            //Team team2 = new Team { Name = GetRandomTeamName(team1.Name) };
 
-            List<Team> teams = new List<Team> { team1, team2 };
-            Sport sport1 = new Sport
-            {
-                Name = GetRandomSportName(),
-                Teams = teams
-            };
+            //List<Team> teams = new List<Team> { team1, team2 };
+            //Sport sport1 = new Sport
+            //{
+            //    Name = GetRandomSportName(),
+            //    Teams = teams
+            //};
 
-            return new Event(randomDate, sport1, team1, team2);
+            return null; //new Event(randomDate, sport1, team1, team2);
         }
 
         public static string GetRandomTeamName(string avoidName = null)
@@ -83,8 +84,9 @@ namespace UnitTests.Utilities
                 randomSportName = sportName;
 
             List<Team> teamList = new List<Team>() { new Team() { Name = "Racing" } };
-            Sport randomSport = new Sport(randomSportName, teamList);
-            return randomSport;
+            // TODO: Modifiar por refactoreo de eventTeams
+            //Sport randomSport = new Sport(randomSportName, teamList);
+            return null;//randomSport;
         }
 
         public static Team GenerateRandomTeam(string teamName = null)

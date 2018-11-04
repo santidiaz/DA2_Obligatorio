@@ -19,7 +19,7 @@ namespace DataAccess.Implementations
             }
         }
 
-        public void DeleteSportByName(Sport sportToDelete)
+        public void DeleteSport(Sport sportToDelete)
         {
             using (Context context = new Context())
             {
@@ -29,11 +29,22 @@ namespace DataAccess.Implementations
             }
         }
 
-        
+        public void ModifySport(Sport sportToModify)
+        {
+            using (Context context = new Context())
+            {
+                Sport sportOnDB = context.Sports.OfType<Sport>()
+                    .Where(a => a.SportOID.Equals(sportToModify.SportOID))
+                    .FirstOrDefault();
+
+                sportOnDB.Name = sportToModify.Name;
+                context.SaveChanges();
+            }
+        }
 
         public List<Sport> GetSports()
         {
-            var sports = new List<Sport>();
+            List<Sport> sports;
             using (Context context = new Context())
             {
                 sports = context.Sports.OfType<Sport>().ToList();
@@ -41,65 +52,83 @@ namespace DataAccess.Implementations
             return sports;
         }
 
-        public bool IsSportInSystem(Sport sport)
-        {
-            bool result = false;
-            using (Context context = new Context())
-            {
-                var sportOnDB = context.Sports.OfType<Sport>().Where(a => a.SportOID.Equals(sport.SportOID)).FirstOrDefault();
-
-                result = sportOnDB != null ? true : false;
-            }
-            return result;
-        }
-
-        public void ModifySportByName(Sport sportToModify)
-        {
-            using (Context context = new Context())
-            {
-                var sportOnDB = context.Sports.OfType<Sport>().Where(a => a.SportOID.Equals(sportToModify.SportOID)).FirstOrDefault();
-                sportOnDB.Name = sportToModify.Name;
-
-                context.SaveChanges();
-            }
-        }
-
-        public List<Event> GetEventsBySport(Sport sport)
-        {
-            List<Event> result = new List<Event>();
-            using (Context context = new Context())
-            {
-                List<Event> sportOnDB1 = context.Events.OfType<Event>().Include(s => s.Sport).Include(t => t.Away).Include(t => t.Local).ToList();
-
-                if (sportOnDB1 != null && sportOnDB1.Count > 0)
-                    result.AddRange(sportOnDB1.Where(s => s.Sport.SportOID == sport.SportOID));
-                
-            }
-            return result;
-        }
-
-        public Sport GetSportByName(string name, bool eageLoad)
+        public Sport GetSportByName(string name, bool eageLoad = false)
         {
             Sport foundSport;
             using (Context context = new Context())
             {
-                if(eageLoad)
-                    foundSport = context.Sports.OfType<Sport>().Include(s => s.Teams).FirstOrDefault(u => u.Name.Equals(name));
+                if (eageLoad)
+                {
+                    foundSport = context.Sports.OfType<Sport>()
+                           .Include(s => s.Teams)
+                           .FirstOrDefault(u => u.Name.Equals(name));
+                }
                 else
-                    foundSport = context.Sports.OfType<Sport>().FirstOrDefault(u => u.Name.Equals(name));
+                {
+                    foundSport = context.Sports.OfType<Sport>()
+                        .FirstOrDefault(u => u.Name.Equals(name));
+                }   
             }
             return foundSport;
         }
 
-        public bool ValidateSportOnTeams(Sport sport)
+        public Sport GetSportById(int id, bool eagerLoad = false)
         {
-            bool result = false;
+            Sport foundSport;
             using (Context context = new Context())
             {
-                //Team teamOnDB1 = context.Teams.OfType<Team>().Where(a => a.Sport.SportOID.Equals(sport.SportOID)).FirstOrDefault();
-                Sport sports = context.Sports.OfType<Sport>().Include(t => t.Teams).Where(a => a.SportOID.Equals(sport.SportOID)).FirstOrDefault();
-                //Team team = sports.Find(s => s.Teams.Find(t => t.))
-                if (sports.Teams != null && sports.Teams.Count > 0) result = true;
+                if (eagerLoad)
+                {
+                    foundSport = context.Sports.OfType<Sport>()
+                        .Include(s => s.Teams)
+                        .FirstOrDefault(s => s.SportOID.Equals(id));
+                }
+                else
+                {
+                    foundSport = context.Sports.OfType<Sport>()
+                        .FirstOrDefault(s => s.SportOID.Equals(id));
+                }
+            }
+            return foundSport;
+        }
+
+        public bool IsSportInSystem(Sport sport)
+        {
+            bool result;
+            using (Context context = new Context())
+            {
+                result = context.Sports.OfType<Sport>()
+                    .Where(s => s.Name.Equals(sport.Name))
+                    .FirstOrDefault() != null;
+            }
+            return result;
+        }
+        
+        public List<Event> GetEventsBySport(Sport sport)
+        {
+            List<Event> sportEvents;
+            using (Context context = new Context())
+            {
+                sportEvents = context.Events.OfType<Event>()
+                    .Include(s => s.Sport)
+                    .Include(t => t.Teams)
+                    .Where(e => e.Sport.Name.Equals(sport.Name))
+                    .ToList();
+            }
+            return sportEvents;
+        }
+
+        public bool CanBeDeleted(Sport sport)
+        {
+            bool result;
+            using (Context context = new Context())
+            {
+                Sport sports = context.Sports.OfType<Sport>()
+                    .Include(t => t.Teams)
+                    .Where(s => s.Name.Equals(sport.Name))
+                    .FirstOrDefault();
+
+                result = sport.Teams == null || sport.Teams.Count.Equals(0);
             }
             return result;
         }

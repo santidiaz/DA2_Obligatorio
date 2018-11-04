@@ -100,14 +100,14 @@ namespace DataAccess.Implementations
             }
         }
 
-        public List<UserTeam> GetFavoritesTeamsByUserName(User user)
+        public List<UserTeam> GetUserFavouriteTeams(User user)
         {
-            List<UserTeam> listTeams = new List<UserTeam>();
+            List<UserTeam> userFavouriteTeams;
             using (Context context = new Context())
             {
-                listTeams = context.UserTeams.Where(u => u.UserOID == user.UserOID).ToList();
+                userFavouriteTeams = context.UserTeams.Where(u => u.UserOID.Equals(user.UserOID)).ToList();
             }
-            return listTeams;
+            return userFavouriteTeams;
         }
 
         public void DeleteFavoriteTeamByUser(Team team, User user)
@@ -120,28 +120,40 @@ namespace DataAccess.Implementations
             }
         }
 
-        public List<Event> GetCommentsOfUserFavouriteTemasEvents(User user)
+        public List<Event> GetUserFavouriteTeamsEvents(User user)
         {
-            List<Event> result = new List<Event>();
-            List<UserTeam> listTeams = new List<UserTeam>();
+            List<Event> userFavouriteTeamsEvents = new List<Event>();
+            List<UserTeam> userFavouriteTeams;
+
             using (Context context = new Context())
             {
-                listTeams = context.UserTeams.Where(u => u.UserOID == user.UserOID).ToList();
-                foreach (var item in listTeams)
+                // Get the user favourite teams.
+                userFavouriteTeams = context.UserTeams.OfType<UserTeam>()
+                    .Where(u => u.UserOID.Equals(user.UserOID))
+                    .ToList();
+
+                foreach (UserTeam favouriteTeam in userFavouriteTeams)
                 {
-                    List<Event> eventOnDB1 = context.Events.OfType<Event>().Include(s => s.Sport).Include(t => t.Away).Include(t => t.Local).Include(c => c.Comments).ToList();
-
-                    if (eventOnDB1 != null && eventOnDB1.Count > 0)
+                    // Return all events of users favourite teams.
+                    List<Event> currentFavouriteTeamEvents = context.Events.OfType<Event>()
+                        .Include(s => s.Sport)
+                        .Include(t => t.Teams)
+                        .Include(c => c.Comments)
+                        .Where(e => e.Teams.Exists(ev_tm => ev_tm.TeamOID.Equals(favouriteTeam.TeamOID)))
+                        .ToList();
+                    
+                    foreach(Event currentEvent in currentFavouriteTeamEvents)
                     {
-                        Event aux = eventOnDB1.Where(s => s.Away.TeamOID == item.TeamOID).FirstOrDefault();
-                        if (aux != null && (result.Find(r => r.EventOID == aux.EventOID) == null)) result.Add(aux);
-
-                        Event aux2 = eventOnDB1.Where(s => s.Local.TeamOID == item.TeamOID).FirstOrDefault();
-                        if (aux2 != null && (result.Find(r => r.EventOID == aux2.EventOID) == null)) result.Add(aux2);
+                        // If return list [userFavouriteTeamsEvents] dont have the event added already.
+                        if (!userFavouriteTeamsEvents.Exists(ft_ev => ft_ev.EventOID.Equals(currentEvent.EventOID)))
+                        {
+                            userFavouriteTeamsEvents.Add(currentEvent);
+                        }
                     }
                 }
             }
-            return result;
+
+            return userFavouriteTeamsEvents;
         }
     }
 }

@@ -6,7 +6,6 @@ using DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BusinessLogic
 {
@@ -24,26 +23,17 @@ namespace BusinessLogic
         }
 
         #region Public methods
-        public void AddEvent(string sportName, string firstTeamName, string secondTeamName, DateTime eventDate)
+        public void AddEvent(string sportName, List<string> teamNames, DateTime eventDate)
         {
+            if(teamNames == null || teamNames.Count < 2)
+                throw new EntitiesException(Constants.SportErrors.NOT_ENOUGH_TEAMS, ExceptionStatusCode.InvalidData);
+
             Sport foundSport = this.FindSport(sportName);
-            Team foundTeamA = this.FindTeamOnSport(foundSport, firstTeamName);
-            Team foundTeamB = this.FindTeamOnSport(foundSport, secondTeamName);
+            List<Team> foundTeams = this.FindSportTeams(foundSport, teamNames);
+            this.ValidateTeamsEventExists(foundTeams, eventDate);
 
-            if (this.DoesTeamsEventExists(foundTeamA, foundTeamB, eventDate))
-                throw new EntitiesException(Constants.EventError.ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
-
-            Event newEvent = new Event(eventDate, foundSport, foundTeamA, foundTeamB);
+            Event newEvent = new Event(eventDate, foundSport, foundTeams);
             this.eventProvider.AddEvent(newEvent);
-        }
-
-        public Event GetEventById(int eventId)
-        {
-            Event foundEvent = this.eventProvider.GetEventById(eventId, true);
-            if (foundEvent == null)
-                throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
-
-            return foundEvent;
         }
 
         public void DeleteEventById(int eventId)
@@ -62,19 +52,39 @@ namespace BusinessLogic
             }
         }
 
-        public void ModifyEvent(int eventId, string localTeamName, string awayTeamName, DateTime initialDate)
+        public void ModifyEvent(int eventId, List<string> teamsNames, DateTime newDate)
         {
-            Event eventToModify = this.GetEventById(eventId);
-            Team foundTeamA = this.FindTeamOnSport(eventToModify.Sport, localTeamName);
-            Team foundTeamB = this.FindTeamOnSport(eventToModify.Sport, awayTeamName);
-            
-            if (this.DoesTeamsEventExists(foundTeamA, foundTeamB, initialDate))
-                throw new EntitiesException(Constants.EventError.ALREADY_EXISTS, ExceptionStatusCode.InvalidData);
+            Event eventToModify = this.GetEventById(eventId, true);
+            List<Team> foundTeams = this.FindSportTeams(eventToModify.Sport, teamsNames);
+            ValidateTeamsEventExists(foundTeams, newDate);
 
-            eventToModify.Local = foundTeamA;
-            eventToModify.Away = foundTeamB;
-            eventToModify.InitialDate = initialDate;
+            eventToModify.ModifyTeams(foundTeams);
+            eventToModify.InitialDate = newDate;
+
             this.eventProvider.ModifyEvent(eventToModify);
+        }
+
+        public List<Team> FindSportTeams(Sport foundSport, List<string> teamNames)
+        {
+            List<Team> sportTeams = foundSport.Teams;
+            // Get all sport teams that are included in teamNames list
+            List<Team> foundTeams = sportTeams.Where(st => !teamNames.Any(tn => st.Name.Equals(tn))).ToList();
+
+            if (foundTeams == null)
+                throw new EntitiesException(Constants.SportErrors.NO_TEAM_BELONG_TO_SPORT, ExceptionStatusCode.NotFound);
+            else if (foundTeams.Count != teamNames.Count)
+                throw new EntitiesException(Constants.SportErrors.NOT_ALL_TEAMS_BELONG_TO_SPORT, ExceptionStatusCode.InvalidData);
+
+            return foundTeams;
+        }
+
+        public Event GetEventById(int eventId, bool eagerLoad = true)
+        {
+            Event foundEvent = this.eventProvider.GetEventById(eventId, eagerLoad);
+            if (foundEvent == null)
+                throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            return foundEvent;
         }
 
         public List<Event> GetAllEvents()
@@ -84,30 +94,30 @@ namespace BusinessLogic
         #endregion
 
         #region Private methods
-        private bool DoesTeamsEventExists(Team firstTeam, Team secondTeam, DateTime eventDate)
+        private void ValidateTeamsEventExists(List<Team> teams, DateTime eventDate)
         {
             List<Event> events = this.eventProvider.GetEventsByDate(eventDate);
-            return events?.Exists(te => te.GetLocalTeam().Equals(firstTeam)
-                                         && te.GetAwayTeam().Equals(secondTeam)) ?? false;
+            foreach(Event e in events)
+            {
+                e.Teams.ForEach(t => {
+                    if(teams.Exists(tm => tm.Name.Equals(t)))
+                    {
+                        throw new EntitiesException(
+                            string.Format(Constants.EventError.EVENT_TEAM_EXISTS,t.Name, e.InitialDate.Date), 
+                            ExceptionStatusCode.InvalidData);
+                    }
+                });
+            }
         }
 
         private Sport FindSport(string sportName)
         {
             Sport foundSport = this.sportProvider.GetSportByName(sportName, true);
             if (foundSport == null)
-                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_NOT_EXISTS, ExceptionStatusCode.NotFound);
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
             return foundSport;
         }
-
-        private Team FindTeamOnSport(Sport aSport, string teamName)
-        {
-            Team foundTeam = aSport.Teams.Find(t => t.Name.Equals(teamName));
-            if (foundTeam == null)
-                throw new EntitiesException(string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, teamName), ExceptionStatusCode.NotFound);
-
-            return foundTeam;
-        }        
         #endregion
     }
 }

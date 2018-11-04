@@ -31,6 +31,8 @@ namespace CommonUtilities
             public const string SPORT_REQUIRED = "Must specify a sport.";
             public const string ALREADY_EXISTS = "An event with selected teams already exists for the date.";
             public const string NOT_FOUND = "Event was not found.";
+            public const string INVALID_AMOUNT_OF_TEAMS = "Invalid amount of teams.";
+            public const string EVENT_TEAM_EXISTS = "The team [{0}] is already on an event on date {1}";
         }
 
         public static class Team
@@ -61,10 +63,12 @@ namespace CommonUtilities
             public const string NAME_REQUIRED = "Name required";
             public const string TEAMLIST_REQUIRED = "Team list required";
             public const string ERROR_SPORT_ALREADY_EXISTS = "Sport already exists";
-            public const string ERROR_SPORT_NOT_EXISTS = "Sport not exists";
+            public const string ERROR_SPORT_DO_NOT_EXISTS = "Sport does not exists";
             public const string NOT_ENOUGH_TEAMS = "Not enough teams in the sport";
             public const string TEAM_NOT_IN_SPORT = "Team <{0}> does no belong to sport";
             public const string ERROR_SPORT_HAS_TEAMS = "Can't delete sport with teams";
+            public const string NOT_ALL_TEAMS_BELONG_TO_SPORT = "Not all teams belong to the sport";
+            public const string NO_TEAM_BELONG_TO_SPORT = "None of the teams belong to the sport";
         }
 
         public static class PermissionError

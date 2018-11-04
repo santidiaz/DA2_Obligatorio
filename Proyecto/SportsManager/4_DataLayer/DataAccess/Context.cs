@@ -18,6 +18,7 @@ namespace DataAccess
         public DbSet<Event> Events { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserTeam> UserTeams { get; set; }
+        //public DbSet<EventTeam> EventTeams { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,6 +40,11 @@ namespace DataAccess
             modelBuilder.Entity<Event>().HasKey(e => e.EventOID);
             modelBuilder.Entity<Comment>().HasKey(e => e.CommentOID);
 
+            // Join entities
+            modelBuilder.Entity<UserTeam>().HasKey(ut => new { ut.UserOID, ut.TeamOID });
+            //modelBuilder.Entity<EventTeam>().HasKey(et => new { et.EventOID, et.TeamOID });
+
+            // Default user
             modelBuilder.Entity<User>().HasData(new User()
             {
                 Email = "aaa@bbb.com",
@@ -49,9 +55,7 @@ namespace DataAccess
                 UserName = "superadmin",
                 Token = Guid.NewGuid(),
                 UserOID = 1
-            });
-
-            modelBuilder.Entity<UserTeam>().HasKey(ut => new { ut.UserOID, ut.TeamOID });
+            });            
         }
     }
 }

@@ -8,10 +8,10 @@ namespace BusinessContracts
     public interface ITeamLogic
     {
         void AddTeam(Team newTeam, int sportOID);
-        List<Team> GetTeams(bool asc, string teamName);
+        List<Team> GetTeams(string teamName, bool orderAsc);
         void ModifyTeamByName(string name, Team team);
         Team GetTeamByName(string name);
-        Team GetTeamByOID(int oid);
+        Team GetTeamById(int teamId);
         bool DeleteTeamByName(string name);
         List<Event> GetEventsByTeam(string team);
     }

@@ -33,6 +33,19 @@ namespace FixtureLogic
         #region Private Methods
         private bool HasEnoughTeams(int teamsCount)
         {
+
+            /*
+             if(admite multiple encuentro)
+                teamsCount > 2
+             
+             
+             
+             */
+
+            // si el Sport.AdmiteMultipleEncuentro
+            // && teamsCount 
+
+
             return (teamsCount % 2) != 0;
         }
 
@@ -79,7 +92,8 @@ namespace FixtureLogic
                             {
                                 if (this.DoesTodayTeamMatchExists(events, aMatch, initialDate))
                                 {
-                                    events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
+                                    // TODO: Refactor...
+                                    //events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
                                     aMatch.IsAvailable = false;
                                     addedGames++;
                                 }
@@ -87,7 +101,9 @@ namespace FixtureLogic
                         }
                         else
                         {   // First iteration
-                            events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
+
+                            // TODO: Refactor...
+                            //events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
                             aMatch.IsAvailable = false;
                         }
                     }

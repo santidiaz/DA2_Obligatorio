@@ -475,7 +475,7 @@ namespace UnitTests.LogicTests
                 User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName("userName", true)).Verifiable();
-                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<User>())).Returns(new List<UserTeam>());
+                mock.Setup(up => up.GetUserFavouriteTeams(It.IsAny<User>())).Returns(new List<UserTeam>());
 
                 UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.GetFavoritesTeamsByUserName("userName");
@@ -498,7 +498,7 @@ namespace UnitTests.LogicTests
                 User mockedOriginalUser = Utility.GenerateRandomUser("userName", Utility.GenerateHash("123456"));
 
                 mock.Setup(up => up.GetUserByUserName("userName", true)).Returns(mockedOriginalUser);
-                mock.Setup(up => up.GetFavoritesTeamsByUserName(It.IsAny<User>())).Throws(new Exception());
+                mock.Setup(up => up.GetUserFavouriteTeams(It.IsAny<User>())).Throws(new Exception());
 
                 UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.GetFavoritesTeamsByUserName("userName");
@@ -550,7 +550,7 @@ namespace UnitTests.LogicTests
 
                 UserLogic userLogic = new UserLogic(userMock.Object, teamMock.Object);
 
-                List<Event> result = userLogic.GetCommentsOfUserFavouriteTemasEvents(mockedUser.UserName);
+                List<Event> result = userLogic.GetUserFavouriteTeamsEvents(mockedUser.UserName);
                 Assert.Fail();
             }
             catch(EntitiesException eEx)
@@ -637,7 +637,7 @@ namespace UnitTests.LogicTests
                 UserTeam ut3 = new UserTeam { Team = team3, User = mockedUser };
 
                 mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
-                mockUserPersitance.Setup(up => up.GetFavoritesTeamsByUserName(mockedUser)).Returns(mockedUserTeams);
+                mockUserPersitance.Setup(up => up.GetUserFavouriteTeams(mockedUser)).Returns(mockedUserTeams);
 
                 UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
 
@@ -659,29 +659,33 @@ namespace UnitTests.LogicTests
         {
             try
             {
-                var mockUserPersitance = new Mock<IUserPersistance>();
-                var mockTeamPersitance = new Mock<ITeamPersistance>();
+                // TODO: Refactor
 
-                User mockedUser = Utility.GenerateRandomUser();
+                //var mockUserPersitance = new Mock<IUserPersistance>();
+                //var mockTeamPersitance = new Mock<ITeamPersistance>();
 
-                Team team1 = new Team { Name = "Nacional" };
-                Team team2 = new Team { Name = "Defensor" };
-                Team team3 = new Team { Name = "FC Barcelona" };
-                Team team4 = new Team { Name = "Sevilla" };
-                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-                Sport sport = new Sport("Football", teams);
-                Event event1 = new Event(DateTime.Now, sport, team1, team3);
-                Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
+                //User mockedUser = Utility.GenerateRandomUser();
 
-                List<Event> mockedEvents = new List<Event> { event1, event2};
+                //Team team1 = new Team { Name = "Nacional" };
+                //Team team2 = new Team { Name = "Defensor" };
+                //Team team3 = new Team { Name = "FC Barcelona" };
+                //Team team4 = new Team { Name = "Sevilla" };
+                //List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                //Sport sport = new Sport("Football", teams);
+                //Event event1 = new Event(DateTime.Now, sport, team1, team3);
+                //Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
 
-                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
-                mockUserPersitance.Setup(up => up.GetCommentsOfUserFavouriteTemasEvents(mockedUser)).Returns(mockedEvents);
+                //List<Event> mockedEvents = new List<Event> { event1, event2};
 
-                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+                //mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
+                //mockUserPersitance.Setup(up => up.GetCommentsOfUserFavouriteTemasEvents(mockedUser)).Returns(mockedEvents);
 
-                List<Event> result = userLogic.GetCommentsOfUserFavouriteTemasEvents(mockedUser.UserName);
-                Assert.IsNotNull(result);
+                //UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+
+                //List<Event> result = userLogic.GetCommentsOfUserFavouriteTemasEvents(mockedUser.UserName);
+                //Assert.IsNotNull(result);
+
+                Assert.Fail();
             }
             catch (EntitiesException eEx)
             {
@@ -704,7 +708,7 @@ namespace UnitTests.LogicTests
                 User mockedUser = Utility.GenerateRandomUser();
 
                 mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
-                mockTeamPersitance.Setup(tm => tm.GetTeamByOID(It.IsAny<int>())).Returns((Team)null);
+                mockTeamPersitance.Setup(tm => tm.GetTeamById(It.IsAny<int>())).Returns((Team)null);
 
                 UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
 
@@ -733,7 +737,7 @@ namespace UnitTests.LogicTests
                 Team mockedTeam = Utility.GenerateRandomTeam();
 
                 mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
-                mockTeamPersitance.Setup(tm => tm.GetTeamByOID(It.IsAny<int>())).Returns(mockedTeam);
+                mockTeamPersitance.Setup(tm => tm.GetTeamById(It.IsAny<int>())).Returns(mockedTeam);
 
                 UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
 
