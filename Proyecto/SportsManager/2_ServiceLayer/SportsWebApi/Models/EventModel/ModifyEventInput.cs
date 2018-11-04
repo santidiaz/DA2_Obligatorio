@@ -8,11 +8,8 @@ namespace SportsWebApi.Models.EventModel
 {
     public class ModifyEventInput
     {
-        [Required(ErrorMessage = "Local team required.")]
-        public string LocalTeamName { get; set; }
-
-        [Required(ErrorMessage = "Away team required.")]
-        public string AwayTeamName { get; set; }
+        [Required(ErrorMessage = "Teams are required.")]
+        public List<string> TeamNames { get; set; }
 
         [Required(ErrorMessage = "Initial date required.")]
         public DateTime InitialDate { get; set; }

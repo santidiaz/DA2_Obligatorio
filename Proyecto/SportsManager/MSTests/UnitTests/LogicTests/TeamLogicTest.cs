@@ -31,7 +31,7 @@ namespace UnitTests.LogicTests
                     new Team() { Name = "teamName2", Photo = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 } },
                     new Team() { Name = "teamName3", Photo = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 } }};
 
-                mock.Setup(up => up.GetTeams(true, string.Empty)).Returns(teamList);
+                mock.Setup(up => up.GetTeams(string.Empty, true)).Returns(teamList);
                 mock.Setup(mr => mr.AddTeam(new Team() { Name = "teamName", Photo = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 } }, 1)).Verifiable();
                 mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
 
@@ -53,7 +53,7 @@ namespace UnitTests.LogicTests
         {
             // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
             var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
-            mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>());
+            mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>());
             mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
             mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
 
@@ -79,7 +79,7 @@ namespace UnitTests.LogicTests
                 TeamLogic userLogic = new TeamLogic(mock.Object , mockSport.Object);
                 Team teamToAdd = Utility.GenerateRandomTeam();
 
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>() { teamToAdd });
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { teamToAdd });
 
                 userLogic.AddTeam(teamToAdd, 1);
 
@@ -123,7 +123,7 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 Team teamToDelete = Utility.GenerateRandomTeam(Constants.Team.NAME_TEST);
 
-                mock.Setup(up => up.GetTeams(true, "Nacional")).Returns(new List<Team>() { teamToDelete });
+                mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { teamToDelete });
                 mock.Setup(mr => mr.DeleteTeamByName(It.IsAny<Team>())).Verifiable();
 
                 TeamLogic teamLogic = new TeamLogic(mock.Object, mockSport.Object);

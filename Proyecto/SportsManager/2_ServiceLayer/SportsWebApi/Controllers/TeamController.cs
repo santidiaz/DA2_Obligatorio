@@ -154,7 +154,7 @@ namespace SportsWebApi.Controllers
         {
             try
             {
-                List<Team> result = teamOperations.GetTeams(orderAsc, teamName);
+                List<Team> result = teamOperations.GetTeams(teamName, orderAsc);
                 return Ok(result);
             }
             catch (EntitiesException ex)

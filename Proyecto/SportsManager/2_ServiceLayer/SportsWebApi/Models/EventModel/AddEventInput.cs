@@ -12,10 +12,7 @@ namespace SportsWebApi.Models.EventModel
         public string SportName { get; set; }
 
         [Required]
-        public string LocalTeamName { get; set; }
-
-        [Required]
-        public string AwayTeamName { get; set; }
+        public List<string> TeamNames { get; set; }
 
         [Required]
         public DateTime EventDate { get; set; }

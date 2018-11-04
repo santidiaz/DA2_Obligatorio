@@ -29,10 +29,7 @@ namespace SportsWebApi.Controllers
                 if (input == null)
                     return BadRequest();
 
-                if (input.LocalTeamName.Equals(input.AwayTeamName))
-                    return BadRequest("Teams must be different.");
-
-                eventOperations.AddEvent(input.SportName, input.LocalTeamName, input.AwayTeamName, input.EventDate);
+                eventOperations.AddEvent(input.SportName, input.TeamNames, input.EventDate);
                 return Ok();
             }
             catch (EntitiesException eEx)
@@ -115,7 +112,7 @@ namespace SportsWebApi.Controllers
                 if (input == null)
                     return BadRequest();
 
-                this.eventOperations.ModifyEvent(eventId, input.LocalTeamName, input.AwayTeamName, input.InitialDate);
+                this.eventOperations.ModifyEvent(eventId, input.TeamNames, input.InitialDate);
                 return Ok();
             }
             catch (EntitiesException eEx)

@@ -42,7 +42,7 @@ namespace BusinessEntities
             this._name = string.Empty;
             this._teams = new List<Team>();
         }
-        public Sport(string newName, List<Team> newTeams, bool allowManyTeamsEvents)
+        public Sport(string newName, List<Team> newTeams, bool allowManyTeamsEvents = true)
         {
             this.AllowdMultipleTeamsEvents = allowManyTeamsEvents;
             this.Name = newName;

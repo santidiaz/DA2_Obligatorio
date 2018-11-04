@@ -46,6 +46,12 @@ namespace BusinessEntities
             set { this._coments = value; }
         }
 
+        public Event()
+        {
+            this._coments = new List<Comment>();
+            this._teams = new List<Team>();
+            this._initialDate = DateTime.MinValue;;
+        }
         public Event(DateTime date, Sport sport, List<Team> teams)
         {
             this._coments = new List<Comment>();
