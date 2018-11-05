@@ -137,9 +137,9 @@ namespace DataAccess.Implementations
                     // Return all events of users favourite teams.
                     List<Event> currentFavouriteTeamEvents = context.Events.OfType<Event>()
                         .Include(s => s.Sport)
-                        .Include(t => t.Teams)
+                        .Include(t => t.EventTeams)
                         .Include(c => c.Comments)
-                        .Where(e => e.Teams.Exists(ev_tm => ev_tm.TeamOID.Equals(favouriteTeam.TeamOID)))
+                        .Where(e => e.EventTeams.Exists(ev_tm => ev_tm.TeamOID.Equals(favouriteTeam.TeamOID)))
                         .ToList();
                     
                     foreach(Event currentEvent in currentFavouriteTeamEvents)

@@ -29,10 +29,10 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 Team teamOnDB = context.Teams.OfType<Team>()
-                    .Where(t => t.Name.Equals(teamToModify.Name))
+                    .Where(t => t.TeamOID.Equals(teamToModify.TeamOID))
                     .FirstOrDefault();
 
-                teamOnDB.Name = teamToModify.Name;
+                teamOnDB.Name = string.IsNullOrEmpty(teamToModify.Name) ? teamOnDB.Name : teamToModify.Name;
                 teamOnDB.Photo = teamToModify.Photo;
                 context.SaveChanges();
             }
@@ -106,8 +106,8 @@ namespace DataAccess.Implementations
             {
                 teamEvents = context.Events.OfType<Event>()
                     .Include(s => s.Sport)
-                    .Include(t => t.Teams)
-                    .Where(e => e.Teams.Exists(ev_tm => ev_tm.Name.Equals(team.Name)))
+                    .Include(t => t.EventTeams)
+                    .Where(e => e.EventTeams.Exists(ev_tm => ev_tm.TeamOID.Equals(team.TeamOID)))
                     .ToList();
             }
             return teamEvents;

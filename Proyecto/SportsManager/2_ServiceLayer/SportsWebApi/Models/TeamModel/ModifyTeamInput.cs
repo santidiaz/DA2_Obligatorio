@@ -11,7 +11,6 @@ namespace SportsWebApi.Models.TeamModel
         [Required(ErrorMessage = "OldName is required.")]
         public string OldName { get; set; }
 
-        [Required(ErrorMessage = "NewName is required.")]
         public string NewName { get; set; }
     }
 }

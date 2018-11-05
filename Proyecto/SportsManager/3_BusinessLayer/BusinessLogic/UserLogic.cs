@@ -83,8 +83,8 @@ namespace BusinessLogic
 
         public void AddFavoritesToUser(User aUser, List<Team> teamLists)
         {
-            User userToDelete = this.GetUserByUserName(aUser.UserName);
-            if (userToDelete == null)
+            User foundUser = this.GetUserByUserName(aUser.UserName);
+            if (foundUser == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
             this.userProvider.AddFavoritesToUser(aUser, teamLists);

@@ -7,29 +7,24 @@ namespace BusinessEntities
 {
     public class Comment
     {
-        private DateTime _datePosted;
-
-        public int CommentOID { get; set; } // [Object Id] This id is used by EntityFramework.
+        #region Private attributes
         private string _description;
         private string _creatorName;
-        public DateTime DatePosted
-        {
-            get { return this._datePosted; }
-            set { this._datePosted = value; }
-        }
+        #endregion
 
-        public Comment()
+        public int CommentOID { get; set; } // [Object Id] This id is used by EntityFramework.
+        public string CreatorName
         {
-            this.DatePosted = DateTime.Now;
-        }
+            get { return this._creatorName; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception(Constants.CommentError.CREATORNAME_REQUIRED);
 
-        public Comment(string exceptedDescription, string exceptedCreatorName)
-        {
-            this.DatePosted = DateTime.Now;
-            this.Description = exceptedDescription;
-            this.CreatorName = exceptedCreatorName;
+                this._creatorName = value;
+            }
         }
-
+        public DateTime DatePosted { get; set; }
         public string Description
         {
             get { return this._description; }
@@ -41,17 +36,17 @@ namespace BusinessEntities
                 this._description = value;
             }
         }
-
-        public string CreatorName
+        
+        public Comment()
         {
-            get { return this._creatorName; }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    throw new Exception(Constants.CommentError.CREATORNAME_REQUIRED);
+            this.DatePosted = DateTime.Now;
+        }
 
-                this._creatorName = value;
-            }
+        public Comment(string newDescription, string creatorName)
+        {
+            this.DatePosted = DateTime.Now;
+            this.Description = newDescription;
+            this.CreatorName = creatorName;
         }
 
         public override bool Equals(object obj)

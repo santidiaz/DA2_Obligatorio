@@ -1,7 +1,5 @@
 ﻿using CommonUtilities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BusinessEntities
 {
@@ -9,7 +7,6 @@ namespace BusinessEntities
     {
         #region Private attributes
         private string _name;
-        private byte[] _photo;
         #endregion
 
         public int TeamOID { get; set; } // [Object Id] This id is team by EntityFramework.
@@ -24,18 +21,8 @@ namespace BusinessEntities
                 this._name = value;
             }
         }
-        public byte[] Photo
-        {
-            get { return this._photo; }
-            set
-            {
-                if (value == null || value.Length == 0)
-                    throw new Exception(Constants.TeamErrors.PHOTO_INVALID);
-
-                this._photo = value;
-            }
-        }
-
+        public byte[] Photo { get; set; }
+        
         public Team()
         {
             this._name = string.Empty;

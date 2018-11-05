@@ -111,7 +111,7 @@ namespace DataAccess.Implementations
             {
                 sportEvents = context.Events.OfType<Event>()
                     .Include(s => s.Sport)
-                    .Include(t => t.Teams)
+                    .Include(t => t.EventTeams)
                     .Where(e => e.Sport.Name.Equals(sport.Name))
                     .ToList();
             }

@@ -1,7 +1,9 @@
 ﻿using BusinessEntities.Exceptions;
+using BusinessEntities.JoinEntities;
 using CommonUtilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -11,10 +13,10 @@ namespace BusinessEntities
     {
         #region Private Attributes
         private DateTime _initialDate;
-        private List<Team> _teams;
+        private List<EventTeam> _teams;
         private List<Comment> _coments;
         #endregion
-        
+
         public int EventOID { get; set; } // [Object Id] This id is required by EntityFramework.
         public DateTime InitialDate
         {
@@ -29,17 +31,19 @@ namespace BusinessEntities
         }
         public bool MultipleTeamsEvent { get; set; }
         public Sport Sport { get; set; }
-        public List<Team> Teams
+        public virtual List<EventTeam> EventTeams
         {
             get { return this._teams; }
             set
             {
-                if (this.TeamsQuantityIsValid(value))
+                List<Team> teams = value?.Select(v => v.Team).ToList();
+                if (teams != null && this.TeamsQuantityIsValid(teams))
                     throw new EntitiesException(Constants.EventError.INVALID_AMOUNT_OF_TEAMS, ExceptionStatusCode.InvalidData);
 
                 this._teams = value;
             }
         }
+
         public virtual List<Comment> Comments
         {
             get { return this._coments?.OrderByDescending(c => c.DatePosted)?.ToList(); }
@@ -49,7 +53,7 @@ namespace BusinessEntities
         public Event()
         {
             this._coments = new List<Comment>();
-            this._teams = new List<Team>();
+            this._teams = new List<EventTeam>();
             this._initialDate = DateTime.MinValue;;
         }
         public Event(DateTime date, Sport sport, List<Team> teams)
@@ -57,19 +61,19 @@ namespace BusinessEntities
             this._coments = new List<Comment>();
             this.InitialDate = date;
             this.Sport = sport;
-            this.MultipleTeamsEvent = sport.AllowdMultipleTeamsEvents;
-            this.Teams = teams;
-        }
+            this.MultipleTeamsEvent = sport.AllowdMultipleTeamsEvents;            
+            this.LoadTeams(teams);
+        }        
 
         #region Public methods
         public Team GetLocalTeam()
         {
-            return this.Teams.ElementAt(0);
+            return this.EventTeams[0].Team;
         }
 
         public Team GetAwayTeam()
         {
-            return this.Teams.ElementAt(1);
+            return this.EventTeams[1].Team;
         }
         
         public void ModifyTeams(List<Team> newTeams)
@@ -80,7 +84,7 @@ namespace BusinessEntities
 
             if (this.MultipleTeamsEvent)
             {
-                this.Teams = newTeams;
+                this.LoadTeams(newTeams);
             }
             else
             {
@@ -111,22 +115,38 @@ namespace BusinessEntities
         #region Private methods
         private void SetLocal(Team localTeam)
         {
-            this.Teams[0] = localTeam;
+            this.EventTeams[0].Team = localTeam;
         }
         private void SetAway(Team awayTeam)
         {
-            this.Teams[1] = awayTeam;
+            this.EventTeams[1].Team = awayTeam;
         }
         private bool AreValidTeams(Team local, Team away)
         {
             return local != null && away != null
                 && !local.Equals(away);
         }
+        private void LoadTeams(List<Team> teams)
+        {
+            if (teams != null && this.TeamsQuantityIsValid(teams))
+                throw new EntitiesException(Constants.EventError.INVALID_AMOUNT_OF_TEAMS, ExceptionStatusCode.InvalidData);
 
+            this._teams = new List<EventTeam>();
+            foreach (Team currentTeam in teams)
+            {
+                this._teams.Add(
+                    new EventTeam
+                    {
+                        Team = currentTeam,
+                        TeamOID = currentTeam.TeamOID,
+                        EventOID = this.EventOID
+                    });
+            }
+        }
         // Teams must be 2, or if SPORT allow multipleTeamsEvents, count must be 3 or more.
         private bool TeamsQuantityIsValid(List<Team> teams)
         {
-            return teams == null || teams.Count < 2 || (!this.MultipleTeamsEvent && teams.Count > 2);
+            return teams == null || teams.Count() < 2 || (!this.MultipleTeamsEvent && teams.Count() > 2);
         }
         #endregion
     }

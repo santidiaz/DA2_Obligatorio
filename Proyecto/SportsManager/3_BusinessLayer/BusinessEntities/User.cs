@@ -18,6 +18,17 @@ namespace BusinessEntities
 
         #region Public attributes
         public int UserOID { get; set; } // [Object Id] This id is used by EntityFramework.
+        public string UserName
+        {
+            get { return this._userName; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new EntitiesException(Constants.UserError.USER_NAME_REQUIRED, ExceptionStatusCode.InvalidData);
+
+                this._userName = value;
+            }
+        }
         public Guid Token { get; set; }
         public string Name
         {
@@ -40,18 +51,7 @@ namespace BusinessEntities
 
                 this._lastName = value;
             }
-        }
-        public string UserName
-        {
-            get { return this._userName; }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    throw new EntitiesException(Constants.UserError.USER_NAME_REQUIRED, ExceptionStatusCode.InvalidData);
-
-                this._userName = value;
-            }
-        }
+        }        
         public string Email
         {
             get { return this._email; }

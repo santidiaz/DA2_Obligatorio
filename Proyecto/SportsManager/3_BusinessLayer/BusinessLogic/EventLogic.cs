@@ -25,11 +25,15 @@ namespace BusinessLogic
         #region Public methods
         public void AddEvent(string sportName, List<string> teamNames, DateTime eventDate)
         {
-            if(teamNames == null || teamNames.Count < 2)
+            var foundSport = this.FindSport(sportName);
+
+            if (teamNames == null || teamNames.Count < 2)
                 throw new EntitiesException(Constants.SportErrors.NOT_ENOUGH_TEAMS, ExceptionStatusCode.InvalidData);
 
-            Sport foundSport = this.FindSport(sportName);
-            List<Team> foundTeams = this.FindSportTeams(foundSport, teamNames);
+            if (this.CheckForDuplicatedNames(teamNames))
+                throw new EntitiesException(Constants.SportErrors.REPEATED_TEAMS, ExceptionStatusCode.InvalidData);
+            
+            var foundTeams = this.FindSportTeams(foundSport, teamNames);
             this.ValidateTeamsEventExists(foundTeams, eventDate);
 
             Event newEvent = new Event(eventDate, foundSport, foundTeams);
@@ -52,10 +56,13 @@ namespace BusinessLogic
             }
         }
 
-        public void ModifyEvent(int eventId, List<string> teamsNames, DateTime newDate)
+        public void ModifyEvent(int eventId, List<string> teamNames, DateTime newDate)
         {
+            if (this.CheckForDuplicatedNames(teamNames))
+                throw new EntitiesException(Constants.SportErrors.REPEATED_TEAMS, ExceptionStatusCode.InvalidData);
+
             Event eventToModify = this.GetEventById(eventId, true);
-            List<Team> foundTeams = this.FindSportTeams(eventToModify.Sport, teamsNames);
+            List<Team> foundTeams = this.FindSportTeams(eventToModify.Sport, teamNames);
             ValidateTeamsEventExists(foundTeams, newDate);
 
             eventToModify.ModifyTeams(foundTeams);
@@ -68,7 +75,7 @@ namespace BusinessLogic
         {
             List<Team> sportTeams = foundSport.Teams;
             // Get all sport teams that are included in teamNames list
-            List<Team> foundTeams = sportTeams.Where(st => !teamNames.Any(tn => st.Name.Equals(tn))).ToList();
+            List<Team> foundTeams = sportTeams.Where(st => teamNames.Any(tn => st.Name == tn)).ToList();
 
             if (foundTeams == null)
                 throw new EntitiesException(Constants.SportErrors.NO_TEAM_BELONG_TO_SPORT, ExceptionStatusCode.NotFound);
@@ -99,11 +106,11 @@ namespace BusinessLogic
             List<Event> events = this.eventProvider.GetEventsByDate(eventDate);
             foreach(Event e in events)
             {
-                e.Teams.ForEach(t => {
-                    if(teams.Exists(tm => tm.Name.Equals(t)))
+                e.EventTeams.ForEach(t => {
+                    if(teams.Exists(tm => tm.TeamOID.Equals(t.TeamOID)))
                     {
                         throw new EntitiesException(
-                            string.Format(Constants.EventError.EVENT_TEAM_EXISTS,t.Name, e.InitialDate.Date), 
+                            string.Format(Constants.EventError.EVENT_TEAM_EXISTS,t.TeamOID, e.InitialDate.Date), 
                             ExceptionStatusCode.InvalidData);
                     }
                 });
@@ -117,6 +124,11 @@ namespace BusinessLogic
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
             return foundSport;
+        }
+
+        private bool CheckForDuplicatedNames(List<string> names)
+        {
+            return !names.Count.Equals(names.Distinct().Count());
         }
         #endregion
     }

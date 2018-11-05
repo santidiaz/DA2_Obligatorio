@@ -69,6 +69,7 @@ namespace CommonUtilities
             public const string ERROR_SPORT_HAS_TEAMS = "Can't delete sport with teams";
             public const string NOT_ALL_TEAMS_BELONG_TO_SPORT = "Not all teams belong to the sport";
             public const string NO_TEAM_BELONG_TO_SPORT = "None of the teams belong to the sport";
+            public const string REPEATED_TEAMS = "There are repeated teams";
         }
 
         public static class PermissionError

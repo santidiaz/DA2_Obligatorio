@@ -99,9 +99,12 @@ namespace SportsWebApi.Controllers
         {
             try
             {
-                if (input == null) return BadRequest();
+                if (input == null)
+                    return BadRequest();
 
-                Team modifyTeam = new Team { Name = input.NewName };
+                Team modifyTeam = new Team();
+                if (!string.IsNullOrEmpty(input.NewName))
+                    modifyTeam.Name = input.NewName;
 
                 var file = HttpContext.Request.Form.Files.GetFile("Image");
                 if (file != null)

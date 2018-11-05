@@ -1,4 +1,5 @@
 ﻿using BusinessEntities;
+using BusinessEntities.JoinEntities;
 using DataContracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,11 +11,18 @@ namespace DataAccess.Implementations
 {
     public class EventPersistance : IEventPersistance
     {
+        //private Context currentContext;
+        //public EventPersistance(Context context)
+        //{
+        //    currentContext = context;
+        //}
+
         public void AddEvent(Event newEvent)
         {
             using (Context context = new Context())
             {
-                context.Events.Add(newEvent);
+                context.Sports.Attach(newEvent.Sport);
+                context.Set<Event>().Add(newEvent);
                 context.SaveChanges();
             }
         }
@@ -37,7 +45,7 @@ namespace DataAccess.Implementations
                 if (eagerLoad)
                 {
                     foundEvent = context.Events.OfType<Event>()
-                        .Include(e => e.Teams)
+                        .Include(e => e.EventTeams)
                         .Include(e => e.Sport)
                         .Include(e => e.Comments)
                     .FirstOrDefault(e => e.EventOID.Equals(eventId));
@@ -57,7 +65,7 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 events = (from anEvent in context.Events.OfType<Event>()
-                          .Include(t => t.Teams)
+                          .Include(t => t.EventTeams)
                           .Include(s => s.Sport)
                           select anEvent).ToList();
             }
@@ -70,6 +78,7 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 todaysEvents = (from anEvent in context.Events.OfType<Event>()
+                                .Include(e => e.EventTeams)
                                 where anEvent.InitialDate.Equals(DateTime.Today)
                                 select anEvent).ToList();
             }
@@ -81,10 +90,10 @@ namespace DataAccess.Implementations
             List<Event> events;
             using (Context context = new Context())
             {
-                events = (from anEvent in context.Events.OfType<Event>()
-                          .Include(e => e.Teams)
-                        where anEvent.InitialDate.Date.Equals(eventDate.Date)
-                        select anEvent).ToList();
+                events = context.Events.OfType<Event>()
+                    .Include(e => e.EventTeams)
+                    .Where(e => e.InitialDate.Date.Equals(eventDate.Date))
+                    .ToList();
             }
             return events;
         }
@@ -94,13 +103,12 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 Event eventOnDB = context.Events
-                    .Include(e => e.Teams)
+                    .Include(e => e.EventTeams)
                     .Where(e => e.EventOID.Equals(eventToModify.EventOID))
                     .FirstOrDefault();
 
-                eventOnDB.Teams = eventToModify.Teams;
+                eventOnDB.EventTeams = eventToModify.EventTeams;
                 eventOnDB.InitialDate = eventToModify.InitialDate;
-
                 context.SaveChanges();
             }
         }
