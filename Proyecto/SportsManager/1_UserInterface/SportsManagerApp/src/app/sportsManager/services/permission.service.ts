@@ -1,23 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Http, Response } from '@angular/http';
-import { BaseService } from './baseService';
+import { BaseService } from './base.service';
+import { LoginRequest } from '../interfaces/login-request';
 
 import { Observable } from 'rxjs';
-import { map, catchError} from 'rxjs/operators';
-import { SessionService } from './session.service';
-
+import { SessionUser } from '../interfaces/session-user';
+/*
 const httpOptions = {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json'
     })
-  };
+};*/
 
 @Injectable()
-export class PermissionService extends BaseService {
+export class PermissionService {
 
-    constructor(protected _http: HttpClient, protected _session:SessionService) {
+  constructor(private baseService: BaseService) { }
+
+  logIn(request: LoginRequest): Observable<SessionUser> {
+    return this.baseService.post<LoginRequest, SessionUser>('authentication/login', request);
+  }
+
+  /*registerUser(request: UserRequest): Observable<any> {
+    return this.baseApiService.post<LoginRequest, Session>('users', request, true);
+  }*/
+
+
+
+    /*constructor(protected _http: HttpClient, protected _session:SessionService) {
       super(_http);
     }
     
@@ -26,12 +36,12 @@ export class PermissionService extends BaseService {
         `${super.getAddress()}/api/authentication/login`,
         JSON.stringify({ userName: inputUserName, password: inputPassword }),
         httpOptions).pipe(
-                    map((response: Response) => <any>response.json(),
+                    map((response: Response) => <any>response,
                     catchError(this.handleError)));
     }
 
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
-    }
+    }*/
 }

@@ -43,7 +43,6 @@ namespace BusinessEntities
                 this._teams = value;
             }
         }
-
         public virtual List<Comment> Comments
         {
             get { return this._coments?.OrderByDescending(c => c.DatePosted)?.ToList(); }

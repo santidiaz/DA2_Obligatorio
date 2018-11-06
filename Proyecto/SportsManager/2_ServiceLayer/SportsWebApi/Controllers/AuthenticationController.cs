@@ -26,8 +26,14 @@ namespace SportsWebApi.Controllers
             {
                 if (input == null) return BadRequest();
 
-                Guid token = permissionOperations.LogIn(input.UserName, input.Password);
-                return Ok(token);
+                var sessionData = permissionOperations.LogIn(input.UserName, input.Password);
+                var session = new SessionDTO
+                {
+                    Token = sessionData.Item1,
+                    IsAdmin = sessionData.Item2
+                };
+
+                return Ok(session);
             }
             catch (EntitiesException eEx)
             {

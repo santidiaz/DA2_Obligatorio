@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './sportsManager/components/permissions/login.component';
 import { EventListComponent } from './sportsManager/components/event/eventList/eventList.component';
 import { PageNotFoundComponent } from './sportsManager/components/general/pageNotFound.component';
+
 import { SessionService } from './sportsManager/services/session.service'
 import { PermissionService } from './sportsManager/services/permission.service'
-import { BaseService } from './sportsManager/services/baseService'
+import { BaseService } from './sportsManager/services/base.service'
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'event', component: EventListComponent },
+  //{ path 'team', componet: MyTEmasComponetn },
   //{ path: 'event/:id',      component: HeroDetailComponent },
   { path: '',
     redirectTo: '/login',

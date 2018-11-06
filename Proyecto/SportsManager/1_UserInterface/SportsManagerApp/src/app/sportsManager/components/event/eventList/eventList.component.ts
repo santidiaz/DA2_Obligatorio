@@ -14,4 +14,11 @@ export class EventListComponent extends BaseComponent {
   constructor(private _session: SessionService) {
     super();
    }
+
+   componentOnInit(){
+
+
+
+
+   }
 }

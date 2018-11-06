@@ -1,43 +1,40 @@
 import { Injectable } from '@angular/core';
+import { SessionUser } from '../interfaces/session-user';
+
+const TOKEN = 'token';
+const IS_ADMIN = 'isAdministrator';
 
 @Injectable()
 export class SessionService {
-
-    private _currentToken: string;
-    private _currentUserName: string;
-    private _isAdmin: boolean;
-
     constructor() { }
 
     isAuthenticated(): boolean {
-        return this._currentToken !== null;
+        return this.getToken() !== null;
     }
 
-    setToken(token: string): void {
-        this._currentToken = token;
+    setToken(newToken: string): void {
+        localStorage.setItem(TOKEN, newToken);
     }
 
     removeToken(): void {
-        this._currentToken = undefined;
+        localStorage.removeItem(TOKEN);
     }
 
     getToken(): string {
-        return this._currentToken;
+        return localStorage.getItem(TOKEN);
+    }
+
+    setSession(session: SessionUser) {
+        localStorage.setItem(TOKEN, session.token);
+        localStorage.setItem(IS_ADMIN, String(session.isAdmin));
     }
 
     isAdmin(): boolean {
-        return this._isAdmin;
+        return localStorage.getItem(IS_ADMIN) === '1';
     }
 
-    setAdminFlag(value: boolean) {
-        this._isAdmin = value;
-    }
-
-    setUserName(value: string) {
-        this._currentUserName = value;
-    }
-
-    getUserName():string {
-        return this._currentUserName;
+    logOff() {
+        localStorage.removeItem(TOKEN);
+        localStorage.removeItem(IS_ADMIN);
     }
 }

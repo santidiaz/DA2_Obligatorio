@@ -6,5 +6,5 @@ export interface User {
     userName: string;
     email: string;
     isAdmin: boolean;
-    //public virtual List<UserTeam> FavouriteTeams { get; set; }
+    //FavouriteTeams: Array<Team>
 }

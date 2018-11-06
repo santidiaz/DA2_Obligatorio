@@ -24,7 +24,7 @@ namespace PermissionLogic
             return this.permissionPersistance.HasPermission(token, isAdminRequired);
         }
 
-        public Guid LogIn(string userName, string password)
+        public Tuple<Guid, bool> LogIn(string userName, string password)
         {
             Guid newToken = Guid.Empty;
             User userToBeLogedIn = this.usersPersistance.GetUserByUserName(userName);
@@ -38,7 +38,7 @@ namespace PermissionLogic
             newToken = Guid.NewGuid();
             this.permissionPersistance.LogIn(userToBeLogedIn.UserName, newToken);
 
-            return newToken;
+            return Tuple.Create(newToken, userToBeLogedIn.IsAdmin);
         }
 
         public void LogOut(string userName)
