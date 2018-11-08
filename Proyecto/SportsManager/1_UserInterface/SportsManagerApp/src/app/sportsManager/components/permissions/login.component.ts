@@ -16,8 +16,7 @@ export class LoginComponent extends BaseComponent {
   formModel: LoginRequest;
   errorMessage: string;
 
-  constructor(
-    private sessionService: SessionService, 
+  constructor(private sessionService: SessionService, 
     private permissionService : PermissionService,
     private router: Router) {
     super();
@@ -25,8 +24,7 @@ export class LoginComponent extends BaseComponent {
    }
 
   onSubmit(){
-    this.permissionService.logIn(this.formModel)
-      .subscribe(
+    this.permissionService.logIn(this.formModel).subscribe(
         response => this.handleResponse(response), 
         error => this.handleError(error));
   }
@@ -35,11 +33,9 @@ export class LoginComponent extends BaseComponent {
   private handleResponse(response: SessionUser) {
     this.sessionService.setSession(response);
 
-
-
-    /*if (this.sessionService.isAuthenticated) {
-      this.router.navigate([this.sessionService.attemptedUrl]);
-    }*/
+    if (this.sessionService.isAuthenticated) {
+      this.router.navigate(['/event']);
+    }
   }
 
   private handleError(error: any) {

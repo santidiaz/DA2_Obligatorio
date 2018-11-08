@@ -107,10 +107,10 @@ namespace BusinessLogic
             foreach(Event e in events)
             {
                 e.EventTeams.ForEach(t => {
-                    if(teams.Exists(tm => tm.TeamOID.Equals(t.TeamOID)))
+                    if(teams.Exists(tm => tm.Id.Equals(t.TeamId)))
                     {
                         throw new EntitiesException(
-                            string.Format(Constants.EventError.EVENT_TEAM_EXISTS,t.TeamOID, e.InitialDate.Date), 
+                            string.Format(Constants.EventError.EVENT_TEAM_EXISTS,t.TeamId, e.InitialDate.Date), 
                             ExceptionStatusCode.InvalidData);
                     }
                 });

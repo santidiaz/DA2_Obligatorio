@@ -21,26 +21,19 @@ export class BaseService {
         return this.http.post<any>(`${environment.apiUrl}${url}`, request, { headers: this.getHeader(isTokenRequired) });
     }
 
+    get<Y>(url: string, isTokenRequired: boolean = false): Observable<Y> {
+        return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: this.getHeader(isTokenRequired) });
+    }
+
+    put<T, Y>(url: string, request: T, isTokenRequired: boolean = false): Observable<Y> {
+        return this.http.put<any>(`${environment.apiUrl}${url}`, request, { headers: this.getHeader(isTokenRequired) });
+    }
+
+    delete<Y>(url: string, isTokenRequired: boolean = false): Observable<Y> {
+        return this.http.delete<any>(`${environment.apiUrl}${url}`, { headers: this.getHeader(isTokenRequired) });
+    }
+
     private getHeader(tokenRequired: boolean): HttpHeaders {
         return !tokenRequired ? this.basicHeaderConfig : this.tokenHeaderConfig;
     }
-
-
-
-
-
-   /* private _address: string;
-
-    constructor(public http: HttpClient) {
-        this.getAppSettings().subscribe(
-            (data: any) => this._address = data.global.address);
-    }
-
-    private getAppSettings(): Observable<any> {
-        return this.http.get('../../../assets/appsettings.json');
-    }
-
-    public getAddress(): string {
-        return this._address;
-    }*/
 }

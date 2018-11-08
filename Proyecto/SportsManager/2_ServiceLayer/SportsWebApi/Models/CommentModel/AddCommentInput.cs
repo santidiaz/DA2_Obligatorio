@@ -9,6 +9,6 @@ namespace SportsWebApi.Models.CommentModel
     {
         public string Description { get; set; }
         public string CreatorName { get; set; }
-        public int EventOID { get; set; }
+        public int Id { get; set; }
     }
 }

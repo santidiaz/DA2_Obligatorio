@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { BaseService } from './base.service';
 import { LoginRequest } from '../interfaces/login-request';
-
-import { Observable } from 'rxjs';
 import { SessionUser } from '../interfaces/session-user';
-/*
-const httpOptions = {
-    headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json'
-    })
-};*/
 
 @Injectable()
 export class PermissionService {

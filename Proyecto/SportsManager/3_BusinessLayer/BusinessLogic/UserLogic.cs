@@ -99,13 +99,13 @@ namespace BusinessLogic
             return this.userProvider.GetUserFavouriteTeams(user);
         }
 
-        public void DeleteFavoriteTeamByUser(int teamOID, string userName)
+        public void DeleteFavoriteTeamByUser(int Id, string userName)
         {
             User userComplete = this.GetUserByUserName(userName);
             if (userComplete == null)
                 throw new EntitiesException(Constants.UserError.USER_NOT_FOUND, ExceptionStatusCode.NotFound);
 
-            Team foundTeam = this.teamProvider.GetTeamById(teamOID);
+            Team foundTeam = this.teamProvider.GetTeamById(Id);
             if (foundTeam == null)
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS, ExceptionStatusCode.NotFound);
 

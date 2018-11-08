@@ -12,7 +12,7 @@ namespace BusinessEntities
         private string _creatorName;
         #endregion
 
-        public int CommentOID { get; set; } // [Object Id] This id is used by EntityFramework.
+        public int Id { get; set; }
         public string CreatorName
         {
             get { return this._creatorName; }

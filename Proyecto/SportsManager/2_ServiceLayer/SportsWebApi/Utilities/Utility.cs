@@ -1,4 +1,6 @@
-﻿using BusinessEntities.Exceptions;
+﻿using BusinessEntities;
+using BusinessEntities.Exceptions;
+using SportsWebApi.Models.EventModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,22 @@ namespace SportsWebApi.Utilities
                     break;
             }
             return response;
+        }
+
+        public static List<EventDTO> TransformEventToDTO(List<Event> events)
+        {
+            //var result = new List<EventDTO>();
+            //EventDTO newDTO;
+            //events?.ForEach(
+            //    e => {
+            //        newDTO = new EventDTO {
+            //            Id = e.Id,
+            //            Name = e.
+
+            //            };
+            //    });
+            return null;
+
         }
     }
 }

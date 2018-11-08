@@ -70,6 +70,9 @@ namespace SportsWebApi.Controllers
         {
             try
             {
+
+
+
                 return Ok(this.eventOperations.GetAllEvents());
             }
             catch (EntitiesException eEx)

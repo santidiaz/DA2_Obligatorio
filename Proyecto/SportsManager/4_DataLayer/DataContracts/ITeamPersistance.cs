@@ -7,7 +7,7 @@ namespace DataContracts
 {
     public interface ITeamPersistance
     {
-        void AddTeam(Team newTeam, int sportOID);
+        void AddTeam(Team newTeam, int Id);
         void ModifyTeam(Team teamWithModifications);
         void DeleteTeamByName(Team team);
         List<Team> GetTeams(string teamName, bool orderAsc);        

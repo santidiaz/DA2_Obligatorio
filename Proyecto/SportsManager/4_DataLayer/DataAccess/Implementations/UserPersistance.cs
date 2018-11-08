@@ -56,7 +56,7 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var userOnDB = context.Users.OfType<User>().Where(u => u.UserOID.Equals(userToModify.UserOID)).FirstOrDefault();
+                var userOnDB = context.Users.OfType<User>().Where(u => u.Id.Equals(userToModify.Id)).FirstOrDefault();
 
                 userOnDB.Name = userToModify.Name;
                 userOnDB.LastName = userToModify.LastName;
@@ -72,12 +72,12 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID.Equals(userToModify.UserOID)).FirstOrDefault();
+                var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.Id.Equals(userToModify.Id)).FirstOrDefault();
 
                 userOnDB.FavouriteTeams = new List<UserTeam>();
                 foreach (Team t in newFavouriteTeams)
                 {
-                    userOnDB.FavouriteTeams.Add(new UserTeam { TeamOID = t.TeamOID, UserOID = userOnDB.UserOID });
+                    userOnDB.FavouriteTeams.Add(new UserTeam { TeamId = t.Id, UserId = userOnDB.Id });
                 }
 
                 context.SaveChanges();
@@ -88,12 +88,12 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.UserOID.Equals(user.UserOID)).FirstOrDefault();
+                var userOnDB = context.Users.Include(u => u.FavouriteTeams).Where(u => u.Id.Equals(user.Id)).FirstOrDefault();
 
                 userOnDB.FavouriteTeams = new List<UserTeam>();
                 foreach (Team t in list)
                 {
-                    userOnDB.FavouriteTeams.Add(new UserTeam { TeamOID = t.TeamOID, UserOID = userOnDB.UserOID });
+                    userOnDB.FavouriteTeams.Add(new UserTeam { TeamId = t.Id, UserId = userOnDB.Id });
                 }
 
                 context.SaveChanges();
@@ -105,7 +105,7 @@ namespace DataAccess.Implementations
             List<UserTeam> userFavouriteTeams;
             using (Context context = new Context())
             {
-                userFavouriteTeams = context.UserTeams.Where(u => u.UserOID.Equals(user.UserOID)).ToList();
+                userFavouriteTeams = context.UserTeams.Where(u => u.UserId.Equals(user.Id)).ToList();
             }
             return userFavouriteTeams;
         }
@@ -114,7 +114,7 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var userOnDB = context.UserTeams.Where(u => u.UserOID == user.UserOID && u.TeamOID == team.TeamOID).FirstOrDefault();
+                var userOnDB = context.UserTeams.Where(u => u.UserId == user.Id && u.UserId == team.Id).FirstOrDefault();
                 context.UserTeams.Remove(userOnDB);
                 context.SaveChanges();
             }
@@ -129,7 +129,7 @@ namespace DataAccess.Implementations
             {
                 // Get the user favourite teams.
                 userFavouriteTeams = context.UserTeams.OfType<UserTeam>()
-                    .Where(u => u.UserOID.Equals(user.UserOID))
+                    .Where(u => u.UserId.Equals(user.Id))
                     .ToList();
 
                 foreach (UserTeam favouriteTeam in userFavouriteTeams)
@@ -139,13 +139,13 @@ namespace DataAccess.Implementations
                         .Include(s => s.Sport)
                         .Include(t => t.EventTeams)
                         .Include(c => c.Comments)
-                        .Where(e => e.EventTeams.Exists(ev_tm => ev_tm.TeamOID.Equals(favouriteTeam.TeamOID)))
+                        .Where(e => e.EventTeams.Exists(ev_tm => ev_tm.TeamId.Equals(favouriteTeam.TeamId)))
                         .ToList();
                     
                     foreach(Event currentEvent in currentFavouriteTeamEvents)
                     {
                         // If return list [userFavouriteTeamsEvents] dont have the event added already.
-                        if (!userFavouriteTeamsEvents.Exists(ft_ev => ft_ev.EventOID.Equals(currentEvent.EventOID)))
+                        if (!userFavouriteTeamsEvents.Exists(ft_ev => ft_ev.Id.Equals(currentEvent.Id)))
                         {
                             userFavouriteTeamsEvents.Add(currentEvent);
                         }

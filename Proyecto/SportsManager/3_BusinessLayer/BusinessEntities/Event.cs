@@ -17,7 +17,7 @@ namespace BusinessEntities
         private List<Comment> _coments;
         #endregion
 
-        public int EventOID { get; set; } // [Object Id] This id is required by EntityFramework.
+        public int Id { get; set; } 
         public DateTime InitialDate
         {
             get { return this._initialDate; }
@@ -100,7 +100,7 @@ namespace BusinessEntities
         public override bool Equals(object obj)
         {
             if (obj is Event)
-                return this.EventOID.Equals(((Event)obj).EventOID);
+                return this.Id.Equals(((Event)obj).Id);
             else
                 return false;
         }
@@ -137,8 +137,8 @@ namespace BusinessEntities
                     new EventTeam
                     {
                         Team = currentTeam,
-                        TeamOID = currentTeam.TeamOID,
-                        EventOID = this.EventOID
+                        TeamId = currentTeam.Id,
+                        EventId = this.Id
                     });
             }
         }

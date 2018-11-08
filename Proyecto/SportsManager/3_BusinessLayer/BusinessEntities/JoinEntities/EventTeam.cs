@@ -6,10 +6,10 @@ namespace BusinessEntities.JoinEntities
 {
     public class EventTeam
     {
-        public int EventOID { get; set; }
+        public int EventId { get; set; }
         public Event Event { get; set; }
 
-        public int TeamOID { get; set; }
+        public int TeamId { get; set; }
         public Team Team { get; set; }
     }
 }

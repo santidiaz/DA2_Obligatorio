@@ -7,7 +7,7 @@ namespace BusinessContracts
 {
     public interface ITeamLogic
     {
-        void AddTeam(Team newTeam, int sportOID);
+        void AddTeam(Team newTeam, int Id);
         List<Team> GetTeams(string teamName, bool orderAsc);
         void ModifyTeamByName(string name, Team team);
         Team GetTeamByName(string name);

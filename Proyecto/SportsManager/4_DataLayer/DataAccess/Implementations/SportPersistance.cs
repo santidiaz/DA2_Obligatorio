@@ -34,7 +34,7 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 Sport sportOnDB = context.Sports.OfType<Sport>()
-                    .Where(a => a.SportOID.Equals(sportToModify.SportOID))
+                    .Where(a => a.Id.Equals(sportToModify.Id))
                     .FirstOrDefault();
 
                 sportOnDB.Name = sportToModify.Name;
@@ -81,12 +81,12 @@ namespace DataAccess.Implementations
                 {
                     foundSport = context.Sports.OfType<Sport>()
                         .Include(s => s.Teams)
-                        .FirstOrDefault(s => s.SportOID.Equals(id));
+                        .FirstOrDefault(s => s.Id.Equals(id));
                 }
                 else
                 {
                     foundSport = context.Sports.OfType<Sport>()
-                        .FirstOrDefault(s => s.SportOID.Equals(id));
+                        .FirstOrDefault(s => s.Id.Equals(id));
                 }
             }
             return foundSport;

@@ -48,12 +48,12 @@ namespace DataAccess.Implementations
                         .Include(e => e.EventTeams)
                         .Include(e => e.Sport)
                         .Include(e => e.Comments)
-                    .FirstOrDefault(e => e.EventOID.Equals(eventId));
+                    .FirstOrDefault(e => e.Id.Equals(eventId));
                 }
                 else
                 {
                     foundEvent = context.Events.OfType<Event>()
-                    .FirstOrDefault(e => e.EventOID.Equals(eventId));
+                    .FirstOrDefault(e => e.Id.Equals(eventId));
                 }
             }
             return foundEvent;
@@ -104,7 +104,7 @@ namespace DataAccess.Implementations
             {
                 Event eventOnDB = context.Events
                     .Include(e => e.EventTeams)
-                    .Where(e => e.EventOID.Equals(eventToModify.EventOID))
+                    .Where(e => e.Id.Equals(eventToModify.Id))
                     .FirstOrDefault();
 
                 eventOnDB.EventTeams = eventToModify.EventTeams;

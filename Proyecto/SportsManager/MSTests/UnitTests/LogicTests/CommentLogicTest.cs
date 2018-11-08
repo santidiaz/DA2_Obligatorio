@@ -23,7 +23,7 @@ namespace UnitTests.LogicTests
             var mockEvent = new Mock<IEventPersistance>();
             mock.Setup(mr => mr.UserCreatorExists(It.IsAny<string>())).Returns(true);
             mock.Setup(mr => mr.AddComment(It.IsAny<Comment>(), 1)).Verifiable();
-            mockEvent.Setup(mr => mr.GetAllEvents()).Returns(new List<Event>() { new Event() { EventOID = 1 } });
+            mockEvent.Setup(mr => mr.GetAllEvents()).Returns(new List<Event>() { new Event() { Id = 1 } });
 
 
             // Instancio SportLogic con el mock como parametro.
@@ -44,7 +44,7 @@ namespace UnitTests.LogicTests
                 var mockEvent = new Mock<IEventPersistance>();
                 mock.Setup(mr => mr.UserCreatorExists(It.IsAny<string>())).Returns(false);
                 mock.Setup(mr => mr.AddComment(It.IsAny<Comment>(), 1)).Verifiable();
-                mockEvent.Setup(mr => mr.GetAllEvents()).Returns(new List<Event>() { new Event() { EventOID = 1 } });
+                mockEvent.Setup(mr => mr.GetAllEvents()).Returns(new List<Event>() { new Event() { Id = 1 } });
 
                 // Instancio SportLogic con el mock como parametro.
                 CommentLogic userLogic = new CommentLogic(mock.Object, mockEvent.Object);
@@ -69,7 +69,7 @@ namespace UnitTests.LogicTests
                 var mockEvent = new Mock<IEventPersistance>();
                 mock.Setup(mr => mr.UserCreatorExists(It.IsAny<string>())).Returns(true);
                 mock.Setup(mr => mr.AddComment(It.IsAny<Comment>(), 1)).Verifiable();
-                mockEvent.Setup(mr => mr.GetAllEvents()).Returns(new List<Event>() { new Event() { EventOID = 2 } });
+                mockEvent.Setup(mr => mr.GetAllEvents()).Returns(new List<Event>() { new Event() { Id = 2 } });
 
 
                 // Instancio SportLogic con el mock como parametro.

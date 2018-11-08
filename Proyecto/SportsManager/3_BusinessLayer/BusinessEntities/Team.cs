@@ -9,7 +9,7 @@ namespace BusinessEntities
         private string _name;
         #endregion
 
-        public int TeamOID { get; set; } // [Object Id] This id is team by EntityFramework.
+        public int Id { get; set; }
         public string Name
         {
             get { return this._name; }

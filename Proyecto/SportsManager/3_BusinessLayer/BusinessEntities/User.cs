@@ -17,7 +17,7 @@ namespace BusinessEntities
         #endregion
 
         #region Public attributes
-        public int UserOID { get; set; } // [Object Id] This id is used by EntityFramework.
+        public int Id { get; set; }
         public string UserName
         {
             get { return this._userName; }
