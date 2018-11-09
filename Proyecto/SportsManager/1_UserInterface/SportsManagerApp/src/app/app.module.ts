@@ -10,14 +10,16 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './sportsManager/components/permissions/login.component';
 import { EventListComponent } from './sportsManager/components/event/eventList/eventList.component';
 import { PageNotFoundComponent } from './sportsManager/components/general/pageNotFound.component';
-import { SessionService } from './sportsManager/services/session.service'
-import { PermissionService } from './sportsManager/services/permission.service'
-import { BaseService } from './sportsManager/services/baseService'
+import { SessionService } from './sportsManager/services/session.service';
+import { PermissionService } from './sportsManager/services/permission.service';
+import { BaseService } from './sportsManager/services/base.service';
+import { AddUserComponent } from './sportsManager/components/users/adduser/adduser.component';
+import { UserService } from './sportsManager/services/user.service';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'event', component: EventListComponent },
-  //{ path: 'event/:id',      component: HeroDetailComponent },
+  { path: 'addUser', component: AddUserComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'
@@ -31,6 +33,7 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     EventListComponent,
+    AddUserComponent,
     PageNotFoundComponent
   ],
   imports: [
@@ -46,7 +49,8 @@ const appRoutes: Routes = [
   providers: [
     BaseService,
     SessionService,
-    PermissionService
+    PermissionService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

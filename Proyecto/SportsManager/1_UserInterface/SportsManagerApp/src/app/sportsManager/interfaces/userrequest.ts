@@ -1,4 +1,4 @@
-export interface User {
+export interface UserRequest {
     userOID: number;
     token: string;
     name: string;
@@ -6,5 +6,4 @@ export interface User {
     userName: string;
     email: string;
     isAdmin: boolean;
-    //public virtual List<UserTeam> FavouriteTeams { get; set; }
 }
