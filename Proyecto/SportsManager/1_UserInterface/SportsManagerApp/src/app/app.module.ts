@@ -15,11 +15,13 @@ import { PermissionService } from './sportsManager/services/permission.service';
 import { BaseService } from './sportsManager/services/base.service';
 import { AddUserComponent } from './sportsManager/components/users/adduser/adduser.component';
 import { UserService } from './sportsManager/services/user.service';
+import { ListUsersComponent } from './sportsManager/components/users/listUsers/listusers.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'event', component: EventListComponent },
   { path: 'addUser', component: AddUserComponent },
+  { path: 'listUsers', component: ListUsersComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'

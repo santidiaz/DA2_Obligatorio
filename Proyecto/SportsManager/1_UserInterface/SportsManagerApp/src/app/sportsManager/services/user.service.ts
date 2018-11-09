@@ -12,4 +12,8 @@ export class UserService {
       addUser(request: UserRequest): Observable<any> {
         return this.baseService.post<UserRequest, any>('user', request);
       }
+
+      getUser(request: UserRequest): Observable<any> {
+        return this.baseService.post<UserRequest, any>('user', request);
+      }
 }
