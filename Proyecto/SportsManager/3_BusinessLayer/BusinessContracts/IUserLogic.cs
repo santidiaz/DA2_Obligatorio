@@ -18,5 +18,6 @@ namespace BusinessContracts
         List<UserTeam> GetFavoritesTeamsByUserName(string userName);
         void DeleteFavoriteTeamByUser(int teamOID, string userName);
         List<Event> GetCommentsOfUserFavouriteTemasEvents(string userName);
+        List<User> GetUsers();
     }
 }

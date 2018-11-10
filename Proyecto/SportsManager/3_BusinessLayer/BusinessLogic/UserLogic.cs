@@ -120,6 +120,11 @@ namespace BusinessLogic
 
             return this.userProvider.GetCommentsOfUserFavouriteTemasEvents(user);
         }
+
+        public List<User> GetUsers()
+        {
+            return this.userProvider.GetUsers();
+        }
         #endregion
 
         #region Private Methods

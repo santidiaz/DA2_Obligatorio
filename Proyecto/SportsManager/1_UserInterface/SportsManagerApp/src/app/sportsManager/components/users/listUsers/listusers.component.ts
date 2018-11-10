@@ -6,15 +6,15 @@ import { UserRequest } from "src/app/sportsManager/interfaces/userrequest";
 
 
 @Component({
-    selector: 'app-listusers',
-    templateUrl: './listusers.component.html',
-    styleUrls: ['./listusers.component.css']
+    selector: 'app-listUsers',
+    templateUrl: './listUsers.component.html',
+    styleUrls: ['./listUsers.component.css']
   })
 
 
   export class ListUsersComponent extends BaseComponent {
 
-    cities: Array<UserRequest>;
+    users: Array<UserRequest>;
 
     constructor(
         private sessionService: SessionService,
@@ -28,7 +28,7 @@ import { UserRequest } from "src/app/sportsManager/interfaces/userrequest";
 
       updateGrid(): void {
         this.userService.getUsers().subscribe(response => {
-          this.cities = response;
+          this.users = response;
         });
       }
 }

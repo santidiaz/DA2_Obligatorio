@@ -36,6 +36,7 @@ const appRoutes: Routes = [
     LoginComponent,
     EventListComponent,
     AddUserComponent,
+    ListUsersComponent,
     PageNotFoundComponent
   ],
   imports: [

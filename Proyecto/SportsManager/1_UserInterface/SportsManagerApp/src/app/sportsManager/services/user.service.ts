@@ -7,13 +7,13 @@ import { Observable } from "rxjs";
 @Injectable()
 export class UserService {
 
-      constructor(private baseService: BaseService) { }
+      constructor(private http: HttpClient, private baseService: BaseService) { }
 
       addUser(request: UserRequest): Observable<any> {
         return this.baseService.post<UserRequest, any>('user', request);
       }
 
-      getUser(request: UserRequest): Observable<any> {
-        return this.baseService.post<UserRequest, any>('user', request);
+      getUsers(): Observable<UserRequest[]> {
+        return this.http.get<UserRequest[]>(`http://localhost:5005/api/user`);
       }
 }

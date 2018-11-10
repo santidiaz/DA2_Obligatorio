@@ -45,7 +45,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [PermissionFilter(true)]
+        //[PermissionFilter(true)]
         [HttpPost()]
         public IActionResult AddUser([FromBody] AddUserInput addUserInput)
         {
@@ -234,6 +234,25 @@ namespace SportsWebApi.Controllers
                     return NotFound();
 
                 return Ok(searchedEvents);
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        //[PermissionFilter(true)]
+        [HttpGet()]
+        public IActionResult GetUsers()
+        {
+            try
+            {
+                List<User> listUsers = userOperations.GetUsers();
+                return Ok(listUsers);
             }
             catch (EntitiesException eEx)
             {

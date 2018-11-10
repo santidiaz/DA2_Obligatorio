@@ -17,5 +17,6 @@ namespace DataContracts
         List<UserTeam> GetFavoritesTeamsByUserName(User userName);
         void DeleteFavoriteTeamByUser(Team team, User user);
         List<Event> GetCommentsOfUserFavouriteTemasEvents(User user);
+        List<User> GetUsers();
     }
 }
