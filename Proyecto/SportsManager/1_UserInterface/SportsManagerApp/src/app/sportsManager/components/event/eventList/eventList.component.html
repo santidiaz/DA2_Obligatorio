@@ -1,9 +1,11 @@
 <div class="accordion" id="accordionExample">
     <div class="card">
-      <div class="card-header" id="headingOne">
+
+
+      <div class="card-header" id="headingOne" *ngFor="let event of events">
         <h5 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            Collapsible Group Item #1
+              {{ event. }}
           </button>
         </h5>
       </div>

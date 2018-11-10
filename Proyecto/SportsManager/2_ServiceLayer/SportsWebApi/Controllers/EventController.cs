@@ -43,7 +43,7 @@ namespace SportsWebApi.Controllers
         }
         
         [PermissionFilter(true)]
-        [HttpDelete("{eventId}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteEventById(int eventId)
         {
             try
@@ -86,7 +86,7 @@ namespace SportsWebApi.Controllers
         }
 
         [PermissionFilter(false)]
-        [HttpGet("{eventId}")]
+        [HttpGet("{id}")]
         public IActionResult GetEventById(int eventId)
         {
             try
@@ -107,8 +107,8 @@ namespace SportsWebApi.Controllers
         }
 
         [PermissionFilter(true)]
-        [HttpPut("{eventId}")]
-        public IActionResult ModifyUser(int eventId, [FromBody] ModifyEventInput input)
+        [HttpPut("{id}")]
+        public IActionResult ModifyEvent(int eventId, [FromBody] ModifyEventInput input)
         {
             try
             {

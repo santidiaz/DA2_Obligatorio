@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../shared/base.component';
-import { SessionService } from '../../../services/session.service'
+import { EventService } from '../../../services/event.service'
+import { Event } from '../../../interfaces/event'
+
 
 @Component({
   selector: 'app-eventList',
@@ -9,16 +11,31 @@ import { SessionService } from '../../../services/session.service'
 })
 export class EventListComponent extends BaseComponent {
 
-  errorMessage: any;// TODO: Ver que retorna y crear una interfaz con eso. codigo y mensaje ?
+  private errorMessage: any;// TODO: Ver que retorna y crear una interfaz con eso. codigo y mensaje ?
+  protected events: Array<Event>;
 
-  constructor(private _session: SessionService) {
+
+  constructor(private eventService: EventService) {
     super();
    }
 
    componentOnInit(){
+    this.eventService.getAllEvents().subscribe(
+      response => this.handleResponse(response), 
+      error => this.handleError(error));
+   }
 
+   private handleResponse(response: any){
+      let algo = response;
 
 
 
    }
+
+   private handleError(error: any){
+    let algo = error;
+
+
+
+ }
 }
