@@ -155,5 +155,15 @@ namespace DataAccess.Implementations
 
             return userFavouriteTeamsEvents;
         }
+
+        public List<User> GetUsers()
+        {
+            List<User> userList;
+            using (Context context = new Context())
+            {
+                userList = context.Users.OfType<User>().ToList();
+            }
+            return userList;
+        }
     }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { LoginRequest } from '../interfaces/login-request';
-
+import { map, catchError} from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { SessionService } from './session.service';
+import { LoginRequest } from '../interfaces/login-request';
 import { SessionUser } from '../interfaces/session-user';
 /*
 const httpOptions = {
@@ -39,7 +40,6 @@ export class PermissionService {
                     map((response: Response) => <any>response,
                     catchError(this.handleError)));
     }
-
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');

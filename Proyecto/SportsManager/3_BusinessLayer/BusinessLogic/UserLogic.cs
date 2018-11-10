@@ -120,6 +120,11 @@ namespace BusinessLogic
 
             return this.userProvider.GetUserFavouriteTeamsEvents(user);
         }
+
+        public List<User> GetUsers()
+        {
+            return this.userProvider.GetUsers();
+        }
         #endregion
 
         #region Private Methods

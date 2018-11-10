@@ -1,0 +1,35 @@
+<h1>
+    User list
+</h1>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Is admin</th>
+                <th scope="col">Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.userName }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.isAdmin }}</td>
+                <td>
+                    <input type="button" (click)="selectUser($event, user)" value="Edit" />
+                    <input type="button" (click)="deleteUser($event, user)" value="Delete" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+            {{ successMessage }}
+    </div>
+
+    <app-useredit *ngIf="isFormActive" (closeRequested)="closeForm($event)" [user]="selectUser"></app-useredit>
+</div>

@@ -16,9 +16,11 @@ namespace DataContracts
 		void AddFavoritesToUser(User user, List<Team> list);
         List<UserTeam> GetUserFavouriteTeams(User user);
         void DeleteFavoriteTeamByUser(Team team, User user);
+<<<<<<< HEAD
         List<Event> GetUserFavouriteTeamsEvents(User user);
-		//List<UserTeam> GetFavoritesTeamsByUserName(User userName);
-		//List<Event> GetCommentsOfUserFavouriteTemasEvents(User user);
-		List<User> GetUsers();
+=======
+        List<Event> GetCommentsOfUserFavouriteTemasEvents(User user);
+        List<User> GetUsers();
+>>>>>>> ui_abmUsers
     }
 }

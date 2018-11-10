@@ -10,16 +10,21 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './sportsManager/components/permissions/login.component';
 import { EventListComponent } from './sportsManager/components/event/eventList/eventList.component';
 import { PageNotFoundComponent } from './sportsManager/components/general/pageNotFound.component';
-
-import { SessionService } from './sportsManager/services/session.service'
-import { PermissionService } from './sportsManager/services/permission.service'
-import { BaseService } from './sportsManager/services/base.service'
+import { SessionService } from './sportsManager/services/session.service';
+import { PermissionService } from './sportsManager/services/permission.service';
+import { BaseService } from './sportsManager/services/base.service';
+import { AddUserComponent } from './sportsManager/components/users/adduser/adduser.component';
+import { UserService } from './sportsManager/services/user.service';
+import { ListUsersComponent } from './sportsManager/components/users/listUsers/listusers.component';
+import { UserEditComponent } from './sportsManager/components/users/useredit/useredit.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'event', component: EventListComponent },
   //{ path 'team', componet: MyTEmasComponetn },
-  //{ path: 'event/:id',      component: HeroDetailComponent },
+  { path: 'addUser', component: AddUserComponent },
+  { path: 'listUsers', component: ListUsersComponent },
+  { path: 'editUser', component: UserEditComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'
@@ -33,6 +38,9 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     EventListComponent,
+    AddUserComponent,
+    ListUsersComponent,
+    UserEditComponent,
     PageNotFoundComponent
   ],
   imports: [
@@ -48,7 +56,8 @@ const appRoutes: Routes = [
   providers: [
     BaseService,
     SessionService,
-    PermissionService
+    PermissionService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
