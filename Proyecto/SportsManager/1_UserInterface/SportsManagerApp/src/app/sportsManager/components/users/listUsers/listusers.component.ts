@@ -15,6 +15,7 @@ import { UserRequest } from "src/app/sportsManager/interfaces/userrequest";
   export class ListUsersComponent extends BaseComponent {
 
     users: Array<UserRequest>;
+    successMessage: string = null;
 
     constructor(
         private sessionService: SessionService,
@@ -24,11 +25,20 @@ import { UserRequest } from "src/app/sportsManager/interfaces/userrequest";
 
       ngOnInit() {
         this.updateGrid();
+        this.successMessage = null;
       }
 
       updateGrid(): void {
         this.userService.getUsers().subscribe(response => {
           this.users = response;
+        });
+      }
+
+      deleteUser($event, user: UserRequest) {
+        this.userService.deleteUser(user.userName).subscribe(resp => {
+          console.log(JSON.stringify(resp));
+          this.successMessage = 'Operation success';
+          this.updateGrid();
         });
       }
 }

@@ -16,7 +16,8 @@ import { UserService } from 'src/app/sportsManager/services/user.service';
 export class AddUserComponent extends BaseComponent {
 
   formModel: UserRequest;
-  errorMessage: string;
+  errorMessage: string = null;
+  successMessage: string = null;
 
   constructor(
     private sessionService: SessionService,
@@ -24,6 +25,11 @@ export class AddUserComponent extends BaseComponent {
     super();
     this.formModel = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: '', token: '' };
   };
+
+  ngOnInit() {
+    this.successMessage = null;
+    this.errorMessage = null;
+  }  
 
   onSubmit() {
     this.userService.addUser(this.formModel)
@@ -33,10 +39,13 @@ export class AddUserComponent extends BaseComponent {
   }
 
   private handleResponse(response: any) {
-    this.sessionService.setSession(response);
+    //this.sessionService.setSession(response);
+    this.errorMessage = null;
+    this.successMessage = 'Operation success';
   }
 
   private handleError(error: any) {
+    this.successMessage = null;
     this.errorMessage = error.error;
   }
 }

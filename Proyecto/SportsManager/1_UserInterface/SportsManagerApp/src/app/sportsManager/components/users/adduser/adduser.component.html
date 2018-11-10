@@ -33,7 +33,14 @@
             <input type="password" class="form-control" name="password" id="passwordInput" required 
             [(ngModel)]="formModel.password"  placeholder="Enter your password...">
           </div>
-  
+          
+          <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+              {{ successMessage }}
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
+              {{ errorMessage }}
+            </div>
+
           <button type="submit" class="btn btn-primary">Add</button>
         </form>
       </div>

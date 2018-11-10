@@ -16,4 +16,8 @@ export class UserService {
       getUsers(): Observable<UserRequest[]> {
         return this.http.get<UserRequest[]>(`http://localhost:5005/api/user`);
       }
+
+      deleteUser(userName: string): Observable<any> {
+        return this.http.delete(`http://localhost:5005/api/user/${userName}`, {  observe: 'response' });
+      }
 }
