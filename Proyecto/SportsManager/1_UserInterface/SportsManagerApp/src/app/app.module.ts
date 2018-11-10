@@ -19,6 +19,7 @@ import { ListUsersComponent } from './sportsManager/components/users/listUsers/l
 import { UserEditComponent } from './sportsManager/components/users/useredit/useredit.component';
 import { AddSportComponent } from './sportsManager/components/sport/addsport/addsport.component';
 import { SportService } from './sportsManager/services/sport.service';
+import { ListSportsComponent } from './sportsManager/components/sport/listsports/listsports.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
   { path: 'listUsers', component: ListUsersComponent },
   { path: 'editUser', component: UserEditComponent },
   { path: 'addSport', component: AddSportComponent },
+  { path: 'listSport', component: ListSportsComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'
@@ -45,6 +47,7 @@ const appRoutes: Routes = [
     ListUsersComponent,
     UserEditComponent,
     AddSportComponent,
+    ListSportsComponent,
     PageNotFoundComponent
   ],
   imports: [

@@ -36,20 +36,20 @@ export class ListSportsComponent extends BaseComponent {
         });
     }
 
-    //deleteSport($event, sport: SportRequest) {
-    //    this.sportService.deleteSport(sport.name).subscribe(resp => {
-    //        console.log(JSON.stringify(resp));
-    //        this.successMessage = 'Operation success';
-    //        this.updateGrid();
-    //    });
-    //}
-
-    selectSport($event, sport: SportRequest) {
-        this.selectedSport = sport;
-        this.isFormActive = true;
-      }
-
-    closeForm($event) {
-        this.isFormActive = false;
+    deleteSport($event, sport: SportRequest) {
+        this.sportService.deleteSport(sport.name).subscribe(resp => {
+            console.log(JSON.stringify(resp));
+            this.successMessage = 'Operation success';
+            this.updateGrid();
+        });
     }
+
+    //selectSport($event, sport: SportRequest) {
+    //    this.selectedSport = sport;
+    //    this.isFormActive = true;
+    //  }
+
+    //closeForm($event) {
+    //    this.isFormActive = false;
+    //}
 }

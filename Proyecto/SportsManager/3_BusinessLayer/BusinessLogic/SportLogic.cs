@@ -60,7 +60,7 @@ namespace BusinessLogic
             if (sportToDelete == null)
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
 
-            if (this.CanBeDeleted(sportToDelete))
+            if (!this.CanBeDeleted(sportToDelete))
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_HAS_TEAMS, ExceptionStatusCode.Conflict);
 
             this.persistanceProvider.DeleteSport(sportToDelete);

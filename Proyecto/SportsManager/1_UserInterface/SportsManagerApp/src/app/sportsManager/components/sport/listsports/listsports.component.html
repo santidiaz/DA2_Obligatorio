@@ -1,0 +1,29 @@
+<h1>
+    Sport list
+</h1>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Allowd multiple teams on events</th>
+                <th scope="col">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let sport of sports">
+                <td>{{ sport.name }}</td>
+                <td>{{ sport.allowdMultipleTeamsEvents }}</td>
+                <td>
+                    <!--<input type="button" (click)="selectSport($event, sport)" value="Edit" />-->
+                    <input type="button" (click)="deleteSport($event, sport)" value="Delete" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+            {{ successMessage }}
+    </div>
+
+    <!-- <app-sportedit *ngIf="isFormActive" (closeRequested)="closeForm($event)" [sport]="selectSport"></app-sportedit>-->
+</div>

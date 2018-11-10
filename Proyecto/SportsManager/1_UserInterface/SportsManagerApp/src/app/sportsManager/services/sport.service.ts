@@ -13,13 +13,13 @@ export class SportService {
         return this.baseService.post<SportRequest, any>('sport', request);
       }
 
-      //getUsers(): Observable<UserRequest[]> {
-      //  return this.http.get<UserRequest[]>(`http://localhost:5005/api/user`);
-      //}
+      getSports(): Observable<SportRequest[]> {
+        return this.http.get<SportRequest[]>(`http://localhost:5005/api/sport`);
+      }
 
-      //deleteUser(userName: string): Observable<any> {
-      //  return this.http.delete(`http://localhost:5005/api/user/${userName}`, {  observe: 'response' });
-      //}
+      deleteSport(sportName: string): Observable<any> {
+        return this.http.delete(`http://localhost:5005/api/sport/${sportName}`, {  observe: 'response' });
+      }
 
       //editUser(request: UserRequest): Observable<any> {
       //  return this.http.put(`http://localhost:5005/api/user/${request.userName}`, {  observe: 'response' });
