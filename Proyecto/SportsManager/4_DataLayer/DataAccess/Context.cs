@@ -19,6 +19,7 @@ namespace DataAccess
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserTeam> UserTeams { get; set; }
         public DbSet<EventTeam> EventTeams { get; set; }
+        public DbSet<EventResult> EventResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,6 +39,7 @@ namespace DataAccess
             modelBuilder.Entity<User>().HasKey(u => u.Id);            
             modelBuilder.Entity<Sport>().HasKey(s => s.Id);
             modelBuilder.Entity<Event>().HasKey(e => e.Id);
+            modelBuilder.Entity<EventResult>().HasKey(er => er.Id);
             modelBuilder.Entity<Comment>().HasKey(e => e.Id);
 
             // Join entities

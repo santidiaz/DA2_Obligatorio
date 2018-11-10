@@ -17,12 +17,12 @@ namespace SportsWebApi.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
-        private ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
+        private readonly IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
+        private readonly ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
  
         [PermissionFilter(true)]
         [HttpPost()]
-        public IActionResult AddEvent([FromBody] AddEventInput input)
+        public IActionResult Add([FromBody] AddEventInput input)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace SportsWebApi.Controllers
         
         [PermissionFilter(true)]
         [HttpDelete("{id}")]
-        public IActionResult DeleteEventById(int eventId)
+        public IActionResult Delete(int eventId)
         {
             try
             {
@@ -52,6 +52,28 @@ namespace SportsWebApi.Controllers
                     return NotFound();
 
                 this.eventOperations.DeleteEventById(eventId);
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [PermissionFilter(true)]
+        [HttpPut()]
+        public IActionResult Modify([FromBody] ModifyEventInput input)
+        {
+            try
+            {
+                if (input == null)
+                    return BadRequest();
+
+                this.eventOperations.ModifyEvent(input.Id, input.TeamNames, input.InitialDate);
                 return Ok();
             }
             catch (EntitiesException eEx)
@@ -106,26 +128,6 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [PermissionFilter(true)]
-        [HttpPut("{id}")]
-        public IActionResult ModifyEvent(int eventId, [FromBody] ModifyEventInput input)
-        {
-            try
-            {
-                if (input == null)
-                    return BadRequest();
-
-                this.eventOperations.ModifyEvent(eventId, input.TeamNames, input.InitialDate);
-                return Ok();
-            }
-            catch (EntitiesException eEx)
-            {
-                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
-            }
-            catch (Exception ex)
-            {
-                return this.StatusCode(500, ex.Message);
-            }
-        }
+        
     }
 }

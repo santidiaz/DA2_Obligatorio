@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixtureLogic", "3_BusinessL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixtureProvider", "Cross-Cutting\FixtureProvider\FixtureProvider.csproj", "{CD424698-4CB9-490E-81C2-BC6399B945C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixtureContracts", "3_BusinessLayer\FixtureContracts\FixtureContracts.csproj", "{084B9D1E-65DF-4645-9960-50AD10869CBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixtureContracts", "3_BusinessLayer\FixtureContracts\FixtureContracts.csproj", "{084B9D1E-65DF-4645-9960-50AD10869CBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

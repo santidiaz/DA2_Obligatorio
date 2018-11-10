@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<InfoWarnings>
+  <Info>Begin full analysis with NDepend v2018.2.1</Info>
+  <Warning>Can't load the assembly {SportsManager}:
+Can't find the .NET assembly {SportsManager} in specified folders. 
+Has it been compiled properly? 
+Is the NDepend project missing the containing folder of the .NET assembly?</Warning>
+  <Info>Concurrent mode</Info>
+  <Info>.NET Assemblies loaded from {C:\Users\santi\Desktop\ORT\DA2\Obligatorio_DA2\Proyecto\SportsManager\MSTests\UnitTests\bin\debug\netcoreapp2.1} 
+   UnitTests.dll   v1.0.0.0
+   BusinessLogic.dll   v1.0.0.0
+   BusinessEntities.dll   v1.0.0.0
+   BusinessContracts.dll   v1.0.0.0
+   DataContracts.dll   v1.0.0.0
+   CommonUtilities.dll   v1.0.0.0
+   PermissionContracts.dll   v1.0.0.0
+   PermissionLogic.dll   v1.0.0.0
+   FixtureLogic.dll   v1.0.0.0
+   FixtureContracts.dll   v1.0.0.0</Info>
+  <Info>.NET Assemblies loaded from {C:\Users\santi\Desktop\ORT\DA2\Obligatorio_DA2\Proyecto\SportsManager\2_ServiceLayer\SportsWebApi\bin\debug\netcoreapp2.1} 
+   SportsWebApi.dll   v1.0.0.0
+   DataAccess.dll   v1.0.0.0
+   ProviderManager.dll   v1.0.0.0
+   FixtureProvider.dll   v1.0.0.0</Info>
+  <Info>.NET Assemblies loaded from {C:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.1.5} 
+   System.Runtime.dll   v4.2.1.0
+   System.Collections.dll   v4.1.1.0
+   System.Runtime.Extensions.dll   v4.2.1.0
+   System.Security.Cryptography.Algorithms.dll   v4.3.1.0
+   System.Linq.Expressions.dll   v4.2.1.0
+   System.Security.Cryptography.Primitives.dll   v4.1.1.0
+   System.Linq.dll   v4.2.1.0
+   System.Diagnostics.Debug.dll   v4.1.1.0
+   System.ComponentModel.Annotations.dll   v4.2.1.0
+   System.Net.Mail.dll   v4.0.1.0
+   System.IO.FileSystem.dll   v4.1.1.0
+   System.Linq.Queryable.dll   v4.0.3.0
+   mscorlib.dll   v4.0.0.0</Info>
+  <Info>.NET Assemblies loaded from {C:\Program Files\dotnet\sdk\NuGetFallbackFolder} 
+   .\Microsoft.AspNetCore.Mvc.Core\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Core.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Razor.Runtime\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Razor.Runtime.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Hosting.Abstractions\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.Abstractions.dll   v2.1.1.0
+   .\Microsoft.Extensions.Configuration.Abstractions\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll   v2.1.1.0
+   .\Microsoft.Extensions.DependencyInjection.Abstractions\2.1.1\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Http.Abstractions\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Cors\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Cors.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Mvc.Abstractions\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Http.Features\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Hosting\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.dll   v2.1.1.0
+   .\Microsoft.AspNetCore\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.dll   v2.1.1.0
+   .\Microsoft.Extensions.Configuration\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll   v2.1.1.0
+   .\Microsoft.Extensions.Configuration.FileExtensions\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.FileExtensions.dll   v2.1.1.0
+   .\Microsoft.Extensions.Configuration.Json\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.Json.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Mvc\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.Diagnostics\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Diagnostics.dll   v2.1.1.0
+   .\Microsoft.AspNetCore.HttpsPolicy\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.HttpsPolicy.dll   v2.1.1.0
+   .\Microsoft.Extensions.Primitives\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll   v2.1.1.0</Info>
+  <Info>.NET Assemblies loaded from {C:\Users\santi\.nuget\packages} 
+   .\MSTest.TestFramework\1.3.2\lib\netstandard1.0\Microsoft.VisualStudio.TestPlatform.TestFramework.dll   v14.0.0.0
+   .\Moq\4.10.0\lib\netstandard1.3\Moq.dll   v4.10.0.0
+   .\Microsoft.EntityFrameworkCore\2.1.3\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll   v2.1.3.0
+   .\Microsoft.EntityFrameworkCore.Relational\2.1.3\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll   v2.1.3.0
+   .\Microsoft.EntityFrameworkCore.SqlServer\2.1.3\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll   v2.1.3.0</Info>
+  <Warning>Assembly {Microsoft.VisualStudio.TestPlatform.ObjectModel} is referenced by {UnitTests} but is not found.</Warning>
+  <Warning>The source file {C:\Users\santi\Desktop\ORT\DA2\Obligatorio_DA2\Proyecto\SportsManager\2_ServiceLayer\SportsWebApi\Models\EventModel\EventDTO.cs} (last modified 07-Nov-18 11:49:36 PM) and the PDB file of the assembly {SportsWebApi} (last modified 07-Nov-18 11:40:03 PM) are not in-sync.</Warning>
+  <Info>73 source files parsed ; all source files found ; 1 source file not in-sync with PDB</Info>
+  <Info>0 code rule has been extracted from code.</Info>
+  <Info>No dependency cycle detected in assemblies referencement graph.</Info>
+  <Info>Do merge code generated by compiler into application code.</Info>
+  <Info>Analyse dependencies of your application.</Info>
+  <Info>No SuppressMessageAttribute found in the analyzed code base. Since NDepend v2018.2 SuppressMessageAttribute can be used to suppress NDepend issues. Don't forget to set in your projects the compilation symbol CODE_ANALYSIS to use this attribute to suppress NDepend issues.</Info>
+  <Info>Log trend metrics values.</Info>
+  <Info>Execute queries and rules.</Info>
+  <Error>1 quality gate fails.
+  - 'Critical Rules Violated' value 5 rules greater than fail threshold 0 rules</Error>
+  <Info>NDepend analysis done. Duration: 00:15</Info>
+  <Info>Building the report (standard).</Info>
+</InfoWarnings>

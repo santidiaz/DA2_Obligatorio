@@ -48,6 +48,7 @@ namespace BusinessEntities
             get { return this._coments?.OrderByDescending(c => c.DatePosted)?.ToList(); }
             set { this._coments = value; }
         }
+        public EventResult Result { get; set; }
 
         public Event()
         {
@@ -69,12 +70,10 @@ namespace BusinessEntities
         {
             return this.EventTeams[0].Team;
         }
-
         public Team GetAwayTeam()
         {
             return this.EventTeams[1].Team;
-        }
-        
+        }        
         public void ModifyTeams(List<Team> newTeams)
         {
             bool result = this.TeamsQuantityIsValid(newTeams);
@@ -87,16 +86,13 @@ namespace BusinessEntities
             }
             else
             {
-                Team local = newTeams.ElementAt(0);
-                Team away = newTeams.ElementAt(1);
-                if (this.AreValidTeams(local, away))
-                {
-                    this.SetLocal(local);
-                    this.SetAway(away);
-                }
+                this.SetupTwoTeamsEvent(newTeams);
             }
         }
-
+        public bool HasResult()
+        {
+            return this.Result != null;
+        }
         public override bool Equals(object obj)
         {
             if (obj is Event)
@@ -104,7 +100,6 @@ namespace BusinessEntities
             else
                 return false;
         }
-
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -112,19 +107,6 @@ namespace BusinessEntities
         #endregion
 
         #region Private methods
-        private void SetLocal(Team localTeam)
-        {
-            this.EventTeams[0].Team = localTeam;
-        }
-        private void SetAway(Team awayTeam)
-        {
-            this.EventTeams[1].Team = awayTeam;
-        }
-        private bool AreValidTeams(Team local, Team away)
-        {
-            return local != null && away != null
-                && !local.Equals(away);
-        }
         private void LoadTeams(List<Team> teams)
         {
             if (teams != null && this.TeamsQuantityIsValid(teams))
@@ -142,6 +124,30 @@ namespace BusinessEntities
                     });
             }
         }
+        private void SetupTwoTeamsEvent(List<Team> teams)
+        {
+            Team local = teams.ElementAt(0);
+            Team away = teams.ElementAt(1);
+            if (this.AreValidTeams(local, away))
+            {
+                this.SetLocal(local);
+                this.SetAway(away);
+            }
+        }
+        private bool AreValidTeams(Team local, Team away)
+        {
+            return local != null && away != null
+                && !local.Equals(away);
+        }
+        private void SetLocal(Team localTeam)
+        {
+            this.EventTeams[0].Team = localTeam;
+        }
+        private void SetAway(Team awayTeam)
+        {
+            this.EventTeams[1].Team = awayTeam;
+        }
+
         // Teams must be 2, or if SPORT allow multipleTeamsEvents, count must be 3 or more.
         private bool TeamsQuantityIsValid(List<Team> teams)
         {

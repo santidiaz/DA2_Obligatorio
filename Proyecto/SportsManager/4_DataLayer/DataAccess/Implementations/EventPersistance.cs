@@ -37,6 +37,19 @@ namespace DataAccess.Implementations
             }
         }
 
+
+
+        public void SaveEventResult(Event finishedEvent)
+        {
+            using (Context context = new Context())
+            {
+                context.Events.Attach(finishedEvent);
+                context.EventResults.Attach(finishedEvent.Result);
+                context.SaveChanges();
+            }
+        }
+
+
         public Event GetEventById(int eventId, bool eagerLoad = false)
         {
             Event foundEvent;

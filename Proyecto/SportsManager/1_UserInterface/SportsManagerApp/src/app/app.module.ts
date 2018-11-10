@@ -14,25 +14,35 @@ import { PageNotFoundComponent } from './sportsManager/components/general/pageNo
 import { SessionService } from './sportsManager/services/session.service'
 import { PermissionService } from './sportsManager/services/permission.service'
 import { BaseService } from './sportsManager/services/base.service'
+import { AuthGuard } from './sportsManager/shared/auth.guard';
+import { NavigationBar } from './sportsManager/components/navigation/nav-bar';
 
 const appRoutes: Routes = [
+  {
+    path: '', component: LoginComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      { path: 'event', component: EventListComponent, canActivate: [AuthGuard] },
+      /*{
+        path: 'city',
+        loadChildren: './city/city.module#CityModule',
+      },*/
+      { path: '', redirectTo: 'event', pathMatch: 'full' }
+    ]
+  }, 
+  { path: 'event', component: EventListComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'event', component: EventListComponent },
-  //{ path 'team', componet: MyTEmasComponetn },
-  //{ path: 'event/:id',      component: HeroDetailComponent },
-  { path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  },  
-  { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     EventListComponent,
+    NavigationBar,
     PageNotFoundComponent
   ],
   imports: [
@@ -48,8 +58,69 @@ const appRoutes: Routes = [
   providers: [
     BaseService,
     SessionService,
-    PermissionService
+    PermissionService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+
+
+/*
+
+
+const appRoutes: Routes = [
+  {
+    path: '', component: LayoutComponent,
+    canActivate: [AuthenticationGuard],
+    canActivateChild: [AuthenticationGuard],
+    children: [
+      { path: 'home', component: HomeComponent },
+      {
+        path: 'city',
+        loadChildren: './city/city.module#CityModule',
+      },
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
+    ]
+  },
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: PageNotFoundComponent }
+];
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    TestComponent,
+    LoginComponent,
+    HomeComponent,
+    PageNotFoundComponent,
+    LayoutComponent,
+    NavBarComponent
+  ],
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: false } // <-- debugging purposes only
+    ),
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    // CityModule
+  ],
+  providers: [
+    CityService,
+    SessionService,
+    UserService,
+    BaseApiService,
+    AuthenticationGuard
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+*/
