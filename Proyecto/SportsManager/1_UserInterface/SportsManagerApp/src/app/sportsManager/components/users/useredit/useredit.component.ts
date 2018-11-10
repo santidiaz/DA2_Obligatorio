@@ -13,7 +13,20 @@ import { UserService } from "src/app/sportsManager/services/user.service";
   export class UserEditComponent extends BaseComponent{
 
     formModel: UserRequest;
-    @Input() user: UserRequest;
+    // @Input() user: UserRequest;
+    _user: UserRequest;
+
+    get user() : UserRequest{
+      return this._user; // una variable privada por ahi
+    }
+
+    @Input()
+    set user(u: UserRequest){
+        this._user = u;
+    }
+    
+    @Output() closeRequested = new EventEmitter<boolean>();
+
     errorMessage: string = null;
     successMessage: string = null;
 
@@ -36,7 +49,7 @@ import { UserService } from "src/app/sportsManager/services/user.service";
     }  
 
     onSubmit() {
-      this.userService.addUser(this.user)
+      this.userService.editUser(this.user)
         .subscribe(
           response => this.handleResponse(response),
           error => this.handleError(error));
@@ -53,4 +66,7 @@ import { UserService } from "src/app/sportsManager/services/user.service";
       this.errorMessage = error.error;
     }
     
+    cancel() {
+      this.closeRequested.emit(true);
+    }
 }

@@ -20,4 +20,8 @@ export class UserService {
       deleteUser(userName: string): Observable<any> {
         return this.http.delete(`http://localhost:5005/api/user/${userName}`, {  observe: 'response' });
       }
+
+      editUser(request: UserRequest): Observable<any> {
+        return this.http.put(`http://localhost:5005/api/user/${request.userName}`, {  observe: 'response' });
+      }
 }

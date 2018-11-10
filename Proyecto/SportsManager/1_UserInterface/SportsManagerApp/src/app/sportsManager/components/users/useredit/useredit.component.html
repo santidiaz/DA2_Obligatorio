@@ -6,7 +6,7 @@
             <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
               <div class="form-group">
                 <label for="userNameInput">User name</label>
-                <input type="text" class="form-control" name="username" id="usernameInput" required
+                <input type="text" class="form-control" disabled="true" name="username" id="usernameInput" required
                   [(ngModel)]="user.username" #nameee="ngModel"  aria-describedby="userNameHelp" placeholder="Enter the userName...">
               </div>
     
