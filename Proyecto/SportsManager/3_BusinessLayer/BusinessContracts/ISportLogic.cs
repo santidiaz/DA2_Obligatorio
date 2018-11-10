@@ -13,5 +13,6 @@ namespace BusinessContracts
         Sport GetSportByName(string name);
         void DeleteSportByName(string sportToBeDeleted);
         List<Event> GetEventsBySport(string sportName);
+        List<Sport> GetSports();
     }
 }

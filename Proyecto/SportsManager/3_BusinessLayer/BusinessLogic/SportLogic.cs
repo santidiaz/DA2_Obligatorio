@@ -73,6 +73,10 @@ namespace BusinessLogic
 
             return this.persistanceProvider.GetEventsBySport(sport);
         }
+
+        public List<Sport> GetSports() {
+            return this.persistanceProvider.GetSports();
+        }
         #endregion
 
         #region Private Methods

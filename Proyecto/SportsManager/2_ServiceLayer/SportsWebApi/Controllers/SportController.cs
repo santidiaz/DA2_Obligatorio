@@ -17,7 +17,7 @@ namespace SportsWebApi.Controllers
     {
         private ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
 
-        [PermissionFilter(true)]
+        //[PermissionFilter(true)]
         [HttpPost()]
         public IActionResult AddSport([FromBody] AddSportInput input)
         {
@@ -126,6 +126,25 @@ namespace SportsWebApi.Controllers
             catch (EntitiesException ex)
             {
                 return this.StatusCode(Utility.GetStatusResponse(ex), ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        //[PermissionFilter(true)]
+        [HttpGet()]
+        public IActionResult GetSports()
+        {
+            try
+            {
+                List<Sport> listSport = sportOperations.GetSports();
+                return Ok(listSport);
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
             }
             catch (Exception ex)
             {
