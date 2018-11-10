@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="card">
+      <h5 class="card-header">Add sport</h5>
+      <div class="card-body">
+  
+        <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+          <div class="form-group">
+            <label for="sportNameInput">Name</label>
+            <input type="text" class="form-control" name="sportname" id="sportnameInput" required
+              [(ngModel)]="formModel.sportname" #nameee="ngModel"  aria-describedby="sportNameHelp" placeholder="Enter the sport Name...">
+          </div>
+
+          <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+              {{ successMessage }}
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
+              {{ errorMessage }}
+            </div>
+
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
