@@ -16,12 +16,14 @@ import { BaseService } from './sportsManager/services/base.service';
 import { AddUserComponent } from './sportsManager/components/users/adduser/adduser.component';
 import { UserService } from './sportsManager/services/user.service';
 import { ListUsersComponent } from './sportsManager/components/users/listUsers/listusers.component';
+import { UserEditComponent } from './sportsManager/components/users/useredit/useredit.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'event', component: EventListComponent },
   { path: 'addUser', component: AddUserComponent },
   { path: 'listUsers', component: ListUsersComponent },
+  { path: 'editUser', component: UserEditComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'
@@ -37,6 +39,7 @@ const appRoutes: Routes = [
     EventListComponent,
     AddUserComponent,
     ListUsersComponent,
+    UserEditComponent,
     PageNotFoundComponent
   ],
   imports: [

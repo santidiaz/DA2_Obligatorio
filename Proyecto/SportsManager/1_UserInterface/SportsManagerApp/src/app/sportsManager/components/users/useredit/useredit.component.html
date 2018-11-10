@@ -1,0 +1,49 @@
+<div class="container">
+        <div class="card">
+          <h5 class="card-header">Modify user</h5>
+          <div class="card-body">
+      
+            <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+              <div class="form-group">
+                <label for="userNameInput">User name</label>
+                <input type="text" class="form-control" name="username" id="usernameInput" required
+                  [(ngModel)]="user.username" #nameee="ngModel"  aria-describedby="userNameHelp" placeholder="Enter the userName...">
+              </div>
+    
+              <div class="form-group">
+                <label for="lastnameInput">Last name</label>
+                <input type="lastname" class="form-control" name="lastname" id="lastnameInput" required 
+                [(ngModel)]="user.lastname"  placeholder="Enter the lastname...">
+              </div>
+    
+              <div class="form-group">
+                <label for="nameInput">Name</label>
+                <input type="name" class="form-control" name="name" id="nameInput" required 
+                [(ngModel)]="user.name"  placeholder="Enter the name...">
+              </div>
+    
+              <div class="form-group">
+                <label for="emailInput">Email</label>
+                <input type="email" class="form-control" name="email" id="emailInput" required 
+                [(ngModel)]="user.email"  placeholder="Enter your email...">
+              </div>
+              
+              <div class="form-group">
+                <label for="passwordInput">Password</label>
+                <input type="password" class="form-control" name="password" id="passwordInput" required 
+                [(ngModel)]="user.password"  placeholder="Enter your password...">
+              </div>
+              
+              <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+                  {{ successMessage }}
+              </div>
+              <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
+                  {{ errorMessage }}
+                </div>
+    
+              <button type="submit" class="btn btn-primary">Modify</button>
+              <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>

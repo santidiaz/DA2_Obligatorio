@@ -30,4 +30,6 @@
     <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
             {{ successMessage }}
     </div>
+
+    <app-useredit *ngIf="isFormActive" (closeRequested)="closeForm($event)" [user]="selectUser"></app-useredit>
 </div>

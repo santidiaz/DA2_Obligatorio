@@ -9,36 +9,47 @@ import { UserRequest } from "src/app/sportsManager/interfaces/userrequest";
     selector: 'app-listUsers',
     templateUrl: './listUsers.component.html',
     styleUrls: ['./listUsers.component.css']
-  })
+})
 
 
-  export class ListUsersComponent extends BaseComponent {
+export class ListUsersComponent extends BaseComponent {
 
     users: Array<UserRequest>;
     successMessage: string = null;
+    isFormActive: boolean;
+    selectedUser: UserRequest;
 
     constructor(
         private sessionService: SessionService,
         private userService: UserService) {
         super();
-      };
+    };
 
-      ngOnInit() {
+    ngOnInit() {
         this.updateGrid();
         this.successMessage = null;
-      }
+    }
 
-      updateGrid(): void {
+    updateGrid(): void {
         this.userService.getUsers().subscribe(response => {
-          this.users = response;
+            this.users = response;
         });
+    }
+
+    deleteUser($event, user: UserRequest) {
+        this.userService.deleteUser(user.userName).subscribe(resp => {
+            console.log(JSON.stringify(resp));
+            this.successMessage = 'Operation success';
+            this.updateGrid();
+        });
+    }
+
+    selectUser($event, user: UserRequest) {
+        this.selectedUser = user;
+        this.isFormActive = true;
       }
 
-      deleteUser($event, user: UserRequest) {
-        this.userService.deleteUser(user.userName).subscribe(resp => {
-          console.log(JSON.stringify(resp));
-          this.successMessage = 'Operation success';
-          this.updateGrid();
-        });
-      }
+    closeForm($event) {
+        this.isFormActive = false;
+    }
 }

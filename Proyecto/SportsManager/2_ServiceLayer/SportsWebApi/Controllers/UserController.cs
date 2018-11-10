@@ -76,7 +76,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [PermissionFilter(true)]
+        //[PermissionFilter(true)]
         [HttpDelete("{userName}")]
         public IActionResult DeleteUserByUserName(string userName)
         {

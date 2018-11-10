@@ -23,7 +23,7 @@ export class AddUserComponent extends BaseComponent {
     private sessionService: SessionService,
     private userService: UserService) {
     super();
-    this.formModel = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: '', token: '' };
+    this.formModel = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: ''};
   };
 
   ngOnInit() {
