@@ -21,7 +21,7 @@ import { SportService } from 'src/app/sportsManager/services/sport.service';
         private sessionService: SessionService,
         private sportService: SportService) {
         super();
-        this.formModel = { sportOID: 0, name: ''};
+        this.formModel = { sportOID: 0, name: '', allowdMultipleTeamsEvents: false};
       };
 
       ngOnInit() {
@@ -30,6 +30,7 @@ import { SportService } from 'src/app/sportsManager/services/sport.service';
       }  
 
       onSubmit() {
+        
         this.sportService.addSport(this.formModel)
           .subscribe(
             response => this.handleResponse(response),
