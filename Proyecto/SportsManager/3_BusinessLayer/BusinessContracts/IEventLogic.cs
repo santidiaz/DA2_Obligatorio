@@ -11,6 +11,8 @@ namespace BusinessContracts
         void AddEvent(string sportName, List<string> teamNames, DateTime eventDate);
         void DeleteEventById(int eventId);
         void ModifyEvent(int eventId, List<string> teamNames, DateTime newDate);
+        void SetupEventResult(int eventId, List<string> teams,bool drawMatch = false);
+
         List<Team> FindSportTeams(Sport foundSport, List<string> teamNames);
         Event GetEventById(int eventId, bool eagerLoad = true);
         List<Event> GetAllEvents();

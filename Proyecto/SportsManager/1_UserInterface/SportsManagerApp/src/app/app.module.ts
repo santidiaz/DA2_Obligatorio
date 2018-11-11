@@ -8,7 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { LoginComponent } from './sportsManager/components/permissions/login.component';
-import { EventListComponent } from './sportsManager/components/event/eventList/eventList.component';
+import { EventListComponent } from './sportsManager/components/event/eventList/event-list.component';
+import { EventFormComponent } from './sportsManager/components/event/eventCard/event-form.component';
 import { PageNotFoundComponent } from './sportsManager/components/general/pageNotFound.component';
 import { SessionService } from './sportsManager/services/session.service';
 import { PermissionService } from './sportsManager/services/permission.service';
@@ -22,8 +23,41 @@ import { SportService } from './sportsManager/services/sport.service';
 import { ListSportsComponent } from './sportsManager/components/sport/listsports/listsports.component';
 import { EditSportComponent } from './sportsManager/components/sport/editsport/editsport.component';
 
+import { SessionService } from './sportsManager/services/session.service'
+import { PermissionService } from './sportsManager/services/permission.service'
+import { BaseService } from './sportsManager/services/base.service'
+
 const appRoutes: Routes = [
+  {
+    path: '', redirectTo: 'login', pathMatch: 'full',
+    //canActivateChild: [AuthGuard],
+    /*children: [
+      { path: 'event', component: EventListComponent, canActivate: [AuthGuard] },
+      /*{
+        path: 'city',
+        loadChildren: './city/city.module#CityModule',
+      },
+      { path: '', redirectTo: 'event', pathMatch: 'full' }
+    ]*/
+  },
   { path: 'login', component: LoginComponent },
+  { 
+    path: 'event', 
+    component: EventListComponent, 
+    canActivate: [AuthGuard], 
+    data: {
+      onlyAdmin: false 
+    }  
+  },
+   
+  /*{ 
+    path: 'event/:id', 
+    component: EventCard, 
+    canActivate: [AuthGuard], 
+    data: {
+      onlyAdmin: true 
+    }  
+  },  */
   { path: 'event', component: EventListComponent },
   //{ path 'team', componet: MyTEmasComponetn },
   { path: 'addUser', component: AddUserComponent },
@@ -40,6 +74,7 @@ const appRoutes: Routes = [
   { path: '**', component: PageNotFoundComponent }
 ];
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +86,8 @@ const appRoutes: Routes = [
     AddSportComponent,
     ListSportsComponent,
     EditSportComponent,
+    EventFormComponent,
+    NavigationBar,
     PageNotFoundComponent
   ],
   imports: [
@@ -67,9 +104,71 @@ const appRoutes: Routes = [
     BaseService,
     SessionService,
     PermissionService,
-    UserService,
-    SportService
+      EventService,
+      UserService,
+      SportService
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+
+
+/*
+
+
+const appRoutes: Routes = [
+  {
+    path: '', component: LayoutComponent,
+    canActivate: [AuthenticationGuard],
+    canActivateChild: [AuthenticationGuard],
+    children: [
+      { path: 'home', component: HomeComponent },
+      {
+        path: 'city',
+        loadChildren: './city/city.module#CityModule',
+      },
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
+    ]
+  },
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: PageNotFoundComponent }
+];
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    TestComponent,
+    LoginComponent,
+    HomeComponent,
+    PageNotFoundComponent,
+    LayoutComponent,
+    NavBarComponent
+  ],
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: false } // <-- debugging purposes only
+    ),
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    // CityModule
+  ],
+  providers: [
+    CityService,
+    SessionService,
+    UserService,
+    BaseApiService,
+    AuthenticationGuard
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+*/

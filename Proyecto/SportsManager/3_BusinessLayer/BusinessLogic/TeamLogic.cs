@@ -21,16 +21,16 @@ namespace BusinessLogic
         }
 
         #region Public methods
-        public void AddTeam(Team newTeam, int sportOID)
+        public void AddTeam(Team newTeam, int Id)
         {
-            Sport foundSport = sportPersistance.GetSportById(sportOID, true);
+            Sport foundSport = sportPersistance.GetSportById(Id, true);
             if(foundSport == null)
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.InvalidData);
 
             if (this.IsTeamInSystem(newTeam))
                 throw new EntitiesException(Constants.TeamErrors.ERROR_TEAM_ALREADY_EXISTS, ExceptionStatusCode.Conflict);
             
-            this.teamPersistance.AddTeam(newTeam, sportOID);
+            this.teamPersistance.AddTeam(newTeam, Id);
         }
 
         public List<Team> GetTeams(string teamName, bool orderAsc)
@@ -42,7 +42,7 @@ namespace BusinessLogic
         {
             Team teamToModify = this.GetTeamByName(teamOldName);
 
-            teamWithModifications.TeamOID = teamToModify.TeamOID;
+            teamWithModifications.Id = teamToModify.Id;
             this.teamPersistance.ModifyTeam(teamWithModifications);
         }
 

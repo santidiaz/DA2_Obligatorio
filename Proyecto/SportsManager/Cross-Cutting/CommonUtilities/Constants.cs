@@ -33,6 +33,7 @@ namespace CommonUtilities
             public const string NOT_FOUND = "Event was not found.";
             public const string INVALID_AMOUNT_OF_TEAMS = "Invalid amount of teams.";
             public const string EVENT_TEAM_EXISTS = "The team [{0}] is already on an event on date {1}";
+            public const string EVENT_ALREADY_HAVE_RESULT = "Event result has already bean decided.";
         }
 
         public static class Team
@@ -49,7 +50,7 @@ namespace CommonUtilities
             public const string NAME_REQUIRED = "Name required";
             public const string PHOTO_INVALID = "Invalid photo";
             public const string TEAM_NAME_NOT_FOUND = "The team <{0}> was not found";
-            public const string TEAM_SPORTOID_FAIL = "The sport to add are invalid";
+            public const string TEAM_Id_FAIL = "The sport to add are invalid";
         }
 
         public static class Sport

@@ -11,9 +11,9 @@ namespace BusinessLogic
 {
     public class EventLogic : IEventLogic
     {
-        private IEventPersistance eventProvider;
-        private ISportPersistance sportProvider;
-        private ITeamPersistance teamProvider;
+        private readonly IEventPersistance eventProvider;
+        private readonly ISportPersistance sportProvider;
+        private readonly ITeamPersistance teamProvider;
 
         public EventLogic(IEventPersistance eventPersistance, ISportPersistance sportPersistance, ITeamPersistance teamPersistance)
         {
@@ -87,7 +87,7 @@ namespace BusinessLogic
 
         public Event GetEventById(int eventId, bool eagerLoad = true)
         {
-            Event foundEvent = this.eventProvider.GetEventById(eventId, eagerLoad);
+            var foundEvent = this.eventProvider.GetEventById(eventId, eagerLoad);
             if (foundEvent == null)
                 throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
 
@@ -98,6 +98,19 @@ namespace BusinessLogic
         {
             return this.eventProvider.GetAllEvents();
         }
+
+        public void SetupEventResult(int eventId, List<string> teams, bool drawMatch = false)
+        {
+            var foundEvent = this.GetEventById(eventId, true);
+            if (foundEvent.HasResult())
+                throw new EntitiesException(Constants.EventError.EVENT_ALREADY_HAVE_RESULT, ExceptionStatusCode.InvalidData);
+
+            bool multipleTeamsEvent = foundEvent.Sport.AllowdMultipleTeamsEvents;
+            var eventResult = new EventResult(teams, multipleTeamsEvent, drawMatch);
+            foundEvent.Result = eventResult;
+
+            this.eventProvider.SaveEventResult(foundEvent);
+        }
         #endregion
 
         #region Private methods
@@ -107,10 +120,10 @@ namespace BusinessLogic
             foreach(Event e in events)
             {
                 e.EventTeams.ForEach(t => {
-                    if(teams.Exists(tm => tm.TeamOID.Equals(t.TeamOID)))
+                    if(teams.Exists(tm => tm.Id.Equals(t.TeamId)))
                     {
                         throw new EntitiesException(
-                            string.Format(Constants.EventError.EVENT_TEAM_EXISTS,t.TeamOID, e.InitialDate.Date), 
+                            string.Format(Constants.EventError.EVENT_TEAM_EXISTS,t.TeamId, e.InitialDate.Date), 
                             ExceptionStatusCode.InvalidData);
                     }
                 });
@@ -119,7 +132,16 @@ namespace BusinessLogic
 
         private Sport FindSport(string sportName)
         {
-            Sport foundSport = this.sportProvider.GetSportByName(sportName, true);
+            var foundSport = this.sportProvider.GetSportByName(sportName, true);
+            if (foundSport == null)
+                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
+
+            return foundSport;
+        }
+
+        private Sport FindSportById(int sportId)
+        {
+            Sport foundSport = this.sportProvider.GetSportById(sportId, true);
             if (foundSport == null)
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
 

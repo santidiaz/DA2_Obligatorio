@@ -197,17 +197,17 @@ namespace SportsWebApi.Controllers
         }
 
         [PermissionFilter(false)]
-        [HttpDelete("{userName}/favorite/{teamOID}")]
-        public IActionResult DeleteFavoriteTeamByUser(string userName, int teamOID)
+        [HttpDelete("{userName}/favorite/{Id}")]
+        public IActionResult DeleteFavoriteTeamByUser(string userName, int Id)
         {
             try
             {
                 if (string.IsNullOrEmpty(userName))
                     return NotFound();
-                if (teamOID <= 0)
+                if (Id <= 0)
                     return NotFound();
 
-                this.userOperations.DeleteFavoriteTeamByUser(teamOID, userName);
+                this.userOperations.DeleteFavoriteTeamByUser(Id, userName);
                 return Ok();
             }
             catch (EntitiesException eEx)

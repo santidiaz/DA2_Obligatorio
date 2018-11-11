@@ -1,0 +1,33 @@
+<p>
+  {{ events | json }}
+</p>
+<div class="table-responsive">
+  <table class="table table-hover">
+      <thead class="thead-dark">
+          <tr>
+              <th scope="col">Cities</th>
+              <th scope="col">Description</th>
+              <th scope="col">Places</th>
+              <th scope="col">Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let event of events">
+              <td>{{ event.id }}</td>
+              <td>{{ event.initialDate | date: 'dd/MM/yyyy' }}</td>
+              <td>
+                  <input type="button" (click)="selectCity($event, event)" value="Edit" />
+                  <!--<input type="button" (click)="deleteCity($event, event)" value="Delete" />-->
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<app-event-form *ngIf="isFormActive" (closeRequested)="closeForm($event)" [event]="selectedEvent"></app-event-form>
+
+
+
+
+
+

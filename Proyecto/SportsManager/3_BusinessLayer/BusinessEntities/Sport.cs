@@ -12,7 +12,7 @@ namespace BusinessEntities
         private List<Team> _teams;
         #endregion
 
-        public int SportOID { get; set; } // [Object Id] This id is required by EntityFramework.
+        public int Id { get; set; }
         public string Name
         {
             get { return this._name; }

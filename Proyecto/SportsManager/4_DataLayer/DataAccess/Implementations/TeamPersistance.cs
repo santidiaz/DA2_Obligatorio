@@ -10,13 +10,13 @@ namespace DataAccess.Implementations
 {
     public class TeamPersistance : ITeamPersistance
     {
-        public void AddTeam(Team newTeam, int sportOID)
+        public void AddTeam(Team newTeam, int Id)
         {
             using (Context context = new Context())
             {
                 Sport sportInDB = context.Sports.OfType<Sport>()
                     .Include(t => t.Teams)
-                    .Where(s => s.SportOID.Equals(sportOID)).FirstOrDefault();
+                    .Where(s => s.Id.Equals(Id)).FirstOrDefault();
 
                 context.Teams.Add(newTeam);
                 sportInDB.Teams.Add(newTeam);
@@ -29,7 +29,7 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 Team teamOnDB = context.Teams.OfType<Team>()
-                    .Where(t => t.TeamOID.Equals(teamToModify.TeamOID))
+                    .Where(t => t.Id.Equals(teamToModify.Id))
                     .FirstOrDefault();
 
                 teamOnDB.Name = string.IsNullOrEmpty(teamToModify.Name) ? teamOnDB.Name : teamToModify.Name;
@@ -107,7 +107,7 @@ namespace DataAccess.Implementations
                 teamEvents = context.Events.OfType<Event>()
                     .Include(s => s.Sport)
                     .Include(t => t.EventTeams)
-                    .Where(e => e.EventTeams.Exists(ev_tm => ev_tm.TeamOID.Equals(team.TeamOID)))
+                    .Where(e => e.EventTeams.Exists(ev_tm => ev_tm.TeamId.Equals(team.Id)))
                     .ToList();
             }
             return teamEvents;
@@ -119,7 +119,7 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 foundTeam = context.Teams.OfType<Team>()
-                    .FirstOrDefault(u => u.TeamOID.Equals(teamId));
+                    .FirstOrDefault(u => u.Id.Equals(teamId));
             }
             return foundTeam;
         }
@@ -129,8 +129,8 @@ namespace DataAccess.Implementations
             bool result = false;
             using (Context context = new Context())
             {
-                Event teamOnDB1 = context.Events.OfType<Event>().Where(a => a.GetLocalTeam().Equals(team.TeamOID)).FirstOrDefault();
-                Event teamOnDB2 = context.Events.OfType<Event>().Where(a => a.GetAwayTeam().Equals(team.TeamOID)).FirstOrDefault();
+                Event teamOnDB1 = context.Events.OfType<Event>().Where(a => a.GetLocalTeam().Equals(team.Id)).FirstOrDefault();
+                Event teamOnDB2 = context.Events.OfType<Event>().Where(a => a.GetAwayTeam().Equals(team.Id)).FirstOrDefault();
 
                 if (teamOnDB1 != null) result = true;
                 if (teamOnDB2 != null) result = true;

@@ -23,7 +23,7 @@ namespace SportsWebApi.Controllers
             try
             {
                 if (addCommentInput == null || 
-                    addCommentInput.EventOID <= 0 ||
+                    addCommentInput.Id <= 0 ||
                     string.IsNullOrEmpty(addCommentInput.Description)) return BadRequest();
 
                 Comment newComment = new Comment
@@ -32,7 +32,7 @@ namespace SportsWebApi.Controllers
                     CreatorName = addCommentInput.CreatorName
                 };
 
-                commentOperations.AddComment(newComment, addCommentInput.EventOID);
+                commentOperations.AddComment(newComment, addCommentInput.Id);
                 return Ok();
             }
             catch (EntitiesException ex)

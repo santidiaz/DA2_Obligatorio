@@ -33,7 +33,7 @@ namespace UnitTests.LogicTests
 
                 mock.Setup(up => up.GetTeams(string.Empty, true)).Returns(teamList);
                 mock.Setup(mr => mr.AddTeam(new Team() { Name = "teamName", Photo = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 } }, 1)).Verifiable();
-                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
+                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { Id = 1 } });
 
                 // Instancio TeamLogic con el mock como parametro.
                 TeamLogic userLogic = new TeamLogic(mock.Object, mockSport.Object);
@@ -55,7 +55,7 @@ namespace UnitTests.LogicTests
             var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
             mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>());
             mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
-            mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
+            mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { Id = 1 } });
 
             // Instancio TeamLogic con el mock como parametro.
             TeamLogic userLogic = new TeamLogic(mock.Object , mockSport.Object);
@@ -73,7 +73,7 @@ namespace UnitTests.LogicTests
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
-                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
+                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { Id = 1 } });
 
                 // Instancio TeamLogic con el mock como parametro.
                 TeamLogic userLogic = new TeamLogic(mock.Object , mockSport.Object);
@@ -230,7 +230,7 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
-        public void AddTeamThatNotSportOIDInvalid()
+        public void AddTeamThatNotIdInvalid()
         {
             try
             {
@@ -246,12 +246,12 @@ namespace UnitTests.LogicTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Equals(Constants.TeamErrors.TEAM_SPORTOID_FAIL));
+                Assert.IsTrue(ex.Message.Equals(Constants.TeamErrors.TEAM_Id_FAIL));
             }
         }
 
         [TestMethod]
-        public void AddTeamThatNotSportOIDNotExists()
+        public void AddTeamThatNotIdNotExists()
         {
             try
             {
@@ -259,7 +259,7 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>());
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
-                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 0 } });
+                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { Id = 0 } });
 
                 // Instancio TeamLogic con el mock como parametro.
                 TeamLogic userLogic = new TeamLogic(mock.Object, mockSport.Object);
@@ -303,7 +303,7 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { new Team { Name = "a" } });
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
-                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
+                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { Id = 1 } });
 
                 // Instancio TeamLogic con el mock como parametro.
                 TeamLogic userLogic = new TeamLogic(mock.Object, mockSport.Object);
@@ -324,7 +324,7 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
-        public void AddTeamThatInvalidSportOID()
+        public void AddTeamThatInvalidId()
         {
             try
             {
@@ -332,7 +332,7 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { new Team { Name = "a" } });
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
-                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
+                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { Id = 1 } });
 
                 // Instancio TeamLogic con el mock como parametro.
                 TeamLogic userLogic = new TeamLogic(mock.Object, mockSport.Object);
@@ -343,7 +343,7 @@ namespace UnitTests.LogicTests
             }
             catch (EntitiesException eEx)
             {
-                Assert.IsTrue(eEx.Message.Equals(Constants.TeamErrors.TEAM_SPORTOID_FAIL));
+                Assert.IsTrue(eEx.Message.Equals(Constants.TeamErrors.TEAM_Id_FAIL));
             }
             catch (Exception)
             {
@@ -361,7 +361,7 @@ namespace UnitTests.LogicTests
                 var mock = new Mock<ITeamPersistance>(); var mockSport = new Mock<ISportPersistance>();
                 mock.Setup(up => up.GetTeams("Nacional", true)).Returns(new List<Team>() { new Team { Name = "a" } });
                 mock.Setup(mr => mr.AddTeam(It.IsAny<Team>(), 1)).Verifiable();
-                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { SportOID = 1 } });
+                mockSport.Setup(mks => mks.GetSports()).Returns(new List<Sport>() { new Sport { Id = 1 } });
 
                 // Instancio TeamLogic con el mock como parametro.
                 TeamLogic userLogic = new TeamLogic(mock.Object, mockSport.Object);

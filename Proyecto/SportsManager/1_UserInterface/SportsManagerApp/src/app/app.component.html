@@ -1,6 +1,3 @@
-<div class="container-fluid">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1">{{title}}</span>
 
     <div *ngIf="isLoggedIn" class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -50,7 +47,6 @@
   </nav>
 </div>
 <div class="container">
-  <br />
-  <br />
+  <nav-bar></nav-bar>
   <router-outlet></router-outlet>
 </div>

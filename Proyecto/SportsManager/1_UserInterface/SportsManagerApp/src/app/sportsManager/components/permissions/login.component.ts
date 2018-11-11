@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { BaseComponent } from '../../shared/base.component';
 import { PermissionService } from '../../services/permission.service';
 import { LoginRequest } from '../../interfaces/login-request';
 import { SessionService } from '../../services/session.service';
 import { Router } from '@angular/router';
 import { SessionUser } from '../../interfaces/session-user';
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,36 +14,52 @@ import { SessionUser } from '../../interfaces/session-user';
 })
 export class LoginComponent extends BaseComponent {
 
-  formModel: LoginRequest;
+  loginForm: LoginRequest;
+
   errorMessage: string;
+  activateSubmit: boolean = true;
 
   constructor(
-    private sessionService: SessionService, 
-    private permissionService : PermissionService,
+    private sessionService: SessionService,
+    private permissionService: PermissionService,
     private router: Router) {
     super();
-    this.formModel = { username: '', password: '' };
-   }
+  }
 
-  onSubmit(){
-    this.permissionService.logIn(this.formModel)
-      .subscribe(
-        response => this.handleResponse(response), 
+  componentOnInit() {
+    this.loginForm = { username: '', password: '' };
+    this.errorMessage = undefined;
+  }
+
+  onSubmit() {
+      this.activateSubmit = false;
+      this.errorMessage = undefined;
+      this.permissionService.logIn(this.loginForm).subscribe(
+        response => this.handleResponse(response),
         error => this.handleError(error));
   }
 
+  componentOnChanges(changes: SimpleChanges) {
+    this.activateSubmit = true;
+  }
+
+  get formIsValid(): boolean {
+    return this.loginForm.username !== undefined && 
+    this.loginForm.password !== undefined && 
+    this.loginForm.username !== '' &&
+    this.loginForm.password !== '';
+  }
 
   private handleResponse(response: SessionUser) {
     this.sessionService.setSession(response);
 
-
-
-    /*if (this.sessionService.isAuthenticated) {
-      this.router.navigate([this.sessionService.attemptedUrl]);
-    }*/
+    if (this.sessionService.isAuthenticated) {
+      this.router.navigate(['/event']);
+    }
   }
 
-  private handleError(error: any) {
-    this.errorMessage = error.error;
+  private handleError(response: any) {
+    this.errorMessage = response.error;
+    ;
   }
 }

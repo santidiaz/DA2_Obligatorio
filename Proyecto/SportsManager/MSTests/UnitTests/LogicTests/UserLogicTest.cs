@@ -423,7 +423,7 @@ namespace UnitTests.LogicTests
                 mock.Setup(up => up.GetUserByUserName("santidiaz", true)).Returns(mockedOriginalUser);
                 mock.Setup(up => up.AddFavoritesToUser(It.IsAny<User>(), It.IsAny<List<Team>>())).Verifiable();
 
-                List<Team> teamLists = new List<Team>() { new Team() { TeamOID = 1 }, new Team { TeamOID = 2 } };
+                List<Team> teamLists = new List<Team>() { new Team() { Id = 1 }, new Team { Id = 2 } };
 
                 UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.AddFavoritesToUser(mockedOriginalUser, teamLists);
@@ -448,7 +448,7 @@ namespace UnitTests.LogicTests
                 mock.Setup(up => up.GetUserByUserName(It.IsAny<string>(), true)).Throws(new Exception());
                 mock.Setup(up => up.AddFavoritesToUser(It.IsAny<User>(), It.IsAny<List<Team>>())).Verifiable();
 
-                List<Team> teamLists = new List<Team>() { new Team() { TeamOID = 1 }, new Team { TeamOID = 2 } };
+                List<Team> teamLists = new List<Team>() { new Team() { Id = 1 }, new Team { Id = 2 } };
 
                 UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 userLogic.AddFavoritesToUser(mockedOriginalUser, teamLists);
@@ -525,9 +525,9 @@ namespace UnitTests.LogicTests
 
                 UserLogic userLogic = new UserLogic(mock.Object, mockTeam.Object);
                 string userToBeDeleted = "userName";
-                int teamOID = 1;
+                int Id = 1;
 
-                userLogic.DeleteFavoriteTeamByUser(teamOID, userToBeDeleted);
+                userLogic.DeleteFavoriteTeamByUser(Id, userToBeDeleted);
 
                 Assert.IsTrue(true);
             }
@@ -741,7 +741,7 @@ namespace UnitTests.LogicTests
 
                 UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
 
-                userLogic.DeleteFavoriteTeamByUser(mockedTeam.TeamOID, mockedUser.UserName);
+                userLogic.DeleteFavoriteTeamByUser(mockedTeam.Id, mockedUser.UserName);
                 Assert.IsTrue(true);
             }
             catch (EntitiesException eEx)

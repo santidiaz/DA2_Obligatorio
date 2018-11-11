@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">{{title}}</span>
+
+        <div *ngIf="isLoggedIn" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/event']">Events <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" *ngIf="isAdmin" [routerLink]="['/user']">Users <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sdasda">Sports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sdasda">Teams</a>
+                </li>
+
+
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Event
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/event']">Events</a>
+                        <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/addEvet']">Add Event</a>
+                        <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/modifyEvet']">Modify Event</a>
+                        <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/deleteEvet']">Add Event</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>-->
+            </ul>
+
+            <span class="navbar-button">
+                <button class="btn btn-sm btn-outline-secondary" type="button" (click)="logOut($event)">LogOut</button>
+            </span>
+        </div>
+    </nav>
+</div>

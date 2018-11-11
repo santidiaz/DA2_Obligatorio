@@ -17,12 +17,12 @@ namespace SportsWebApi.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
-        private ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
- 
+        private readonly IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
+        private readonly ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
+
         [PermissionFilter(true)]
         [HttpPost()]
-        public IActionResult AddEvent([FromBody] AddEventInput input)
+        public IActionResult Add([FromBody] AddEventInput input)
         {
             try
             {
@@ -41,10 +41,10 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
-        
+
         [PermissionFilter(true)]
-        [HttpDelete("{eventId}")]
-        public IActionResult DeleteEventById(int eventId)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int eventId)
         {
             try
             {
@@ -64,13 +64,17 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [PermissionFilter(false)]
-        [HttpGet()]
-        public IActionResult GetAllEvents()
+        [PermissionFilter(true)]
+        [HttpPut("{id}")]
+        public IActionResult Modify(int id, [FromBody] ModifyEventInput input)
         {
             try
             {
-                return Ok(this.eventOperations.GetAllEvents());
+                if (input == null)
+                    return BadRequest();
+
+                this.eventOperations.ModifyEvent(id, input.TeamNames, input.InitialDate);
+                return Ok();
             }
             catch (EntitiesException eEx)
             {
@@ -83,15 +87,35 @@ namespace SportsWebApi.Controllers
         }
 
         [PermissionFilter(false)]
-        [HttpGet("{eventId}")]
-        public IActionResult GetEventById(int eventId)
+        [HttpGet()]
+        public IActionResult GetAllEvents()
         {
             try
             {
-                if (eventId <= 0)
+                var result = Utility.TransformEventsToDTOs(this.eventOperations.GetAllEvents());
+                return Ok(result);
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
+
+        [PermissionFilter(false)]
+        [HttpGet("{id}")]
+        public IActionResult GetEventById(int id)
+        {
+            try
+            {
+                if (id <= 0)
                     return NotFound();
 
-                return Ok(this.eventOperations.GetEventById(eventId));
+                var result = Utility.TransformEventToDTO(this.eventOperations.GetEventById(id));
+                return Ok(result);
             }
             catch (EntitiesException eEx)
             {
@@ -104,15 +128,15 @@ namespace SportsWebApi.Controllers
         }
 
         [PermissionFilter(true)]
-        [HttpPut("{eventId}")]
-        public IActionResult ModifyUser(int eventId, [FromBody] ModifyEventInput input)
+        [HttpPut("SetupResult/{id}")]
+        public IActionResult SetupResult(int id, [FromBody] EventResultInput input)
         {
             try
             {
                 if (input == null)
                     return BadRequest();
 
-                this.eventOperations.ModifyEvent(eventId, input.TeamNames, input.InitialDate);
+                this.eventOperations.SetupEventResult(id, input.TeamNames, input.DrawMatch);
                 return Ok();
             }
             catch (EntitiesException eEx)

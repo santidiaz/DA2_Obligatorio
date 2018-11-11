@@ -16,8 +16,7 @@ namespace BusinessContracts
         void ModifyUserFavouriteTeams(string userName, List<string> teamNames);
         void AddFavoritesToUser(User mockedOriginalUser, List<Team> teamLists);
         List<UserTeam> GetFavoritesTeamsByUserName(string userName);
-        void DeleteFavoriteTeamByUser(int teamOID, string userName);
-		//<Event> GetCommentsOfUserFavouriteTemasEvents(string userName);
+        void DeleteFavoriteTeamByUser(int Id, string userName);
         List<Event> GetUserFavouriteTeamsEvents(string userName);
 		List<User> GetUsers();
     }

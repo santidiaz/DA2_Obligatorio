@@ -20,7 +20,7 @@ namespace BusinessLogic
             this.eventPersistanceProvider = eventProvider;
         }
 
-        public void AddComment(Comment commentToAdd, int eventOID)
+        public void AddComment(Comment commentToAdd, int Id)
         {
             if (!this.UserCreatorExists(commentToAdd))
                 throw new EntitiesException(Constants.CommentError.ERROR_CREATOR_NAME_NOT_EXISTS, ExceptionStatusCode.NotFound);
@@ -29,11 +29,11 @@ namespace BusinessLogic
             List<Event> events = eventPersistanceProvider.GetAllEvents();
             foreach (var aux in events)
             {
-                if (aux.EventOID==eventOID) { result = true; };
+                if (aux.Id==Id) { result = true; };
 
             }
             if (result)
-                this.commentPersistanceProvider.AddComment(commentToAdd, eventOID);
+                this.commentPersistanceProvider.AddComment(commentToAdd, Id);
             else
                 throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
         }

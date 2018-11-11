@@ -19,6 +19,8 @@ namespace DataAccess
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserTeam> UserTeams { get; set; }
         public DbSet<EventTeam> EventTeams { get; set; }
+        public DbSet<EventResult> EventResults { get; set; }
+        public DbSet<TeamResult> TeamResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,16 +35,18 @@ namespace DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Team>().HasKey(t => t.TeamOID);
-            modelBuilder.Entity<Comment>().HasKey(c => c.CommentOID);
-            modelBuilder.Entity<User>().HasKey(u => u.UserOID);            
-            modelBuilder.Entity<Sport>().HasKey(s => s.SportOID);
-            modelBuilder.Entity<Event>().HasKey(e => e.EventOID);
-            modelBuilder.Entity<Comment>().HasKey(e => e.CommentOID);
+            modelBuilder.Entity<Team>().HasKey(t => t.Id);
+            modelBuilder.Entity<Comment>().HasKey(c => c.Id);
+            modelBuilder.Entity<User>().HasKey(u => u.Id);            
+            modelBuilder.Entity<Sport>().HasKey(s => s.Id);
+            modelBuilder.Entity<Event>().HasKey(e => e.Id);
+            modelBuilder.Entity<EventResult>().HasKey(er => er.Id);
+            modelBuilder.Entity<TeamResult>().HasKey(tr => tr.Id);
+            modelBuilder.Entity<Comment>().HasKey(e => e.Id);
 
             // Join entities
-            modelBuilder.Entity<UserTeam>().HasKey(ut => new { ut.UserOID, ut.TeamOID });
-            modelBuilder.Entity<EventTeam>().HasKey(et => new { et.EventOID, et.TeamOID });
+            modelBuilder.Entity<UserTeam>().HasKey(ut => new { ut.UserId, ut.TeamId });
+            modelBuilder.Entity<EventTeam>().HasKey(et => new { et.EventId, et.TeamId});
 
             // Default user
             modelBuilder.Entity<User>().HasData(new User()
@@ -54,7 +58,7 @@ namespace DataAccess
                 LastName = "defaultLastName",
                 UserName = "superadmin",
                 Token = Guid.NewGuid(),
-                UserOID = 1
+                Id = 1
             });            
         }
     }

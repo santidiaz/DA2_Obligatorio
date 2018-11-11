@@ -37,6 +37,23 @@ namespace DataAccess.Implementations
             }
         }
 
+
+
+        public void SaveEventResult(Event finishedEvent)
+        {
+            using (Context context = new Context())
+            {
+                context.Events.Attach(finishedEvent);
+
+                //context.EventResults.Attach(finishedEvent.Result);
+                //foreach(var result in finishedEvent.Result.TeamsResult)
+                //    context.TeamResults.Attach(result);
+
+                context.SaveChanges();
+            }
+        }
+
+
         public Event GetEventById(int eventId, bool eagerLoad = false)
         {
             Event foundEvent;
@@ -44,16 +61,23 @@ namespace DataAccess.Implementations
             {
                 if (eagerLoad)
                 {
+                    var eventTeams = context.EventTeams.OfType<EventTeam>()
+                        .Include(et => et.Team)
+                        .Where(et => et.EventId.Equals(eventId))
+                        .ToList();
+
                     foundEvent = context.Events.OfType<Event>()
-                        .Include(e => e.EventTeams)
+                        .Include(e => e.Result)
                         .Include(e => e.Sport)
                         .Include(e => e.Comments)
-                    .FirstOrDefault(e => e.EventOID.Equals(eventId));
+                    .FirstOrDefault(e => e.Id.Equals(eventId));
+
+                    foundEvent.EventTeams = eventTeams;
                 }
                 else
                 {
                     foundEvent = context.Events.OfType<Event>()
-                    .FirstOrDefault(e => e.EventOID.Equals(eventId));
+                    .FirstOrDefault(e => e.Id.Equals(eventId));
                 }
             }
             return foundEvent;
@@ -104,7 +128,7 @@ namespace DataAccess.Implementations
             {
                 Event eventOnDB = context.Events
                     .Include(e => e.EventTeams)
-                    .Where(e => e.EventOID.Equals(eventToModify.EventOID))
+                    .Where(e => e.Id.Equals(eventToModify.Id))
                     .FirstOrDefault();
 
                 eventOnDB.EventTeams = eventToModify.EventTeams;

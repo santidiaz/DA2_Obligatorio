@@ -10,12 +10,12 @@ namespace DataAccess.Implementations
 {
     public class CommentPersistance : ICommentPersistance
     {
-        public void AddComment(Comment comment, int eventOID)
+        public void AddComment(Comment comment, int Id)
         {
             using (Context context = new Context())
             {
                 Event foundEvent = context.Events.OfType<Event>().Include(e => e.Comments)
-                    .FirstOrDefault(e => e.EventOID.Equals(eventOID));
+                    .FirstOrDefault(e => e.Id.Equals(Id));
 
                 foundEvent.Comments.Add(comment);
                 context.SaveChanges();

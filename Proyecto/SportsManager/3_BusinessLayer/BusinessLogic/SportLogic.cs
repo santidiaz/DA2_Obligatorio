@@ -41,7 +41,7 @@ namespace BusinessLogic
         {
             Sport sportToModify = this.GetSportByName(nameSport);
 
-            sport.SportOID = sportToModify.SportOID;
+            sport.Id = sportToModify.Id;
             this.persistanceProvider.ModifySport(sport);
         }
 
