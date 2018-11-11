@@ -15,6 +15,7 @@ import { SportModifyRequest } from "src/app/sportsManager/interfaces/sportmodify
     formModel: SportModifyRequest;
     // @Input() sport: SportModifyRequest;
     _sport: SportModifyRequest;
+    _oldSportName: string; // mapear a esta propiedad el nombre viejo.
 
     get sport() : SportModifyRequest{
       return this._sport; // una variable privada por ahi
