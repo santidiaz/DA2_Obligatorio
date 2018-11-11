@@ -15,7 +15,7 @@
                 <td>{{ sport.name }}</td>
                 <td>{{ sport.allowdMultipleTeamsEvents }}</td>
                 <td>
-                    <!--<input type="button" (click)="selectSport($event, sport)" value="Edit" />-->
+                    <input type="button" (click)="selectSport($event, sport)" value="Edit" />
                     <input type="button" (click)="deleteSport($event, sport)" value="Delete" />
                 </td>
             </tr>
@@ -25,5 +25,5 @@
             {{ successMessage }}
     </div>
 
-    <!-- <app-sportedit *ngIf="isFormActive" (closeRequested)="closeForm($event)" [sport]="selectSport"></app-sportedit>-->
+    <app-editsport *ngIf="isFormActive" (closeRequested)="closeForm($event)" [sport]="selectSport"></app-editsport>
 </div>

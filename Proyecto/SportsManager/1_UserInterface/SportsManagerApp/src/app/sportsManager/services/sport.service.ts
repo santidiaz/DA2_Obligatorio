@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { BaseService } from "./base.service";
 import { Observable } from "rxjs";
 import { SportRequest } from "../interfaces/sportrequest";
+import { SportModifyRequest } from "../interfaces/sportmodifyrequest";
 
 @Injectable()
 export class SportService {
@@ -21,7 +22,7 @@ export class SportService {
         return this.http.delete(`http://localhost:5005/api/sport/${sportName}`, {  observe: 'response' });
       }
 
-      //editUser(request: UserRequest): Observable<any> {
-      //  return this.http.put(`http://localhost:5005/api/user/${request.userName}`, {  observe: 'response' });
-      //}
+      editSport(request: SportModifyRequest): Observable<any> {
+        return this.http.put(`http://localhost:5005/api/user/${request.oldName}`, {  observe: 'response' });
+      }
 }

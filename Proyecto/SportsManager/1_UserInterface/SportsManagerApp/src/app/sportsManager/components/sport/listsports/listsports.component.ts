@@ -44,12 +44,12 @@ export class ListSportsComponent extends BaseComponent {
         });
     }
 
-    //selectSport($event, sport: SportRequest) {
-    //    this.selectedSport = sport;
-    //    this.isFormActive = true;
-    //  }
+    selectSport($event, sport: SportRequest) {
+        this.selectedSport = sport;
+        this.isFormActive = true;
+      }
 
-    //closeForm($event) {
-    //    this.isFormActive = false;
-    //}
+    closeForm($event) {
+        this.isFormActive = false;
+    }
 }
