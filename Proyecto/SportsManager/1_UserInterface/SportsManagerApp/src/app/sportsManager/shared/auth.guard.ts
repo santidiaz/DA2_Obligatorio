@@ -7,30 +7,36 @@ import { SessionService } from '../services/session.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  
+
   constructor(private sessionService: SessionService, private router: Router) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    return this.isAdmin(next.data.isAdmin, state.url);
+    return this.hasPermission(next.data.onlyAdmin, state.url);
   }
 
-  isAdmin(isAdmin: boolean, attemptedUrl: string) {
-      let result: boolean = true;
-      
-      if(isAdmin){
-        const isValid = this.sessionService.isAdmin();
-        if (!isValid) {
-          const navigationExtras: NavigationExtras = {
-            queryParams: { 'message': `${attemptedUrl} requires administrator rights` }
-          };
-  
-          this.router.navigate(['**'], navigationExtras);
-        }
-      }
-
-      return result;
+  hasPermission(onlyAdmin: boolean, attemptedUrl: string) {
+    let result: boolean = true;
+    if (!this.sessionService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      result = false;
     }
+
+
+    if (result && onlyAdmin) {
+      const isValid = this.sessionService.isAdmin();
+      if (!isValid) {
+        const navigationExtras: NavigationExtras = {
+          queryParams: { 'message': `${attemptedUrl} requires administrator rights` }
+        };
+
+        this.router.navigate(['/event'], navigationExtras);
+        result = false;
+      }
+    }
+
+    return result;
+  }
 }

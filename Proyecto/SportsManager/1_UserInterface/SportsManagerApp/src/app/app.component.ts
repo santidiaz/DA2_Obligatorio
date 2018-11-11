@@ -7,12 +7,7 @@ import { SessionService } from './sportsManager/services/session.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'Sports Manager';
+export class AppComponent {  
 
-  constructor(private _session: SessionService) { }
-
-   get isLoggedIn():boolean {
-     return this._session.isAuthenticated();
-   }
+  constructor() { }
 }

@@ -9,7 +9,7 @@ export class EventService {
   constructor(private baseService: BaseService) { }
 
   getAllEvents(): Observable<Array<Event>> {
-    return this.baseService.get<Array<Event>>('event');
+    return this.baseService.get<Array<Event>>('event', true);
   }
 
   /*registerUser(request: UserRequest): Observable<any> {

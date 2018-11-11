@@ -30,7 +30,7 @@ export class SessionService {
     }
 
     isAdmin(): boolean {
-        return localStorage.getItem(IS_ADMIN) === '1';
+        return localStorage.getItem(IS_ADMIN) === 'true';
     }
 
     logOff() {

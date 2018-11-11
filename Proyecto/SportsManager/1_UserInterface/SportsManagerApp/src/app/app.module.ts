@@ -17,6 +17,7 @@ import { PermissionService } from './sportsManager/services/permission.service'
 import { BaseService } from './sportsManager/services/base.service'
 import { AuthGuard } from './sportsManager/shared/auth.guard';
 import { NavigationBar } from './sportsManager/components/navigation/nav-bar';
+import { EventService } from './sportsManager/services/event.service';
 
 const appRoutes: Routes = [
   {
@@ -30,7 +31,7 @@ const appRoutes: Routes = [
       },
       { path: '', redirectTo: 'event', pathMatch: 'full' }
     ]*/
-  }, 
+  },
   { path: 'login', component: LoginComponent },
   { 
     path: 'event', 
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
     data: {
       onlyAdmin: false 
     }  
-  }, 
+  },
+   
   /*{ 
     path: 'event/:id', 
     component: EventCard, 
@@ -75,6 +77,7 @@ const appRoutes: Routes = [
     BaseService,
     SessionService,
     PermissionService,
+    EventService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

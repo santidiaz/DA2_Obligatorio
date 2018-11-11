@@ -26,13 +26,14 @@ export class EventListComponent extends BaseComponent {
    }
 
    private handleResponse(response: any){
-    this.events = response;
+    this.events = <Array<Event>>response;
 
 
 
    }
 
    private handleError(error: any){
+     console.log(JSON.parse(error));
     let algo = error;
  }
 
