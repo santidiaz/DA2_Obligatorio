@@ -44,7 +44,11 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 context.Events.Attach(finishedEvent);
-                context.EventResults.Attach(finishedEvent.Result);
+
+                //context.EventResults.Attach(finishedEvent.Result);
+                //foreach(var result in finishedEvent.Result.TeamsResult)
+                //    context.TeamResults.Attach(result);
+
                 context.SaveChanges();
             }
         }
@@ -57,11 +61,18 @@ namespace DataAccess.Implementations
             {
                 if (eagerLoad)
                 {
+                    var eventTeams = context.EventTeams.OfType<EventTeam>()
+                        .Include(et => et.Team)
+                        .Where(et => et.EventId.Equals(eventId))
+                        .ToList();
+
                     foundEvent = context.Events.OfType<Event>()
-                        .Include(e => e.EventTeams)
+                        .Include(e => e.Result)
                         .Include(e => e.Sport)
                         .Include(e => e.Comments)
                     .FirstOrDefault(e => e.Id.Equals(eventId));
+
+                    foundEvent.EventTeams = eventTeams;
                 }
                 else
                 {

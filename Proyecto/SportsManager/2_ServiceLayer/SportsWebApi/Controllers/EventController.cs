@@ -19,7 +19,7 @@ namespace SportsWebApi.Controllers
     {
         private readonly IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
         private readonly ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
- 
+
         [PermissionFilter(true)]
         [HttpPost()]
         public IActionResult Add([FromBody] AddEventInput input)
@@ -41,7 +41,7 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
-        
+
         [PermissionFilter(true)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int eventId)
@@ -65,15 +65,15 @@ namespace SportsWebApi.Controllers
         }
 
         [PermissionFilter(true)]
-        [HttpPut()]
-        public IActionResult Modify([FromBody] ModifyEventInput input)
+        [HttpPut("{id}")]
+        public IActionResult Modify(int id, [FromBody] ModifyEventInput input)
         {
             try
             {
                 if (input == null)
                     return BadRequest();
 
-                this.eventOperations.ModifyEvent(input.Id, input.TeamNames, input.InitialDate);
+                this.eventOperations.ModifyEvent(id, input.TeamNames, input.InitialDate);
                 return Ok();
             }
             catch (EntitiesException eEx)
@@ -92,10 +92,8 @@ namespace SportsWebApi.Controllers
         {
             try
             {
-
-
-
-                return Ok(this.eventOperations.GetAllEvents());
+                var result = Utility.TransformEventsToDTOs(this.eventOperations.GetAllEvents());
+                return Ok(result);
             }
             catch (EntitiesException eEx)
             {
@@ -109,14 +107,15 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(false)]
         [HttpGet("{id}")]
-        public IActionResult GetEventById(int eventId)
+        public IActionResult GetEventById(int id)
         {
             try
             {
-                if (eventId <= 0)
+                if (id <= 0)
                     return NotFound();
 
-                return Ok(this.eventOperations.GetEventById(eventId));
+                var result = Utility.TransformEventToDTO(this.eventOperations.GetEventById(id));
+                return Ok(result);
             }
             catch (EntitiesException eEx)
             {
@@ -128,6 +127,26 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        
+        [PermissionFilter(true)]
+        [HttpPut("SetupResult/{id}")]
+        public IActionResult SetupResult(int id, [FromBody] EventResultInput input)
+        {
+            try
+            {
+                if (input == null)
+                    return BadRequest();
+
+                this.eventOperations.SetupEventResult(id, input.TeamNames, input.DrawMatch);
+                return Ok();
+            }
+            catch (EntitiesException eEx)
+            {
+                return this.StatusCode(Utility.GetStatusResponse(eEx), eEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
+        }
     }
 }

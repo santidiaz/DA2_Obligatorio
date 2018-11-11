@@ -33,7 +33,7 @@ namespace CommonUtilities
             public const string NOT_FOUND = "Event was not found.";
             public const string INVALID_AMOUNT_OF_TEAMS = "Invalid amount of teams.";
             public const string EVENT_TEAM_EXISTS = "The team [{0}] is already on an event on date {1}";
-            public const string EVENT_ALREADY_HAVE_RESULT = "Event result has already bean added";
+            public const string EVENT_ALREADY_HAVE_RESULT = "Event result has already bean decided.";
         }
 
         public static class Team

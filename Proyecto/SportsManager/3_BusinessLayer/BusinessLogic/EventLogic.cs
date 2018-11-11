@@ -99,10 +99,10 @@ namespace BusinessLogic
             return this.eventProvider.GetAllEvents();
         }
 
-        public void SetupEventResult(List<string> teams, int eventId, bool drawMatch = false)
+        public void SetupEventResult(int eventId, List<string> teams, bool drawMatch = false)
         {
             var foundEvent = this.GetEventById(eventId, true);
-            if (foundEvent.Result == null)
+            if (foundEvent.HasResult())
                 throw new EntitiesException(Constants.EventError.EVENT_ALREADY_HAVE_RESULT, ExceptionStatusCode.InvalidData);
 
             bool multipleTeamsEvent = foundEvent.Sport.AllowdMultipleTeamsEvents;

@@ -8,9 +8,6 @@ namespace SportsWebApi.Models.EventModel
 {
     public class ModifyEventInput
     {
-        [Required(ErrorMessage = "EventId is required.")]
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "Teams are required.")]
         public List<string> TeamNames { get; set; }
 

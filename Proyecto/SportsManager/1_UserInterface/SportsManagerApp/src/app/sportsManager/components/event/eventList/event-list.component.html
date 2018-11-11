@@ -1,3 +1,36 @@
+<p>
+  {{ events | json }}
+</p>
+<div class="table-responsive">
+  <table class="table table-hover">
+      <thead class="thead-dark">
+          <tr>
+              <th scope="col">Cities</th>
+              <th scope="col">Description</th>
+              <th scope="col">Places</th>
+              <th scope="col">Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let event of events">
+              <td>{{ event.id }}</td>
+              <td>{{ event.initialDate | date: 'dd/MM/yyyy' }}</td>
+              <td>
+                  <input type="button" (click)="selectCity($event, event)" value="Edit" />
+                  <!--<input type="button" (click)="deleteCity($event, event)" value="Delete" />-->
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<app-event-form *ngIf="isFormActive" (closeRequested)="closeForm($event)" [event]="selectedEvent"></app-event-form>
+
+
+
+
+
+<!--
 <div class="accordion" id="accordionExample">
     <div class="card">
 
@@ -9,16 +42,14 @@
           </button>
         </h5>
       </div>
-
-      <!--
         ACA VA EL <eventCard.Compoentn>  
         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
           Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
         </div>
-      </div>-->
+      </div>
     </div>
-    <!--div class="card">
+    div class="card">
       <div class="card-header" id="headingTwo">
         <h5 class="mb-0">
           <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -31,5 +62,11 @@
           Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
         </div>
       </div>
-    </div>-->    
+    </div>   
   </div>
+
+
+
+
+
+-->

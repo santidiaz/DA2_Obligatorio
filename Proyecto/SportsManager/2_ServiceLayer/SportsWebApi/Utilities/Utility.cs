@@ -29,27 +29,48 @@ namespace SportsWebApi.Utilities
                     break;
                 case ExceptionStatusCode.Undefined:
                     response = 500;
-                    break;                
+                    break;
                 default:
                     break;
             }
             return response;
         }
 
-        public static List<EventDTO> TransformEventToDTO(List<Event> events)
+        public static List<EventDTO> TransformEventsToDTOs(List<Event> events)
         {
-            //var result = new List<EventDTO>();
-            //EventDTO newDTO;
-            //events?.ForEach(
-            //    e => {
-            //        newDTO = new EventDTO {
-            //            Id = e.Id,
-            //            Name = e.
+            var result = new List<EventDTO>();
+            EventDTO newDTO;
+            events?.ForEach(
+                e =>
+                {
+                    result.Add(newDTO = new EventDTO
+                    {
+                        Id = e.Id,
+                        InitialDate = e.InitialDate,
+                        Teams = e.EventTeams.Select(t => t.Team).ToList(),
+                        Comments = e.Comments,
+                        AllowMultipleTeams = e.MultipleTeamsEvent,
+                        SportId = e.Sport.Id,
+                        SportName = e.Sport.Name,
+                        Result = e.Result
+                    });
+                });
+            return result;
+        }
 
-            //            };
-            //    });
-            return null;
-
+        public static EventDTO TransformEventToDTO(Event events)
+        {
+            return new EventDTO
+            {
+                Id = events.Id,
+                InitialDate = events.InitialDate,
+                Teams = events.EventTeams?.Select(t => t.Team)?.ToList(),
+                Comments = events.Comments ?? null,
+                AllowMultipleTeams = events.MultipleTeamsEvent,
+                SportId = events.Sport?.Id ?? 0,
+                SportName = events.Sport?.Name,
+                Result = events.Result
+            };
         }
     }
 }

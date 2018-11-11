@@ -11,10 +11,11 @@ namespace SportsWebApi.Models.EventModel
     {
         public int Id { get; set; }
         public DateTime InitialDate { get; set; }
-        public bool MultipleTeams { get; set; }
-        public List<TeamDTO> Teams { get; set; }
+        public bool AllowMultipleTeams { get; set; }
+        public List<Team> Teams { get; set; }
         public List<Comment> Comments { get; set; }
-        public string SportId { get; set; }
+        public int SportId { get; set; }
         public string SportName { get; set; }
+        public EventResult Result { get; set; }
     }
 }

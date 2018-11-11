@@ -5,9 +5,9 @@ import { Event } from '../../../interfaces/event'
 
 
 @Component({
-  selector: 'app-eventList',
-  templateUrl: './eventList.component.html',
-  styleUrls: ['./eventList.component.css']
+  selector: 'app-event-list',
+  templateUrl: './event-list.component.html',
+  styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent extends BaseComponent {
 
@@ -26,7 +26,7 @@ export class EventListComponent extends BaseComponent {
    }
 
    private handleResponse(response: any){
-      let algo = response;
+    this.events = response;
 
 
 
@@ -34,8 +34,27 @@ export class EventListComponent extends BaseComponent {
 
    private handleError(error: any){
     let algo = error;
-
-
-
  }
+
+  selectedEvent: Event;
+  isFormActive: boolean;
+
+  selectCity($event, event: Event) {
+    this.selectedEvent = event;
+    this.isFormActive = true;
+  }
+/*
+  deleteCity($event, city: City) {
+    this.cityService.deleteCity(city.id).subscribe(resp => {
+      console.log(JSON.stringify(resp));
+      this.updateGrid();
+    });
+  }*/
+
+  closeForm($event) {
+    this.isFormActive = false;
+  }
+
+
+
 }

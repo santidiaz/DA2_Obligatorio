@@ -9,64 +9,65 @@ namespace BusinessEntities
         private readonly bool IsDrawMatch;
 
         public int Id { get; set; }
-        public IList<Tuple<string, int>> TeamsResult { get; set; }
+        public virtual List<TeamResult> TeamsResult { get; set; }
 
+        public EventResult() { }
         public EventResult(List<string> teamNames, bool isMultipleEventResult, bool drawMatch)
         {
             this.IsDrawMatch = drawMatch;
             this.SetResults(teamNames, isMultipleEventResult);
         }
         
-        public Tuple<string, int> GetFirst()
+        public TeamResult GetFirst()
         {
             return this.TeamsResult[0];
         }
-        public Tuple<string, int> GetSecond()
+        public TeamResult GetSecond()
         {
             return this.TeamsResult[1];
         }
-        public IList<Tuple<string, int>> GetEventResults()
+        public List<TeamResult> GetEventResults()
         {
             return this.TeamsResult;
         }
 
         #region Private Methods
-        private void SetResults(List<string> teamsResult, bool isMultipleEventResult)
+        private void SetResults(List<string> teamNames, bool isMultipleEventResult)
         {
-            this.TeamsResult = new List<Tuple<string, int>>();
+            this.TeamsResult = new List<TeamResult>();
             if (isMultipleEventResult)
-                GenerateResultForPlayers(teamsResult);
+                GenerateResultForPlayers(teamNames);
             else
-                GenerateResultForTeams(teamsResult);
+                GenerateResultForTeams(teamNames);
         }
-        private void GenerateResultForTeams(List<string> teamsResult)
+        private void GenerateResultForTeams(List<string> teamNames)
         {
-            this.TeamsResult = new List<Tuple<string, int>>();
+            this.TeamsResult = new List<TeamResult>();
             if (IsDrawMatch)
             {
-                this.TeamsResult.Add(Tuple.Create(teamsResult[0], 1));
-                this.TeamsResult.Add(Tuple.Create(teamsResult[1], 1));
+                this.TeamsResult.Add(new TeamResult(teamNames[0], 1));
+                this.TeamsResult.Add(new TeamResult(teamNames[1], 1));
             }
             else
             {
-                this.TeamsResult.Add(Tuple.Create(teamsResult[0], 3));
-                this.TeamsResult.Add(Tuple.Create(teamsResult[1], 0));
+                this.TeamsResult.Add(new TeamResult(teamNames[0], 3));
+                this.TeamsResult.Add(new TeamResult(teamNames[1], 0));
             }
         }
         private void GenerateResultForPlayers(List<string> teamsResult)
         {
-            this.TeamsResult = new List<Tuple<string, int>>();
+            this.TeamsResult = new List<TeamResult>();
             int count = 0;
             teamsResult.ForEach(teamName
                 => {
                     if (count == 0)
-                        this.TeamsResult.Add(Tuple.Create(teamName, 3));
+                        this.TeamsResult.Add(new TeamResult(teamName, 3));
                     else if (count == 1)
-                        this.TeamsResult.Add(Tuple.Create(teamName, 2));
+                        this.TeamsResult.Add(new TeamResult(teamName, 2));
                     else if (count == 3)
-                        this.TeamsResult.Add(Tuple.Create(teamName, 1));
+                        this.TeamsResult.Add(new TeamResult(teamName, 1));
                     else
-                        this.TeamsResult.Add(Tuple.Create(teamName, 0));
+                        this.TeamsResult.Add(new TeamResult(teamName, 0));
                 });
         }
         #endregion
