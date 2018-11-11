@@ -33,7 +33,7 @@ export class EventListComponent extends BaseComponent {
    }
 
    private handleError(error: any){
-     console.log(JSON.parse(error));
+     console.log(error);
     let algo = error;
  }
 

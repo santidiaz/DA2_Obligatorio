@@ -23,53 +23,49 @@ import { SportService } from './sportsManager/services/sport.service';
 import { ListSportsComponent } from './sportsManager/components/sport/listsports/listsports.component';
 import { EditSportComponent } from './sportsManager/components/sport/editsport/editsport.component';
 
-import { SessionService } from './sportsManager/services/session.service'
-import { PermissionService } from './sportsManager/services/permission.service'
-import { BaseService } from './sportsManager/services/base.service'
+import { AuthGuard } from './sportsManager/shared/auth.guard';
+import { NavigationBar } from './sportsManager/components/navigation/nav-bar';
+import { EventService } from './sportsManager/services/event.service';
 
 const appRoutes: Routes = [
-  {
-    path: '', redirectTo: 'login', pathMatch: 'full',
-    //canActivateChild: [AuthGuard],
-    /*children: [
-      { path: 'event', component: EventListComponent, canActivate: [AuthGuard] },
-      /*{
-        path: 'city',
-        loadChildren: './city/city.module#CityModule',
-      },
-      { path: '', redirectTo: 'event', pathMatch: 'full' }
-    ]*/
-  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { 
-    path: 'event', 
-    component: EventListComponent, 
-    canActivate: [AuthGuard], 
-    data: {
-      onlyAdmin: false 
-    }  
+  {
+    path: 'event', component: EventListComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: false }
   },
-   
-  /*{ 
-    path: 'event/:id', 
-    component: EventCard, 
-    canActivate: [AuthGuard], 
-    data: {
-      onlyAdmin: true 
-    }  
-  },  */
-  { path: 'event', component: EventListComponent },
-  //{ path 'team', componet: MyTEmasComponetn },
-  { path: 'addUser', component: AddUserComponent },
-  { path: 'listUsers', component: ListUsersComponent },
-  { path: 'editUser', component: UserEditComponent },
-  { path: 'addSport', component: AddSportComponent },
-  { path: 'listSport', component: ListSportsComponent },
-  { path: 'editsport', component: EditSportComponent },
-  { path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  },  
+  {
+    path: 'addUser', component: AddUserComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
+    path: 'listUsers', component: ListUsersComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
+    path: 'editUser', component: UserEditComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
+    path: 'addSport', component: AddSportComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
+    path: 'listSport', component: ListSportsComponent
+    ,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
+    path: 'editsport', component: EditSportComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -104,9 +100,9 @@ const appRoutes: Routes = [
     BaseService,
     SessionService,
     PermissionService,
-      EventService,
-      UserService,
-      SportService
+    EventService,
+    UserService,
+    SportService,
     AuthGuard
   ],
   bootstrap: [AppComponent]
