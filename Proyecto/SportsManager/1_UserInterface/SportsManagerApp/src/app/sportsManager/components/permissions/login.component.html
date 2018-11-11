@@ -1,60 +1,25 @@
+
 <div class="container">
-  <div class="card">
-    <h5 class="card-header">Login</h5>
-    <div class="card-body">
-
-      <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
-        <div class="form-group">
-          <label for="userNameInput">User name</label>
-          <input type="text" class="form-control" name="username" id="usernameInput" required
-            [(ngModel)]="formModel.username" #nameee="ngModel"  aria-describedby="userNameHelp" placeholder="Enter user name...">
-
-
-            <div *ngIf="nameee.invalid && (nameee.dirty || nameee.touched)"
-                class="alert alert-danger">
-            
-              <div *ngIf="nameee?.errors.required">
-                Name is required.
-              </div>
-              <div *ngIf="nameee?.errors.minlength">
-                Name must be at least 4 characters long.
-              </div>
-              <div *ngIf="nameee?.errors.forbiddenName">
-                Name cannot be Bob.
-              </div>
-            
-            </div>
-
-
+    <div class="row justify-content-center" style="margin-top: 10%">
+        <div class="col-4">
+            <h2>Login</h2>
+            <form (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="name">User Name</label>
+                    <input type="text" [(ngModel)]="loginForm.username" class="form-control" id="name" name="userNameControl" required>
+                </div>
+  
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" [(ngModel)]="loginForm.password" required class="form-control" id="password" name="password" required>
+                </div>
+  
+                <button type="submit" [disabled]="!formIsValid" class="btn btn-success">Submit</button>
+                <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                  {{errorMessage}}
+                </div>
+  
+            </form>
         </div>
-        <div class="form-group">
-          <label for="passwordInput">Password</label>
-          <input type="password" class="form-control" name="password" id="passwordInput" required 
-          [(ngModel)]="formModel.password"  placeholder="Enter your password...">
-        </div>
-
-        <button type="submit" class="btn btn-primary">LogIn</button>
-      </form>
     </div>
   </div>
-</div>
-<script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function () {
-    'use strict';
-    window.addEventListener('load', function () {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function (form) {
-        form.addEventListener('submit', function (event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();
-</script>
