@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label>Teams</label>
-                <select [(ngModel)]="fromModel.teams" name="teamSelected" class="form-control" required multiple="true">
+                <select [(ngModel)]="fromModel.teamNames" name="teamSelected" class="form-control" required multiple="true">
                     <option *ngFor="let team of teams" [ngValue]="team.name" #name>{{team.name}}</option>
                 </select>
             </div>

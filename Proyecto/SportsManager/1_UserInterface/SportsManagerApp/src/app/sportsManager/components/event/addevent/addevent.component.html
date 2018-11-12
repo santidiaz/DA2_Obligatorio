@@ -38,7 +38,7 @@
                             <tr *ngFor="let event of eventsToAdd">
                                 <td>{{ event.sportName }}</td>
                                 <td>{{ event.eventDate }}</td>
-                                <td>{{ event.teams }}</td>
+                                <td>{{ event.teamNames }}</td>
                                 <td>
                                     <input type="button" (click)="deleteEvent($event, event)" value="Delete" />
                                 </td>

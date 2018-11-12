@@ -51,7 +51,7 @@ import { TeamRequest } from "src/app/sportsManager/interfaces/team-request";
   clearFromModel(){
     this.fromModel = { 
       eventDate: null,
-      teams: null,
+      teamNames: null,
       sportName: null};
   }
     
