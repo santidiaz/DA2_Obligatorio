@@ -36,7 +36,7 @@ const appRoutes: Routes = [
   { path: 'listSport', component: ListSportsComponent },
   { path: 'editsport', component: EditSportComponent },
   { path: 'addTeam', component: AddTeamComponent },
-  { path: 'listteams', component: ListTeamsComponent },
+  { path: 'listTeams', component: ListTeamsComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'
