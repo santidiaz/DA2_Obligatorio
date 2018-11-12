@@ -1,0 +1,29 @@
+<h1>
+    Team list
+</h1>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let team of teams">
+                <td>{{ team.name }}</td>
+                <td>{{ team.photo }}</td>
+                <td>
+                    <input type="button" (click)="selectTeam($event, team)" value="Edit" />
+                    <input type="button" (click)="deleteTeam($event, team)" value="Delete" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+            {{ successMessage }}
+    </div>
+
+    <!-- <app-editsport *ngIf="isFormActive" (closeRequested)="closeForm($event)" [sport]="selectSport"></app-editsport> -->
+</div>

@@ -19,13 +19,13 @@ export class TeamService {
         return this.http.post(`http://localhost:5005/api/team`, formData)
       }
 
-      //getTeams(): Observable<TeamRequest[]> {
-      //  return this.http.get<TeamRequest[]>(`http://localhost:5005/api/team`);
-      //}
+      getTeams(): Observable<TeamRequest[]> {
+        return this.http.get<TeamRequest[]>(`http://localhost:5005/api/team`, { params: { orderAsc: 'false', teamName: '' }});
+      }
 
-      //deleteTeam(teamName: string): Observable<any> {
-      //  return this.http.delete(`http://localhost:5005/api/team/${teamName}`, {  observe: 'response' });
-      //}
+      deleteTeam(teamName: string): Observable<any> {
+        return this.http.delete(`http://localhost:5005/api/team/${teamName}`, {  observe: 'response' });
+      }
 
       //editTeam(request: TeamModifyRequest): Observable<any> {
       //  return this.http.put(`http://localhost:5005/api/user/${request.oldName}`, {  observe: 'response' });
