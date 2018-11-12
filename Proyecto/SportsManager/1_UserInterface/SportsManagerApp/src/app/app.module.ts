@@ -31,6 +31,9 @@ import { EditTeamComponent } from './sportsManager/components/team/editteam/edit
 import { AuthGuard } from './sportsManager/shared/auth.guard';
 import { NavigationBar } from './sportsManager/components/navigation/nav-bar';
 import { EventService } from './sportsManager/services/event.service';
+import { AddEventComponent } from './sportsManager/components/event/addevent/addevent.component';
+import { AddEventDynamicComponent } from './sportsManager/components/event/addeventdynamic/addeventdynamic.component';
+import { AddEventManualComponent } from './sportsManager/components/event/addeventmanual/addeventmanual.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -86,6 +89,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
   },
+  {
+    path: 'addEvent', component: AddEventComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -107,6 +115,9 @@ const appRoutes: Routes = [
     EditTeamComponent,
     EventFormComponent,
     NavigationBar,
+    AddEventComponent,
+    AddEventDynamicComponent,
+    AddEventManualComponent,
     PageNotFoundComponent
   ],
   imports: [

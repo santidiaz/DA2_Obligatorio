@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { HttpClient } from "@angular/common/http";
 import { BaseService } from './base.service';
+import { EventRequest } from '../interfaces/event-request';
 
 @Injectable()
 export class EventService {
 
-  constructor(private baseService: BaseService) { }
+  constructor(private http: HttpClient, private baseService: BaseService) { }
 
   getAllEvents(): Observable<Array<Event>> {
     return this.baseService.get<Array<Event>>('event', true);
   }
+
+  addEvent(request: EventRequest): Observable<any> {
+    return this.baseService.post<EventRequest, any>('event', request);
+  }
+
+  /*addEvent(request: EventRequest): Observable<any> {
+    return this.http.post(`http://localhost:5005/api/event`, {  observe: 'response' });
+  }/*
 
   /*registerUser(request: UserRequest): Observable<any> {
     return this.baseApiService.post<LoginRequest, Session>('users', request, true);
