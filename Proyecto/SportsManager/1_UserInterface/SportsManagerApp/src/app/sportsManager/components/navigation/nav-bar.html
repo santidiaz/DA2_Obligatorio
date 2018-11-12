@@ -25,8 +25,8 @@
                         Users
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" [routerLink]="['/listUsers']">All users</a>
                         <a class="dropdown-item" [routerLink]="['/addUser']">Add user</a>
-                        <a class="dropdown-item" [routerLink]="['/listUsers']">List users</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -35,17 +35,20 @@
                         Sports
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" [routerLink]="['/listSport']">All sports</a>
                         <a class="dropdown-item" [routerLink]="['/addSport']">Add sport</a>
-                        <a class="dropdown-item" [routerLink]="['/listSport']">List sports</a>
                     </div>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="sdasda">Sports</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="sdasda">Teams</a>
-                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      Teams
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" [routerLink]="['/listTeams']">All teams</a>
+                      <a class="dropdown-item" [routerLink]="['/addTeam']">Add team</a>
+                    </div>
+                  </li>
                 <!--<li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">

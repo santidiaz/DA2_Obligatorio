@@ -23,6 +23,6 @@ export class SportService {
       }
 
       editSport(request: SportModifyRequest): Observable<any> {
-        return this.http.put(`http://localhost:5005/api/user/${request.oldName}`, {  observe: 'response' });
+        return this.http.put(`http://localhost:5005/api/sport/${request.oldName}`, {  observe: 'response' });
       }
 }

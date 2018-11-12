@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="card">
+      <h5 class="card-header">Add team</h5>
+      <div class="card-body">
+  
+        <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+          <div class="form-group">
+            <label for="teamNameInput">Name</label>
+            <input type="text" class="form-control" name="teamname" id="teamnameInput" required
+              [(ngModel)]="formModel.name" #nameee="ngModel"  aria-describedby="teamNameHelp" placeholder="Enter the team Name...">
+          </div>
+
+          <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" class="form-control" name="image" id="imageInput" required
+              [(ngModel)]="formModel.photo" #nameee="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label>Sport</label>
+            <select [(ngModel)]="formModel.sportOID" name="sportSelected" class="form-control">
+                <option *ngFor="let sport of sports" [ngValue]="sport.id" #name>{{sport.name}}</option>
+            </select>
+        </div>
+
+          <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+              {{ successMessage }}
+          </div>
+
+          <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
+              {{ errorMessage }}
+            </div>
+
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
