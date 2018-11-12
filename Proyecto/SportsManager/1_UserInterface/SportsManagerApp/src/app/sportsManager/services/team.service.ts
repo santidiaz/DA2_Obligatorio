@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { BaseService } from "./base.service";
 import { Observable } from "rxjs";
 import { TeamRequest } from "../interfaces/team-request";
+import { TeamModifyRequest } from "../interfaces/teammodifyrequest";
 
 @Injectable()
 export class TeamService {
@@ -27,7 +28,12 @@ export class TeamService {
         return this.http.delete(`http://localhost:5005/api/team/${teamName}`, {  observe: 'response' });
       }
 
-      //editTeam(request: TeamModifyRequest): Observable<any> {
-      //  return this.http.put(`http://localhost:5005/api/user/${request.oldName}`, {  observe: 'response' });
-      //}
+      editTeam(request: TeamModifyRequest): Observable<any> {
+        let formData: FormData = new FormData(); 
+        formData.append('Image', request.photo); 
+        formData.append('OldName', request.oldName); 
+        formData.append('NewName', request.newName); 
+
+        return this.http.put(`http://localhost:5005/api/team`, {  observe: 'response' });
+      }
 }
