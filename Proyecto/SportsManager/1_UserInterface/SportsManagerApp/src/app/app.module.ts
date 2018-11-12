@@ -59,7 +59,7 @@ const appRoutes: Routes = [
     path: 'listSport', component: ListSportsComponent
     ,
     canActivate: [AuthGuard],
-    data: { onlyAdmin: true }
+    data: { onlyAdmin: false }
   },
   {
     path: 'editsport', component: EditSportComponent,

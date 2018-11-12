@@ -13,44 +13,50 @@ export class EventListComponent extends BaseComponent {
 
   private errorMessage: any;// TODO: Ver que retorna y crear una interfaz con eso. codigo y mensaje ?
   protected events: Array<Event>;
+  protected eventTypeTitle: string = 'Teams';
 
 
   constructor(private eventService: EventService) {
     super();
-   }
+  }
 
-   componentOnInit(){
+  componentOnInit() {
     this.eventService.getAllEvents().subscribe(
-      response => this.handleResponse(response), 
+      response => this.handleResponse(response),
       error => this.handleError(error));
-   }
+  }
 
-   private handleResponse(response: any){
+  private handleResponse(response: any) {
     this.events = <Array<Event>>response;
 
 
 
-   }
+  }
 
-   private handleError(error: any){
-     console.log(error);
+  private handleError(error: any) {
+    console.log(error);
     let algo = error;
- }
+  }
 
   selectedEvent: Event;
   isFormActive: boolean;
+
+
+  get existsEvents(): boolean {
+    return this.events !== undefined && this.events.length > 0;
+  }
 
   selectCity($event, event: Event) {
     this.selectedEvent = event;
     this.isFormActive = true;
   }
-/*
-  deleteCity($event, city: City) {
-    this.cityService.deleteCity(city.id).subscribe(resp => {
-      console.log(JSON.stringify(resp));
-      this.updateGrid();
-    });
-  }*/
+  /*
+    deleteCity($event, city: City) {
+      this.cityService.deleteCity(city.id).subscribe(resp => {
+        console.log(JSON.stringify(resp));
+        this.updateGrid();
+      });
+    }*/
 
   closeForm($event) {
     this.isFormActive = false;

@@ -88,10 +88,21 @@ namespace DataAccess.Implementations
             List<Event> events;
             using (Context context = new Context())
             {
-                events = (from anEvent in context.Events.OfType<Event>()
-                          .Include(t => t.EventTeams)
-                          .Include(s => s.Sport)
-                          select anEvent).ToList();
+                events = context.Events.OfType<Event>()
+                    .Include(e => e.EventTeams)
+                    .Include(e => e.Result)
+                    .Include(e => e.Sport)
+                    .Include(e => e.Comments)
+                    .OrderBy(e => e.InitialDate).ToList();
+
+                // Add event teams.
+                events.ForEach(e =>
+                {
+                    e.EventTeams = context.EventTeams.OfType<EventTeam>()
+                        .Include(et => et.Team)
+                        .Where(et => et.EventId.Equals(e.Id))
+                        .ToList();
+                });
             }
             return events;
         }

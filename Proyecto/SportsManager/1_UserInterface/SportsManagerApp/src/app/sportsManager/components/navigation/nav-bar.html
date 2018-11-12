@@ -13,8 +13,8 @@
                         Event <span class="sr-only">(current)</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" [routerLink]="['/event']">All events</a>
-                        <a class="dropdown-item" [routerLink]="['/addEvent']">Add event</a>                        
+                        <a class="dropdown-item" [routerLink]="['/event']">All events</a>
+                        <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/addEvent']">Add event</a>
                     </div>
                 </li>
 
@@ -25,7 +25,7 @@
                         Users
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" [routerLink]="['/addUser']">Add user</a>
+                        <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/addUser']">Add user</a>
                         <a class="dropdown-item" [routerLink]="['/listUsers']">List users</a>
                     </div>
                 </li>
@@ -35,7 +35,7 @@
                         Sports
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" [routerLink]="['/addSport']">Add sport</a>
+                        <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/addSport']">Add sport</a>
                         <a class="dropdown-item" [routerLink]="['/listSport']">List sports</a>
                     </div>
                 </li>

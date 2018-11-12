@@ -111,6 +111,8 @@ namespace BusinessLogic
 
             this.eventProvider.SaveEventResult(foundEvent);
         }
+
+        //public EventResult
         #endregion
 
         #region Private methods

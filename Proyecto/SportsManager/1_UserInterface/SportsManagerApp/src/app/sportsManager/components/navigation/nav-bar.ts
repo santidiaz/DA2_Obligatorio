@@ -17,8 +17,7 @@ export class NavigationBar extends BaseComponent {
     }
 
     get isLoggedIn(): boolean {
-        let algo = this.sessionService.isAuthenticated();
-        return algo;
+        return this.sessionService.isAuthenticated();
     }
 
     get isAdmin(): boolean {
