@@ -22,6 +22,11 @@ import { AddSportComponent } from './sportsManager/components/sport/addsport/add
 import { SportService } from './sportsManager/services/sport.service';
 import { ListSportsComponent } from './sportsManager/components/sport/listsports/listsports.component';
 import { EditSportComponent } from './sportsManager/components/sport/editsport/editsport.component';
+import { AddTeamComponent } from './sportsManager/components/team/addteam/addteam.component';
+import { TeamService } from './sportsManager/services/team.service';
+import { ListTeamsComponent } from './sportsManager/components/team/listteams/listteams.component';
+import { EditTeamComponent } from './sportsManager/components/team/editteam/editteam.component';
+
 
 import { AuthGuard } from './sportsManager/shared/auth.guard';
 import { NavigationBar } from './sportsManager/components/navigation/nav-bar';
@@ -66,6 +71,21 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
   },
+  {
+    path: 'addTeam', component: AddTeamComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
+    path: 'listTeams', component: ListTeamsComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
+    path: 'editTeam', component: EditTeamComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -82,6 +102,9 @@ const appRoutes: Routes = [
     AddSportComponent,
     ListSportsComponent,
     EditSportComponent,
+    AddTeamComponent,
+    ListTeamsComponent,
+    EditTeamComponent,
     EventFormComponent,
     NavigationBar,
     PageNotFoundComponent
@@ -103,6 +126,7 @@ const appRoutes: Routes = [
     EventService,
     UserService,
     SportService,
+    TeamService,
     AuthGuard
   ],
   bootstrap: [AppComponent]
