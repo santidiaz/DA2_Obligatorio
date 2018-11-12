@@ -17,6 +17,10 @@ export class EventService {
     return this.baseService.post<EventRequest, any>('event', request);
   }
 
+  deleteEvent(eventId: number): Observable<any> {
+    return this.http.delete(`http://localhost:5005/api/event/${eventId}`, {  observe: 'response' });
+  }
+
   /*addEvent(request: EventRequest): Observable<any> {
     return this.http.post(`http://localhost:5005/api/event`, {  observe: 'response' });
   }/*

@@ -44,14 +44,14 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(true)]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int eventId)
+        public IActionResult Delete(int id)
         {
             try
             {
-                if (eventId <= 0)
+                if (id <= 0)
                     return NotFound();
 
-                this.eventOperations.DeleteEventById(eventId);
+                this.eventOperations.DeleteEventById(id);
                 return Ok();
             }
             catch (EntitiesException eEx)

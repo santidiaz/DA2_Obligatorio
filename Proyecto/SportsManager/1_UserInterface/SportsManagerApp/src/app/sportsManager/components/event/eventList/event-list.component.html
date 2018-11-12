@@ -40,11 +40,14 @@
 
                 <td class="float: right !important;">
                     <input type="button" (click)="selectCity($event, event)" value="Edit" />
-                    <!--<input type="button" (click)="deleteCity($event, event)" value="Delete" />-->
+                    <input type="button" (click)="deleteEvent($event, event)" value="Delete" />
                 </td>
             </tr>
         </tbody>
     </table>
+    <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+        {{ successMessage }}
+    </div>
 </div>
 
 <app-event-form *ngIf="isFormActive" (closeRequested)="closeForm($event)" [event]="selectedEvent"></app-event-form>

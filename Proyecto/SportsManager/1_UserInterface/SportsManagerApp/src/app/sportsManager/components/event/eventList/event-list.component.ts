@@ -14,13 +14,22 @@ export class EventListComponent extends BaseComponent {
   private errorMessage: any;// TODO: Ver que retorna y crear una interfaz con eso. codigo y mensaje ?
   protected events: Array<Event>;
   protected eventTypeTitle: string = 'Teams';
-
+  successMessage: string = null;
 
   constructor(private eventService: EventService) {
     super();
   }
 
+  ngOnInit() {
+    this.updateGrid();
+    this.successMessage = null;
+}
+
   componentOnInit() {
+    this.updateGrid();
+  }
+
+  updateGrid() {
     this.eventService.getAllEvents().subscribe(
       response => this.handleResponse(response),
       error => this.handleError(error));
@@ -28,9 +37,6 @@ export class EventListComponent extends BaseComponent {
 
   private handleResponse(response: any) {
     this.events = <Array<Event>>response;
-
-
-
   }
 
   private handleError(error: any) {
@@ -50,13 +56,14 @@ export class EventListComponent extends BaseComponent {
     this.selectedEvent = event;
     this.isFormActive = true;
   }
-  /*
-    deleteCity($event, city: City) {
-      this.cityService.deleteCity(city.id).subscribe(resp => {
+  
+  deleteEvent($event, event: Event) {
+    this.eventService.deleteEvent(event.id).subscribe(resp => {
         console.log(JSON.stringify(resp));
+        this.successMessage = 'Operation success';
         this.updateGrid();
-      });
-    }*/
+    });
+}
 
   closeForm($event) {
     this.isFormActive = false;
