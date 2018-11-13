@@ -1,4 +1,5 @@
 ﻿using BusinessEntities;
+using BusinessEntities.JoinEntities;
 using DataContracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -112,9 +113,20 @@ namespace DataAccess.Implementations
                 sportEvents = context.Events.OfType<Event>()
                     .Include(s => s.Sport)
                     .Include(t => t.EventTeams)
+                    .Include(r => r.Result).ThenInclude(r => r.TeamsResult)
                     .Where(e => e.Sport.Name.Equals(sport.Name))
                     .ToList();
+
+                // Add event teams.
+                sportEvents.ForEach(e =>
+                {
+                    e.EventTeams = context.EventTeams.OfType<EventTeam>()
+                        .Include(et => et.Team)
+                        .Where(et => et.EventId.Equals(e.Id))
+                        .ToList();
+                });                
             }
+
             return sportEvents;
         }
 

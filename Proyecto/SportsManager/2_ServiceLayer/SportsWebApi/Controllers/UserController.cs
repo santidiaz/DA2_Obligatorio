@@ -45,7 +45,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        //[PermissionFilter(true)]
+        [PermissionFilter(true)]
         [HttpPost()]
         public IActionResult AddUser([FromBody] AddUserInput addUserInput)
         {
@@ -76,7 +76,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        //[PermissionFilter(true)]
+        [PermissionFilter(true)]
         [HttpDelete("{userName}")]
         public IActionResult DeleteUserByUserName(string userName)
         {
@@ -245,7 +245,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        //[PermissionFilter(true)]
+        [PermissionFilter(true)]
         [HttpGet()]
         public IActionResult GetUsers()
         {

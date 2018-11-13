@@ -77,6 +77,22 @@ namespace BusinessLogic
         public List<Sport> GetSports() {
             return this.persistanceProvider.GetSports();
         }
+
+        public List<KeyValuePair<string, int>> GetSportResultTable(string sportName)
+        {
+            var result = new List<KeyValuePair<string, int>>();
+            List<Event> events = GetEventsBySport(sportName);
+
+
+            var a = new KeyValuePair<string, int>("a", 6);
+            var b = new KeyValuePair<string, int>("b", 3);
+            var c = new KeyValuePair<string, int>("b", 1);
+            var d = new KeyValuePair<string, int>("d", 12);
+
+
+            result.Sort((aa, bb) => (bb.Value.CompareTo(aa.Value)));
+            return result;
+        }
         #endregion
 
         #region Private Methods

@@ -14,5 +14,6 @@ namespace BusinessContracts
         void DeleteSportByName(string sportToBeDeleted);
         List<Event> GetEventsBySport(string sportName);
         List<Sport> GetSports();
+        List<KeyValuePair<string, int>> GetSportResultTable(string sportName);
     }
 }
