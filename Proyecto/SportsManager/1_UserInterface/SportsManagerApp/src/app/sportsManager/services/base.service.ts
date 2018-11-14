@@ -36,4 +36,8 @@ export class BaseService {
     private getHeader(tokenRequired: boolean): HttpHeaders {
         return !tokenRequired ? this.basicHeaderConfig : this.tokenHeaderConfig;
     }
+
+    getToken(){
+        return this.sessionService.getToken() 
+    }
 }

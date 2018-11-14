@@ -3,7 +3,27 @@
         <h6 class="card-header">Add event dynamic</h6>
         <div class="card-body">
 
-            
+            <div class="form-group">
+                <label>Sport</label>
+                <select [(ngModel)]="fromModel.sportName" name="sportSelected" class="form-control" required>
+                    <option *ngFor="let sport of sports" [ngValue]="sport.name" #name>{{sport.name}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Fixture</label>
+                <select [(ngModel)]="fromModel.fixtureName" name="fixtureSelected" class="form-control" required>
+                    <option *ngFor="let fixture of fixtures" #name>{{fixture}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dateInput">Date</label>
+                <input type="datetime-local" class="form-control" name="date" id="dateInput" required [(ngModel)]="fromModel.initialDate"
+                    #nameee="ngModel" aria-describedby="dateNameHelp" placeholder="Enter the date ...">
+            </div>
+
+            <button type="button" class="btn btn-secondary" (click)="addEvent()">Generate fixture and add events to preview list</button>
             
         </div>
     </div>
