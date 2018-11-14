@@ -86,13 +86,17 @@ namespace FixtureLogic
         private List<Event> GenerateEvents(List<Match> matches, DateTime initialDate, Sport aSport)
         {
             List<Event> generatedEvents = new List<Event>();
-            
+
+            var teams = new List<Team>();
             // TODO refactor..
-            //foreach (Match currentMatch in matches)
-            //{
-            //    generatedEvents.Add(new Event(initialDate, aSport, currentMatch.Local, currentMatch.Away));
-            //    initialDate = initialDate.AddDays(1);
-            //}
+            foreach (Match currentMatch in matches)
+            {
+                teams = new List<Team>();
+                teams.Add(currentMatch.Local);
+                teams.Add(currentMatch.Away);
+                generatedEvents.Add(new Event(initialDate, aSport, teams));
+                initialDate = initialDate.AddDays(1);
+            }
             return generatedEvents;
         }
         #endregion
