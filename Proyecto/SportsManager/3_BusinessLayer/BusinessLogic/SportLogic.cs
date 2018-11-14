@@ -5,6 +5,7 @@ using CommonUtilities;
 using DataContracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusinessLogic
@@ -74,24 +75,30 @@ namespace BusinessLogic
             return this.persistanceProvider.GetEventsBySport(sport);
         }
 
-        public List<Sport> GetSports() {
+        public List<Sport> GetSports()
+        {
             return this.persistanceProvider.GetSports();
         }
-
-        public List<KeyValuePair<string, int>> GetSportResultTable(string sportName)
+        public Dictionary<string, int> GetSportResultTable(string sportName)
         {
-            var result = new List<KeyValuePair<string, int>>();
+            var result = new Dictionary<string, int>();
             List<Event> events = GetEventsBySport(sportName);
 
+            events = events.FindAll(e => e.HasResult());
+            events.ForEach(
+                ev =>
+                {
+                    ev.Result.TeamsResult.ForEach(
+                            tr =>
+                            {
+                                if (result.ContainsKey(tr.TeamName))
+                                    result[tr.TeamName] += tr.TeamPoints;
+                                else
+                                    result.Add(tr.TeamName, tr.TeamPoints);
+                            });
+                });
 
-            var a = new KeyValuePair<string, int>("a", 6);
-            var b = new KeyValuePair<string, int>("b", 3);
-            var c = new KeyValuePair<string, int>("b", 1);
-            var d = new KeyValuePair<string, int>("d", 12);
-
-
-            result.Sort((aa, bb) => (bb.Value.CompareTo(aa.Value)));
-            return result;
+            return result.OrderBy(dic => dic.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
         #endregion
 

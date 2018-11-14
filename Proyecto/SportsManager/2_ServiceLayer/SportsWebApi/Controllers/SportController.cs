@@ -142,7 +142,7 @@ namespace SportsWebApi.Controllers
                 if (string.IsNullOrEmpty(sportName))
                     return NotFound();
 
-                List<KeyValuePair<string, int>> result = sportOperations.GetSportResultTable(sportName);
+                var result = Utility.TransformToSportTable(sportOperations.GetSportResultTable(sportName));
                 return Ok(result);
             }
             catch (EntitiesException ex)

@@ -68,6 +68,8 @@ namespace BusinessEntities
                         this.TeamsResult.Add(new TeamResult(teamName, 1));
                     else
                         this.TeamsResult.Add(new TeamResult(teamName, 0));
+
+                    count++;
                 });
         }
         #endregion
