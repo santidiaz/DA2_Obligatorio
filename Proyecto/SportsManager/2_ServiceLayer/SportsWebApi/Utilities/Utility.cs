@@ -1,6 +1,7 @@
 ﻿using BusinessEntities;
 using BusinessEntities.Exceptions;
 using SportsWebApi.Models.EventModel;
+using SportsWebApi.Models.SportModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,16 @@ namespace SportsWebApi.Utilities
                 SportName = events.Sport?.Name,
                 Result = events.Result
             };
+        }
+
+        public static List<TeamPointsDTO> TransformToSportTable(Dictionary<string, int> rawTeamPointsTable)
+        {
+            var result = new List<TeamPointsDTO>();
+            foreach(var item in rawTeamPointsTable)
+            {
+                result.Add(new TeamPointsDTO { Name = item.Key, Points = item.Value });
+            }
+            return result.OrderByDescending(r => r.Points).ToList();
         }
     }
 }

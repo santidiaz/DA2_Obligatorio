@@ -49,7 +49,7 @@ export class EventListComponent extends BaseComponent {
 
 
   get existsEvents(): boolean {
-    return this.events !== undefined && this.events.length > 0;
+    return this.events != undefined && this.events.length > 0;
   }
 
   selectCity($event, event: Event) {
