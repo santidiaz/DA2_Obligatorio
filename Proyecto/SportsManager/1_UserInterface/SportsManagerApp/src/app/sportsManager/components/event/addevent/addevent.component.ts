@@ -61,6 +61,7 @@ export class AddEventComponent extends BaseComponent {
                 
                 this.auxEvent.eventDate = event.initialDate;
                 this.auxEvent.sportName = event.sportName;
+                this.auxEvent.teamNames = [];
                 event.teams.forEach(tem => { this.auxEvent.teamNames.push(tem.name) });
     
                 this.eventsToAdd.push(this.auxEvent);

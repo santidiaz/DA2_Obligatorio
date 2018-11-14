@@ -13,7 +13,7 @@
           <div class="form-group">
             <label for="image">Image</label>
             <input type="file" class="form-control" name="image" id="imageInput" required
-              [(ngModel)]="formModel.photo" #nameee="ngModel">
+              [(ngModel)]="formModel.photo" #nameee="ngModel" (change)="onChange($event)">
           </div>
 
           <div class="form-group">

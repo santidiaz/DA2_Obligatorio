@@ -34,7 +34,9 @@ namespace SportsWebApi.Controllers
                 IFixture selectedFixture = this.GetSelectedFixture(input.FixtureName);
                 List<Event> generatedEvents = selectedFixture.GenerateFixture(foundSport, input.InitialDate);
 
-                return Ok(generatedEvents);
+                var result = Utility.TransformEventsToDTOs(generatedEvents);
+
+                return Ok(result);
             }
             catch (EntitiesException eEx)
             {
