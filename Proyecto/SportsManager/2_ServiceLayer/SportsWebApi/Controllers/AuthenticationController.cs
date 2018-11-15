@@ -19,6 +19,7 @@ namespace SportsWebApi.Controllers
     {
         private IPermissionLogic permissionOperations = Provider.GetInstance.GetPermissionOperations();
 
+        [Log("Login")]
         [HttpPost(nameof(LogIn))]
         public IActionResult LogIn([FromBody] LogInInput input)
         {
@@ -30,7 +31,8 @@ namespace SportsWebApi.Controllers
                 var session = new SessionDTO
                 {
                     Token = sessionData.Item1,
-                    IsAdmin = sessionData.Item2
+                    UserName = sessionData.Item2,
+                    IsAdmin = sessionData.Item3
                 };
 
                 return Ok(session);

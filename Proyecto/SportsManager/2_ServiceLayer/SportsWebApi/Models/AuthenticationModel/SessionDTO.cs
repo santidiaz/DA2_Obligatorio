@@ -8,6 +8,7 @@ namespace SportsWebApi.Models.AuthenticationModel
     public class SessionDTO
     {
         public Guid Token { get; set; }
+        public string UserName { get; set; }
         public bool IsAdmin { get; set; }
     }
 }

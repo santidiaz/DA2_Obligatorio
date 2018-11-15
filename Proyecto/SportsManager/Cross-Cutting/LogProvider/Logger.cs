@@ -1,39 +1,31 @@
-﻿using System;
+﻿using Logger;
+using LoggerLogic;
+using System;
 
 namespace LogProvider
 {
     public class Logger
     {
-        //private IList<IFixture> fixturesAlgorithms;
+        private readonly ILogger loggerLogic;
 
-        //#region Singleton
-        //private static readonly Lazy<Provider> currentInstance = new Lazy<Provider>(() => new Provider());
-        //private Provider()
-        //{
-        //    Initialize();
-        //}
-        //private void Initialize()
-        //{
-        //    fixturesAlgorithms = AlgorithmsHelper.GetAssemblyFixtures();
-        //    if (fixturesAlgorithms == null)
-        //        fixturesAlgorithms = new List<IFixture>();
+        #region Singleton
+        private static readonly Lazy<Logger> currentInstance = new Lazy<Logger>(() => new Logger());
+        private Logger()
+        {
+            loggerLogic = new TextFileLogger();
+        }
+        public static Logger GetInstance
+        {
+            get
+            {
+                return currentInstance.Value;
+            }
+        }
+        #endregion
 
-        //    fixturesAlgorithms.Add(new FinalPhaseLogic());
-        //    fixturesAlgorithms.Add(new RoundRobinLogic());
-        //}
-
-        //public static Provider GetInstance
-        //{
-        //    get
-        //    {
-        //        return currentInstance.Value;
-        //    }
-        //}
-        //#endregion
-
-        //public IList<IFixture> GetFixturesAlgorithms()
-        //{
-        //    return fixturesAlgorithms;
-        //}
+        public ILogger LogTool()
+        {
+            return this.loggerLogic;
+        }
     }
 }

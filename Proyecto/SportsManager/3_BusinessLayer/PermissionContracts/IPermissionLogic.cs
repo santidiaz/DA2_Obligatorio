@@ -4,7 +4,7 @@ namespace PermissionContracts
 {
     public interface IPermissionLogic
     {
-        Tuple<Guid, bool> LogIn(string userName, string password);
+        Tuple<Guid, string, bool> LogIn(string userName, string password);
         void LogOut(string userName);
         bool HasPermission(Guid token, bool isAdminRequired);
     }

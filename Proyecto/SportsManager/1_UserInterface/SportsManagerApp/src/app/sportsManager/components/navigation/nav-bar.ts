@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../shared/base.component';
 import { SessionService } from '../../services/session.service';
 import { Router } from '@angular/router';
+import { PermissionService } from '../../services/permission.service';
 
 @Component({
     selector: 'nav-bar',
@@ -12,7 +13,7 @@ export class NavigationBar extends BaseComponent {
 
     title = 'Sports Manager';
 
-    constructor(private sessionService: SessionService, private router: Router) {
+    constructor(private permissionService: PermissionService, private sessionService: SessionService, private router: Router) {
         super();
     }
 
@@ -25,6 +26,7 @@ export class NavigationBar extends BaseComponent {
     }
 
     logOut($event){
+        this.permissionService.logOut(this.sessionService.getCurrentUserName());
         this.sessionService.logOff();
         this.router.navigate(['/login']);
     }

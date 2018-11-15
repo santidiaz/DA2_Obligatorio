@@ -12,7 +12,7 @@ export class BaseService {
         { 
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            'Authorization': this.sessionService.getToken() 
+            'Authorization': this.sessionService.getToken()
         });
 
     constructor(private http: HttpClient, private sessionService: SessionService) { }    

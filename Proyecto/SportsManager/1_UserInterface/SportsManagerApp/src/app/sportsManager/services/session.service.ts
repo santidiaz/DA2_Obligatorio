@@ -3,6 +3,7 @@ import { SessionUser } from '../interfaces/session-user';
 
 const TOKEN = 'token';
 const IS_ADMIN = 'isAdministrator';
+const USER_NAME = 'userName';
 
 @Injectable()
 export class SessionService {
@@ -24,8 +25,13 @@ export class SessionService {
         return localStorage.getItem(TOKEN);
     }
 
+    getCurrentUserName(): string {
+        return localStorage.getItem(USER_NAME);
+    }
+
     setSession(session: SessionUser) {
         localStorage.setItem(TOKEN, session.token);
+        localStorage.setItem(USER_NAME, session.userName);
         localStorage.setItem(IS_ADMIN, String(session.isAdmin));
     }
 
@@ -34,6 +40,7 @@ export class SessionService {
     }
 
     logOff() {
+        localStorage.removeItem(USER_NAME);
         localStorage.removeItem(TOKEN);
         localStorage.removeItem(IS_ADMIN);
     }

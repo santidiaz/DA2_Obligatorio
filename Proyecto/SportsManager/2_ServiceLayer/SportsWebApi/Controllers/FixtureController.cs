@@ -22,6 +22,7 @@ namespace SportsWebApi.Controllers
         private readonly IList<IFixture> fixturesAlhorithms = FixtureProvider.Provider.GetInstance.GetFixturesAlgorithms();
 
         [PermissionFilter(true)]
+        [Log("Fixture")]
         [HttpPost()]
         public IActionResult GenerateFixture([FromBody] GenerateFixtureInput input)
         {
@@ -30,8 +31,8 @@ namespace SportsWebApi.Controllers
                 if (input == null)
                     return BadRequest();
 
-                Sport foundSport = sportOperations.GetSportByName(input.SportName);
-                IFixture selectedFixture = this.GetSelectedFixture(input.FixtureName);
+                var foundSport = sportOperations.GetSportByName(input.SportName);
+                var selectedFixture = this.GetSelectedFixture(input.FixtureName);
                 List<Event> generatedEvents = selectedFixture.GenerateFixture(foundSport, input.InitialDate);
 
                 return Ok(generatedEvents);

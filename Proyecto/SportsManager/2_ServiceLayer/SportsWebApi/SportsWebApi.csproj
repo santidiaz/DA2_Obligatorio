@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cross-Cutting\LogProvider\LogProvider.csproj" />
     <ProjectReference Include="..\..\Cross-Cutting\ProviderManager\ProviderManager.csproj" />
   </ItemGroup>
 

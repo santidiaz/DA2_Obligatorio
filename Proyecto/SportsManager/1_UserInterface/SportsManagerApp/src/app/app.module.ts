@@ -44,6 +44,11 @@ const appRoutes: Routes = [
     data: { onlyAdmin: false }
   },
   {
+    path: 'editTeam', component: EditTeamComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
     path: 'addUser', component: AddUserComponent,
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
@@ -81,11 +86,6 @@ const appRoutes: Routes = [
   },
   {
     path: 'listTeams', component: ListTeamsComponent,
-    canActivate: [AuthGuard],
-    data: { onlyAdmin: true }
-  },
-  {
-    path: 'editTeam', component: EditTeamComponent,
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
   },
