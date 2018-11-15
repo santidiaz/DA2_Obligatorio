@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BaseService } from "./base.service";
 import { Observable } from "rxjs";
 import { TeamRequest } from "../interfaces/team-request";
@@ -21,11 +21,19 @@ export class TeamService {
       }
 
       getTeams(): Observable<TeamRequest[]> {
-        return this.http.get<TeamRequest[]>(`http://localhost:5005/api/team`, { params: { orderAsc: 'false', teamName: '' }});
+
+        var auxHeaders = new HttpHeaders(
+          { 
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Authorization': this.baseService.getToken() 
+          });
+
+        return this.http.get<TeamRequest[]>(`http://localhost:5005/api/team`, { headers: auxHeaders, params: { orderAsc: 'false', teamName: '' }});
       }
 
       deleteTeam(teamName: string): Observable<any> {
-        return this.http.delete(`http://localhost:5005/api/team/${teamName}`, {  observe: 'response' });
+        return this.baseService.delete(`team/${teamName}`);
       }
 
       editTeam(request: TeamModifyRequest): Observable<any> {

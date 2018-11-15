@@ -34,6 +34,7 @@ import { EventService } from './sportsManager/services/event.service';
 import { AddEventComponent } from './sportsManager/components/event/addevent/addevent.component';
 import { AddEventDynamicComponent } from './sportsManager/components/event/addeventdynamic/addeventdynamic.component';
 import { AddEventManualComponent } from './sportsManager/components/event/addeventmanual/addeventmanual.component';
+import { FixtureService } from './sportsManager/services/fixture.services';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -138,6 +139,7 @@ const appRoutes: Routes = [
     UserService,
     SportService,
     TeamService,
+    FixtureService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

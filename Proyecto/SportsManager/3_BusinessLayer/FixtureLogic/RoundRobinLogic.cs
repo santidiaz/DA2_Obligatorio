@@ -94,6 +94,10 @@ namespace FixtureLogic
                                 {
                                     // TODO: Refactor...
                                     //events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
+                                    List<Team> teams = new List<Team>();
+                                    teams.Add(aMatch.Local);
+                                    teams.Add(aMatch.Away);
+                                    events.Add(new Event(initialDate, aSport, teams));
                                     aMatch.IsAvailable = false;
                                     addedGames++;
                                 }
@@ -104,6 +108,10 @@ namespace FixtureLogic
 
                             // TODO: Refactor...
                             //events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
+                            List<Team> teams = new List<Team>();
+                            teams.Add(aMatch.Local);
+                            teams.Add(aMatch.Away);
+                            events.Add(new Event(initialDate, aSport, teams));
                             aMatch.IsAvailable = false;
                         }
                     }

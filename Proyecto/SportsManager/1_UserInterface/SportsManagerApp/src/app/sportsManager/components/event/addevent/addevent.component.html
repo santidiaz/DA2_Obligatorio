@@ -21,7 +21,7 @@
                 </div>
 
                 <app-addeventmanual *ngIf="isManualFormChecked" (closeRequested)="addEventTemp($event)"></app-addeventmanual>
-                <app-addeventdynamic *ngIf="isDynamicFormChecked" (closeRequested)="addEventTemp($event)"></app-addeventdynamic>
+                <app-addeventdynamic *ngIf="isDynamicFormChecked" (closeRequested)="addEventTempDynamic($event)"></app-addeventdynamic>
                 <hr />
                 <h6 class="card-header">Events to add</h6>
                 <div class="table-responsive">
