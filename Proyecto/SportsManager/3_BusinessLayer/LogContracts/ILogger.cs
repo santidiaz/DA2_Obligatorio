@@ -1,8 +1,7 @@
-﻿using LogContracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Logger
+namespace LogContracts
 {
     public interface ILogger
     {

@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\3_BusinessLayer\LoggerContracts\LogContracts.csproj" />
-    <ProjectReference Include="..\..\3_BusinessLayer\LoggerLogic\LogLogic.csproj" />
+    <ProjectReference Include="..\..\3_BusinessLayer\LogContracts\LogContracts.csproj" />
+    <ProjectReference Include="..\..\3_BusinessLayer\LogLogic\LogLogic.csproj" />
   </ItemGroup>
 
 </Project>

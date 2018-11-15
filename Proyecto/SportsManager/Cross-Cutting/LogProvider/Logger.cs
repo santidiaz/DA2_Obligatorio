@@ -1,4 +1,4 @@
-﻿using Logger;
+﻿using LogContracts;
 using LoggerLogic;
 using System;
 

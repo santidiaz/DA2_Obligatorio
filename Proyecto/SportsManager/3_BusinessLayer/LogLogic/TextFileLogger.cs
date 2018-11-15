@@ -1,5 +1,4 @@
 ﻿using LogContracts;
-using Logger;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,7 +16,6 @@ namespace LoggerLogic
         {
             string rootPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\"));
             this.fileLogPath = string.Concat(rootPath, @"Resources\Logs\LogFile.txt");
-
         }
 
         public IList<LogRecord> GetLogs(DateTime initialDate, DateTime finalDate)

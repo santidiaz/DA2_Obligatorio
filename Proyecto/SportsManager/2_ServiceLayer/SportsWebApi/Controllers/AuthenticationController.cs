@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BusinessEntities.Exceptions;
-using Logger;
-using Microsoft.AspNetCore.Http;
+using LogContracts;
 using Microsoft.AspNetCore.Mvc;
 using PermissionContracts;
 using ProviderManager;
-using SportsWebApi.Filters;
 using SportsWebApi.Models.AuthenticationModel;
 using SportsWebApi.Utilities;
 

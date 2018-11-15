@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Logger;
+using LogContracts;
 using Microsoft.AspNetCore.Mvc;
 using SportsWebApi.Filters;
 

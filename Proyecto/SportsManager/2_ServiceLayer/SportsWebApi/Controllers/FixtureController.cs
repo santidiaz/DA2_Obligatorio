@@ -2,7 +2,7 @@
 using BusinessEntities;
 using BusinessEntities.Exceptions;
 using FixtureContracts;
-using Logger;
+using LogContracts;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Filters;
