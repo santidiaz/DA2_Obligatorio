@@ -2,6 +2,7 @@
 using BusinessEntities;
 using BusinessEntities.Exceptions;
 using FixtureContracts;
+using Logger;
 using Microsoft.AspNetCore.Mvc;
 using ProviderManager;
 using SportsWebApi.Filters;
@@ -20,9 +21,9 @@ namespace SportsWebApi.Controllers
         private readonly IEventLogic eventOperations = Provider.GetInstance.GetEventOperations();
         private readonly ISportLogic sportOperations = Provider.GetInstance.GetSportOperations();
         private readonly IList<IFixture> fixturesAlhorithms = FixtureProvider.Provider.GetInstance.GetFixturesAlgorithms();
+        private readonly ILogger logger = LogProvider.Logger.GetInstance.LogTool();
 
         [PermissionFilter(true)]
-        [Log("Fixture")]
         [HttpPost()]
         public IActionResult GenerateFixture([FromBody] GenerateFixtureInput input)
         {
@@ -30,6 +31,8 @@ namespace SportsWebApi.Controllers
             {
                 if (input == null)
                     return BadRequest();
+
+                logger.LogAction(nameof(GenerateFixture), input.UserName, DateTime.Now);
 
                 var foundSport = sportOperations.GetSportByName(input.SportName);
                 var selectedFixture = this.GetSelectedFixture(input.FixtureName);

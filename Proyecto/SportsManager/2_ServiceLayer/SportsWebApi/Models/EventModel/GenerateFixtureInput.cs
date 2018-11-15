@@ -8,7 +8,7 @@ namespace SportsWebApi.Models.EventModel
 {
     public class GenerateFixtureInput
     {
-        [Required]
+        [Required(ErrorMessage = "Fixture name is required.")]
         public string FixtureName { get; set; }
 
         [Required]
@@ -16,5 +16,8 @@ namespace SportsWebApi.Models.EventModel
 
         [Required]
         public DateTime InitialDate { get; set; }
+
+        [Required(ErrorMessage = "User name that execute this action is required.")]
+        public string UserName { get; set; }
     }
 }

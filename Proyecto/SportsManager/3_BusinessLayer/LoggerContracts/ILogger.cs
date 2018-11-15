@@ -6,7 +6,7 @@ namespace Logger
 {
     public interface ILogger
     {
-        void LogAction(LogRecord logToBeRecorded);
+        void LogAction(string actionToLog, string username, DateTime dateTime);
         IList<LogRecord> GetLogs(DateTime initialDate, DateTime finalDate);
     }
 }

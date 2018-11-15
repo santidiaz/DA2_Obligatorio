@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessEntities.Exceptions;
+using Logger;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PermissionContracts;
@@ -18,8 +19,8 @@ namespace SportsWebApi.Controllers
     public class AuthenticationController : ControllerBase
     {
         private IPermissionLogic permissionOperations = Provider.GetInstance.GetPermissionOperations();
+        private readonly ILogger logger = LogProvider.Logger.GetInstance.LogTool();
 
-        [Log("Login")]
         [HttpPost(nameof(LogIn))]
         public IActionResult LogIn([FromBody] LogInInput input)
         {
@@ -34,7 +35,8 @@ namespace SportsWebApi.Controllers
                     UserName = sessionData.Item2,
                     IsAdmin = sessionData.Item3
                 };
-
+                
+                logger.LogAction(nameof(LogIn), session.UserName, DateTime.Now);
                 return Ok(session);
             }
             catch (EntitiesException eEx)
