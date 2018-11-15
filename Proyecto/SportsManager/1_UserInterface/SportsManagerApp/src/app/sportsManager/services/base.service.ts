@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SessionService } from '../services/session.service';
@@ -21,8 +21,8 @@ export class BaseService {
         return this.http.post<any>(`${environment.apiUrl}${url}`, request, { headers: this.getHeader(isTokenRequired) });
     }
 
-    get<Y>(url: string, isTokenRequired: boolean = false): Observable<Y> {
-        return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: this.getHeader(isTokenRequired) });
+    get<Y>(url: string, isTokenRequired: boolean = false, params: HttpParams = undefined): Observable<Y> {
+        return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: this.getHeader(isTokenRequired) }, { params });
     }
 
     put<T, Y>(url: string, request: T, isTokenRequired: boolean = false): Observable<Y> {

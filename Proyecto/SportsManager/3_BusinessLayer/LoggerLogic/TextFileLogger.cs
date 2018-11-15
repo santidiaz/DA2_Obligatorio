@@ -2,6 +2,7 @@
 using Logger;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -22,43 +23,50 @@ namespace LoggerLogic
         public IList<LogRecord> GetLogs(DateTime initialDate, DateTime finalDate)
         {
             var loggedRecords = new List<LogRecord>();
-            var fileStream = new FileStream(this.fileLogPath, FileMode.Open, FileAccess.Read);
-
-            try
+            if (File.Exists(fileLogPath))
             {
-                using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+                var fileStream = new FileStream(this.fileLogPath, FileMode.Open, FileAccess.Read);
+                try
                 {
-                    streamReader.ReadLine(); // To avoid the header.
-                    string line;
-                    string[] splittedLine;
-                    LogRecord readRecord;
-                    DateTime currentLogDate;
-                    while ((line = streamReader.ReadLine()) != null)
+                    using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
                     {
-                        splittedLine = line.Split(splitter);
-                        currentLogDate = DateTime.ParseExact(splittedLine[1], DATE_FORMAT, System.Globalization.CultureInfo.InvariantCulture);
-                        if (this.IsLogBetweenDates(initialDate, finalDate, currentLogDate))
+                        streamReader.ReadLine(); // To avoid the header.
+                        string line;
+                        string[] splittedLine;
+                        DateTime currentLogDate;
+                        while ((line = streamReader.ReadLine()) != null)
                         {
-                            readRecord = new LogRecord { Action = splittedLine[0], LogDate = currentLogDate, UserName = splittedLine[2] };
+                            splittedLine = line.Split(splitter);
+                            currentLogDate = DateTime.ParseExact(splittedLine[1], DATE_FORMAT, CultureInfo.InvariantCulture);
+                            if (this.IsLogBetweenDates(initialDate, finalDate, currentLogDate))
+                            {
+                                loggedRecords.Add(
+                                    new LogRecord
+                                    {
+                                        Action = splittedLine[0],
+                                        LogDate = currentLogDate,
+                                        UserName = splittedLine[2]
+                                    });
+                            }
                         }
                     }
                 }
-            }
-            catch(IOException ioEx)
-            {
-                throw ioEx;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                fileStream.Close();
+                catch (IOException ioEx)
+                {
+                    throw ioEx;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    fileStream.Close();
+                }
             }
 
             return loggedRecords;
-        }        
+        }
 
         public void LogAction(string actionToLog, string username, DateTime dateTime)
         {
@@ -69,7 +77,7 @@ namespace LoggerLogic
                     sWriter.WriteLine("[Action | DateTime | UserName]");
                     sWriter.WriteLine("{0}|{1}|{2}",
                         actionToLog,
-                        dateTime.ToString("dd/MM/yyyy hh:mm"),
+                        dateTime.ToString(DATE_FORMAT, CultureInfo.InvariantCulture),
                         username);
                 }
             }
@@ -79,7 +87,7 @@ namespace LoggerLogic
                 {
                     sWriter.WriteLine("{0}|{1}|{2}",
                         actionToLog,
-                        dateTime.ToString(DATE_FORMAT),
+                        dateTime.ToString(DATE_FORMAT, CultureInfo.InvariantCulture),
                         username);
                 }
             }
