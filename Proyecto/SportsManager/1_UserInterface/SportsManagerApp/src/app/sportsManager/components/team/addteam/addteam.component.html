@@ -18,7 +18,7 @@
 
           <div class="form-group">
             <label>Sport</label>
-            <select [(ngModel)]="formModel.sportOID" name="sportSelected" class="form-control">
+            <select [(ngModel)]="formModel.sportOID" name="sportSelected" class="form-control" required>
                 <option *ngFor="let sport of sports" [ngValue]="sport.id" #name>{{sport.name}}</option>
             </select>
         </div>

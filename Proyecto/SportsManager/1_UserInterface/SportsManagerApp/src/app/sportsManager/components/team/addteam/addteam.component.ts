@@ -41,10 +41,19 @@ export class AddTeamComponent extends BaseComponent {
 
   onSubmit() {
 
-    this.teamService.addTeam(this.formModel)
-      .subscribe(
-        response => this.handleResponse(response),
-        error => this.handleError(error));
+    if (this.formModel.name == '' ||
+      this.formModel.photo == null ||
+      this.formModel.sportOID == null ||
+      this.formModel.sportOID == 0) {
+        this.errorMessage = 'Complete all the required information';
+    }
+    else {
+      this.errorMessage = null;
+      this.teamService.addTeam(this.formModel)
+        .subscribe(
+          response => this.handleResponse(response),
+          error => this.handleError(error));
+    }
   }
 
   private handleResponse(response: any) {
@@ -60,10 +69,10 @@ export class AddTeamComponent extends BaseComponent {
 
   file: File;
   onChange(event: EventTarget) {
-        let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
-        let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
-        let files: FileList = target.files;
-        this.file = files[0];
-        this.formModel.photo = this.file; 
-    }
+    let eventObj: MSInputMethodContext = <MSInputMethodContext>event;
+    let target: HTMLInputElement = <HTMLInputElement>eventObj.target;
+    let files: FileList = target.files;
+    this.file = files[0];
+    this.formModel.photo = this.file;
+  }
 }
