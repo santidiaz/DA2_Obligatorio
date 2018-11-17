@@ -7,6 +7,7 @@ import { SportRequest } from "src/app/sportsManager/interfaces/sportrequest";
 import { EventRequest } from "src/app/sportsManager/interfaces/event-request";
 import { Team } from "src/app/sportsManager/interfaces/team";
 import { TeamRequest } from "src/app/sportsManager/interfaces/team-request";
+import { TeamRequestFilter } from "src/app/sportsManager/interfaces/team-request-filter";
 
 @Component({
     selector: 'app-addeventmanual',
@@ -19,6 +20,7 @@ import { TeamRequest } from "src/app/sportsManager/interfaces/team-request";
     sports: Array<SportRequest>;
     teams: Array<TeamRequest>;
     fromModel: EventRequest;
+    teamRequestFilter: TeamRequestFilter;
 
     @Output() closeRequested = new EventEmitter<EventRequest>();
 
@@ -28,6 +30,7 @@ import { TeamRequest } from "src/app/sportsManager/interfaces/team-request";
         private sportService: SportService) {
         super();
         this.clearFromModel();
+        this.teamRequestFilter = { teamName: '', orderAsc: true};
       };
 
     
@@ -38,7 +41,7 @@ import { TeamRequest } from "src/app/sportsManager/interfaces/team-request";
       this.sports = response;
     });
 
-    this.teamService.getTeams().subscribe(response => {
+    this.teamService.getTeams(this.teamRequestFilter).subscribe(response => {
       this.teams = response;
     });
   }

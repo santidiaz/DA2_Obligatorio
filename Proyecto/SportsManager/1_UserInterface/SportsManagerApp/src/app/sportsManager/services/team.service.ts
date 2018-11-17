@@ -4,6 +4,7 @@ import { BaseService } from "./base.service";
 import { Observable } from "rxjs";
 import { TeamRequest } from "../interfaces/team-request";
 import { TeamModifyRequest } from "../interfaces/teammodifyrequest";
+import { TeamRequestFilter } from "../interfaces/team-request-filter";
 
 @Injectable()
 export class TeamService {
@@ -20,7 +21,7 @@ export class TeamService {
         return this.http.post(`http://localhost:5005/api/team`, formData)
       }
 
-      getTeams(): Observable<TeamRequest[]> {
+      getTeams(teamRequestFilter: TeamRequestFilter): Observable<TeamRequest[]> {
 
         var auxHeaders = new HttpHeaders(
           { 
@@ -29,7 +30,11 @@ export class TeamService {
               'Authorization': this.baseService.getToken() 
           });
 
-        return this.http.get<TeamRequest[]>(`http://localhost:5005/api/team`, { headers: auxHeaders, params: { orderAsc: 'false', teamName: '' }});
+        var order = teamRequestFilter.orderAsc ? 'true' : 'false';
+        return this.http.get<TeamRequest[]>(`http://localhost:5005/api/team`, 
+                                            { headers: auxHeaders, 
+                                              params: { orderAsc: order, teamName: teamRequestFilter.teamName }
+                                            });
       }
 
       deleteTeam(teamName: string): Observable<any> {

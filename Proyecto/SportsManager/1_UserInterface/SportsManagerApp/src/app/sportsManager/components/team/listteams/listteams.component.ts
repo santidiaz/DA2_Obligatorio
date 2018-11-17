@@ -6,6 +6,7 @@ import { TeamService } from "src/app/sportsManager/services/team.service";
 import { UserService } from "src/app/sportsManager/services/user.service";
 import { UserTeam } from "src/app/sportsManager/interfaces/user-team";
 import { AddFavoriteRequest } from "src/app/sportsManager/interfaces/addfavoriterequest";
+import { TeamRequestFilter } from "src/app/sportsManager/interfaces/team-request-filter";
 
 @Component({
     selector: 'app-listteams',
@@ -22,6 +23,7 @@ export class ListTeamsComponent extends BaseComponent {
     selectedTeam: TeamRequest;
     userFavoriteTeams: Array<UserTeam>;
     addEventReqeust: AddFavoriteRequest;
+    teamRequestFilter: TeamRequestFilter;
 
     constructor(
         private sessionService: SessionService,
@@ -29,6 +31,7 @@ export class ListTeamsComponent extends BaseComponent {
         private userService: UserService) {
         super();
         this.addEventReqeust = { UserName: '', NetFavouriteTeamsOID: [] };
+        this.teamRequestFilter = { teamName: '', orderAsc: true};
     };
 
     ngOnInit() {
@@ -37,12 +40,17 @@ export class ListTeamsComponent extends BaseComponent {
         this.errorMessage = null;
     }
 
+    onSearchChange(searchValue : string ) {  
+        this.teamRequestFilter.teamName = searchValue;
+        this.updateGrid();
+    }
+
     updateGrid(): void {
 
         this.userService.getUserFavoriteTeams(this.sessionService.getCurrentUserName()).subscribe(responseFavorite => {
             this.userFavoriteTeams = responseFavorite;
 
-            this.teamService.getTeams().subscribe(response => {
+            this.teamService.getTeams(this.teamRequestFilter).subscribe(response => {
 
                 this.userFavoriteTeams.forEach(element2 => {
                     var aux = response.filter(x => x.teamOID === element2.teamId);
@@ -101,5 +109,15 @@ export class ListTeamsComponent extends BaseComponent {
         this.userService.deleteUserFavoriteTeam(this.sessionService.getCurrentUserName(), team.teamOID).subscribe(
             response => this.handleResponse(response, 'Delete favorite success'),
             error => this.handleError(error));
+    }
+
+    changeView($event, item: Number) {
+        if (item == 1) {
+            this.teamRequestFilter.orderAsc = true;
+        }
+        else {
+            this.teamRequestFilter.orderAsc = false;
+        }
+        this.updateGrid();
     }
 }

@@ -1,6 +1,42 @@
+<hr />
 <h1>
     Team list
-</h1>
+</h1><hr />
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">Filtro</h5>
+        <div class="card-body">
+            <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="sportNameInput">Name</label>
+                    <input type="text" 
+                    (input)="onSearchChange($event.target.value)"
+                     class="form-control" name="sportname" id="sportnameInput" 
+                    [(ngModel)]="teamRequestFilter.teamName"
+                    #nameee="ngModel" aria-describedby="sportNameHelp" placeholder="Enter the team Name...">
+                </div>
+
+                <div class="form-group">
+                    <label for="allowdMultipleTeamsEventsInput">Order by</label>
+                    <!-- Group of default radios - option 1 -->
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="radioManual" name="groupOfDefaultRadios"
+                            #radioManual checked (click)="changeView($event, 1)">
+                        <label class="custom-control-label" for="radioManual">Asc</label>
+                    </div>
+
+                    <!-- Group of default radios - option 2 -->
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="radioDynamic" name="groupOfDefaultRadios"
+                            #radioDynamic (click)="changeView($event, 2)">
+                        <label class="custom-control-label" for="radioDynamic">Desc</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr />
 <div class="table-responsive">
     <table class="table table-hover">
         <thead class="thead-dark">
