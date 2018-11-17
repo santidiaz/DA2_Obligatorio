@@ -1,0 +1,38 @@
+<div class="container">
+
+    
+    <div class="row justify-content-start">
+        <div class="col-4">
+            <label for="dateFromInput">Date from</label>
+            <input type="datetime-local" class="form-control" name="date" id="dateFromInput" required [(ngModel)]="logRequest.fromDate"
+                aria-describedby="dateNameHelp" placeholder="Enter a date ...">
+        </div>
+        <div class="col-4">
+            <label for="dateToInput">Date to</label>
+            <input type="datetime-local" class="form-control" name="date" id="dateToInput" required [(ngModel)]="logRequest.toDate"
+                aria-describedby="dateNameHelp" placeholder="Enter a date ...">
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" [disabled]="!datesAreValid" (click)="filterLogByDates()">Filter</button>
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{errorMessage}}
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Tipo de Acción</th>
+                    <th scope="col">Fecha y hora</th>
+                    <th scope="col">Nombre de usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let log of auditLogs">
+                    <td>{{ log.action }}</td>
+                    <td>{{ log.logDate | date: 'dd/MM/yyyy hh:MM'}}</td>
+                    <td>{{ log.userName }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

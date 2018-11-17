@@ -35,14 +35,23 @@ import { AddEventComponent } from './sportsManager/components/event/addevent/add
 import { AddEventDynamicComponent } from './sportsManager/components/event/addeventdynamic/addeventdynamic.component';
 import { AddEventManualComponent } from './sportsManager/components/event/addeventmanual/addeventmanual.component';
 import { FixtureService } from './sportsManager/services/fixture.services';
+import { LogReportComponent } from './sportsManager/components/logs/log-report.component';
+import { LogService } from './sportsManager/services/log.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomMaterialModule } from './material.module';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
-    path: 'event', component: EventListComponent,
+    path: 'events', component: EventListComponent,
     canActivate: [AuthGuard],
     data: { onlyAdmin: false }
+  },
+  {
+    path: 'addEvent', component: AddEventComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
   },
   {
     path: 'editTeam', component: EditTeamComponent,
@@ -91,14 +100,13 @@ const appRoutes: Routes = [
     data: { onlyAdmin: true }
   },
   {
-    path: 'addEvent', component: AddEventComponent,
+    path: 'logs', component: LogReportComponent,
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
   },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
-
 
 @NgModule({
   declarations: [
@@ -119,6 +127,7 @@ const appRoutes: Routes = [
     AddEventComponent,
     AddEventDynamicComponent,
     AddEventManualComponent,
+    LogReportComponent,
     PageNotFoundComponent
   ],
   imports: [
@@ -126,10 +135,15 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
     ),
+    CustomMaterialModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
+  ],
+  exports: [
+    CustomMaterialModule
   ],
   providers: [
     BaseService,
@@ -140,6 +154,7 @@ const appRoutes: Routes = [
     SportService,
     TeamService,
     FixtureService,
+    LogService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

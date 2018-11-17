@@ -40,14 +40,18 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                      Teams
+                        aria-haspopup="true" aria-expanded="false">
+                        Teams
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" [routerLink]="['/listTeams']">All teams</a>
-                      <a class="dropdown-item" [routerLink]="['/addTeam']">Add team</a>
+                        <a class="dropdown-item" [routerLink]="['/addTeam']">Add team</a>
                     </div>
-                  </li>
+                </li>
+
+                <li class="nav-item" *ngIf="isAdmin">
+                    <a class="nav-link" [routerLink]="['/logs']">Logs Report</a>
+                </li>
                 <!--<li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">

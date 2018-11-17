@@ -54,7 +54,7 @@ export class LoginComponent extends BaseComponent {
     this.sessionService.setSession(response);
 
     if (this.sessionService.isAuthenticated) {
-      this.router.navigate(['/event']);
+      this.router.navigate(['/events']);
     }
   }
 

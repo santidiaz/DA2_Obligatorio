@@ -21,8 +21,8 @@ export class BaseService {
         return this.http.post<any>(`${environment.apiUrl}${url}`, request, { headers: this.getHeader(isTokenRequired) });
     }
 
-    get<Y>(url: string, isTokenRequired: boolean = false, params: HttpParams = undefined): Observable<Y> {
-        return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: this.getHeader(isTokenRequired) }, { params });
+    get<Y>(url: string, isTokenRequired: boolean = false, params: any = undefined): Observable<Y> {
+        return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: this.getHeader(isTokenRequired), params: this.generateParams(params) });
     }
 
     put<T, Y>(url: string, request: T, isTokenRequired: boolean = false): Observable<Y> {
@@ -37,7 +37,18 @@ export class BaseService {
         return !tokenRequired ? this.basicHeaderConfig : this.tokenHeaderConfig;
     }
 
-    getToken(){
-        return this.sessionService.getToken() 
+    private generateParams<T>(data: T): HttpParams {
+        if(data != undefined){
+            let httpParams = new HttpParams();
+            Object.keys(data).forEach(function (key) {
+                 httpParams = httpParams.append(key, data[key]);
+            });
+            return httpParams;
+        }
+        return undefined;
+    }
+
+    public getToken() : any{
+        this.sessionService.getToken();
     }
 }
