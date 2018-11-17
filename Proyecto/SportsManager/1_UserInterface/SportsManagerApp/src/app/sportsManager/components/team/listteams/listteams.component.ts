@@ -7,6 +7,7 @@ import { UserService } from "src/app/sportsManager/services/user.service";
 import { UserTeam } from "src/app/sportsManager/interfaces/user-team";
 import { AddFavoriteRequest } from "src/app/sportsManager/interfaces/addfavoriterequest";
 import { TeamRequestFilter } from "src/app/sportsManager/interfaces/team-request-filter";
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-listteams',
@@ -51,7 +52,6 @@ export class ListTeamsComponent extends BaseComponent {
             this.userFavoriteTeams = responseFavorite;
 
             this.teamService.getTeams(this.teamRequestFilter).subscribe(response => {
-
                 this.userFavoriteTeams.forEach(element2 => {
                     var aux = response.filter(x => x.teamOID === element2.teamId);
                     if(aux.length != 0) aux[0].isFavorite = true;

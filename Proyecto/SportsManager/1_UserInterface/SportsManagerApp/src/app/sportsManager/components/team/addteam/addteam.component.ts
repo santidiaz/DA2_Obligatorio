@@ -25,7 +25,7 @@ export class AddTeamComponent extends BaseComponent {
     private teamService: TeamService,
     private sportService: SportService) {
     super();
-    this.formModel = { teamOID: 0, name: '', photo: null, sportOID: 0, isFavorite: false };
+    this.formModel = { teamOID: 0, name: '', photo: null, sportOID: 0, isFavorite: false, photoString: '' };
   };
 
   ngOnInit() {
@@ -64,6 +64,6 @@ export class AddTeamComponent extends BaseComponent {
         let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
         let files: FileList = target.files;
         this.file = files[0];
-        this.formModel.photo = this.file;
+        this.formModel.photo = this.file; 
     }
 }

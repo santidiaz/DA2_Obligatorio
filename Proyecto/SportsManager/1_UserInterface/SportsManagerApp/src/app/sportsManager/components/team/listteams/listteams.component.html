@@ -1,7 +1,8 @@
 <hr />
 <h1>
     Team list
-</h1><hr />
+</h1>
+<hr />
 <div class="container">
     <div class="card">
         <h5 class="card-header">Filtro</h5>
@@ -9,11 +10,9 @@
             <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label for="sportNameInput">Name</label>
-                    <input type="text" 
-                    (input)="onSearchChange($event.target.value)"
-                     class="form-control" name="sportname" id="sportnameInput" 
-                    [(ngModel)]="teamRequestFilter.teamName"
-                    #nameee="ngModel" aria-describedby="sportNameHelp" placeholder="Enter the team Name...">
+                    <input type="text" (input)="onSearchChange($event.target.value)" class="form-control" name="sportname"
+                        id="sportnameInput" [(ngModel)]="teamRequestFilter.teamName" #nameee="ngModel" aria-describedby="sportNameHelp"
+                        placeholder="Enter the team Name...">
                 </div>
 
                 <div class="form-group">
@@ -50,7 +49,9 @@
         <tbody>
             <tr *ngFor="let team of teams">
                 <td>{{ team.name }}</td>
-                <td>{{ team.photo }}</td>
+                <td>
+                    <img src="data:image/png;base64,{{team.photoString}}" width="100" height="100" />
+                </td>
                 <td>
                     <input type="button" (click)="selectTeam($event, team)" value="Edit" />
                     <input type="button" (click)="deleteTeam($event, team)" value="Delete" />
@@ -66,12 +67,12 @@
         </tbody>
     </table>
     <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
-            {{ successMessage }}
+        {{ successMessage }}
     </div>
 
     <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
         {{ errorMessage }}
-      </div>
+    </div>
 
     <app-editteam *ngIf="isFormActive" (closeRequested)="closeForm($event)" [team]="selectTeam"></app-editteam>
 </div>

@@ -91,11 +91,12 @@ namespace SportsWebApi.Utilities
             team?.ForEach(
                 e =>
                 {
+                    var image = e.Photo != null ? System.Convert.ToBase64String(e.Photo) : string.Empty;
                     result.Add(newDTO = new TeamDTO
                     {
                         TeamOID = e.Id,
                         Name = e.Name,
-                        Photo = e.Photo,
+                        PhotoString = image,
                         IsFavorite = false
                     });
                 });

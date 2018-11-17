@@ -3,5 +3,6 @@ export interface TeamRequest {
     name: string;
     sportOID: number;
     photo: File;
-    isFavorite: Boolean
+    isFavorite: Boolean;
+    photoString: string;
 }
