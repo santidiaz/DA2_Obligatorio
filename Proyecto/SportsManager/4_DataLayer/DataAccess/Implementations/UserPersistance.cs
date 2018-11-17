@@ -114,7 +114,7 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                var userOnDB = context.UserTeams.Where(u => u.UserId == user.Id && u.UserId == team.Id).FirstOrDefault();
+                var userOnDB = context.UserTeams.Where(u => u.UserId == user.Id && u.TeamId == team.Id).FirstOrDefault();
                 context.UserTeams.Remove(userOnDB);
                 context.SaveChanges();
             }

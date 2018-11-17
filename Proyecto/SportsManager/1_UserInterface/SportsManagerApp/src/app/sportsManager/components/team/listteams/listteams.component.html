@@ -8,6 +8,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Photo</th>
                 <th scope="col">Acción</th>
+                <th scope="col">Favorite</th>
             </tr>
         </thead>
         <tbody>
@@ -17,6 +18,13 @@
                 <td>
                     <input type="button" (click)="selectTeam($event, team)" value="Edit" />
                     <input type="button" (click)="deleteTeam($event, team)" value="Delete" />
+                </td>
+                <td>
+                    <input *ngIf="!team.isFavorite" type="button" (click)="addFavoriteTeam($event, team)" value="Add favorite" />
+                    <div *ngIf="team.isFavorite">
+                        In favorite
+                        <input *ngIf="team.isFavorite" type="button" (click)="deleteFavoriteTeam($event, team)" value="Delete favorite" />
+                    </div>
                 </td>
             </tr>
         </tbody>

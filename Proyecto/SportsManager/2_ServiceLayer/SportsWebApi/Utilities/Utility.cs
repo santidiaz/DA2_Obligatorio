@@ -83,5 +83,23 @@ namespace SportsWebApi.Utilities
             }
             return result.OrderByDescending(r => r.Points).ToList();
         }
+
+        public static List<TeamDTO> TransformTeamToDTO(List<Team> team)
+        {
+            var result = new List<TeamDTO>();
+            TeamDTO newDTO;
+            team?.ForEach(
+                e =>
+                {
+                    result.Add(newDTO = new TeamDTO
+                    {
+                        TeamOID = e.Id,
+                        Name = e.Name,
+                        Photo = e.Photo,
+                        IsFavorite = false
+                    });
+                });
+            return result;
+        }
     }
 }

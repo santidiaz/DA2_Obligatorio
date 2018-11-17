@@ -25,7 +25,7 @@ export class AddTeamComponent extends BaseComponent {
     private teamService: TeamService,
     private sportService: SportService) {
     super();
-    this.formModel = { teamOID: 0, name: '', photo: null, sportOID: 0 };
+    this.formModel = { teamOID: 0, name: '', photo: null, sportOID: 0, isFavorite: false };
   };
 
   ngOnInit() {

@@ -157,7 +157,7 @@ namespace SportsWebApi.Controllers
         {
             try
             {
-                List<Team> result = teamOperations.GetTeams(teamName, orderAsc);
+                var result = Utility.TransformTeamToDTO(teamOperations.GetTeams(teamName, orderAsc));
                 return Ok(result);
             }
             catch (EntitiesException ex)
