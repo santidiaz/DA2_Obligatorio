@@ -15,7 +15,6 @@ export class LogReportComponent extends BaseComponent {
 
   auditLogs: Array<Log> = [];
   logRequest: LogRequest;
-
   errorMessage: string;
 
   constructor(
@@ -32,6 +31,7 @@ export class LogReportComponent extends BaseComponent {
 
 
   filterLogByDates() {
+    this.errorMessage = undefined;
     this.logService.getLogs(this.logRequest).subscribe(
       response => this.handleResponse(response),
       error => this.handleError(error));

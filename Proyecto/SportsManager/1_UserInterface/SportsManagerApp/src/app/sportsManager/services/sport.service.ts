@@ -4,6 +4,7 @@ import { BaseService } from "./base.service";
 import { Observable } from "rxjs";
 import { SportRequest } from "../interfaces/sportrequest";
 import { SportModifyRequest } from "../interfaces/sportmodifyrequest";
+import { Event } from "../interfaces/event";
 
 @Injectable()
 export class SportService {
@@ -14,10 +15,14 @@ export class SportService {
         return this.baseService.post<SportRequest, any>('sport', request);
       }
 
-      getSports(): Observable<SportRequest[]> {
-        return this.http.get<SportRequest[]>(`http://localhost:5005/api/sport`);
+      getSports(): Observable<Array<SportRequest>> {
+        return this.baseService.get<Array<SportRequest>>('sport', true);
       }
 
+      getSportEvents(sportName: string): Observable<Array<Event>> {
+        return this.baseService.get<Array<Event>>(`sport/${sportName}/events`, true);
+      }
+      
       deleteSport(sportName: string): Observable<any> {
         return this.http.delete(`http://localhost:5005/api/sport/${sportName}`, {  observe: 'response' });
       }

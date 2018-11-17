@@ -39,6 +39,12 @@ import { LogReportComponent } from './sportsManager/components/logs/log-report.c
 import { LogService } from './sportsManager/services/log.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMaterialModule } from './material.module';
+import { CommonModule } from '@angular/common';
+
+
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { EventsCalendar } from './sportsManager/components/event/eventGrid/event-calendar.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -52,6 +58,11 @@ const appRoutes: Routes = [
     path: 'addEvent', component: AddEventComponent,
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
+  },
+  {
+    path: 'eventsCalendar', component: EventsCalendar,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: false }
   },
   {
     path: 'editTeam', component: EditTeamComponent,
@@ -128,6 +139,7 @@ const appRoutes: Routes = [
     AddEventDynamicComponent,
     AddEventManualComponent,
     LogReportComponent,
+    EventsCalendar,
     PageNotFoundComponent
   ],
   imports: [
@@ -135,6 +147,11 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
     ),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
+    CommonModule,
     CustomMaterialModule,
     BrowserModule,
     AppRoutingModule,
@@ -143,7 +160,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule
   ],
   exports: [
-    CustomMaterialModule
+    CustomMaterialModule,
+    CalendarModule
   ],
   providers: [
     BaseService,
