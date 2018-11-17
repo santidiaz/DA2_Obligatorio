@@ -64,6 +64,6 @@ export class AddTeamComponent extends BaseComponent {
         let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
         let files: FileList = target.files;
         this.file = files[0];
-        console.log(this.file);
+        this.formModel.photo = this.file;
     }
 }
