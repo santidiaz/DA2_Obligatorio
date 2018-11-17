@@ -34,7 +34,7 @@ import { UserService } from "src/app/sportsManager/services/user.service";
       private sessionService: SessionService,
       private userService: UserService) {
       super();
-      this.formModel = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: ''};
+      this.formModel = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: '', password: ''};
     };
 
     ngOnInit() {

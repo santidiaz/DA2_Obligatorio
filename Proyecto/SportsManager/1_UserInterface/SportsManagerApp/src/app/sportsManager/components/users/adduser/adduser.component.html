@@ -7,13 +7,13 @@
           <div class="form-group">
             <label for="userNameInput">User name</label>
             <input type="text" class="form-control" name="username" id="usernameInput" required
-              [(ngModel)]="formModel.username" #nameee="ngModel"  aria-describedby="userNameHelp" placeholder="Enter the userName...">
+              [(ngModel)]="formModel.userName" #nameee="ngModel"  aria-describedby="userNameHelp" placeholder="Enter the userName...">
           </div>
 
           <div class="form-group">
             <label for="lastnameInput">Last name</label>
             <input type="lastname" class="form-control" name="lastname" id="lastnameInput" required 
-            [(ngModel)]="formModel.lastname"  placeholder="Enter the lastname...">
+            [(ngModel)]="formModel.lastName"  placeholder="Enter the lastname...">
           </div>
 
           <div class="form-group">
@@ -33,6 +33,12 @@
             <input type="password" class="form-control" name="password" id="passwordInput" required 
             [(ngModel)]="formModel.password"  placeholder="Enter your password...">
           </div>
+
+          <div class="form-group">
+              <label for="isAdminInput">Is Admin</label>
+              <input type="checkbox" class="form-control" name="isAdmin" id="isAdminInput" required
+                [(ngModel)]="formModel.isAdmin" #nameee="ngModel"  aria-describedby="isAdminHelp" placeholder="Check if is admin...">
+            </div>
           
           <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
               {{ successMessage }}

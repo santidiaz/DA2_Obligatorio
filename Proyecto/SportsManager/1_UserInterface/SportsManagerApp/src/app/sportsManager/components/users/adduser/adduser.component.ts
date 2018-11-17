@@ -23,7 +23,7 @@ export class AddUserComponent extends BaseComponent {
     private sessionService: SessionService,
     private userService: UserService) {
     super();
-    this.formModel = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: ''};
+    this.formModel = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: '', password: ''};
   };
 
   ngOnInit() {
@@ -32,10 +32,23 @@ export class AddUserComponent extends BaseComponent {
   }  
 
   onSubmit() {
-    this.userService.addUser(this.formModel)
+
+    if (this.formModel.userName == '' ||
+      this.formModel.name == '' ||
+      this.formModel.lastName == '' ||
+      this.formModel.email == '' ||
+      this.formModel.password == '') {
+        this.errorMessage = 'Complete all the required information';
+    }
+    else {
+      this.errorMessage = null;
+      this.userService.addUser(this.formModel)
       .subscribe(
         response => this.handleResponse(response),
         error => this.handleError(error));
+    }
+
+    
   }
 
   private handleResponse(response: any) {

@@ -5,4 +5,5 @@ export interface UserRequest {
     userName: string;
     email: string;
     isAdmin: boolean;
+    password: string
 }
