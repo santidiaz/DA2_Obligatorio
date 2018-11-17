@@ -64,19 +64,20 @@ namespace BusinessLogic
             return team;
         }
 
-        public bool DeleteTeamByName(string name)
+        public void DeleteTeamByName(string name)
         {
             try
             {
-                bool result = true;
                 Team teamToDelete = this.GetTeamByName(name);
 
                 if (teamToDelete != null && !this.ValidateTeamOnEvents(teamToDelete))
                     this.teamPersistance.DeleteTeamByName(teamToDelete);
                 else
-                    result = false;
-
-                return result;
+                    throw new EntitiesException(Constants.TeamErrors.TEAM_EXISTES_ON_EVENT, ExceptionStatusCode.Conflict);
+            }
+            catch (EntitiesException)
+            {
+                throw new EntitiesException(Constants.TeamErrors.TEAM_EXISTES_ON_EVENT, ExceptionStatusCode.Conflict);
             }
             catch (Exception)
             {

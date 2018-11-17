@@ -25,5 +25,9 @@
             {{ successMessage }}
     </div>
 
+    <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
+        {{ errorMessage }}
+      </div>
+
     <app-editteam *ngIf="isFormActive" (closeRequested)="closeForm($event)" [team]="selectTeam"></app-editteam>
 </div>

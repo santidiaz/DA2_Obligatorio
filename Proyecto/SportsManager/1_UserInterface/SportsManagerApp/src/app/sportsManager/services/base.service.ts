@@ -22,7 +22,7 @@ export class BaseService {
     }
 
     get<Y>(url: string, isTokenRequired: boolean = false, params: HttpParams = undefined): Observable<Y> {
-        return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: this.getHeader(isTokenRequired) }, { params });
+        return this.http.get<any>(`${environment.apiUrl}${url}`, { headers: this.getHeader(isTokenRequired),  params });
     }
 
     put<T, Y>(url: string, request: T, isTokenRequired: boolean = false): Observable<Y> {

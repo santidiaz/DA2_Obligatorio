@@ -51,6 +51,7 @@ namespace CommonUtilities
             public const string PHOTO_INVALID = "Invalid photo";
             public const string TEAM_NAME_NOT_FOUND = "The team <{0}> was not found";
             public const string TEAM_Id_FAIL = "The sport to add are invalid";
+            public const string TEAM_EXISTES_ON_EVENT = "The team is in an event";
         }
 
         public static class Sport

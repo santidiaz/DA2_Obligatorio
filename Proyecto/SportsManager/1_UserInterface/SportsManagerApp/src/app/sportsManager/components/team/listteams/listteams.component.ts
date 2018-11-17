@@ -14,6 +14,7 @@ export class ListTeamsComponent extends BaseComponent {
 
     teams: Array<TeamRequest>;
     successMessage: string = null;
+    errorMessage: string = null;
     isFormActive: boolean;
     selectedTeam: TeamRequest;
 
@@ -26,6 +27,7 @@ export class ListTeamsComponent extends BaseComponent {
     ngOnInit() {
         this.updateGrid();
         this.successMessage = null;
+        this.errorMessage = null;
     }
 
     updateGrid(): void {
@@ -35,11 +37,9 @@ export class ListTeamsComponent extends BaseComponent {
     }
 
     deleteTeam($event, team: TeamRequest) {
-        this.teamService.deleteTeam(team.name).subscribe(resp => {
-            console.log(JSON.stringify(resp));
-            this.successMessage = 'Operation success';
-            this.updateGrid();
-        });
+        this.teamService.deleteTeam(team.name).subscribe(
+            response => this.handleResponse(response),
+            error => this.handleError(error));
     }
 
     selectTeam($event, team: TeamRequest) {
@@ -50,5 +50,17 @@ export class ListTeamsComponent extends BaseComponent {
     closeForm($event) {
         this.isFormActive = false;
     }
+
+    private handleResponse(response: any) {
+        //this.sessionService.setSession(response);
+        this.errorMessage = null;
+        this.successMessage = 'Operation success';
+        this.updateGrid();
+      }
+    
+      private handleError(error: any) {
+        this.successMessage = null;
+        this.errorMessage = error.error;
+      }
 
 }

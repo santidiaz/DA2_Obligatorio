@@ -12,7 +12,7 @@ namespace BusinessContracts
         void ModifyTeamByName(string name, Team team);
         Team GetTeamByName(string name);
         Team GetTeamById(int teamId);
-        bool DeleteTeamByName(string name);
+        void DeleteTeamByName(string name);
         List<Event> GetEventsByTeam(string team);
     }
 }
