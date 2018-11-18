@@ -1,10 +1,7 @@
 import { BaseComponent } from "src/app/sportsManager/shared/base.component";
 import { Component, Output, EventEmitter, Input, SimpleChanges } from "@angular/core";
 import { SessionService } from "src/app/sportsManager/services/session.service";
-import { TeamService } from "src/app/sportsManager/services/team.service";
-import { SportService } from "src/app/sportsManager/services/sport.service";
 import { Event } from '../../../interfaces/event'
-import { Router } from "@angular/router";
 import { AddCommentRequest } from "src/app/sportsManager/interfaces/add-comment-request";
 import { CommentService } from "src/app/sportsManager/services/comment.service";
 import { EventService } from "src/app/sportsManager/services/event.service";
