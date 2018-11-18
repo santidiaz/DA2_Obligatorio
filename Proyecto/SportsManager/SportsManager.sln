@@ -43,11 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixtureProvider", "Cross-Cu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixtureContracts", "3_BusinessLayer\FixtureContracts\FixtureContracts.csproj", "{084B9D1E-65DF-4645-9960-50AD10869CBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogProvider", "Cross-Cutting\LogProvider\LogProvider.csproj", "{A4F58BF3-8998-46C8-AC7D-8FD46BCCB455}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogProvider", "Cross-Cutting\LogProvider\LogProvider.csproj", "{A4F58BF3-8998-46C8-AC7D-8FD46BCCB455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogContracts", "3_BusinessLayer\LogContracts\LogContracts.csproj", "{6B6DEB70-AD46-4D3A-BE50-E69B26127D2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogContracts", "3_BusinessLayer\LogContracts\LogContracts.csproj", "{6B6DEB70-AD46-4D3A-BE50-E69B26127D2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogLogic", "3_BusinessLayer\LogLogic\LogLogic.csproj", "{DA76B1BB-183D-410C-943E-D4A57F7EF313}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogLogic", "3_BusinessLayer\LogLogic\LogLogic.csproj", "{DA76B1BB-183D-410C-943E-D4A57F7EF313}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

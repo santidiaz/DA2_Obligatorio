@@ -10,9 +10,10 @@
                         Event <span class="sr-only">(current)</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" [routerLink]="['/favTeamsEvents']">Favourite teams events</a>
                         <a class="dropdown-item" [routerLink]="['/events']">All events</a>
+                        <a class="dropdown-item" [routerLink]="['/eventsCalendar']">Events Calendar</a>
                         <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/addEvent']">Add event</a>
-                        <a class="dropdown-item" *ngIf="isAdmin" [routerLink]="['/eventsCalendar']">Calendar</a>
                     </div>
                 </li>
 

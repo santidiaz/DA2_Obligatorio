@@ -233,7 +233,7 @@ namespace SportsWebApi.Controllers
                 if (searchedEvents == null)
                     return NotFound();
 
-                return Ok(searchedEvents);
+                return Ok(Utility.TransformEventsToDTOs(searchedEvents));
             }
             catch (EntitiesException eEx)
             {
