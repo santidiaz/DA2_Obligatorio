@@ -47,6 +47,6 @@ export class TeamService {
         formData.append('OldName', request.oldName); 
         formData.append('NewName', request.newName); 
 
-        return this.http.put(`http://localhost:5005/api/team`, {  observe: 'response' });
+        return this.http.put(`http://localhost:5005/api/team`, formData)
       }
 }

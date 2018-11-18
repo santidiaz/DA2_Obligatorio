@@ -96,6 +96,7 @@ namespace SportsWebApi.Utilities
                     {
                         TeamOID = e.Id,
                         Name = e.Name,
+                        Photo = e.Photo,
                         PhotoString = image,
                         IsFavorite = false
                     });

@@ -11,6 +11,7 @@ namespace SportsWebApi.Models.EventModel
         public string Name { get; set; }
         public int SportOID { get; set; }
         public string PhotoString { get; set; }
+        public byte[] Photo { get; set; }
         public bool IsFavorite { get; set; }
     }
 }

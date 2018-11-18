@@ -8,6 +8,7 @@ import { UserTeam } from "src/app/sportsManager/interfaces/user-team";
 import { AddFavoriteRequest } from "src/app/sportsManager/interfaces/addfavoriterequest";
 import { TeamRequestFilter } from "src/app/sportsManager/interfaces/team-request-filter";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { TeamModifyRequest } from "src/app/sportsManager/interfaces/teammodifyrequest";
 
 @Component({
     selector: 'app-listteams',
@@ -21,7 +22,7 @@ export class ListTeamsComponent extends BaseComponent {
     successMessage: string = null;
     errorMessage: string = null;
     isFormActive: boolean;
-    selectedTeam: TeamRequest;
+    selectedTeam: TeamModifyRequest;
     userFavoriteTeams: Array<UserTeam>;
     addEventReqeust: AddFavoriteRequest;
     teamRequestFilter: TeamRequestFilter;
@@ -33,6 +34,7 @@ export class ListTeamsComponent extends BaseComponent {
         super();
         this.addEventReqeust = { UserName: '', NetFavouriteTeamsOID: [] };
         this.teamRequestFilter = { teamName: '', orderAsc: true};
+        this.selectedTeam = { sportOID: 0, newName: '', oldName: '', photo: null, photoString: '', teamOID: 0, newPhoto: null };
     };
 
     ngOnInit() {
@@ -69,12 +71,18 @@ export class ListTeamsComponent extends BaseComponent {
     }
 
     selectTeam($event, team: TeamRequest) {
-        this.selectedTeam = team;
+        this.selectedTeam.newName = team.name;
+        this.selectedTeam.oldName = team.name;
+        this.selectedTeam.photo = team.photo;
+        this.selectedTeam.teamOID = team.teamOID;
+        this.selectedTeam.photoString = team.photoString;
+        this.selectedTeam.sportOID = team.sportOID;
         this.isFormActive = true;
       }
 
     closeForm($event) {
         this.isFormActive = false;
+        this.updateGrid();
     }
 
     private handleResponse(response: any, message: string) {

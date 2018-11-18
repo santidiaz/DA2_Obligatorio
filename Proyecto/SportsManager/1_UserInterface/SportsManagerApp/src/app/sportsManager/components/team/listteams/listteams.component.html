@@ -74,5 +74,5 @@
         {{ errorMessage }}
     </div>
 
-    <app-editteam *ngIf="isFormActive" (closeRequested)="closeForm($event)" [team]="selectTeam"></app-editteam>
+    <app-editteam *ngIf="isFormActive" (closeRequested)="closeForm($event)" [team]="selectedTeam"></app-editteam>
 </div>

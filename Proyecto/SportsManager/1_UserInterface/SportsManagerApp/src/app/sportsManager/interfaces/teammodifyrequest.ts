@@ -3,4 +3,7 @@ export interface TeamModifyRequest {
     newName: string;
     oldName: string;
     photo: File;
+    newPhoto: File;
+    photoString: string;
+    sportOID: number;
 }
