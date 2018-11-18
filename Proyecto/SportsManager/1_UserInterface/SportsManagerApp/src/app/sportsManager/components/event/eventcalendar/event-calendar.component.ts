@@ -58,6 +58,8 @@ export class EventsCalendar extends BaseComponent {
   sports: Array<SportRequest> = [];
   sportEvents: Array<Event> = [];
   showCalendar: boolean = false;
+  showEventDetails: boolean = false;
+  selectedEvent: Event;
 
   constructor(private sportService: SportService) {
     super();
@@ -67,9 +69,14 @@ export class EventsCalendar extends BaseComponent {
     this.sportService.getSports().subscribe(response => {
       this.sports = response;
     });
+    this.selectedEvent = undefined;
   }
 
   onChange(selectedValue: SportRequest) {
+    this.calendarEvents = [];
+    this.showEventDetails = false;
+    this.activeDayIsOpen = false;
+
     this.sportService.getSportEvents(selectedValue.name).subscribe(response => {
       this.sportEvents = response;
       this.loadCalendarEvents();
@@ -78,41 +85,35 @@ export class EventsCalendar extends BaseComponent {
   }
 
   loadCalendarEvents() {
-
     this.sportEvents.forEach((element: Event) => {
-      this.events.push({
+      this.calendarEvents.push({
         title: this.showTeams(element),
         start: startOfDay(<any>element.initialDate),
         end: endOfDay(<any>element.initialDate),
+        id: element.id,
         color: colors.red,
-        draggable: true,
+        draggable: false,
         resizable: {
           beforeStart: true,
           afterEnd: true
         }
       });
       this.refresh.next();
-
-
     });
   }
 
-
-
-
-
-  showTeams(eventData: Event) : string {
+  showTeams(eventData: Event): string {
     let result: string = "";
 
-    if(eventData.allowMultipleTeams){
+    if (eventData.allowMultipleTeams) {
       eventData.teams.forEach(team => {
-        result += team.name + '\n';
+        result += team.name + ' | ';
       });
 
     } else {
       result = eventData.teams[0].name + ' vs ' + eventData.teams[1].name;
     }
-    
+
     return result;
   }
 
@@ -127,57 +128,11 @@ export class EventsCalendar extends BaseComponent {
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
+        this.calendarEvents = this.calendarEvents.filter(iEvent => iEvent !== event);
         this.handleEvent('Deleted', event);
       }
     }
   ];
-
-  events: CalendarEvent[] = [
-    /*{
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 5),
-      end: addDays(endOfMonth(new Date()), 5),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }*/
-  ];
-
-
-
-
-
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -205,21 +160,16 @@ export class EventsCalendar extends BaseComponent {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    //this.modalData = { event, action };      
+    this.showCalendar = false;
+    this.showEventDetails = true;
+    this.activeDayIsOpen = false;
+
+    this.selectedEvent = this.sportEvents.find(se => se.id == event.id);
   }
 
-  addEvent(): void {
-    this.events.push({
-      title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
-      color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      }
-    });
-    this.refresh.next();
+  closeDetails($event) {
+    this.showCalendar = true;
+    this.activeDayIsOpen = false;
+    this.showEventDetails = false;
   }
 }

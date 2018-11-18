@@ -1,0 +1,43 @@
+<div *ngIf="event != undefined && !event.allowMultipleTeams" class="card text-center">
+
+    <div class="card-header">
+        {{event.sportName}}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{event.teams[0].name}} vs {{event.teams[1].name}}</h5>
+        <p class="card-text">aaaaaa</p>
+        <button type="button" (click)="closeDetails()" class="btn btn-primary">Back to calendar</button>
+    </div>
+    <div class="card-footer text-muted">
+        Fecha: {{ event.initialDate | date: 'dd/MM/yyyy' }}
+    </div>
+</div>
+
+
+
+<div *ngIf="event != undefined && event.allowMultipleTeams" class="card text-center">
+    <div class="card-header"></div>
+    <div class="card-body">
+        <h5 class="card-title">{{event.sportName}}</h5>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Player name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let team of event.teams">
+                    <th scope="row">{{team.id}}</th>
+                    <td>{{team.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <button type="button" (click)="closeDetails()" class="btn btn-primary">Back to calendar</button>
+    </div>
+    <div class="card-footer text-muted">
+        Fecha: {{ event.initialDate | date: 'dd/MM/yyyy' }}
+    </div>
+</div>
