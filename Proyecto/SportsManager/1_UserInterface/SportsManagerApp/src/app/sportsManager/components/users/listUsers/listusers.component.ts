@@ -44,12 +44,13 @@ export class ListUsersComponent extends BaseComponent {
         });
     }
 
-    selectUser($event, user: UserRequest) {
+    selectUser(event: any, user: UserRequest) {
         this.selectedUser = user;
         this.isFormActive = true;
       }
 
     closeForm($event) {
         this.isFormActive = false;
+        this.updateGrid();
     }
 }

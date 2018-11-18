@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { UserRequest } from "src/app/sportsManager/interfaces/userrequest";
 import { BaseComponent } from "src/app/sportsManager/shared/base.component";
 import { SessionService } from "src/app/sportsManager/services/session.service";
 import { UserService } from "src/app/sportsManager/services/user.service";
+import { UserRequest } from "src/app/sportsManager/interfaces/userrequest";
 
 @Component({
     selector: 'app-useredit',
@@ -12,19 +12,24 @@ import { UserService } from "src/app/sportsManager/services/user.service";
 
   export class UserEditComponent extends BaseComponent{
 
-    formModel: UserRequest;
     // @Input() user: UserRequest;
+    //_user: UserRequest;
     _user: UserRequest;
-
+ 
+    @Input()
+    set user(u: UserRequest){
+        this._user.userName = u.userName;
+        this._user.userOID = u.userOID;
+        this._user.password = '';
+        this._user.name = u.name;
+        this._user.lastName = u.lastName;
+        this._user.email = u.email;
+        this._user.isAdmin = u.isAdmin;
+    }
     get user() : UserRequest{
       return this._user; // una variable privada por ahi
     }
 
-    @Input()
-    set user(u: UserRequest){
-        this._user = u;
-    }
-    
     @Output() closeRequested = new EventEmitter<boolean>();
 
     errorMessage: string = null;
@@ -34,18 +39,12 @@ import { UserService } from "src/app/sportsManager/services/user.service";
       private sessionService: SessionService,
       private userService: UserService) {
       super();
-      this.formModel = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: '', password: ''};
+      this._user = { userOID: 0, userName: '', name: '', lastName: '', isAdmin: false, email: '', password: ''};
     };
 
     ngOnInit() {
       this.successMessage = null;
       this.errorMessage = null;
-      this.formModel.userOID = this.user.userOID, 
-      this.formModel.userName = this.user.userName, 
-      this.formModel.name = this.user.name, 
-      this.formModel.lastName = this.user.lastName, 
-      this.formModel.isAdmin = this.user.isAdmin, 
-      this.formModel.email = this.user.email
     }  
 
     onSubmit() {
@@ -59,11 +58,12 @@ import { UserService } from "src/app/sportsManager/services/user.service";
       //this.sessionService.setSession(response);
       this.errorMessage = null;
       this.successMessage = 'Operation success';
+      this.cancel();
     }
   
     private handleError(error: any) {
       this.successMessage = null;
-      this.errorMessage = error.error;
+      this.errorMessage = "Validate the information entered : " + error.error + " ";
     }
     
     cancel() {

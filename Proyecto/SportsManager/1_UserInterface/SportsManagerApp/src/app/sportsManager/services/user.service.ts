@@ -24,7 +24,7 @@ export class UserService {
   }
 
   editUser(request: UserRequest): Observable<any> {
-    return this.http.put(`http://localhost:5005/api/user/${request.userName}`, { observe: 'response' });
+    return this.baseService.put<UserRequest, any>(`user/${request.userName}`, request);
   }
 
   getUserFavoriteTeams(userName: string): Observable<UserTeam[]> {
