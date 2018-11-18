@@ -26,18 +26,6 @@ export class TeamService {
         let algo = { orderAsc: order, teamName: teamRequestFilter.teamName };
         return this.baseService.get<TeamRequest[]>('team', true, algo);
 
-        /*var auxHeaders = new HttpHeaders(
-          { 
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-              'Authorization': this.baseService.getToken() 
-          });
-
-        
-        return this.baseService.get<TeamRequest[]>(`team`, 
-                                            { headers: auxHeaders, 
-                                              params: { orderAsc: order, teamName: teamRequestFilter.teamName }
-                                            });*/
       }
 
       deleteTeam(teamName: string): Observable<any> {

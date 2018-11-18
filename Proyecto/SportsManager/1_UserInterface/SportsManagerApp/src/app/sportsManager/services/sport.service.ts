@@ -24,7 +24,7 @@ export class SportService {
       }
       
       deleteSport(sportName: string): Observable<any> {
-        return this.http.delete(`http://localhost:5005/api/sport/${sportName}`, {  observe: 'response' });
+        return this.baseService.delete(`sport/${sportName}`, true);
       }
 
       editSport(request: SportModifyRequest): Observable<any> {
