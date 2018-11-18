@@ -35,6 +35,7 @@ import { AddEventComponent } from './sportsManager/components/event/addevent/add
 import { AddEventDynamicComponent } from './sportsManager/components/event/addeventdynamic/addeventdynamic.component';
 import { AddEventManualComponent } from './sportsManager/components/event/addeventmanual/addeventmanual.component';
 import { FixtureService } from './sportsManager/services/fixture.services';
+import { EventListByParamComponent } from './sportsManager/components/event/eventListByParam/eventListByParam.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -95,6 +96,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
   },
+  {
+    path: 'listEventByParam', component: EventListByParamComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -119,6 +125,7 @@ const appRoutes: Routes = [
     AddEventComponent,
     AddEventDynamicComponent,
     AddEventManualComponent,
+    EventListByParamComponent ,
     PageNotFoundComponent
   ],
   imports: [
