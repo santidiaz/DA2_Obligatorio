@@ -25,5 +25,5 @@
             {{ successMessage }}
     </div>
 
-    <app-editsport *ngIf="isFormActive" (closeRequested)="closeForm($event)" [sport]="selectSport"></app-editsport>
+    <app-editsport *ngIf="isFormActive" (closeRequested)="closeForm($event)" [sport]="selectedSport"></app-editsport>
 </div>

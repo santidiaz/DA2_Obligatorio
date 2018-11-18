@@ -3,6 +3,7 @@ import { BaseComponent } from "src/app/sportsManager/shared/base.component";
 import { SessionService } from "src/app/sportsManager/services/session.service";
 import { SportRequest } from "src/app/sportsManager/interfaces/sportrequest";
 import { SportService } from "src/app/sportsManager/services/sport.service";
+import { SportModifyRequest } from "src/app/sportsManager/interfaces/sportmodifyrequest";
 
 
 @Component({
@@ -17,12 +18,13 @@ export class ListSportsComponent extends BaseComponent {
     sports: Array<SportRequest>;
     successMessage: string = null;
     isFormActive: boolean;
-    selectedSport: SportRequest;
+    selectedSport: SportModifyRequest;
 
     constructor(
         private sessionService: SessionService,
         private sportService: SportService) {
         super();
+        this.selectedSport = { sportOID: 0, newName: '', oldName: '', multipleTeamsAllowed: false };
     };
 
     ngOnInit() {
@@ -45,11 +47,15 @@ export class ListSportsComponent extends BaseComponent {
     }
 
     selectSport($event, sport: SportRequest) {
-        this.selectedSport = sport;
+        this.selectedSport.newName = sport.name;
+        this.selectedSport.oldName = sport.name;
+        this.selectedSport.multipleTeamsAllowed = sport.multipleTeamsAllowed;
+        this.selectedSport.sportOID = sport.sportOID;
         this.isFormActive = true;
       }
 
     closeForm($event) {
         this.isFormActive = false;
+        this.updateGrid();
     }
 }
