@@ -18,6 +18,7 @@ export class ListSportsComponent extends BaseComponent {
 
     sports: Array<SportRequest>;
     successMessage: string = null;
+    errorMessage: string = null;
     isFormActive: boolean;
     selectedSport: SportModifyRequest;
 
@@ -32,6 +33,7 @@ export class ListSportsComponent extends BaseComponent {
     ngOnInit() {
         this.updateGrid();
         this.successMessage = null;
+        this.errorMessage = null;
     }
 
     updateGrid(): void {
@@ -41,11 +43,9 @@ export class ListSportsComponent extends BaseComponent {
     }
 
     deleteSport($event, sport: SportRequest) {
-        this.sportService.deleteSport(sport.name).subscribe(resp => {
-            console.log(JSON.stringify(resp));
-            this.successMessage = 'Operation success';
-            this.updateGrid();
-        });
+        this.sportService.deleteSport(sport.name).subscribe(
+            response => this.handleResponse(response, 'Delete team success'),
+            error => this.handleError(error));
     }
 
     selectSport($event, sport: SportRequest) {
@@ -64,4 +64,16 @@ export class ListSportsComponent extends BaseComponent {
     reportEvents($event, sport: SportRequest) {
         this.router.navigate(['/listEventByParam', { name: sport.name, item: '2' }]);
     }
+
+    private handleResponse(response: any, message: string) {
+        //this.sessionService.setSession(response);
+        this.errorMessage = null;
+        this.successMessage = message;
+        this.updateGrid();
+      }
+    
+      private handleError(error: any) {
+        this.successMessage = null;
+        this.errorMessage = error.error;
+      }
 }

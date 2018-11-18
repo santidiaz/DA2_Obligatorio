@@ -15,16 +15,20 @@
                 <td>{{ sport.name }}</td>
                 <td>{{ sport.allowdMultipleTeamsEvents }}</td>
                 <td>
-                    <input type="button" (click)="selectSport($event, sport)" value="Edit" />
-                    <input type="button" (click)="deleteSport($event, sport)" value="Delete" />
-                    <input type="button" (click)="reportEvents($event, sport)" value="Report events" />
+                    <input type="button" class="btn btn-warning" (click)="selectSport($event, sport)" value="Edit" />
+                    <input type="button" class="btn btn-danger" (click)="deleteSport($event, sport)" value="Delete" />
+                    <input type="button" class="btn btn-primary" (click)="reportEvents($event, sport)" value="Report events" />
                 </td>
             </tr>
         </tbody>
     </table>
     <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
             {{ successMessage }}
-    </div>
+        </div>
+    
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
+            {{ errorMessage }}
+        </div>
 
     <app-editsport *ngIf="isFormActive" (closeRequested)="closeForm($event)" [sport]="selectedSport"></app-editsport>
 </div>

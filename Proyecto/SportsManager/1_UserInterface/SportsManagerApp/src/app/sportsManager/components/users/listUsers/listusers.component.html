@@ -21,8 +21,8 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.isAdmin }}</td>
                 <td>
-                    <input type="button" (click)="selectUser($event, user)" value="Edit" />
-                    <input type="button" (click)="deleteUser($event, user)" value="Delete" />
+                    <input type="button" class="btn btn-warning" (click)="selectUser($event, user)" value="Edit" />
+                    <input type="button" class="btn btn-danger" (click)="deleteUser($event, user)" value="Delete" />
                 </td>
             </tr>
         </tbody>

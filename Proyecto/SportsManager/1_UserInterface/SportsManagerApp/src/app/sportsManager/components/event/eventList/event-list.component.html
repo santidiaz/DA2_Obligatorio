@@ -36,8 +36,8 @@
                 </td>
 
                 <td class="float: right !important;" *ngIf="isAdmin">
-                    <input *ngIf="event.result == null" type="button" (click)="selectEvent($event, event)" value="Edit" />
-                    <input type="button" (click)="deleteEvent($event, event)" value="Delete" />
+                    <input *ngIf="event.result == null" type="button" class="btn btn-warning" (click)="selectEvent($event, event)" value="Edit" />
+                    <input type="button" class="btn btn-danger" (click)="deleteEvent($event, event)" value="Delete" />
                 </td>
             </tr>
         </tbody>
