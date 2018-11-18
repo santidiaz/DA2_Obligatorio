@@ -30,4 +30,8 @@ export class SportService {
       editSport(request: SportModifyRequest): Observable<any> {
         return this.baseService.put<SportModifyRequest, any>(`sport`, request);
       }
+
+      getEventsBySport(sportName: string): Observable<Array<Event>> {
+        return this.baseService.get<Array<Event>>(`/sport/${sportName}/events`, true);
+      }
 }

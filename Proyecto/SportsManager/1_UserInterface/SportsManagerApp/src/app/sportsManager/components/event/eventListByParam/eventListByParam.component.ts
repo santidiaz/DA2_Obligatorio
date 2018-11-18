@@ -5,6 +5,7 @@ import { Event } from '../../../interfaces/event'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { TeamService } from 'src/app/sportsManager/services/team.service';
+import { SportService } from 'src/app/sportsManager/services/sport.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class EventListByParamComponent extends BaseComponent {
     constructor(private eventService: EventService,
         private router: ActivatedRoute,
         private teamService: TeamService,
+        private sportServices: SportService,
         private routerAux: Router) {
         super();
         this.nameParam = null;
@@ -57,6 +59,10 @@ export class EventListByParamComponent extends BaseComponent {
             this.title = 'Report of events for team ' + this.nameParam;
         }
         else {
+            this.sportServices.getEventsBySport(this.nameParam).subscribe(
+                response => this.handleResponse(response),
+                error => this.handleError(error));
+
             this.title = 'Report of events for sport ' + this.nameParam;
         }
     }

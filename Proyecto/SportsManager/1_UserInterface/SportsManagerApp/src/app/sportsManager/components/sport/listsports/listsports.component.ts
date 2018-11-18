@@ -4,6 +4,7 @@ import { SessionService } from "src/app/sportsManager/services/session.service";
 import { SportRequest } from "src/app/sportsManager/interfaces/sportrequest";
 import { SportService } from "src/app/sportsManager/services/sport.service";
 import { SportModifyRequest } from "src/app/sportsManager/interfaces/sportmodifyrequest";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -22,7 +23,8 @@ export class ListSportsComponent extends BaseComponent {
 
     constructor(
         private sessionService: SessionService,
-        private sportService: SportService) {
+        private sportService: SportService,
+        private router: Router) {
         super();
         this.selectedSport = { sportOID: 0, newName: '', oldName: '', multipleTeamsAllowed: false };
     };
@@ -57,5 +59,9 @@ export class ListSportsComponent extends BaseComponent {
     closeForm($event) {
         this.isFormActive = false;
         this.updateGrid();
+    }
+
+    reportEvents($event, sport: SportRequest) {
+        this.router.navigate(['/listEventByParam', { name: sport.name, item: '2' }]);
     }
 }
