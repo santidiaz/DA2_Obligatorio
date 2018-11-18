@@ -20,6 +20,7 @@ import { FixtureService } from "src/app/sportsManager/services/fixture.services"
     sports: Array<SportRequest>;
     fixtures: Array<string>;
     fromModel: EventRequestDynamic;
+    errorMessageDynamic: string = null;
 
     @Output() closeRequested = new EventEmitter<EventRequestDynamic>();
 
@@ -29,6 +30,7 @@ import { FixtureService } from "src/app/sportsManager/services/fixture.services"
       private fixtureService: FixtureService) {
       super();
       this.clearFromModel();
+      this.errorMessageDynamic = null;
     };
 
     ngOnInit() {
@@ -44,15 +46,29 @@ import { FixtureService } from "src/app/sportsManager/services/fixture.services"
     }
 
     addEvent() {
-      this.closeRequested.emit(this.fromModel);
-      this.clearFromModel();
+
+      if (
+        this.fromModel.sportName == null ||    
+        this.fromModel.sportName.length == 0||
+        this.fromModel.fixtureName == ''||
+        this.fromModel.initialDate == null ) {
+        this.errorMessageDynamic = 'Complete all the required information';
+      }
+      else {
+        this.errorMessageDynamic = null;
+        this.closeRequested.emit(this.fromModel);
+        this.clearFromModel();
+      }
+      
+      
     }
   
     clearFromModel(){
       this.fromModel = { 
         initialDate: null,
         fixtureName: null,
-        sportName: null};
+        sportName: null,
+        userName: null};
     }
 
 }

@@ -5,7 +5,8 @@
 
             <div class="form-group">
                 <label>Sport</label>
-                <select [(ngModel)]="fromModel.sportName" name="sportSelected" class="form-control" required>
+                <select [(ngModel)]="fromModel.sportName" name="sportSelected" class="form-control" required 
+                        (change)="onChangeSport($event, sport)">
                     <option *ngFor="let sport of sports" [ngValue]="sport.name" #name>{{sport.name}}</option>
                 </select>
             </div>
@@ -22,6 +23,11 @@
                     <option *ngFor="let team of teams" [ngValue]="team.name" #name>{{team.name}}</option>
                 </select>
             </div>
+
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessageManual != null">
+                {{ errorMessageManual }}
+            </div>
+
             <button type="button" class="btn btn-secondary" (click)="addEvent()">Add event to preview list</button>
         </div>
     </div>

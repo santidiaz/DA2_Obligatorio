@@ -23,6 +23,10 @@
                     #nameee="ngModel" aria-describedby="dateNameHelp" placeholder="Enter the date ...">
             </div>
 
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessageDynamic != null">
+                    {{ errorMessageDynamic }}
+                </div>
+
             <button type="button" class="btn btn-secondary" (click)="addEvent()">Generate fixture and add events to preview list</button>
             
         </div>

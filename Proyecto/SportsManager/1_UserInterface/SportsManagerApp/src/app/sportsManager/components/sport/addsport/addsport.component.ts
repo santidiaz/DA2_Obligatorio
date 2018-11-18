@@ -25,7 +25,7 @@ export class AddSportComponent extends BaseComponent {
   };
 
   clearModel(){
-    this.formModel = { sportOID: 0, name: '', multipleTeamsAllowed: false };
+    this.formModel = { sportOID: 0, name: '', multipleTeamsAllowed: false, teams: [] };
   }
 
   ngOnInit() {

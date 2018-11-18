@@ -20,6 +20,8 @@ export class AddEventComponent extends BaseComponent {
     eventsToAdd: Array<EventRequest> = [];
     auxEventFromDynamic: Array<Event> = [];
     auxEvent: EventRequest;
+    errorMessage: string = null;
+    successMessage: string = null;
 
     constructor(
         private sessionService: SessionService,
@@ -29,8 +31,8 @@ export class AddEventComponent extends BaseComponent {
     };
 
     ngOnInit() {
-        //this.updateGrid();
-        //this.successMessage = null;
+        this.errorMessage = null;
+        this.successMessage= null;
         this.isManualFormChecked = true;
         this.isDynamicFormChecked = false;
     }
@@ -53,6 +55,7 @@ export class AddEventComponent extends BaseComponent {
 
     addEventTempDynamic(eventsRequest: EventRequestDynamic) {
 
+        eventsRequest.userName = this.sessionService.getCurrentUserName();
         // buscar los eventos a crear.
         this.fixtureService.getGenerateFixtures(eventsRequest).subscribe(response => {
             //this.auxEventFromDynamic = ;
@@ -83,19 +86,19 @@ export class AddEventComponent extends BaseComponent {
         this.eventsToAdd.forEach(element => {
             this.eventService.addEvent(element).subscribe(
                 response => this.handleResponse(response),
-                error => this.handleError(error));
+                error => this.handleError(error, element));
         });
     }
 
     private handleResponse(response: any) {
-        //this.sessionService.setSession(response);
-        //this.errorMessage = null;
-        //this.successMessage = 'Operation success';
+        this.sessionService.setSession(response);
+        this.errorMessage = null;
+        this.successMessage = 'Operation success';
     }
 
-    private handleError(error: any) {
-        //this.successMessage = null;
-        //this.errorMessage = error.error;
+    private handleError(error: any, element: EventRequest) {
+        this.successMessage = null;
+        this.errorMessage += 'The event : ' + element.teamNames + ' has error : ' + error.error + ' </br> ';
     }
 
 }

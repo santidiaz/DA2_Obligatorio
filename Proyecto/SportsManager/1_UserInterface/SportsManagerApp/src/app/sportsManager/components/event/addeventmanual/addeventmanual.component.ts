@@ -10,30 +10,32 @@ import { TeamRequest } from "src/app/sportsManager/interfaces/team-request";
 import { TeamRequestFilter } from "src/app/sportsManager/interfaces/team-request-filter";
 
 @Component({
-    selector: 'app-addeventmanual',
-    templateUrl: './addeventmanual.component.html',
-    styleUrls: ['./addeventmanual.component.css']
-  })
-  
-  export class AddEventManualComponent extends BaseComponent {
+  selector: 'app-addeventmanual',
+  templateUrl: './addeventmanual.component.html',
+  styleUrls: ['./addeventmanual.component.css']
+})
 
-    sports: Array<SportRequest>;
-    teams: Array<TeamRequest>;
-    fromModel: EventRequest;
-    teamRequestFilter: TeamRequestFilter;
+export class AddEventManualComponent extends BaseComponent {
 
-    @Output() closeRequested = new EventEmitter<EventRequest>();
+  sports: Array<SportRequest>;
+  teams: Array<TeamRequest>;
+  fromModel: EventRequest;
+  teamRequestFilter: TeamRequestFilter;
+  errorMessageManual: string = null;
 
-    constructor(
-        private sessionService: SessionService,
-        private teamService: TeamService,
-        private sportService: SportService) {
-        super();
-        this.clearFromModel();
-        this.teamRequestFilter = { teamName: '', orderAsc: true};
-      };
+  @Output() closeRequested = new EventEmitter<EventRequest>();
 
-    
+  constructor(
+    private sessionService: SessionService,
+    private teamService: TeamService,
+    private sportService: SportService) {
+    super();
+    this.clearFromModel();
+    this.teamRequestFilter = { teamName: '', orderAsc: true };
+    this.errorMessageManual = null;
+  };
+
+
   ngOnInit() {
     //this.successMessage = null;
     //this.errorMessage = null;
@@ -41,22 +43,39 @@ import { TeamRequestFilter } from "src/app/sportsManager/interfaces/team-request
       this.sports = response;
     });
 
-    this.teamService.getTeams(this.teamRequestFilter).subscribe(response => {
-      this.teams = response;
-    });
   }
 
   addEvent() {
-    this.closeRequested.emit(this.fromModel);
-    this.clearFromModel();
+
+    if (
+      this.fromModel.teamNames == null ||
+      this.fromModel.teamNames.length < 2 ||  
+      this.fromModel.sportName == null ||    
+      this.fromModel.sportName.length == 0||
+      this.fromModel.eventDate == null ) {
+      this.errorMessageManual = 'Complete all the required information';
+    }
+    else {
+      this.errorMessageManual = null;
+      this.closeRequested.emit(this.fromModel);
+      this.clearFromModel();
+    }
   }
 
-  clearFromModel(){
-    this.fromModel = { 
+  clearFromModel() {
+    this.fromModel = {
       eventDate: null,
       teamNames: null,
-      sportName: null};
+      sportName: null
+    };
   }
+
+  onChangeSport(event: EventTarget, sport: SportRequest) {
+    this.errorMessageManual = null;
+    this.sports.forEach(element => {
+      if(element.name == this.fromModel.sportName) this.teams = element.teams;
+    });
     
-    
+  }
+
 }

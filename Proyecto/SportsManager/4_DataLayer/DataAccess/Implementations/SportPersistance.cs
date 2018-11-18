@@ -48,7 +48,7 @@ namespace DataAccess.Implementations
             List<Sport> sports;
             using (Context context = new Context())
             {
-                sports = context.Sports.OfType<Sport>().ToList();
+                sports = context.Sports.OfType<Sport>().Include(s => s.Teams).ToList();
             }
             return sports;
         }
