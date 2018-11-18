@@ -13,7 +13,7 @@ namespace BusinessContracts
         void ModifyEvent(int eventId, List<string> teamNames, DateTime newDate);
         void SetupEventResult(int eventId, List<string> teams,bool drawMatch = false);
 
-        List<Team> FindSportTeams(Sport foundSport, List<string> teamNames);
+        List<Team> FindTeams(List<string> teamNames);
         Event GetEventById(int eventId, bool eagerLoad = true);
         List<Event> GetAllEvents();
     }

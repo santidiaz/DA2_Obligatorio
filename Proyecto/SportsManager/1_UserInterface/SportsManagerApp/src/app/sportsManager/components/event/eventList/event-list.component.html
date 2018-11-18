@@ -36,7 +36,7 @@
                 </td>
 
                 <td class="float: right !important;" *ngIf="isAdmin">
-                    <input type="button" (click)="selectCity($event, event)" value="Edit" />
+                    <input type="button" (click)="selectEvent($event, event)" value="Edit" />
                     <input type="button" (click)="deleteEvent($event, event)" value="Delete" />
                 </td>
             </tr>
@@ -47,4 +47,4 @@
     </div>
 </div>
 
-<app-event-form *ngIf="isFormActive" (closeRequested)="closeForm($event)" [event]="selectedEvent"></app-event-form>
+<app-editevent *ngIf="isFormActive" (closeRequested)="closeForm($event)" [event]="selectedEvent"></app-editevent>

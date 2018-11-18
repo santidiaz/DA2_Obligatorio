@@ -73,7 +73,7 @@ namespace SportsWebApi.Controllers
                 if (input == null)
                     return BadRequest();
 
-                this.eventOperations.ModifyEvent(id, input.TeamNames, input.InitialDate);
+                this.eventOperations.ModifyEvent(id, input.TeamsString, input.InitialDate);
                 return Ok();
             }
             catch (EntitiesException eEx)

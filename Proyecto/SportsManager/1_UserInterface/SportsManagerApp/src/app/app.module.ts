@@ -36,7 +36,6 @@ import { AddEventDynamicComponent } from './sportsManager/components/event/addev
 import { AddEventManualComponent } from './sportsManager/components/event/addeventmanual/addeventmanual.component';
 import { EventsCalendar } from './sportsManager/components/event/eventCalendar/event-calendar.component';
 import { EventDetailsComponent } from './sportsManager/components/event/eventdetails/event-details.component';
-import { EventFormComponent } from './sportsManager/components/event/eventCard/event-form.component';
 import { EventListByParamComponent } from './sportsManager/components/event/eventListByParam/eventListByParam.component';
 
 import { FixtureService } from './sportsManager/services/fixture.services';
@@ -51,6 +50,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CommentService } from './sportsManager/services/comment.service';
 import { UserFavouriteTeamsEventsComponent } from './sportsManager/components/users/favouriteTeamsEvents/user-favourite-teams-events.component';
+import { EditEventComponent } from './sportsManager/components/event/editevent/editevent.component';
 
 
 const appRoutes: Routes = [
@@ -132,6 +132,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
   },
+  {
+    path: 'editevent', component: EditEventComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -150,7 +155,6 @@ const appRoutes: Routes = [
     AddTeamComponent,
     ListTeamsComponent,
     EditTeamComponent,
-    EventFormComponent,
     NavigationBar,
     AddEventComponent,
     AddEventDynamicComponent,
@@ -160,6 +164,7 @@ const appRoutes: Routes = [
     EventDetailsComponent,
     UserFavouriteTeamsEventsComponent,
     EventListByParamComponent,
+    EditEventComponent,
     PageNotFoundComponent
   ],
   imports: [

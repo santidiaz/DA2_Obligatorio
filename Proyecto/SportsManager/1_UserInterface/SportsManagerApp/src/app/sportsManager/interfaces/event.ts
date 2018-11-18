@@ -11,4 +11,5 @@ export interface Event {
     comments: Array<Comment>;    
     sportId: number;
     sportName: string;
+    teamsString: Array<string>;
 }

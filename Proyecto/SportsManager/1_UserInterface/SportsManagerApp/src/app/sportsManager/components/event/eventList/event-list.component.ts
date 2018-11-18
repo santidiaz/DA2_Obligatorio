@@ -52,7 +52,7 @@ export class EventListComponent extends BaseComponent {
     return this.events != undefined && this.events.length > 0;
   }
 
-  selectCity($event, event: Event) {
+  selectEvent($event, event: Event) {
     this.selectedEvent = event;
     this.isFormActive = true;
   }
@@ -67,6 +67,7 @@ export class EventListComponent extends BaseComponent {
 
   closeForm($event) {
     this.isFormActive = false;
+    this.updateGrid();
   }
 
 
