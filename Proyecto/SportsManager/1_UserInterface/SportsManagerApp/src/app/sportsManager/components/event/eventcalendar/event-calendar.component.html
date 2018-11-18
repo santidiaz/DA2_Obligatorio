@@ -1,6 +1,7 @@
 <div class="row justify-content-start">
   <div class="col-4">
-    <label>Sport</label>
+    <br>
+    <label>Select a sport: </label>
     <select class="form-control" [ngModel]="sports" name="sportSelected" (ngModelChange)="onChange($event)">
       <option *ngFor="let sport of sports;" [ngValue]="sport" #name>{{sport.name}}</option>
     </select>

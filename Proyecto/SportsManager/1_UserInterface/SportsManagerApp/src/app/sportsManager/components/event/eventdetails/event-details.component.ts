@@ -16,10 +16,6 @@ import { EventService } from "src/app/sportsManager/services/event.service";
 })
 export class EventDetailsComponent extends BaseComponent {
 
-    //sports: Array<SportRequest>;
-    //teams: Array<TeamRequest>;
-    //fromModel: EventRequest;
-
     commentModel: AddCommentRequest;
     errorMessage: string;
     activateSubmit: boolean = true;
@@ -43,8 +39,8 @@ export class EventDetailsComponent extends BaseComponent {
         super();
     };
 
-    setupModel(){
-        this.commentModel= { creatorName: this.sessionService.getCurrentUserName(), description: '', id: this._event.id }
+    setupModel() {
+        this.commentModel = { creatorName: this.sessionService.getCurrentUserName(), description: '', id: this._event.id }
     }
 
     closeDetails() {
@@ -54,7 +50,6 @@ export class EventDetailsComponent extends BaseComponent {
     }
 
     componentOnInit() {
-        //this.commentModel = { creatorName: '', description: '', id: 0 }
         this.errorMessage = undefined;
     }
 
@@ -78,18 +73,18 @@ export class EventDetailsComponent extends BaseComponent {
     }
 
     private handleResponse(response: any) {
-
         this.eventService.getEventById(this._event.id).subscribe(
             response => { this._event = response },
             error => this.handleError(error));
-
+        this.resetForm();
     }
 
     private handleError(error: any) {
         console.log(error);
+        this.errorMessage = <any>error;
     }
 
-    resetForm(){
+    resetForm() {
         this.commentModel.description = '';
     }
 
