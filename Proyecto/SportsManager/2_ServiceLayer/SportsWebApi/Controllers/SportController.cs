@@ -155,7 +155,7 @@ namespace SportsWebApi.Controllers
             }
         }
 
-        [PermissionFilter(true)]
+        [PermissionFilter(false)]
         [HttpGet()]
         public IActionResult GetSports()
         {

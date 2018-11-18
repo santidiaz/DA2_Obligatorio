@@ -42,7 +42,7 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Photo</th>
-                <th scope="col">Acción</th>
+                <th scope="col" *ngIf="isAdmin">Acción</th>
                 <th scope="col">Favorite</th>
             </tr>
         </thead>
@@ -52,7 +52,7 @@
                 <td>
                     <img src="data:image/png;base64,{{team.photoString}}" width="100" height="100" />
                 </td>
-                <td>
+                <td *ngIf="isAdmin">
                     <input type="button" class="btn btn-warning" (click)="selectTeam($event, team)" value="Edit" />
                     <input type="button" class="btn btn-danger" (click)="deleteTeam($event, team)" value="Delete" />
                     <input type="button" class="btn btn-primary" (click)="reportEvents($event, team)" value="Report events" />

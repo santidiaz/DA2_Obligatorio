@@ -120,7 +120,7 @@ const appRoutes: Routes = [
   {
     path: 'listTeams', component: ListTeamsComponent,
     canActivate: [AuthGuard],
-    data: { onlyAdmin: true }
+    data: { onlyAdmin: false }
   },
   {
     path: 'logs', component: LogReportComponent,

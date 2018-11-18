@@ -7,14 +7,14 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Allowd multiple teams on events</th>
-                <th scope="col">Acción</th>
+                <th scope="col" *ngIf="isAdmin">Acción</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let sport of sports">
                 <td>{{ sport.name }}</td>
                 <td>{{ sport.allowdMultipleTeamsEvents }}</td>
-                <td>
+                <td *ngIf="isAdmin">
                     <input type="button" class="btn btn-warning" (click)="selectSport($event, sport)" value="Edit" />
                     <input type="button" class="btn btn-danger" (click)="deleteSport($event, sport)" value="Delete" />
                     <input type="button" class="btn btn-primary" (click)="reportEvents($event, sport)" value="Report events" />
