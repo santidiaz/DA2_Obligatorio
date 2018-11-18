@@ -141,8 +141,17 @@ namespace DataAccess.Implementations
                         .Include(c => c.Comments)
                         .Where(e => e.EventTeams.Exists(ev_tm => ev_tm.TeamId.Equals(favouriteTeam.TeamId)))
                         .ToList();
-                    
-                    foreach(Event currentEvent in currentFavouriteTeamEvents)
+
+                    // Add event teams.
+                    currentFavouriteTeamEvents.ForEach(e =>
+                    {
+                        e.EventTeams = context.EventTeams.OfType<EventTeam>()
+                            .Include(et => et.Team)
+                            .Where(et => et.EventId.Equals(e.Id))
+                            .ToList();
+                    });
+
+                    foreach (Event currentEvent in currentFavouriteTeamEvents)
                     {
                         // If return list [userFavouriteTeamsEvents] dont have the event added already.
                         if (!userFavouriteTeamsEvents.Exists(ft_ev => ft_ev.Id.Equals(currentEvent.Id)))

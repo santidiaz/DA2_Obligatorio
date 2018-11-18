@@ -12,7 +12,8 @@ import {
   MatProgressSpinnerModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatCommonModule
+  MatCommonModule,
+  MatExpansionModule
 } from "@angular/material";
 
 @NgModule({
@@ -29,7 +30,10 @@ import {
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCommonModule
+    MatCommonModule,
+    MatTableModule,
+    MatDialogModule,
+    MatExpansionModule
   ],
   exports: [
     CommonModule,
@@ -44,7 +48,10 @@ import {
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCommonModule
+    MatCommonModule,
+    MatTableModule,
+    MatDialogModule,
+    MatExpansionModule
   ]
 })
 export class CustomMaterialModule {}

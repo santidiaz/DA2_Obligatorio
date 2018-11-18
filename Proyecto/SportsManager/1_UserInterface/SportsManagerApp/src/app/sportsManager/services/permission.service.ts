@@ -11,10 +11,10 @@ export class PermissionService {
   constructor(private baseService: BaseService) { }
 
   logIn(request: LoginRequest): Observable<SessionUser> {
-    return this.baseService.post<LoginRequest, SessionUser>('authentication/login', request);
+    return this.baseService.post<LoginRequest, SessionUser>('authentication/login', request, false);
   }
 
   logOut(request: string): Observable<any> {
-    return this.baseService.post<string, any>('authentication/logout', request);
+    return this.baseService.post<string, any>('authentication/logout', request, false);
   }
 }

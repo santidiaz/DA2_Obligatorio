@@ -1,26 +1,26 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { BaseService } from "./base.service";
 import { UserRequest } from "../interfaces/userrequest";
 import { Observable } from "rxjs";
 import { UserTeam } from "../interfaces/user-team";
+import { Event } from "../interfaces/event";
 import { AddFavoriteRequest } from "../interfaces/addfavoriterequest";
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: HttpClient, private baseService: BaseService) { }
+  constructor(private baseService: BaseService) { }
 
   addUser(request: UserRequest): Observable<any> {
     return this.baseService.post<UserRequest, any>('user', request);
   }
 
   getUsers(): Observable<UserRequest[]> {
-    return this.http.get<UserRequest[]>(`http://localhost:5005/api/user`);
+    return this.baseService.get<UserRequest[]>('user');
   }
 
   deleteUser(userName: string): Observable<any> {
-    return this.http.delete(`http://localhost:5005/api/user/${userName}`, { observe: 'response' });
+    return this.baseService.delete<any>(`user/${userName}`);
   }
 
   editUser(request: UserRequest): Observable<any> {
@@ -28,7 +28,7 @@ export class UserService {
   }
 
   getUserFavoriteTeams(userName: string): Observable<UserTeam[]> {
-    return this.http.get<UserTeam[]>(`http://localhost:5005/api/user/${userName}/favorites/`);
+    return this.baseService.get<UserTeam[]>(`user/${userName}/favorites/`);
   }
 
   addUserFavoriteTeams(userName: string, request: AddFavoriteRequest): Observable<any> {
@@ -36,7 +36,10 @@ export class UserService {
   }
 
   deleteUserFavoriteTeam(userName: string, teamid: number): Observable<any> {
-    return this.http.delete(`http://localhost:5005/api/user/${userName}/favorite/${teamid}`, { observe: 'response' });
+    return this.baseService.delete(`user/${userName}/favorite/${teamid}`);
   }
 
+  getUserFavouriteTeamsEvents(userName: string): Observable<Array<Event>> {
+    return this.baseService.get<Array<Event>>(`user/${userName}/favoriteTeamComments/`);
+  }
 }

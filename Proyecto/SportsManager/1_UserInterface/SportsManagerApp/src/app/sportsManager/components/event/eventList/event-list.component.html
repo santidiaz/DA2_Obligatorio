@@ -1,6 +1,3 @@
-<!--<p>
-    {{ events | json }}
-</p>-->
 <h1>
     Event List
 </h1>
@@ -12,7 +9,7 @@
                 <th scope="col">Start Date</th>
                 <th scope="col">Sport</th>
                 <th scope="col">Equipos<th>
-                <th scope="col">Options<th>
+                <th *ngIf="isAdmin" scope="col">Options<th>
             </tr>
         </thead>
         <tbody *ngIf="events != undefined">
@@ -38,7 +35,7 @@
                     </div>
                 </td>
 
-                <td class="float: right !important;">
+                <td class="float: right !important;" *ngIf="isAdmin">
                     <input type="button" (click)="selectCity($event, event)" value="Edit" />
                     <input type="button" (click)="deleteEvent($event, event)" value="Delete" />
                 </td>

@@ -49,11 +49,17 @@ import { CommonModule } from '@angular/common';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CommentService } from './sportsManager/services/comment.service';
+import { UserFavouriteTeamsEventsComponent } from './sportsManager/components/users/favouriteTeamsEvents/user-favourite-teams-events.component';
 
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  {
+    path: 'favTeamsEvents', component: UserFavouriteTeamsEventsComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: false }
+  },
   {
     path: 'events', component: EventListComponent,
     canActivate: [AuthGuard],
@@ -146,6 +152,7 @@ const appRoutes: Routes = [
     LogReportComponent,
     EventsCalendar,
     EventDetailsComponent,
+    UserFavouriteTeamsEventsComponent,
     PageNotFoundComponent
   ],
   imports: [
