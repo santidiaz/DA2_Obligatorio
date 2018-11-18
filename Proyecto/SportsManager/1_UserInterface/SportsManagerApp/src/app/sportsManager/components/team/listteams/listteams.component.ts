@@ -9,6 +9,7 @@ import { AddFavoriteRequest } from "src/app/sportsManager/interfaces/addfavorite
 import { TeamRequestFilter } from "src/app/sportsManager/interfaces/team-request-filter";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { TeamModifyRequest } from "src/app/sportsManager/interfaces/teammodifyrequest";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-listteams',
@@ -30,7 +31,8 @@ export class ListTeamsComponent extends BaseComponent {
     constructor(
         private sessionService: SessionService,
         private teamService: TeamService,
-        private userService: UserService) {
+        private userService: UserService,
+        private router: Router) {
         super();
         this.addEventReqeust = { UserName: '', NetFavouriteTeamsOID: [] };
         this.teamRequestFilter = { teamName: '', orderAsc: true};
@@ -68,6 +70,10 @@ export class ListTeamsComponent extends BaseComponent {
         this.teamService.deleteTeam(team.name).subscribe(
             response => this.handleResponse(response, 'Delete team success'),
             error => this.handleError(error));
+    }
+
+    reportEvents($event, team: TeamRequest) {
+        this.router.navigate(['/listEventByParam', { name: team.name, item: '1' }]);
     }
 
     selectTeam($event, team: TeamRequest) {

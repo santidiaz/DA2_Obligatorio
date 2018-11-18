@@ -55,6 +55,7 @@
                 <td>
                     <input type="button" (click)="selectTeam($event, team)" value="Edit" />
                     <input type="button" (click)="deleteTeam($event, team)" value="Delete" />
+                    <input type="button" (click)="reportEvents($event, team)" value="Report events" />
                 </td>
                 <td>
                     <input *ngIf="!team.isFavorite" type="button" (click)="addFavoriteTeam($event, team)" value="Add favorite" />

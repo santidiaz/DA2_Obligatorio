@@ -1,0 +1,43 @@
+<!--<p>
+    {{ events | json }}
+</p>-->
+<h1>
+        {{ title }}
+    </h1>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">Sport</th>
+                    <th scope="col">Equipos<th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let event of events">
+                    <td>{{ event.id }}</td>
+                    <td>{{ event.initialDate | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ event.sportName }}</td>
+                    <td>
+                        <div *ngIf="!event.allowMultipleTeams" class="container">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    {{event.teams[0].name}} VS {{event.teams[1].name}}
+                                </li>
+                            </ul>
+    
+                        </div>
+                        <div *ngIf="event.allowMultipleTeams" class="card">
+                            <ul class="list-group list-group-flush">
+                                <li *ngFor="let team of event.teams; let i = index" class="list-group-item">
+                                    {{i+1}}. {{team.name}}
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button type="button" class="btn btn-secondary" (click)="return()">Return</button>

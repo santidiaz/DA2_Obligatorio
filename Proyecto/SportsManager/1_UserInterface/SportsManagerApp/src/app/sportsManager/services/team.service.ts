@@ -49,4 +49,8 @@ export class TeamService {
 
         return this.http.put(`http://localhost:5005/api/team`, formData)
       }
+
+      getEventsByTeam(teamName: string): Observable<Array<Event>> {
+        return this.baseService.get<Array<Event>>(`/team/${teamName}/events`, true);
+      }
 }

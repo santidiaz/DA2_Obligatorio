@@ -138,7 +138,7 @@ namespace SportsWebApi.Controllers
                 if (string.IsNullOrEmpty(sportName))
                     return NotFound();
 
-                List<Event> result = teamOperations.GetEventsByTeam(sportName);
+                var result = Utility.TransformEventsToDTOs(teamOperations.GetEventsByTeam(sportName));
                 return Ok(result);
             }
             catch (EntitiesException ex)

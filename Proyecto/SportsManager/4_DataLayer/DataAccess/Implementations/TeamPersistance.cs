@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using BusinessEntities.JoinEntities;
 
 namespace DataAccess.Implementations
 {
@@ -105,10 +106,19 @@ namespace DataAccess.Implementations
             using (Context context = new Context())
             {
                 teamEvents = context.Events.OfType<Event>()
+                    .Include(e => e.EventTeams)
                     .Include(s => s.Sport)
-                    .Include(t => t.EventTeams)
                     .Where(e => e.EventTeams.Exists(ev_tm => ev_tm.TeamId.Equals(team.Id)))
                     .ToList();
+
+                // Add event teams.
+                teamEvents.ForEach(e =>
+                {
+                    e.EventTeams = context.EventTeams.OfType<EventTeam>()
+                        .Include(et => et.Team)
+                        .Where(et => et.EventId.Equals(e.Id))
+                        .ToList();
+                });
             }
             return teamEvents;
         }
