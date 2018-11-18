@@ -27,31 +27,7 @@ export class EventService {
     return this.baseService.delete(`event/${eventId}`, true);
   }
 
-  /*addEvent(request: EventRequest): Observable<any> {
-    return this.http.post(`http://localhost:5005/api/event`, {  observe: 'response' });
-  }/*
-
-  /*registerUser(request: UserRequest): Observable<any> {
-    return this.baseApiService.post<LoginRequest, Session>('users', request, true);
-  }*/
-
-
-
-    /*constructor(protected _http: HttpClient, protected _session:SessionService) {
-      super(_http);
-    }
-    
-    logIn(inputUserName: string, inputPassword: string) {      
-      return this._http.post( 
-        `${super.getAddress()}/api/authentication/login`,
-        JSON.stringify({ userName: inputUserName, password: inputPassword }),
-        httpOptions).pipe(
-                    map((response: Response) => <any>response,
-                    catchError(this.handleError)));
-    }
-
-    private handleError(error: Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
-    }*/
+  editEvent(request: Event): Observable<any> {
+    return this.baseService.put<Event, any>(`event/${request.id}`, request);
+  }
 }

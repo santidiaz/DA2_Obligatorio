@@ -27,6 +27,10 @@ export class SportService {
         return this.baseService.delete(`sport/${sportName}`, true);
       }
 
+      getSportByName(sportName: string): Observable<SportRequest> {
+        return this.baseService.get<SportRequest>(`sport/${sportName}`, true);
+      }
+
       editSport(request: SportModifyRequest): Observable<any> {
         return this.baseService.put<SportModifyRequest, any>(`sport`, request);
       }

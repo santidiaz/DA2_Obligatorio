@@ -9,7 +9,7 @@ namespace SportsWebApi.Models.EventModel
     public class ModifyEventInput
     {
         [Required(ErrorMessage = "Teams are required.")]
-        public List<string> TeamNames { get; set; }
+        public List<string> TeamsString { get; set; }
 
         [Required(ErrorMessage = "Initial date required.")]
         public DateTime InitialDate { get; set; }

@@ -77,7 +77,7 @@ namespace BusinessEntities
         public void ModifyTeams(List<Team> newTeams)
         {
             bool result = this.TeamsQuantityIsValid(newTeams);
-            if(!result)
+            if(result)
                 throw new EntitiesException(Constants.EventError.INVALID_AMOUNT_OF_TEAMS, ExceptionStatusCode.InvalidData);
 
             if (this.MultipleTeamsEvent)
