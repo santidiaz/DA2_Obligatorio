@@ -48,10 +48,10 @@
                 </div>
 
                 <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
-                    {{ successMessage }}
+                        <p [innerHTML]="successMessage"></p>
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
-                    {{ errorMessage }}
+                        <p [innerHTML]="errorMessage"></p>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Add events</button>

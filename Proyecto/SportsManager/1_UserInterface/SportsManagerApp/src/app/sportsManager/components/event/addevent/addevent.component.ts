@@ -6,6 +6,7 @@ import { SessionService } from "src/app/sportsManager/services/session.service";
 import { EventService } from "src/app/sportsManager/services/event.service";
 import { EventRequestDynamic } from "src/app/sportsManager/interfaces/event-request-dynamic";
 import { FixtureService } from "src/app/sportsManager/services/fixture.services";
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-addevent',
@@ -26,7 +27,8 @@ export class AddEventComponent extends BaseComponent {
     constructor(
         private sessionService: SessionService,
         private eventService: EventService,
-        private fixtureService: FixtureService) {
+        private fixtureService: FixtureService,
+        sanitizer: DomSanitizer) {
         super();;
     };
 
@@ -38,6 +40,8 @@ export class AddEventComponent extends BaseComponent {
     }
 
     changeView($event, item: Number) {
+        this.successMessage = null;
+        this.errorMessage = null;
         if (item == 1) {
             this.isManualFormChecked = true;
             this.isDynamicFormChecked = false;
@@ -82,22 +86,22 @@ export class AddEventComponent extends BaseComponent {
     }
 
     onSubmit() {
-
+        
+        this.successMessage = '';
+        this.errorMessage = '';
         this.eventsToAdd.forEach(element => {
             this.eventService.addEvent(element).subscribe(
-                response => this.handleResponse(response),
+                response => this.handleResponse(response, element),
                 error => this.handleError(error, element));
         });
+        this.eventsToAdd = null;
     }
 
-    private handleResponse(response: any) {
-        this.sessionService.setSession(response);
-        this.errorMessage = null;
-        this.successMessage = 'Operation success';
+    private handleResponse(response: any, element: EventRequest) {
+        this.successMessage += 'Operation success for element ' + element.teamNames + "<br/>";
     }
 
     private handleError(error: any, element: EventRequest) {
-        this.successMessage = null;
         this.errorMessage += 'The event : ' + element.teamNames + ' has error : ' + error.error + ' </br> ';
     }
 
