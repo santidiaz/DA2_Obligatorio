@@ -42,7 +42,6 @@ namespace DataAccess
             modelBuilder.Entity<Event>().HasKey(e => e.Id);
             modelBuilder.Entity<EventResult>().HasKey(er => er.Id);
             modelBuilder.Entity<TeamResult>().HasKey(tr => tr.Id);
-            modelBuilder.Entity<Comment>().HasKey(e => e.Id);
 
             // Join entities
             modelBuilder.Entity<UserTeam>().HasKey(ut => new { ut.UserId, ut.TeamId });

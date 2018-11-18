@@ -1,0 +1,74 @@
+<div *ngIf="event != undefined" class="card text-center">
+    <div class="card-header">
+        <h5 *ngIf="!event.allowMultipleTeams" class="card-title">{{event.teams[0].name}} vs {{event.teams[1].name}}</h5>
+        <h5 *ngIf="event.allowMultipleTeams" class="card-title">{{event.sportName}}</h5>
+    </div>
+    <div class="card-body">
+        <div class="media">
+            <div class="media-body">
+                
+                <table *ngIf="event.allowMultipleTeams" class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Player name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let team of event.teams">
+                            <th scope="row">{{team.id}}</th>
+                            <td>{{team.name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mt-0 mb-1">Comments</h5>
+                    </div>
+                    <div class="card-body">
+                        <blockquote *ngFor="let comment of event.comments" class="blockquote mb-0">
+                            <p>{{comment.description}}</p>
+                            <footer class="blockquote-footer">Posted by: <cite title="Source Title">{{comment.creatorName}}</cite>,
+                                {{comment.datePosted | date: 'dd/MM/yyyy'}}</footer>
+                            <hr>
+                        </blockquote>
+                    </div>
+
+                    <p *ngIf="event.comments == undefined || event.comments.length == 0">No comments...</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mt-0 mb-1">Add Comment</h5>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="creatorName">User Name</label>
+                        <input type="text" [(ngModel)]="commentModel.creatorName" [disabled]="true" class="form-control"
+                            id="creatorName" name="creatorName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" [(ngModel)]="commentModel.description" id="description" name="description"
+                            rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" [disabled]="!formIsValid" class="btn btn-success">Submit</button>
+                    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                        {{errorMessage}}
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <button type="button" (click)="closeDetails()" class="btn btn-primary">Back to calendar</button>
+    </div>
+    <div class="card-footer text-muted">
+        Fecha: {{ event.initialDate | date: 'dd/MM/yyyy' }}
+    </div>
+</div>

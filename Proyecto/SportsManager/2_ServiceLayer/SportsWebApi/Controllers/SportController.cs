@@ -121,7 +121,7 @@ namespace SportsWebApi.Controllers
                     return NotFound();
 
                 List<Event> result = sportOperations.GetEventsBySport(sportName);
-                return Ok(result);
+                return Ok(Utility.TransformEventsToDTOs(result));
             }
             catch (EntitiesException ex)
             {

@@ -14,10 +14,12 @@ namespace DataAccess.Implementations
         {
             using (Context context = new Context())
             {
-                Event foundEvent = context.Events.OfType<Event>().Include(e => e.Comments)
-                    .FirstOrDefault(e => e.Id.Equals(Id));
+                Event foundEvent = context.Events
+                    .Include(e => e.Comments)
+                    .Where(e => e.Id.Equals(Id)).FirstOrDefault();
 
-                foundEvent.Comments.Add(comment);
+                context.Comments.Add(comment);
+                foundEvent.AddNewComment(comment);
                 context.SaveChanges();
             }
         }
