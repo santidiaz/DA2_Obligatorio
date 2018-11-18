@@ -24,7 +24,7 @@ export class ListTeamsComponent extends BaseComponent {
     errorMessage: string = null;
     isFormActive: boolean;
     selectedTeam: TeamModifyRequest;
-    userFavoriteTeams: Array<UserTeam>;
+    userFavoriteTeams: Array<UserTeam> = [];
     addEventReqeust: AddFavoriteRequest;
     teamRequestFilter: TeamRequestFilter;
 

@@ -22,19 +22,22 @@ export class TeamService {
       }
 
       getTeams(teamRequestFilter: TeamRequestFilter): Observable<TeamRequest[]> {
+        var order = teamRequestFilter.orderAsc ? 'true' : 'false';
+        let algo = { orderAsc: order, teamName: teamRequestFilter.teamName };
+        return this.baseService.get<TeamRequest[]>('team', true, algo);
 
-        var auxHeaders = new HttpHeaders(
+        /*var auxHeaders = new HttpHeaders(
           { 
               'Content-Type': 'application/json',
               'Access-Control-Allow-Origin': '*',
               'Authorization': this.baseService.getToken() 
           });
 
-        var order = teamRequestFilter.orderAsc ? 'true' : 'false';
-        return this.http.get<TeamRequest[]>(`http://localhost:5005/api/team`, 
+        
+        return this.baseService.get<TeamRequest[]>(`team`, 
                                             { headers: auxHeaders, 
                                               params: { orderAsc: order, teamName: teamRequestFilter.teamName }
-                                            });
+                                            });*/
       }
 
       deleteTeam(teamName: string): Observable<any> {
