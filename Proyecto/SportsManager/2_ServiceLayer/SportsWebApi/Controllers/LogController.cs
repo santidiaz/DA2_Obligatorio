@@ -13,11 +13,19 @@ namespace SportsWebApi.Controllers
 
         [PermissionFilter(true)]
         [HttpGet()]
-        public IActionResult GetLogs(/*agregr fechas desde-hasta*/)
+        public IActionResult GetLogs([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
         {
-            var result = logger.GetLogs(DateTime.Now.AddDays(-1), DateTime.Now.AddDays(1));
+            try
+            {
+                if (fromDate == null || toDate == null)
+                    return BadRequest();
 
-            return Ok();
+                return Ok(logger.GetLogs(fromDate, toDate));
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(500, ex.Message);
+            }
         }
     }
 }

@@ -24,18 +24,12 @@ namespace BusinessLogic
         {
             if (!this.UserCreatorExists(commentToAdd))
                 throw new EntitiesException(Constants.CommentError.ERROR_CREATOR_NAME_NOT_EXISTS, ExceptionStatusCode.NotFound);
-
-            bool result = false;
-            List<Event> events = eventPersistanceProvider.GetAllEvents();
-            foreach (var aux in events)
-            {
-                if (aux.Id==Id) { result = true; };
-
-            }
-            if (result)
-                this.commentPersistanceProvider.AddComment(commentToAdd, Id);
-            else
+            
+            Event foundEvent = eventPersistanceProvider.GetEventById(Id);
+            if(foundEvent == null)
                 throw new EntitiesException(Constants.EventError.NOT_FOUND, ExceptionStatusCode.NotFound);
+
+            this.commentPersistanceProvider.AddComment(commentToAdd, Id);                
         }
 
         public bool UserCreatorExists(Comment commentToAdd)

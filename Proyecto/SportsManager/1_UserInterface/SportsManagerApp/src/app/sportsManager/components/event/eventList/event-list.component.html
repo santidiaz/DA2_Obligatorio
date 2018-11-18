@@ -15,7 +15,7 @@
                 <th scope="col">Options<th>
             </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="events != undefined">
             <tr *ngFor="let event of events">
                 <td>{{ event.id }}</td>
                 <td>{{ event.initialDate | date: 'dd/MM/yyyy' }}</td>
