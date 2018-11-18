@@ -54,12 +54,11 @@ export class LoginComponent extends BaseComponent {
     this.sessionService.setSession(response);
 
     if (this.sessionService.isAuthenticated) {
-      this.router.navigate(['/events']);
+      this.router.navigate(['/favTeamsEvents']);
     }
   }
 
   private handleError(response: any) {
     this.errorMessage = response.error;
-    ;
   }
 }

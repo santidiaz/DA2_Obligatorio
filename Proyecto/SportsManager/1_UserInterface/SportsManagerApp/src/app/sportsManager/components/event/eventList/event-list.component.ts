@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../shared/base.component';
 import { EventService } from '../../../services/event.service'
 import { Event } from '../../../interfaces/event'
+import { SessionService } from 'src/app/sportsManager/services/session.service';
 
 
 @Component({
@@ -16,17 +17,13 @@ export class EventListComponent extends BaseComponent {
   protected eventTypeTitle: string = 'Teams';
   successMessage: string = null;
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private sessionService: SessionService) {
     super();
   }
 
-  ngOnInit() {
-    this.updateGrid();
-    this.successMessage = null;
-}
-
   componentOnInit() {
     this.updateGrid();
+    this.successMessage = null;
   }
 
   updateGrid() {
@@ -47,6 +44,9 @@ export class EventListComponent extends BaseComponent {
   selectedEvent: Event;
   isFormActive: boolean;
 
+  get isAdmin(){
+    return this.sessionService.isAdmin();
+  }
 
   get existsEvents(): boolean {
     return this.events != undefined && this.events.length > 0;
