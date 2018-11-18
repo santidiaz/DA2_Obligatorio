@@ -25,8 +25,12 @@ export class AddTeamComponent extends BaseComponent {
     private teamService: TeamService,
     private sportService: SportService) {
     super();
-    this.formModel = { teamOID: 0, name: '', photo: null, sportOID: 0, isFavorite: false, photoString: '' };
+    this.clearModel();
   };
+
+  clearModel(){
+    this.formModel = { teamOID: 0, name: '', photo: null, sportOID: 0, isFavorite: false, photoString: '' };
+  }
 
   ngOnInit() {
     this.successMessage = null;
@@ -60,6 +64,7 @@ export class AddTeamComponent extends BaseComponent {
     //this.sessionService.setSession(response);
     this.errorMessage = null;
     this.successMessage = 'Operation success';
+    this.clearModel();
   }
 
   private handleError(error: any) {

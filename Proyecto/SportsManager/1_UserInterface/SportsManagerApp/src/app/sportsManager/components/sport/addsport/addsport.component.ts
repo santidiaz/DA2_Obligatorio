@@ -5,46 +5,59 @@ import { SessionService } from 'src/app/sportsManager/services/session.service';
 import { SportService } from 'src/app/sportsManager/services/sport.service';
 
 @Component({
-    selector: 'app-addsport',
-    templateUrl: './addsport.component.html',
-    styleUrls: ['./addsport.component.css']
-  })
+  selector: 'app-addsport',
+  templateUrl: './addsport.component.html',
+  styleUrls: ['./addsport.component.css']
+})
 
 
-  export class AddSportComponent extends BaseComponent {
+export class AddSportComponent extends BaseComponent {
 
-    formModel: SportRequest;
-    errorMessage: string = null;
-    successMessage: string = null;
-    
-    constructor(
-        private sessionService: SessionService,
-        private sportService: SportService) {
-        super();
-        this.formModel = { sportOID: 0, name: '', allowdMultipleTeamsEvents: false};
-      };
+  formModel: SportRequest;
+  errorMessage: string = null;
+  successMessage: string = null;
 
-      ngOnInit() {
-        this.successMessage = null;
-        this.errorMessage = null;
-      }  
+  constructor(
+    private sessionService: SessionService,
+    private sportService: SportService) {
+    super();
+    this.clearModel();
+  };
 
-      onSubmit() {
-        
-        this.sportService.addSport(this.formModel)
-          .subscribe(
-            response => this.handleResponse(response),
-            error => this.handleError(error));
-      }
-    
-      private handleResponse(response: any) {
-        //this.sessionService.setSession(response);
-        this.errorMessage = null;
-        this.successMessage = 'Operation success';
-      }
-    
-      private handleError(error: any) {
-        this.successMessage = null;
-        this.errorMessage = error.error;
-      }
+  clearModel(){
+    this.formModel = { sportOID: 0, name: '', multipleTeamsAllowed: false };
+  }
+
+  ngOnInit() {
+    this.successMessage = null;
+    this.errorMessage = null;
+  }
+
+  onSubmit() {
+
+    if (this.formModel.name == '') {
+      this.errorMessage = 'Complete all the required information';
+    }
+    else {
+      this.errorMessage = null;
+      this.sportService.addSport(this.formModel)
+        .subscribe(
+          response => this.handleResponse(response),
+          error => this.handleError(error));
+    }
+
+
+  }
+
+  private handleResponse(response: any) {
+    //this.sessionService.setSession(response);
+    this.errorMessage = null;
+    this.successMessage = 'Operation success';
+    this.clearModel();
+  }
+
+  private handleError(error: any) {
+    this.successMessage = null;
+    this.errorMessage = error.error;
+  }
 }

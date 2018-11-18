@@ -11,9 +11,9 @@
           </div>
 
           <div class="form-group">
-            <label for="allowdMultipleTeamsEventsInput">Allowd multiple teams on events</label>
-            <input type="checkbox" class="form-control" name="allowdMultipleTeamsEvents" id="allowdMultipleTeamsEventsInput" required
-              [(ngModel)]="formModel.allowdMultipleTeamsEvents" #nameee="ngModel"  aria-describedby="allowdMultipleTeamsEventsHelp" placeholder="Enter the sport Name...">
+            <label for="multipleTeamsAllowedInput">Multiple teams allowed</label>
+            <input type="checkbox" class="form-control" name="multipleTeamsAllowed" id="multipleTeamsAllowedInput" required
+              [(ngModel)]="formModel.multipleTeamsAllowed" #nameee="ngModel" aria-describedby="multipleTeamsAllowedHelp" >
           </div>
 
           <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
