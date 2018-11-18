@@ -73,7 +73,8 @@ export class AddEventComponent extends BaseComponent {
     
                 this.eventsToAdd.push(this.auxEvent);
             });
-          });
+          },
+          error => this.handleErrorDynamic(error));
 
         
     }
@@ -102,7 +103,11 @@ export class AddEventComponent extends BaseComponent {
     }
 
     private handleError(error: any, element: EventRequest) {
-        this.errorMessage += 'The event : ' + element.teamNames + ' has error : ' + error.error + ' </br> ';
+        this.errorMessage += 'The event : ' + element.teamNames + ' has error : ' + error.error + "<br/>";
+    }
+
+    private handleErrorDynamic(error: any) {
+        this.errorMessage = error.error;
     }
 
 }
