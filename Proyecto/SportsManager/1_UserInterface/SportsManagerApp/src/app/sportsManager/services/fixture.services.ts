@@ -11,7 +11,7 @@ export class FixtureService {
       constructor(private http: HttpClient, private baseService: BaseService) { }
 
       getFixtures(): Observable<string[]> {
-        return this.http.get<string[]>(`http://localhost:5005/api/fixture`);
+        return this.baseService.get<string[]>(`fixture`, true);
       }
 
       getGenerateFixtures(fromModel: EventRequestDynamic): Observable<Event[]> {
