@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { BaseService } from './base.service';
 import { EventRequest } from '../interfaces/event-request';
+import { Event } from '../interfaces/event';
 
 @Injectable()
 export class EventService {
@@ -12,6 +13,11 @@ export class EventService {
   getAllEvents(): Observable<Array<Event>> {
     return this.baseService.get<Array<Event>>('event', true);
   }
+
+  getEventById(eventId: number): Observable<Event> {
+    return this.baseService.get<Event>(`event/${eventId}`, true);
+  }
+
 
   addEvent(request: EventRequest): Observable<any> {
     return this.baseService.post<EventRequest, any>('event', request);

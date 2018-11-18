@@ -48,6 +48,7 @@ import { CommonModule } from '@angular/common';
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CommentService } from './sportsManager/services/comment.service';
 
 
 const appRoutes: Routes = [
@@ -178,6 +179,7 @@ const appRoutes: Routes = [
     TeamService,
     FixtureService,
     LogService,
+    CommentService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

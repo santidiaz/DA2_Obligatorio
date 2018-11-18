@@ -45,7 +45,7 @@ namespace BusinessEntities
         }
         public virtual List<Comment> Comments
         {
-            get { return this._coments?.OrderByDescending(c => c.DatePosted)?.ToList(); }
+            get { return this._coments; }
             set { this._coments = value; }
         }
         public EventResult Result { get; set; }
@@ -88,6 +88,14 @@ namespace BusinessEntities
             {
                 this.SetupTwoTeamsEvent(newTeams);
             }
+        }
+        public void AddNewComment(Comment commentToAdd)
+        {
+            this._coments.Add(commentToAdd);
+        }
+        public List<Comment> GetOrderedCommentsDesc()
+        {
+            return this._coments?.OrderByDescending(c => c.DatePosted)?.ToList();
         }
         public bool HasResult()
         {

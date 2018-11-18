@@ -25,6 +25,7 @@ import { BaseComponent } from 'src/app/sportsManager/shared/base.component';
 import { SportRequest } from 'src/app/sportsManager/interfaces/sportrequest';
 import { SportService } from 'src/app/sportsManager/services/sport.service';
 import { Event } from 'src/app/sportsManager/interfaces/event';
+import { EventService } from 'src/app/sportsManager/services/event.service';
 
 const colors: any = {
   red: {
@@ -61,7 +62,7 @@ export class EventsCalendar extends BaseComponent {
   showEventDetails: boolean = false;
   selectedEvent: Event;
 
-  constructor(private sportService: SportService) {
+  constructor(private sportService: SportService, private eventService: EventService) {
     super();
   }
 
@@ -160,12 +161,22 @@ export class EventsCalendar extends BaseComponent {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
+    this.eventService.getEventById(Number(event.id)).subscribe(
+      response => this.handleResponse(response),
+      error => this.handleError(error));
+  }
+
+  private handleResponse(response: any) {
+    this.selectedEvent = <Event>response;
     this.showCalendar = false;
     this.showEventDetails = true;
     this.activeDayIsOpen = false;
-
-    this.selectedEvent = this.sportEvents.find(se => se.id == event.id);
   }
+
+  private handleError(error: any) {
+    console.log(error);
+  }
+
 
   closeDetails($event) {
     this.showCalendar = true;

@@ -66,7 +66,7 @@ namespace SportsWebApi.Utilities
                 Id = events.Id,
                 InitialDate = events.InitialDate,
                 Teams = events.EventTeams?.Select(t => t.Team)?.ToList(),
-                Comments = events.Comments ?? null,
+                Comments = events.GetOrderedCommentsDesc() ?? null,
                 AllowMultipleTeams = events.MultipleTeamsEvent,
                 SportId = events.Sport?.Id ?? 0,
                 SportName = events.Sport?.Name,

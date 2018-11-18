@@ -1,10 +1,13 @@
 import { BaseComponent } from "src/app/sportsManager/shared/base.component";
-import { Component, Output, EventEmitter, Input } from "@angular/core";
+import { Component, Output, EventEmitter, Input, SimpleChanges } from "@angular/core";
 import { SessionService } from "src/app/sportsManager/services/session.service";
 import { TeamService } from "src/app/sportsManager/services/team.service";
 import { SportService } from "src/app/sportsManager/services/sport.service";
 import { Event } from '../../../interfaces/event'
 import { Router } from "@angular/router";
+import { AddCommentRequest } from "src/app/sportsManager/interfaces/add-comment-request";
+import { CommentService } from "src/app/sportsManager/services/comment.service";
+import { EventService } from "src/app/sportsManager/services/event.service";
 
 @Component({
     selector: 'app-event-details',
@@ -17,11 +20,15 @@ export class EventDetailsComponent extends BaseComponent {
     //teams: Array<TeamRequest>;
     //fromModel: EventRequest;
 
+    commentModel: AddCommentRequest;
+    errorMessage: string;
+    activateSubmit: boolean = true;
     _event: Event;
 
     @Input()
     set event(value: Event) {
         this._event = value;
+        this.setupModel();
     }
     get event(): Event {
         return this._event;
@@ -31,41 +38,59 @@ export class EventDetailsComponent extends BaseComponent {
 
     constructor(
         private sessionService: SessionService,
-        private teamService: TeamService,
-        private sportService: SportService,
-        private route: Router) {
+        private commentService: CommentService,
+        private eventService: EventService) {
         super();
-        //this.clearFromModel();
     };
 
-    closeDetails(){
+    setupModel(){
+        this.commentModel= { creatorName: this.sessionService.getCurrentUserName(), description: '', id: this._event.id }
+    }
+
+    closeDetails() {
+        this.commentModel = { creatorName: this.sessionService.getCurrentUserName(), description: '', id: 0 }
         this._event = undefined;
         this.closeRequested.emit(true);
     }
 
     componentOnInit() {
-        // from https://v6.angular.io/guide/router
-        /* this.route.paramMap.pipe(
-             switchMap((params: ParamMap) => {
-                 // (+) before `params.get()` turns the string into a number
-                 const cityId = +params.get('id');
-                 console.log(`param id value: ${cityId}`);
-                 return this.cityService.getCity(cityId);
-             })
-         ).subscribe(x => x ? this.updateForm(x) : this.cityForm.reset());
- 
-         console.log(`Using snapshot : ${this.route.snapshot.paramMap.get('id')}`);
- 
-         this.updateForm(this.city);*/
+        //this.commentModel = { creatorName: '', description: '', id: 0 }
+        this.errorMessage = undefined;
     }
 
-    /*clearFromModel() {
-        this.fromModel = {
-            eventDate: null,
-            teamNames: null,
-            sportName: null
-        };
-    }*/
+    onSubmit() {
+        this.activateSubmit = false;
+        this.errorMessage = undefined;
+        this.commentModel.id = this._event.id;
+        this.commentService.addComment(this.commentModel).subscribe(
+            response => this.handleResponse(response),
+            error => this.handleError(error));
+    }
 
+    componentOnChanges(changes: SimpleChanges) {
+        this.activateSubmit = true;
+    }
+
+    get formIsValid(): boolean {
+        return this.commentModel.creatorName !== undefined &&
+            this.commentModel.description !== undefined &&
+            this.commentModel.description !== '';
+    }
+
+    private handleResponse(response: any) {
+
+        this.eventService.getEventById(this._event.id).subscribe(
+            response => { this._event = response },
+            error => this.handleError(error));
+
+    }
+
+    private handleError(error: any) {
+        console.log(error);
+    }
+
+    resetForm(){
+        this.commentModel.description = '';
+    }
 
 }
