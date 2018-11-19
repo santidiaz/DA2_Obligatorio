@@ -30,7 +30,8 @@ export class ListSportsComponent extends BaseComponent {
         this.selectedSport = { sportOID: 0, newName: '', oldName: '', multipleTeamsAllowed: false };
     };
 
-    ngOnInit() {
+    componentOnInit() {
+        this.isAdmin = this.sessionService.isAdmin();
         this.updateGrid();
         this.successMessage = null;
         this.errorMessage = null;

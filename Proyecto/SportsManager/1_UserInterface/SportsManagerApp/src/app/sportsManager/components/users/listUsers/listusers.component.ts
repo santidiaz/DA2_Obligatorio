@@ -18,6 +18,7 @@ export class ListUsersComponent extends BaseComponent {
     successMessage: string = null;
     isFormActive: boolean;
     selectedUser: UserRequest;
+    isAdmin: boolean;
 
     constructor(
         private sessionService: SessionService,
@@ -25,7 +26,8 @@ export class ListUsersComponent extends BaseComponent {
         super();
     };
 
-    ngOnInit() {
+    componentOnInit() {
+        this.isAdmin = this.sessionService.isAdmin();
         this.updateGrid();
         this.successMessage = null;
     }
