@@ -51,6 +51,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CommentService } from './sportsManager/services/comment.service';
 import { UserFavouriteTeamsEventsComponent } from './sportsManager/components/users/favouriteTeamsEvents/user-favourite-teams-events.component';
 import { SetupEventResultComponent } from './sportsManager/components/event/eventresults/setup-event-result.component';
+import { SportResultTable } from './sportsManager/components/sport/resultTable/sport-result-table.component';
 
 
 const appRoutes: Routes = [
@@ -137,6 +138,12 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
   },
+  {
+    path: 'sportResultTable', component: SportResultTable,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: false }
+    
+  },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -165,6 +172,7 @@ const appRoutes: Routes = [
     UserFavouriteTeamsEventsComponent,
     EventListByParamComponent,
     SetupEventResultComponent,
+    SportResultTable,
     PageNotFoundComponent
   ],
   imports: [
