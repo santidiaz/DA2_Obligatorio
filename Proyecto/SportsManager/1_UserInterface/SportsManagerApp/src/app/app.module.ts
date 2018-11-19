@@ -52,6 +52,7 @@ import { CommentService } from './sportsManager/services/comment.service';
 import { UserFavouriteTeamsEventsComponent } from './sportsManager/components/users/favouriteTeamsEvents/user-favourite-teams-events.component';
 import { SetupEventResultComponent } from './sportsManager/components/event/eventresults/setup-event-result.component';
 import { SportResultTable } from './sportsManager/components/sport/resultTable/sport-result-table.component';
+import { EditEventComponent } from './sportsManager/components/event/editevent/editevent.component';
 
 
 const appRoutes: Routes = [
@@ -121,7 +122,7 @@ const appRoutes: Routes = [
   {
     path: 'listTeams', component: ListTeamsComponent,
     canActivate: [AuthGuard],
-    data: { onlyAdmin: true }
+    data: { onlyAdmin: false }
   },
   {
     path: 'logs', component: LogReportComponent,
@@ -143,6 +144,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { onlyAdmin: false }
     
+  },
+  {
+    path: 'editevent', component: EditEventComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
   },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
@@ -173,6 +179,7 @@ const appRoutes: Routes = [
     EventListByParamComponent,
     SetupEventResultComponent,
     SportResultTable,
+    EditEventComponent,
     PageNotFoundComponent
   ],
   imports: [

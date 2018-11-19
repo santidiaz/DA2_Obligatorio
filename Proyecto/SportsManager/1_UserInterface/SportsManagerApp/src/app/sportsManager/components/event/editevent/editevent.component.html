@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="card">
+        <h6 class="card-header">Modify event</h6>
+        <div class="card-body">
+            <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+
+                <div class="form-group">
+                    <label for="idInput">Event id</label>
+                    <input type="text" class="form-control" name="id" id="idInput" required [(ngModel)]="_event.id"
+                        #nameee="ngModel" aria-describedby="idHelp" disabled="true">
+                </div>
+
+                <div class="form-group">
+                    <label for="dateInput">Date</label>
+                    <input type="datetime-local" class="form-control" name="date" id="dateInput" required [(ngModel)]="_event.initialDate"
+                        #nameee="ngModel" aria-describedby="dateNameHelp" placeholder="Enter the date ...">
+                </div>
+
+                <div class="form-group">
+                    <label>Teams</label>
+                    <select [(ngModel)]="_event.teamsString" name="teamSelected" class="form-control" required multiple="true">
+                        <option *ngFor="let team of teams" [ngValue]="team.name" #name>{{team.name}}</option>
+                    </select>
+                </div>
+
+                <div class="alert alert-success" role="alert" *ngIf="successMessage != null">
+                    {{ successMessage }}
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="errorMessage != null">
+                    {{ errorMessage }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Modify</button>
+                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

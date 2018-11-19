@@ -36,8 +36,8 @@
                 </td>
 
                 <td class="float: right !important;" *ngIf="isAdmin">
-                    <input type="button" (click)="selectCity($event, event)" value="Edit" />
-                    <input type="button" (click)="deleteEvent($event, event)" value="Delete" />
+                    <input *ngIf="event.result == null" type="button" class="btn btn-warning" (click)="selectEvent($event, event)" value="Edit" />
+                    <input type="button" class="btn btn-danger" (click)="deleteEvent($event, event)" value="Delete" />
                     <input *ngIf="isValidForSetupResult(event)" type="button" (click)="setupResult($event, event)" value="Setup result" />
                 </td>
             </tr>
@@ -47,3 +47,5 @@
         {{ successMessage }}
     </div>
 </div>
+
+<app-editevent *ngIf="isFormActive" (closeRequested)="closeForm($event)" [event]="selectedEvent"></app-editevent>

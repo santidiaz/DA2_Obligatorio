@@ -53,16 +53,20 @@ export class AddEventComponent extends BaseComponent {
     }
 
     addEventTemp(EventRequest: EventRequest) {
-
+        this.successMessage = null;
+        this.errorMessage = null;
         this.eventsToAdd.push(EventRequest);
     }
 
     addEventTempDynamic(eventsRequest: EventRequestDynamic) {
+        this.successMessage = null;
+        this.errorMessage = null;
 
         eventsRequest.userName = this.sessionService.getCurrentUserName();
         // buscar los eventos a crear.
         this.fixtureService.getGenerateFixtures(eventsRequest).subscribe(response => {
             //this.auxEventFromDynamic = ;
+            if(this.eventsToAdd == null) this.eventsToAdd = [];
             response.forEach(event => {
                 this.auxEvent = { sportName: null, eventDate: null, teamNames: []};
                 
@@ -88,8 +92,8 @@ export class AddEventComponent extends BaseComponent {
 
     onSubmit() {
         
-        this.successMessage = '';
-        this.errorMessage = '';
+        this.successMessage = null;
+        this.errorMessage = null;
         this.eventsToAdd.forEach(element => {
             this.eventService.addEvent(element).subscribe(
                 response => this.handleResponse(response, element),
@@ -99,10 +103,12 @@ export class AddEventComponent extends BaseComponent {
     }
 
     private handleResponse(response: any, element: EventRequest) {
+        if(this.successMessage == null) this.successMessage = '';
         this.successMessage += 'Operation success for element ' + element.teamNames + "<br/>";
     }
 
     private handleError(error: any, element: EventRequest) {
+        if(this.errorMessage == null) this.errorMessage = '';
         this.errorMessage += 'The event : ' + element.teamNames + ' has error : ' + error.error + "<br/>";
     }
 

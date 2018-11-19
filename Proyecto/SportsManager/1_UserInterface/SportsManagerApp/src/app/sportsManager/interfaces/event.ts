@@ -10,5 +10,6 @@ export interface Event {
     allowMultipleTeams: boolean;
     sportId: number;
     sportName: string;
+    teamsString: Array<string>;
     result: Array<any>;
 }

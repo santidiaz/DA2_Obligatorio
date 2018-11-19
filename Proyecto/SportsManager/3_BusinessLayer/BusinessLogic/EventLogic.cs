@@ -33,7 +33,7 @@ namespace BusinessLogic
             if (this.CheckForDuplicatedNames(teamNames))
                 throw new EntitiesException(Constants.SportErrors.REPEATED_TEAMS, ExceptionStatusCode.InvalidData);
             
-            var foundTeams = this.FindSportTeams(foundSport, teamNames);
+            var foundTeams = this.FindTeams(teamNames);
             this.ValidateTeamsEventExists(foundTeams, eventDate);
 
             Event newEvent = new Event(eventDate, foundSport, foundTeams);
@@ -62,8 +62,8 @@ namespace BusinessLogic
                 throw new EntitiesException(Constants.SportErrors.REPEATED_TEAMS, ExceptionStatusCode.InvalidData);
 
             Event eventToModify = this.GetEventById(eventId, true);
-            List<Team> foundTeams = this.FindSportTeams(eventToModify.Sport, teamNames);
-            ValidateTeamsEventExists(foundTeams, newDate);
+            List<Team> foundTeams = this.FindTeams(teamNames);
+            ValidateTeamsEventExistsWithEventId(foundTeams, newDate, eventId);
 
             eventToModify.ModifyTeams(foundTeams);
             eventToModify.InitialDate = newDate;
@@ -71,18 +71,16 @@ namespace BusinessLogic
             this.eventProvider.ModifyEvent(eventToModify);
         }
 
-        public List<Team> FindSportTeams(Sport foundSport, List<string> teamNames)
+        public List<Team> FindTeams(List<string> teamNames)
         {
-            List<Team> sportTeams = foundSport.Teams;
-            // Get all sport teams that are included in teamNames list
-            List<Team> foundTeams = sportTeams.Where(st => teamNames.Any(tn => st.Name == tn)).ToList();
+            List<Team> temas = new List<Team>();
 
-            if (foundTeams == null)
-                throw new EntitiesException(Constants.SportErrors.NO_TEAM_BELONG_TO_SPORT, ExceptionStatusCode.NotFound);
-            else if (foundTeams.Count != teamNames.Count)
-                throw new EntitiesException(Constants.SportErrors.NOT_ALL_TEAMS_BELONG_TO_SPORT, ExceptionStatusCode.InvalidData);
+            foreach (var item in teamNames)
+            {
+                temas.Add(this.teamProvider.GetTeamByName(item));
+            }
 
-            return foundTeams;
+            return temas;
         }
 
         public Event GetEventById(int eventId, bool eagerLoad = true)
@@ -125,6 +123,22 @@ namespace BusinessLogic
                     {
                         throw new EntitiesException(
                             string.Format(Constants.EventError.EVENT_TEAM_EXISTS,t.TeamId, e.InitialDate.Date), 
+                            ExceptionStatusCode.InvalidData);
+                    }
+                });
+            }
+        }
+        
+         private void ValidateTeamsEventExistsWithEventId(List<Team> teams, DateTime eventDate, int eventId)
+        {
+            List<Event> events = this.eventProvider.GetEventsByDate(eventDate);
+            foreach (Event e in events)
+            {
+                e.EventTeams.ForEach(t => {
+                    if (teams.Exists(tm => tm.Id.Equals(t.TeamId)) && e.Id != eventId)
+                    {
+                        throw new EntitiesException(
+                            string.Format(Constants.EventError.EVENT_TEAM_EXISTS, t.TeamId, e.InitialDate.Date),
                             ExceptionStatusCode.InvalidData);
                     }
                 });

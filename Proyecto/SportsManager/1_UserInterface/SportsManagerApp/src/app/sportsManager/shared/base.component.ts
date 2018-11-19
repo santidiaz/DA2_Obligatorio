@@ -8,12 +8,15 @@ import {
     AfterViewChecked,
     OnDestroy
 } from "@angular/core";
+import { SessionService } from "../services/session.service";
 
 
 export class BaseComponent implements OnChanges, OnInit, AfterContentInit, AfterContentChecked,
     AfterViewInit, AfterViewChecked, OnDestroy {
 
     //protected _contextInfo: UserInfo;
+
+    protected isAdmin: boolean;
 
     constructor() {
     }

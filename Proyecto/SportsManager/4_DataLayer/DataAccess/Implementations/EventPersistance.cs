@@ -128,6 +128,10 @@ namespace DataAccess.Implementations
                     .Where(e => e.Id.Equals(eventToModify.Id))
                     .FirstOrDefault();
 
+                foreach (var item in eventToModify.EventTeams)
+                {
+                    context.Teams.Attach(item.Team);
+                }
                 eventOnDB.EventTeams = eventToModify.EventTeams;
                 eventOnDB.InitialDate = eventToModify.InitialDate;
                 context.SaveChanges();

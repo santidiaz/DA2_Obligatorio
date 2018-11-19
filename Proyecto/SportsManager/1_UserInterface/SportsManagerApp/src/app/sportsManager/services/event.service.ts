@@ -30,4 +30,7 @@ export class EventService {
   setupEventResult(eventId: number, teamsResult: SetupEventResultRequest): Observable<any> {
     return this.baseService.put<SetupEventResultRequest, any>(`event/SetupResult/${eventId}`, teamsResult)
   }
+  editEvent(request: Event): Observable<any> {
+    return this.baseService.put<Event, any>(`event/${request.id}`, request);
+  }
 }

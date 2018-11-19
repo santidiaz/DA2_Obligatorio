@@ -42,7 +42,7 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Photo</th>
-                <th scope="col">Acción</th>
+                <th scope="col" *ngIf="isAdmin">Acción</th>
                 <th scope="col">Favorite</th>
             </tr>
         </thead>
@@ -52,16 +52,16 @@
                 <td>
                     <img src="data:image/png;base64,{{team.photoString}}" width="100" height="100" />
                 </td>
-                <td>
-                    <input type="button" (click)="selectTeam($event, team)" value="Edit" />
-                    <input type="button" (click)="deleteTeam($event, team)" value="Delete" />
-                    <input type="button" (click)="reportEvents($event, team)" value="Report events" />
+                <td *ngIf="isAdmin">
+                    <input type="button" class="btn btn-warning" (click)="selectTeam($event, team)" value="Edit" />
+                    <input type="button" class="btn btn-danger" (click)="deleteTeam($event, team)" value="Delete" />
+                    <input type="button" class="btn btn-primary" (click)="reportEvents($event, team)" value="Report events" />
                 </td>
                 <td>
-                    <input *ngIf="!team.isFavorite" type="button" (click)="addFavoriteTeam($event, team)" value="Add favorite" />
+                    <input *ngIf="!team.isFavorite" type="button" class="btn btn-success" (click)="addFavoriteTeam($event, team)" value="Add favorite" />
                     <div *ngIf="team.isFavorite">
                         In favorite
-                        <input *ngIf="team.isFavorite" type="button" (click)="deleteFavoriteTeam($event, team)" value="Delete favorite" />
+                        <input *ngIf="team.isFavorite" type="button" class="btn btn-info" (click)="deleteFavoriteTeam($event, team)" value="Delete favorite" />
                     </div>
                 </td>
             </tr>
