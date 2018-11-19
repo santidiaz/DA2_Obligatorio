@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from "@angular/common/http";
 import { BaseService } from './base.service';
 import { EventRequest } from '../interfaces/event-request';
 import { Event } from '../interfaces/event';
@@ -9,7 +8,7 @@ import { SetupEventResultRequest } from '../interfaces/setup-event-result-reques
 @Injectable()
 export class EventService {
 
-  constructor(private http: HttpClient, private baseService: BaseService) { }
+  constructor(private baseService: BaseService) { }
 
   getAllEvents(): Observable<Array<Event>> {
     return this.baseService.get<Array<Event>>('event');

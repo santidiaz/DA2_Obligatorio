@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SessionUser } from '../interfaces/session-user';
+import { Subject } from 'rxjs';
 
 const TOKEN = 'token';
 const IS_ADMIN = 'isAdministrator';
@@ -7,6 +8,7 @@ const USER_NAME = 'userName';
 
 @Injectable()
 export class SessionService {
+    
     constructor() { }
 
     isAuthenticated(): boolean {

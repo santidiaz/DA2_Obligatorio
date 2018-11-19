@@ -37,8 +37,9 @@
 
                 <td class="float: right !important;" *ngIf="isAdmin">
                     <input *ngIf="event.result == null" type="button" class="btn btn-warning" (click)="selectEvent($event, event)" value="Edit" />
-                    <input type="button" class="btn btn-danger" (click)="deleteEvent($event, event)" value="Delete" />
-                    <input *ngIf="isValidForSetupResult(event)" type="button" (click)="setupResult($event, event)" value="Setup result" />
+                    <input *ngIf="event.result == null" type="button" class="btn btn-danger" (click)="deleteEvent($event, event)" value="Delete" />
+                    <input *ngIf="isValidForSetupResult(event)" type="button" class="btn btn-info" (click)="setupResult($event, event)" value="Setup result" />
+                    <input *ngIf="event.result != undefined" type="button" class="btn btn-dark" (click)="viewResult($event, event)" value="View result" />
                 </td>
             </tr>
         </tbody>

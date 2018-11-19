@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { BaseService } from "./base.service";
 import { Observable } from "rxjs";
 import { SportRequest } from "../interfaces/sportrequest";
@@ -10,7 +9,7 @@ import { TeamPoints } from "../interfaces/team-points";
 @Injectable()
 export class SportService {
 
-      constructor(private http: HttpClient, private baseService: BaseService) { }
+      constructor(private baseService: BaseService) { }
 
       addSport(request: SportRequest): Observable<any> {
         return this.baseService.post<SportRequest, any>('sport', request);

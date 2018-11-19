@@ -87,4 +87,7 @@ export class EventListComponent extends BaseComponent {
     this.router.navigate(['/setupEventResult', { eventId: event.id }]);
   }
 
+  viewResult($event, event: Event) {
+    this.router.navigate(['/eventResult', { eventId: event.id }]);
+  }
 }

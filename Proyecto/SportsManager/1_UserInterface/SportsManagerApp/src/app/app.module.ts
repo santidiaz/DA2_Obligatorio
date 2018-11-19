@@ -53,6 +53,7 @@ import { UserFavouriteTeamsEventsComponent } from './sportsManager/components/us
 import { SetupEventResultComponent } from './sportsManager/components/event/eventresults/setup-event-result.component';
 import { SportResultTable } from './sportsManager/components/sport/resultTable/sport-result-table.component';
 import { EditEventComponent } from './sportsManager/components/event/editevent/editevent.component';
+import { EventResultComponent } from './sportsManager/components/event/eventresults/event-result.component';
 
 
 const appRoutes: Routes = [
@@ -180,6 +181,7 @@ const appRoutes: Routes = [
     SetupEventResultComponent,
     SportResultTable,
     EditEventComponent,
+    EventResultComponent,
     PageNotFoundComponent
   ],
   imports: [

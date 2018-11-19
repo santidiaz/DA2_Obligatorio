@@ -8,12 +8,7 @@ import { environment } from '../../../environments/environment';
 export class BaseService {
 
     private basicHeaderConfig = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    private tokenHeaderConfig = new HttpHeaders(
-        {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Authorization': this.sessionService.getToken()
-        });
+    private tokenHeaderConfig = undefined;
 
     constructor(private http: HttpClient, private sessionService: SessionService) { }
 
@@ -48,7 +43,12 @@ export class BaseService {
         return undefined;
     }
 
-    public getToken(): any {
-        this.sessionService.getToken();
+    public setHeaderWithToken() {
+        this.tokenHeaderConfig = new HttpHeaders(
+            {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': this.sessionService.getToken()
+            });
     }
 }
