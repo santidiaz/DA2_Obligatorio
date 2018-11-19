@@ -13,7 +13,7 @@ import { TeamPoints } from 'src/app/sportsManager/interfaces/team-points';
 export class SportResultTable extends BaseComponent {
 
     sports: Array<SportRequest> = [];
-    teamPoints: Array<TeamPoints> = [];
+    teamsPoints: Array<TeamPoints> = [];
 
     constructor(private sportService: SportService) {
         super();
@@ -31,7 +31,7 @@ export class SportResultTable extends BaseComponent {
         //this.activeDayIsOpen = false;
 
         this.sportService.getSportResultTable(selectedValue.name).subscribe(response => {
-            this.teamPoints = response;
+            this.teamsPoints = response;
             //this.sportEvents = response;
             //this.loadCalendarEvents();
             //this.showCalendar = true;
