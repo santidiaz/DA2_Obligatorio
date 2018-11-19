@@ -4,7 +4,6 @@ import { SportService } from 'src/app/sportsManager/services/sport.service';
 import { SportRequest } from 'src/app/sportsManager/interfaces/sportrequest';
 import { TeamPoints } from 'src/app/sportsManager/interfaces/team-points';
 
-
 @Component({
     selector: 'app-sport-result-table',
     templateUrl: './sport-result-table.component.html',
