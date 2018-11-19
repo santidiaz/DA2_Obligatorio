@@ -1,10 +1,7 @@
 import { BaseComponent } from "src/app/sportsManager/shared/base.component";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { SportRequest } from "src/app/sportsManager/interfaces/sportrequest";
-import { TeamRequest } from "src/app/sportsManager/interfaces/team-request";
-import { EventRequest } from "src/app/sportsManager/interfaces/event-request";
 import { SessionService } from "src/app/sportsManager/services/session.service";
-import { TeamService } from "src/app/sportsManager/services/team.service";
 import { SportService } from "src/app/sportsManager/services/sport.service";
 import { EventRequestDynamic } from "src/app/sportsManager/interfaces/event-request-dynamic";
 import { FixtureService } from "src/app/sportsManager/services/fixture.services";

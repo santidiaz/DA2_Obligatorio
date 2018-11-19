@@ -9,13 +9,13 @@ export class BaseService {
 
     private basicHeaderConfig = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     private tokenHeaderConfig = new HttpHeaders(
-        { 
+        {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Authorization': this.sessionService.getToken()
         });
 
-    constructor(private http: HttpClient, private sessionService: SessionService) { }    
+    constructor(private http: HttpClient, private sessionService: SessionService) { }
 
     post<T, Y>(url: string, request: T, isTokenRequired: boolean = true): Observable<Y> {
         return this.http.post<any>(`${environment.apiUrl}${url}`, request, { headers: this.getHeader(isTokenRequired) });
@@ -38,17 +38,17 @@ export class BaseService {
     }
 
     private generateParams<T>(data: T): HttpParams {
-        if(data != undefined){
+        if (data != undefined) {
             let httpParams = new HttpParams();
             Object.keys(data).forEach(function (key) {
-                 httpParams = httpParams.append(key, data[key]);
+                httpParams = httpParams.append(key, data[key]);
             });
             return httpParams;
         }
         return undefined;
     }
 
-    public getToken() : any{
+    public getToken(): any {
         this.sessionService.getToken();
     }
 }

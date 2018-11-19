@@ -13,17 +13,15 @@ import { UserService } from 'src/app/sportsManager/services/user.service';
 export class UserFavouriteTeamsEventsComponent extends BaseComponent {
 
     private errorMessage: any;
-    protected events: Array<Event>;
+    protected events: Array<Event> = [];
     successMessage: string = null;
-    currentUser: string;
 
     constructor(private userService: UserService, private sessionService: SessionService) {
         super();
-        this.currentUser = sessionService.getCurrentUserName();
     }
 
     componentOnInit() {
-        this.userService.getUserFavouriteTeamsEvents(this.currentUser).subscribe(
+        this.userService.getUserFavouriteTeamsEvents(this.sessionService.getCurrentUserName()).subscribe(
             response => this.handleResponse(response),
             error => this.handleError(error));
     }

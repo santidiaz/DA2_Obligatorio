@@ -1,0 +1,55 @@
+<div class="container">
+    <br>
+    <div class="card">
+        <h3 class="card-header">Setup event result </h3>
+        <div class="card-body" *ngIf="currentEvent != undefined && !currentEvent.allowMultipleTeams">
+            <h5 class="card-title">Teams of sport {{currentEvent.sportName}}: </h5>
+            <div class="d-flex flex-column bd-highlight mb-3">
+                <div class="p-2 bd-highlight">
+                    <mat-radio-group [disabled]="disableElements" class="example-radio-group" [(ngModel)]="winnerTeam">
+                        <mat-radio-button class="example-radio-button" [value]="0">Winner is
+                            {{currentEvent.teams[0].name}}</mat-radio-button>
+                        <mat-radio-button class="example-radio-button" [value]="1">Winner is
+                            {{currentEvent.teams[1].name}}</mat-radio-button>
+                        <mat-radio-button class="example-radio-button" [value]="2">Match is draw</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="p-2 bd-highlight">
+                    <input class="btn btn-secondary btn-sm" type="button" [disabled]="winnerTeam == undefined || disableElements"
+                        (click)="setupSimpleEventResult($event)" value="Save result" />
+                    <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                        Result saved succesfuly!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body" *ngIf="currentEvent != undefined && currentEvent.allowMultipleTeams">
+            <h5 class="card-title">Teams of sport {{currentEvent.sportName}}: </h5>
+            <div class="d-flex flex-column bd-highlight mb-3">
+                <div class="p-2 bd-highlight">
+                    <mat-selection-list [disabled]="disableElements" #teams (selectionChange)="onSelection($event, teams.selectedOptions)">
+                        <mat-list-option *ngFor="let team of currentEvent.teams" [value]='team'>
+                            {{team.name}}
+                        </mat-list-option>
+                    </mat-selection-list>
+                    <br>
+                    <h5>Positions: </h5>
+                    <ul>
+                        <li *ngFor="let i of teams.selectedOptions.selected; let ix = index">
+                            {{ix+1}}. {{ i.value.name }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-2 bd-highlight">
+                    <input class="btn btn-secondary btn-sm" type="button" [disabled]="playersPositionsResult.length != currentEvent.teams.length || disableElements"
+                        (click)="setupMultipleEventResult($event)" value="Save result" />
+                    <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                        Result saved succesfuly!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

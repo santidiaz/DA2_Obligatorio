@@ -14,7 +14,8 @@ export class PermissionService {
     return this.baseService.post<LoginRequest, SessionUser>('authentication/login', request, false);
   }
 
-  logOut(request: string): Observable<any> {
-    return this.baseService.post<string, any>('authentication/logout', request, false);
+  logOut(inputUserName: string): Observable<any> {
+    let request = { userName: inputUserName };
+    return this.baseService.post<any, any>('authentication/logout', request, false);
   }
 }

@@ -23,8 +23,8 @@ export class TeamService {
 
   getTeams(teamRequestFilter: TeamRequestFilter): Observable<TeamRequest[]> {
     var order = teamRequestFilter.orderAsc ? 'true' : 'false';
-    let algo = { orderAsc: order, teamName: teamRequestFilter.teamName };
-    return this.baseService.get<TeamRequest[]>('team', true, algo);
+    let params = { orderAsc: order, teamName: teamRequestFilter.teamName };
+    return this.baseService.get<TeamRequest[]>('team', true, params);
   }
 
   deleteTeam(teamName: string): Observable<any> {

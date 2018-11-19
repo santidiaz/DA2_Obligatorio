@@ -26,7 +26,7 @@ export class NavigationBar extends BaseComponent {
     }
 
     logOut($event){
-        this.permissionService.logOut(this.sessionService.getCurrentUserName());
+        this.permissionService.logOut(this.sessionService.getCurrentUserName()).subscribe();
         this.sessionService.logOff();
         this.router.navigate(['/login']);
     }

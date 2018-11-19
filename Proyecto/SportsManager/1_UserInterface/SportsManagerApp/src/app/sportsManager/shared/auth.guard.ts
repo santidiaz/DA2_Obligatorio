@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
           queryParams: { 'message': `${attemptedUrl} requires administrator rights` }
         };
 
-        this.router.navigate(['/event'], navigationExtras);
+        this.router.navigate(['/favTeamsEvents'], navigationExtras);
         result = false;
       }
     }

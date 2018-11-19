@@ -40,7 +40,9 @@ export class LoginComponent extends BaseComponent {
   }
 
   componentOnChanges(changes: SimpleChanges) {
-    this.activateSubmit = true;
+    if(this.formIsValid){
+      this.activateSubmit = true;
+    }
   }
 
   get formIsValid(): boolean {
