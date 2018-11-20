@@ -58,9 +58,7 @@ namespace BusinessLogic
         public void DeleteSportByName(string name)
         {
             Sport sportToDelete = this.GetSportByName(name);
-            if (sportToDelete == null)
-                throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_DO_NOT_EXISTS, ExceptionStatusCode.NotFound);
-
+            
             if (!this.CanBeDeleted(sportToDelete))
                 throw new EntitiesException(Constants.SportErrors.ERROR_SPORT_HAS_TEAMS, ExceptionStatusCode.Conflict);
 

@@ -108,6 +108,31 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
+        public void DeleteSportByNameAndNotExists()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<ISportPersistance>();
+                Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
+
+                //mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns(new Sport());
+                mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToDelete });
+                mock.Setup(mr => mr.DeleteSport(It.IsAny<Sport>())).Verifiable();
+
+                SportLogic sportLogic = new SportLogic(mock.Object);
+                string userToBeDeleted = Constants.Sport.NAME_SPORT_FUTBOL;
+                sportLogic.DeleteSportByName(userToBeDeleted);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
         public void GetEventsBySport()
         {
             try
@@ -279,6 +304,73 @@ namespace UnitTests.LogicTests
                 SportLogic sportLogic = new SportLogic(mock.Object);
                 string userToBeDeleted = Constants.Sport.NAME_SPORT_FUTBOL;
                 sportLogic.DeleteSportByName(userToBeDeleted);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void GetSportREsultTable()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<ISportPersistance>();
+                Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
+                mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns(new Sport());
+                SportLogic sportLogic = new SportLogic(mock.Object);
+                List<Event> events = new List<Event>()
+                    { new Event()
+                        { Result = new EventResult()
+                            { TeamsResult = new List<TeamResult>()
+                                {
+                                    new TeamResult("Nacional", 1),
+                                    new TeamResult("Nacional", 1),
+                                }
+                            }
+                        }
+                    };
+                mock.Setup(up => up.GetEventsBySport(It.IsAny<Sport>())).Returns(events);
+                
+                sportLogic.GetSportResultTable(Constants.Sport.NAME_SPORT_FUTBOL);
+
+                Assert.IsTrue(true);
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void GetSports()
+        {
+            try
+            {
+                // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
+                var mock = new Mock<ISportPersistance>();
+                Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
+                List<Event> events = new List<Event>()
+                    { new Event()
+                        { Result = new EventResult()
+                            { TeamsResult = new List<TeamResult>()
+                                {
+                                    new TeamResult("Nacional", 1),
+                                    new TeamResult("Nacional", 1),
+                                }
+                            }
+                        }
+                    };
+                mock.Setup(up => up.GetEventsBySport(It.IsAny<Sport>())).Returns(events);
+
+                SportLogic sportLogic = new SportLogic(mock.Object);
+                mock.Setup(up => up.GetSports()).Verifiable();
+
+                sportLogic.GetSports();
 
                 Assert.IsTrue(true);
             }
