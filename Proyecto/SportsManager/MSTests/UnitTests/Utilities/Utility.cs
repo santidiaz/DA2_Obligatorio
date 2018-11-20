@@ -85,8 +85,8 @@ namespace UnitTests.Utilities
 
             List<Team> teamList = new List<Team>() { new Team() { Name = "Racing" } };
             // TODO: Modifiar por refactoreo de eventTeams
-            //Sport randomSport = new Sport(randomSportName, teamList);
-            return null;//randomSport;
+            Sport randomSport = new Sport(randomSportName, teamList);
+            return randomSport;
         }
 
         public static Team GenerateRandomTeam(string teamName = null)

@@ -45,8 +45,9 @@ namespace UnitTests.LogicTests
                 // Instancio SportLogic con el mock como parametro.
                 SportLogic userLogic = new SportLogic(mock.Object);
                 Sport sportToAdd = Utility.GenerateRandomSport();
+                Sport sportToAdd2 = Utility.GenerateRandomSport();
 
-                mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToAdd });
+                mock.Setup(up => up.GetSports()).Returns(new List<Sport>() { sportToAdd2 });
 
                 userLogic.AddSport(sportToAdd);
 
@@ -143,7 +144,7 @@ namespace UnitTests.LogicTests
                 mock.Setup(up => up.GetEventsBySport(It.IsAny<Sport>())).Returns(new List<Event>());
 
                 SportLogic sportLogic = new SportLogic(mock.Object);
-                sportLogic.GetEventsBySport(sportToDelete.Name);
+                sportLogic.GetEventsBySport("Nacional");
 
                 Assert.IsTrue(true);
             }
@@ -163,14 +164,15 @@ namespace UnitTests.LogicTests
 
                 Sport mockedSport = Utility.GenerateRandomSport();
                 sportMock.Setup(sp => sp.GetSportByName(mockedSport.Name, true)).Returns(mockedSport);
+                sportMock.Setup(sp => sp.GetSportById(1, true)).Returns(mockedSport);
                 sportMock.Setup(sp => sp.CanBeDeleted(It.IsAny<Sport>())).Returns(true);
-
+                sportMock.Setup(sp => sp.DeleteSport(It.IsAny<Sport>())).Verifiable(); ;
                 // Instancio SportLogic con el mock como parametro.
                 SportLogic userLogic = new SportLogic(sportMock.Object);
                 
                 userLogic.DeleteSportByName(mockedSport.Name);
 
-                Assert.Fail();
+                Assert.IsTrue(true);
             }
             catch (EntitiesException eEx)
             {
