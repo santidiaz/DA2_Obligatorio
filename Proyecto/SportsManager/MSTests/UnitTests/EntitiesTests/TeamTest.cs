@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Utilities;
 using System.Linq;
 
-namespace UnitTests
+namespace UnitTests.EntitiesTests
 {
     [TestClass]
     public class TeamTest

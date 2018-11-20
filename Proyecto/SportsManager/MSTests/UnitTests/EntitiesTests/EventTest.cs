@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using UnitTests.Utilities;
 
-namespace UnitTests
+namespace UnitTests.EntitiesTests
 {
     [TestClass]
     public class EventTest
@@ -221,8 +221,8 @@ namespace UnitTests
             newEvent.AddNewComment(
                 new Comment
                 {
-                    CreatorName ="test",
-                    Description ="AAA",
+                    CreatorName = "test",
+                    Description = "AAA",
                     DatePosted = DateTime.Now,
                     Id = 1
                 });
@@ -236,34 +236,65 @@ namespace UnitTests
         public void GetOrderedCommentsByDateDesc()
         {
             var generatedEvent = Utility.GenerateRandomEvent(true);
-            var com1 = new Comment
+            var comments = new List<Comment>
             {
-                CreatorName = "test1",
-                Description = "AAA",
-                DatePosted = DateTime.Now.AddDays(1),
-                Id = 1
-            };
-            var com2 = new Comment
-            {
-                CreatorName = "test2",
-                Description = "BBB",
-                DatePosted = DateTime.Now.AddDays(-3),
-                Id = 2
-            };
-            var com3 = new Comment
-            {
-                CreatorName = "test3",
-                Description = "CCC",
-                DatePosted = DateTime.Now.AddDays(5),
-                Id = 3
+                new Comment
+                {
+                    CreatorName = "test1",
+                    Description = "AAA",
+                    DatePosted = DateTime.Now.AddDays(1),
+                    Id = 1
+                },
+                new Comment
+                {
+                    CreatorName = "test2",
+                    Description = "BBB",
+                    DatePosted = DateTime.Now.AddDays(-3),
+                    Id = 2
+                },
+                new Comment
+                {
+                    CreatorName = "test3",
+                    Description = "CCC",
+                    DatePosted = DateTime.Now.AddDays(5),
+                    Id = 3
+                }
             };
 
-            generatedEvent.Comments.Add(com1);
-            generatedEvent.Comments.Add(com2);
-            generatedEvent.Comments.Add(com3);
-
+            generatedEvent.Comments = comments;
             var orderedComments = generatedEvent.GetOrderedCommentsDesc();
             Assert.AreEqual(orderedComments.First().Id, 3);
+        }
+
+        [TestMethod]
+        public void CheckEqualEventsObjects()
+        {
+            var event1 = Utility.GenerateRandomEvent(true);
+            var event2 = event1;
+
+            Assert.IsTrue(event1.Equals(event2));
+        }
+
+        [TestMethod]
+        public void CheckNotEqualEventsObjects()
+        {
+            var event1 = Utility.GenerateRandomEvent(true);
+            event1.Id = event1.GetHashCode();
+            var event2 = Utility.GenerateRandomEvent(true);
+            event2.Id = event2.GetHashCode();
+
+            Assert.IsFalse(event1.Equals(event2));
+        }
+
+        [TestMethod]
+        public void HasResult()
+        {
+            var event1 = Utility.GenerateRandomEvent(true);
+            event1.Result = new EventResult();
+            var event2 = Utility.GenerateRandomEvent(true);
+
+            Assert.IsTrue(event1.HasResult());
+            Assert.IsFalse(event2.HasResult());
         }
     }
 }

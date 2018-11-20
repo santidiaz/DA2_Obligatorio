@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnitTests.Utilities;
 
-namespace UnitTests
+namespace UnitTests.EntitiesTests
 {
     [TestClass]
     public class SportTest

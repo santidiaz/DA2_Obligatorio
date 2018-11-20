@@ -90,5 +90,29 @@ namespace UnitTests.EntitiesTests
 
             Assert.IsFalse(firstComment.Description == secondComment.Description && secondComment.CreatorName == secondComment.CreatorName);
         }
+
+        [TestMethod]
+        public void AreEqualComments()
+        {
+            var expectedDescription = Constants.Comment.DESCRIPTION_TEST;
+            var expectedCreatorName = Constants.Comment.CREATORNAME_TEST;
+            var expectedDate = DateTime.Now;
+            var commentA = new Comment
+            {
+                Description = expectedDescription,
+                DatePosted = expectedDate,
+                CreatorName = expectedCreatorName
+            };
+
+            var commentB = new Comment
+            {
+                Description = expectedDescription,
+                CreatorName = expectedCreatorName,
+                DatePosted = expectedDate
+            };
+            var hashCode = commentA.GetHashCode();
+
+            Assert.IsTrue(commentA.Equals(commentB));
+        }
     }
 }

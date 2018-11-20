@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BusinessEntities.JoinEntities;
 
-namespace UnitTests
+namespace UnitTests.EntitiesTests
 {
     [TestClass]
     public class UserTest
@@ -163,6 +163,18 @@ namespace UnitTests
             {
                 Assert.IsTrue(ex.Message.Equals(Constants.UserError.LAST_NAME_REQUIRED));
             }
+        }
+
+        [TestMethod]
+        public void AddFavouriteTeam()
+        {
+            var user = Utility.GenerateRandomUser();
+            var userFavTeams = new List<UserTeam>();
+            var newTeam = Utility.GenerateRandomTeam();
+            var newFavTeam = new UserTeam { Team = newTeam, User = new User(), TeamId = 1, UserId = 1 };
+
+            user.AddFavouriteTeam(newFavTeam);
+            Assert.IsTrue(user.FavouriteTeams.Contains(newFavTeam));
         }
     }
 }
