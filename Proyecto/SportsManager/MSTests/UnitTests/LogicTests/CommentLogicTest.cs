@@ -24,6 +24,7 @@ namespace UnitTests.LogicTests
             mock.Setup(mr => mr.UserCreatorExists(It.IsAny<string>())).Returns(true);
             mock.Setup(mr => mr.AddComment(It.IsAny<Comment>(), 1)).Verifiable();
             mockEvent.Setup(mr => mr.GetAllEvents()).Returns(new List<Event>() { new Event() { Id = 1 } });
+            mockEvent.Setup(mr => mr.GetEventById(1, true)).Returns(new Event { Id = 1 } ); 
 
 
             // Instancio SportLogic con el mock como parametro.
