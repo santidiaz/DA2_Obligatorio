@@ -37,7 +37,7 @@ namespace BusinessEntities
             set
             {
                 List<Team> teams = value?.Select(v => v.Team).ToList();
-                if (teams != null && this.TeamsQuantityIsValid(teams))
+                if (teams != null && this.TeamsQuantityIsInvalid(teams))
                     throw new EntitiesException(Constants.EventError.INVALID_AMOUNT_OF_TEAMS, ExceptionStatusCode.InvalidData);
 
                 this._teams = value;
@@ -76,18 +76,13 @@ namespace BusinessEntities
         }        
         public void ModifyTeams(List<Team> newTeams)
         {
-            bool result = this.TeamsQuantityIsValid(newTeams);
-            if(result)
+            if (this.TeamsQuantityIsInvalid(newTeams))
                 throw new EntitiesException(Constants.EventError.INVALID_AMOUNT_OF_TEAMS, ExceptionStatusCode.InvalidData);
 
             if (this.MultipleTeamsEvent)
-            {
                 this.LoadTeams(newTeams);
-            }
             else
-            {
                 this.SetupTwoTeamsEvent(newTeams);
-            }
         }
         public void AddNewComment(Comment commentToAdd)
         {
@@ -117,7 +112,7 @@ namespace BusinessEntities
         #region Private methods
         private void LoadTeams(List<Team> teams)
         {
-            if (teams != null && this.TeamsQuantityIsValid(teams))
+            if (teams != null && this.TeamsQuantityIsInvalid(teams))
                 throw new EntitiesException(Constants.EventError.INVALID_AMOUNT_OF_TEAMS, ExceptionStatusCode.InvalidData);
 
             this._teams = new List<EventTeam>();
@@ -157,7 +152,7 @@ namespace BusinessEntities
         }
 
         // Teams must be 2, or if SPORT allow multipleTeamsEvents, count must be 3 or more.
-        private bool TeamsQuantityIsValid(List<Team> teams)
+        private bool TeamsQuantityIsInvalid(List<Team> teams)
         {
             return teams == null || teams.Count() < 2 || (!this.MultipleTeamsEvent && teams.Count() > 2);
         }
