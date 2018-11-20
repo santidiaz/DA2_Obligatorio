@@ -141,10 +141,14 @@ const appRoutes: Routes = [
     data: { onlyAdmin: true }
   },
   {
+    path: 'eventResult', component: EventResultComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: false }
+  },
+  {
     path: 'sportResultTable', component: SportResultTable,
     canActivate: [AuthGuard],
     data: { onlyAdmin: false }
-    
   },
   {
     path: 'editevent', component: EditEventComponent,

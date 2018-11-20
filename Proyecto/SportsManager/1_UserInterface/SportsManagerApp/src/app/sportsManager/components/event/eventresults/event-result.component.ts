@@ -6,6 +6,9 @@ import { UserService } from 'src/app/sportsManager/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from 'src/app/sportsManager/services/event.service';
 import { SetupEventResultRequest } from 'src/app/sportsManager/interfaces/setup-event-result-request';
+import { TeamPoints } from 'src/app/sportsManager/interfaces/team-points';
+import { TeamResult } from 'src/app/sportsManager/interfaces/team-result';
+import { TeamService } from 'src/app/sportsManager/services/team.service';
 
 
 @Component({
@@ -15,12 +18,13 @@ import { SetupEventResultRequest } from 'src/app/sportsManager/interfaces/setup-
 })
 export class EventResultComponent extends BaseComponent {
 
-    //winnerTeam: string;
-
-    //protected currentEvent: Event;
-    //protected eventResultRequest: SetupEventResultRequest;
-    //protected showSuccessMessage: boolean = false;
-    //protected disableElements: boolean = false;
+    displayedColumns: string[] = ['position', 'teamName', 'teamPoints'];
+    tableDataSource: Array<TeamResult> = [];
+    currentEvent: Event;
+    isMultipleTeamsEvent: boolean = false;
+    drawMatch: boolean = false;
+    winnerTeam: TeamResult;
+    loseTeam: TeamResult;
 
     constructor(
         private eventService: EventService,
@@ -29,72 +33,40 @@ export class EventResultComponent extends BaseComponent {
     }
 
     componentOnInit() {
-        /*if (this.router != null) {
-            let currentEventId = this.router.snapshot.paramMap.get('eventId');
+        if (this.router != null) {
+            let currentEventId = this.router.snapshot.paramMap.get('Id');
             this.eventService.getEventById(Number(currentEventId)).subscribe(
                 response => this.handleResponse(response),
                 error => this.handleError(error));
-        }*/
+        }
     }
 
     private handleResponse(response: any) {
-        //this.currentEvent = <Event>response;
+        this.currentEvent = <Event>response;
+        if(!this.currentEvent.allowMultipleTeams){
+            this.setupSimpleEventData();
+        } else {
+            this.tableDataSource = this.currentEvent.result.teamsResult;
+            this.isMultipleTeamsEvent = true;
+        }
     }
 
+    private setupSimpleEventData(){
+        let teamA = this.currentEvent.result.teamsResult[0];
+        let teamB = this.currentEvent.result.teamsResult[1];
+        if(teamA.teamPoints == teamB.teamPoints){
+            this.drawMatch = true;
+            this.winnerTeam = teamA;
+            this.loseTeam = teamB;
+        } else if (teamA.teamPoints > teamB.teamPoints){
+            this.winnerTeam = teamA;
+            this.loseTeam = teamB;
+        } else {
+            this.winnerTeam = teamB;
+            this.loseTeam = teamA;
+        }
+    }
     private handleError(error: any) {
         console.log(error);
-        //let algo = error;
     }
-
-
-    setupSimpleEventResult($event) {
-
-        /*let teamsResult = new Array<string>();
-        if (this.winnerTeam == '2') {
-            teamsResult.push(this.currentEvent.teams[0].name);
-            teamsResult.push(this.currentEvent.teams[1].name);
-            this.eventResultRequest = { teamNames: teamsResult, drawMatch: true };
-        } else if (this.winnerTeam == '0') {
-            teamsResult.push(this.currentEvent.teams[0].name);
-            teamsResult.push(this.currentEvent.teams[1].name);
-            this.eventResultRequest = { teamNames: teamsResult, drawMatch: false };
-        } else {
-            teamsResult.push(this.currentEvent.teams[1].name);
-            teamsResult.push(this.currentEvent.teams[0].name);
-            this.eventResultRequest = { teamNames: teamsResult, drawMatch: false };
-        }
-
-        this.eventService.setupEventResult(this.currentEvent.id, this.eventResultRequest).subscribe(
-            response => this.handleSetupResponse(response),
-            error => this.handleError(error));*/
-    }
-
-    private handleSetupResponse(response: any) {
-       // this.showSuccessMessage = true;
-        //this.disableElements = true;
-
-    }
-
-
-   /* setupMultipleEventResult($event){
-        this.eventResultRequest = { teamNames: this.playersPositionsResult, drawMatch: false };
-        this.eventService.setupEventResult(this.currentEvent.id, this.eventResultRequest).subscribe(
-            response => this.handleSetupResponse(response),
-            error => this.handleError(error));
-    }*/
-
-    /*current_selected: string;
-    playersPositionsResult: Array<string> = [];
-    onSelection(e, v) {
-        this.current_selected = e.option.value;
-
-        if(e.option.selected){
-            this.playersPositionsResult.push(e.option.value.name);
-        } else {
-            const index = this.playersPositionsResult.indexOf(e.option.value.name, 0);
-            if (index > -1) {
-                this.playersPositionsResult.splice(index, 1);
-            }
-        }
-    }*/
 }

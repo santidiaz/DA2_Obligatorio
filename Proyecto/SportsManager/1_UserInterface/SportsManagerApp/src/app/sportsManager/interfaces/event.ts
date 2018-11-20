@@ -1,6 +1,7 @@
 import { Team } from "./team";
 import { Comment } from "./comment";
 import { DatePipe } from "@angular/common";
+import { EventResult } from "./event-result";
 
 export interface Event {
     id: number;
@@ -11,5 +12,5 @@ export interface Event {
     sportId: number;
     sportName: string;
     teamsString: Array<string>;
-    result: Array<any>;
+    result: EventResult;
 }

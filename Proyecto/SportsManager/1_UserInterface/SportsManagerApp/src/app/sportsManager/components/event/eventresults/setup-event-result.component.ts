@@ -31,7 +31,7 @@ export class SetupEventResultComponent extends BaseComponent {
 
     componentOnInit() {
         if (this.router != null) {
-            let currentEventId = this.router.snapshot.paramMap.get('eventId');
+            let currentEventId = this.router.snapshot.paramMap.get('Id');
             this.eventService.getEventById(Number(currentEventId)).subscribe(
                 response => this.handleResponse(response),
                 error => this.handleError(error));
