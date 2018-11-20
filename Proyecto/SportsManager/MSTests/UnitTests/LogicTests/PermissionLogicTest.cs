@@ -99,8 +99,8 @@ namespace UnitTests.LogicTests
                 //Start test
                 var permissionLogic = new PermissionLogic.PermissionLogic(premissionsPersistanceMock.Object, userPersistanceMock.Object);
 
-                //Guid result = permissionLogic.LogIn(expectedUserName, "123456");
-                //Assert.IsTrue(!result.Equals(Guid.Empty));
+                permissionLogic.LogIn(expectedUserName, "123456");
+                Assert.IsTrue(true);
             }
             catch (EntitiesException eEx)
             {
