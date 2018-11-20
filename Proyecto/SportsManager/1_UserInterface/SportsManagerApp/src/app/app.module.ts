@@ -50,7 +50,10 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CommentService } from './sportsManager/services/comment.service';
 import { UserFavouriteTeamsEventsComponent } from './sportsManager/components/users/favouriteTeamsEvents/user-favourite-teams-events.component';
+import { SetupEventResultComponent } from './sportsManager/components/event/eventresults/setup-event-result.component';
+import { SportResultTable } from './sportsManager/components/sport/resultTable/sport-result-table.component';
 import { EditEventComponent } from './sportsManager/components/event/editevent/editevent.component';
+import { EventResultComponent } from './sportsManager/components/event/eventresults/event-result.component';
 
 
 const appRoutes: Routes = [
@@ -133,6 +136,21 @@ const appRoutes: Routes = [
     data: { onlyAdmin: true }
   },
   {
+    path: 'setupEventResult', component: SetupEventResultComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: true }
+  },
+  {
+    path: 'eventResult', component: EventResultComponent,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: false }
+  },
+  {
+    path: 'sportResultTable', component: SportResultTable,
+    canActivate: [AuthGuard],
+    data: { onlyAdmin: false }
+  },
+  {
     path: 'editevent', component: EditEventComponent,
     canActivate: [AuthGuard],
     data: { onlyAdmin: true }
@@ -164,7 +182,10 @@ const appRoutes: Routes = [
     EventDetailsComponent,
     UserFavouriteTeamsEventsComponent,
     EventListByParamComponent,
+    SetupEventResultComponent,
+    SportResultTable,
     EditEventComponent,
+    EventResultComponent,
     PageNotFoundComponent
   ],
   imports: [

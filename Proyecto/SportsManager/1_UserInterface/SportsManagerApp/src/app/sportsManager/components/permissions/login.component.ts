@@ -6,6 +6,7 @@ import { SessionService } from '../../services/session.service';
 import { Router } from '@angular/router';
 import { SessionUser } from '../../interfaces/session-user';
 import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { BaseService } from '../../services/base.service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent extends BaseComponent {
 
   constructor(
     private sessionService: SessionService,
+    private baseService: BaseService,
     private permissionService: PermissionService,
     private router: Router) {
     super();
@@ -40,7 +42,9 @@ export class LoginComponent extends BaseComponent {
   }
 
   componentOnChanges(changes: SimpleChanges) {
-    this.activateSubmit = true;
+    if(this.formIsValid){
+      this.activateSubmit = true;
+    }
   }
 
   get formIsValid(): boolean {
@@ -54,6 +58,7 @@ export class LoginComponent extends BaseComponent {
     this.sessionService.setSession(response);
 
     if (this.sessionService.isAuthenticated) {
+      this.baseService.setHeaderWithToken();
       this.router.navigate(['/favTeamsEvents']);
     }
   }

@@ -3,6 +3,7 @@ import { BaseComponent } from '../../../shared/base.component';
 import { EventService } from '../../../services/event.service'
 import { Event } from '../../../interfaces/event'
 import { SessionService } from 'src/app/sportsManager/services/session.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class EventListComponent extends BaseComponent {
   protected eventTypeTitle: string = 'Teams';
   successMessage: string = null;
 
-  constructor(private eventService: EventService, private sessionService: SessionService) {
+  constructor(
+    private eventService: EventService,
+    private sessionService: SessionService,
+    private router: Router) {
     super();
   }
 
@@ -44,7 +48,7 @@ export class EventListComponent extends BaseComponent {
   selectedEvent: Event;
   isFormActive: boolean;
 
-  get isAdmin(){
+  get isAdmin() {
     return this.sessionService.isAdmin();
   }
 
@@ -56,20 +60,34 @@ export class EventListComponent extends BaseComponent {
     this.selectedEvent = event;
     this.isFormActive = true;
   }
-  
+
   deleteEvent($event, event: Event) {
     this.eventService.deleteEvent(event.id).subscribe(resp => {
-        console.log(JSON.stringify(resp));
-        this.successMessage = 'Operation success';
-        this.updateGrid();
+      console.log(JSON.stringify(resp));
+      this.successMessage = 'Operation success';
+      this.updateGrid();
     });
-}
+  }
 
   closeForm($event) {
     this.isFormActive = false;
     this.updateGrid();
   }
 
+  isValidForSetupResult(value: Event): boolean {
+    var initialDate = new Date(<any>value.initialDate);
+    var currentDate = new Date();
+    if (value.result == undefined && initialDate < currentDate) {
+      return true;
+    }
+    return false;
+  }
 
+  setupResult($event, event: Event) {
+    this.router.navigate(['/setupEventResult', { Id: event.id }]);
+  }
 
+  viewResult($event, event: Event) {
+    this.router.navigate(['/eventResult', { Id: event.id }]);
+  }
 }

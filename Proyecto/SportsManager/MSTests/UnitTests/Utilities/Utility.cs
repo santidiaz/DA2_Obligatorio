@@ -38,23 +38,27 @@ namespace UnitTests.Utilities
 
             User randomUser = new User(randomName, randomLastName, randomUserName, randomPassword, randomEmail);
             return randomUser;
-        }        
-        
-        public static Event GenerateRandomEvent()
+        }
+
+        public static Event GenerateRandomEvent(bool multipleTeams)
         {
-            // TODO: Modifiar por refactoreo de eventTeams
-            //DateTime randomDate = DateTime.Now.AddDays(GetRandomNumber(10));
-            //Team team1 = new Team { Name = GetRandomTeamName() };
-            //Team team2 = new Team { Name = GetRandomTeamName(team1.Name) };
+            DateTime randomDate = DateTime.Now.AddDays(GetRandomNumber(10));
+            Team team1 = new Team { Name = GetRandomTeamName() };
+            Team team2 = new Team { Name = GetRandomTeamName(team1.Name) };
+            Team team3 = new Team { Name = "team3" };
+            Team team4 = new Team { Name = "team4" };
+            Team team5 = new Team { Name = "team5" };
 
-            //List<Team> teams = new List<Team> { team1, team2 };
-            //Sport sport1 = new Sport
-            //{
-            //    Name = GetRandomSportName(),
-            //    Teams = teams
-            //};
+            List<Team> teams = new List<Team> { team1, team2, team3, team4, team5 };
+            Sport sport1 = new Sport
+            {
+                Name = GetRandomSportName(),
+                Teams = teams,
+                AllowdMultipleTeamsEvents = multipleTeams
+            };
 
-            return null; //new Event(randomDate, sport1, team1, team2);
+            var evenTeams = multipleTeams ? teams.Take(2).ToList() : teams.Skip(1).Take(4).ToList();
+            return new Event(randomDate, sport1, evenTeams);
         }
 
         public static string GetRandomTeamName(string avoidName = null)
@@ -102,7 +106,7 @@ namespace UnitTests.Utilities
             return randomUser;
         }
 
-        public static List<Team> GetRandomTeamList()
+        public static List<Team> GetRandomTeamList(int length = 5)
         {
             return new List<Team>
             {
@@ -111,7 +115,7 @@ namespace UnitTests.Utilities
                 GenerateRandomTeam("teamC"),
                 GenerateRandomTeam("teamD"),
                 GenerateRandomTeam("teamE")
-            };
+            }.Take(length).ToList();
         }
 
         public static string GetRandomName()

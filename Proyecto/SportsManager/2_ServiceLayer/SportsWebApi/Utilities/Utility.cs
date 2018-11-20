@@ -61,6 +61,9 @@ namespace SportsWebApi.Utilities
 
         public static EventDTO TransformEventToDTO(Event events)
         {
+            if(events.Result?.TeamsResult?.Count > 0)
+                events.Result.TeamsResult = events.Result.TeamsResult.OrderByDescending(tr => tr.TeamPoints).ToList();
+
             return new EventDTO
             {
                 Id = events.Id,

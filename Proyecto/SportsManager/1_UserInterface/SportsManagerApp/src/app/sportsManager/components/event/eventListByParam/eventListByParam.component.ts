@@ -34,7 +34,7 @@ export class EventListByParamComponent extends BaseComponent {
         this.itemParam = null;
     }
 
-    ngOnInit() {
+    componentOnInit() {
 
         if (this.router != null) {
             this.nameParam = this.router.snapshot.paramMap.get('name');
@@ -43,11 +43,6 @@ export class EventListByParamComponent extends BaseComponent {
             this.updateGrid();
             this.successMessage = null;
         }
-
-    }
-
-    componentOnInit() {
-        this.updateGrid();
     }
 
     updateGrid() {

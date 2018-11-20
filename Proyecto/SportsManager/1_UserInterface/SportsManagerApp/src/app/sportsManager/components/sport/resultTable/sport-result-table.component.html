@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="card">
+        <h3 class="card-header">Setup event result </h3>
+        <div class="card-body">
+
+            <div class="row justify-content-start">
+                <div class="col-4">
+                    <label>Select a sport: </label>
+                    <select class="form-control" [ngModel]="sports" name="sportSelected" (ngModelChange)="onChange($event)">
+                        <option *ngFor="let sport of sports;" [ngValue]="sport" #name>{{sport.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div *ngIf="teamsPoints != undefined">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Team Name</th>
+                            <th scope="col">Team Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let teamPoints of teamsPoints; let i = index">
+                            <td>{{ i+1 }}</td>
+                            <td>{{ teamPoints.name }}</td>
+                            <td>{{ teamPoints.points }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

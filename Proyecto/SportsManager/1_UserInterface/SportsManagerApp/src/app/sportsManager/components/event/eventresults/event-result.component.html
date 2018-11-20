@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">Event Result</h5>
+        <div *ngIf="currentEvent != undefined" class="card-body">
+            <p class="card-text"><b>Id:</b> {{currentEvent.sportId}}</p>
+            <p class="card-text"><b>Sport:</b> {{currentEvent.sportName}}</p>
+            <p class="card-text"><b>Date:</b> {{ currentEvent.initialDate | date: 'dd/MM/yyyy' }}</p>
+
+            <div *ngIf="isMultipleTeamsEvent" class="d-flex p-2 bd-highlight">
+                <table mat-table [dataSource]="tableDataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> Position </th>
+                        <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="teamName">
+                        <th mat-header-cell *matHeaderCellDef> Player Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.teamName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="teamPoints">
+                        <th mat-header-cell *matHeaderCellDef> Points </th>
+                        <td mat-cell *matCellDef="let element"> {{element.teamPoints}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+
+            <div *ngIf="!isMultipleTeamsEvent" class="d-flex p-2 bd-highlight">
+                <div *ngIf="drawMatch">
+                    <h3>Match was a draw</h3>
+                    <mat-card>Team: {{winnerTeam.teamName}} - Points: {{winnerTeam.teamPoints}}</mat-card>
+                    <mat-card>Team: {{loseTeam.teamName}} - Points: {{loseTeam.teamPoints}}</mat-card>
+                </div>
+                <div *ngIf="!drawMatch">
+                    <mat-card>Winner is <b>{{winnerTeam.teamName}}</b> - Points: {{winnerTeam.teamPoints}}</mat-card>
+                    <mat-card>Loser is <b>{{loseTeam.teamName}}</b> - Points: {{loseTeam.teamPoints}}</mat-card>
+                </div>
+            </div>
+            <a [routerLink]="['/events']" class="btn btn-primary">Back to all events</a>
+        </div>
+    </div>
+</div>

@@ -11,12 +11,6 @@ namespace DataAccess.Implementations
 {
     public class EventPersistance : IEventPersistance
     {
-        //private Context currentContext;
-        //public EventPersistance(Context context)
-        //{
-        //    currentContext = context;
-        //}
-
         public void AddEvent(Event newEvent)
         {
             using (Context context = new Context())
@@ -37,23 +31,15 @@ namespace DataAccess.Implementations
             }
         }
 
-
-
         public void SaveEventResult(Event finishedEvent)
         {
             using (Context context = new Context())
             {
                 context.Events.Attach(finishedEvent);
-
-                //context.EventResults.Attach(finishedEvent.Result);
-                //foreach(var result in finishedEvent.Result.TeamsResult)
-                //    context.TeamResults.Attach(result);
-
                 context.SaveChanges();
             }
         }
-
-
+        
         public Event GetEventById(int eventId, bool eagerLoad = false)
         {
             Event foundEvent;
@@ -68,6 +54,7 @@ namespace DataAccess.Implementations
 
                     foundEvent = context.Events.OfType<Event>()
                         .Include(e => e.Result)
+                        .Include(e => e.Result.TeamsResult)
                         .Include(e => e.Sport)
                         .Include(e => e.Comments)
                     .FirstOrDefault(e => e.Id.Equals(eventId));
