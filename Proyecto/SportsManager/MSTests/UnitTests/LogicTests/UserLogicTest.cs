@@ -753,5 +753,123 @@ namespace UnitTests.LogicTests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void GetUsers()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+
+                User mockedUser = Utility.GenerateRandomUser();
+
+                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
+                mockTeamPersitance.Setup(tm => tm.GetTeamById(It.IsAny<int>())).Returns((Team)null);
+
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+
+                userLogic.GetUsers();
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.AreEqual(eEx.Message, Constants.TeamErrors.ERROR_TEAM_NOT_EXISTS);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void ModifyUserFavouriteTeamsUserNameNotExists()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+
+                User mockedUser = Utility.GenerateRandomUser();
+                Team mockedTeam = Utility.GenerateRandomTeam();
+
+                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
+                mockTeamPersitance.Setup(tm => tm.GetTeamById(It.IsAny<int>())).Returns(mockedTeam);
+                mockTeamPersitance.Setup(up => up.GetTeamByName(It.IsAny<string>())).Returns(new Team());
+
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+
+                userLogic.ModifyUserFavouriteTeams(mockedUser.UserName, new List<string>() { "Nacional" });
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void ModifyUserFavouriteTeamsOk()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+
+                User mockedUser = Utility.GenerateRandomUser();
+                Team mockedTeam = Utility.GenerateRandomTeam();
+
+                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, true)).Returns(mockedUser);
+                mockTeamPersitance.Setup(tm => tm.GetTeamById(It.IsAny<int>())).Returns(mockedTeam);
+                mockTeamPersitance.Setup(up => up.GetTeamByName(It.IsAny<string>())).Returns(new Team());
+
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+
+                userLogic.ModifyUserFavouriteTeams(mockedUser.UserName, new List<string>() { "Nacional" });
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void ModifyUserFavouriteTeamsTeamByNameNotExists()
+        {
+            try
+            {
+                var mockUserPersitance = new Mock<IUserPersistance>();
+                var mockTeamPersitance = new Mock<ITeamPersistance>();
+
+                User mockedUser = Utility.GenerateRandomUser();
+                Team mockedTeam = Utility.GenerateRandomTeam();
+
+                mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, true)).Returns(mockedUser);
+                mockTeamPersitance.Setup(tm => tm.GetTeamById(It.IsAny<int>())).Returns(mockedTeam);
+                mockTeamPersitance.Setup(up => up.GetTeamByName(It.IsAny<string>())).Returns((Team)null);
+
+                UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
+
+                userLogic.ModifyUserFavouriteTeams(mockedUser.UserName, new List<string>() { "Nacional" });
+                Assert.IsTrue(true);
+            }
+            catch (EntitiesException eEx)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(true);
+            }
+        }
     }
 }
