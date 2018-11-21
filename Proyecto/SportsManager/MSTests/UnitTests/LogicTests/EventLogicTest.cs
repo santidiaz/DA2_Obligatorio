@@ -20,38 +20,42 @@ namespace UnitTests.LogicTests
         {
             try
             {
-                //#region Initialize Mock
-                //var eventMock = new Mock<IEventPersistance>();
-                //var sportMock = new Mock<ISportPersistance>();
-                //var teamMock = new Mock<ITeamPersistance>();
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
 
-                //Team team1 = new Team { Name = "Nacional" };
-                //Team team2 = new Team { Name = "Defensor" };
-                //Team team3 = new Team { Name = "FC Barcelona" };
-                //Team team4 = new Team { Name = "Sevilla" };
+                Team team1 = new Team { Name = "Nacional" };
+                Team team2 = new Team { Name = "Defensor" };
+                Team team3 = new Team { Name = "FC Barcelona" };
+                Team team4 = new Team { Name = "Sevilla" };
+                var ev1Teams = new List<Team> { team1, team3 };
+                var ev2Teams = new List<Team> { team2, team1 };
 
-                // TODO: Refactor
-                //List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-                //Sport sport = new Sport("Football", teams);
-                //Event event1 = new Event(DateTime.Now, sport, team1, team3);
-                //Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
+                Event event1 = new Event(DateTime.Now, sport, ev1Teams);
+                Event event2 = new Event(DateTime.Now.AddHours(3), sport, ev2Teams);
 
-                //// Events that will be returned for today.
-                //List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
-                //eventMock.Setup(em => em.GetEventsByDate(event1.InitialDate)).Returns(todaysMockedEvents);
-                //sportMock.Setup(sm => sm.GetSportByName(sport.Name, true)).Returns(sport);
-                //teamMock.Setup(tm => tm.GetTeamByName(team1.Name)).Returns(team1);
-                //teamMock.Setup(tm => tm.GetTeamByName(team3.Name)).Returns(team2);
-                //#endregion
+                // Events that will be returned for today.
+                List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
+                eventMock.Setup(em => em.GetEventsByDate(event1.InitialDate)).Returns(todaysMockedEvents);
+                sportMock.Setup(sm => sm.GetSportByName(sport.Name, true)).Returns(sport);
+                teamMock.Setup(tm => tm.GetTeamByName(team1.Name)).Returns(team1);
+                teamMock.Setup(tm => tm.GetTeamByName(team3.Name)).Returns(team2);
+                #endregion
 
-                //EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-                //eventLogic.AddEvent(sport.Name, team1.Name, team3.Name, event1.InitialDate);
+                var expectedTeamNames = new List<string> { team1.Name, team3.Name };
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                eventLogic.AddEvent(sport.Name, expectedTeamNames, event1.InitialDate);
 
                 Assert.Fail();
             }
             catch (EntitiesException eEx)
             {
-                Assert.IsTrue(eEx.Message.Equals(Constants.EventError.ALREADY_EXISTS));
+                string expectedEx = string.Format(Constants.EventError.EVENT_TEAM_EXISTS, 0, DateTime.Now.Date);
+                Assert.IsTrue(eEx.Message.Equals(expectedEx));
+                Assert.AreEqual(eEx.StatusCode, ExceptionStatusCode.InvalidData);
             }
             catch (Exception ex)
             {
@@ -64,39 +68,38 @@ namespace UnitTests.LogicTests
         {
             try
             {
-                //#region Initialize Mock
-                //var eventMock = new Mock<IEventPersistance>();
-                //var sportMock = new Mock<ISportPersistance>();
-                //var teamMock = new Mock<ITeamPersistance>();
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
 
-                //Team team1 = new Team { Name = "Nacional" };
-                //Team team2 = new Team { Name = "Defensor" };
-                //Team team3 = new Team { Name = "FC Barcelona" };
-                //Team team4 = new Team { Name = "Sevilla" };
+                Team team1 = new Team { Name = "Nacional", Id = 1 };
+                Team team2 = new Team { Name = "Defensor", Id = 2 };
+                Team team3 = new Team { Name = "Barcelona", Id = 3 };
+                Team team4 = new Team { Name = "Sevilla", Id = 4 };
 
-                // TODO: Refactor
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
 
-                //List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-                //Sport sport = new Sport("Football", teams);
-                //Event event1 = new Event(DateTime.Now, sport, team1, team3);
-                //Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
+                var ev1Teams = new List<Team> { team1, team3 };
+                Event event1 = new Event(DateTime.Now, sport, ev1Teams);
+                event1.Id = 1;
 
-                //// Todays event that will be returned.
-                //List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
+                // Todays event that will be returned.
+                List<Event> todaysMockedEvents = new List<Event> { event1 };
 
-                //eventMock.Setup(em => em.GetEventsByDate(event1.InitialDate)).Returns(todaysMockedEvents);
-                //sportMock.Setup(sm => sm.GetSportByName(sport.Name, true)).Returns(sport);
-                //teamMock.Setup(tm => tm.GetTeamByName(team1.Name)).Returns(team1);
-                //teamMock.Setup(tm => tm.GetTeamByName(team2.Name)).Returns(team2);
-                //#endregion
+                eventMock.Setup(em => em.GetEventsByDate(event1.InitialDate)).Returns(todaysMockedEvents);
+                sportMock.Setup(sm => sm.GetSportByName(sport.Name, true)).Returns(sport);
+                teamMock.Setup(tm => tm.GetTeamByName(team2.Name)).Returns(team2);
+                teamMock.Setup(tm => tm.GetTeamByName(team4.Name)).Returns(team4);
+                #endregion
 
-                //// Instancio UserLogic con el mock como parametro.
-                //EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                // Instancio UserLogic con el mock como parametro.
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
 
-                //eventLogic.AddEvent(sport.Name, team1.Name, team2.Name, event1.InitialDate);
-                //Assert.IsTrue(true);
-
-                Assert.Fail();
+                var newTeamNames = new List<string> { team2.Name, team4.Name };
+                eventLogic.AddEvent(sport.Name, newTeamNames, event1.InitialDate);
+                Assert.IsTrue(true);
             }
             catch (EntitiesException eEx)
             {
@@ -137,38 +140,38 @@ namespace UnitTests.LogicTests
         [TestMethod]
         public void DeleteEventById()
         {
-            //try
-            //{
-            //    #region Initialize Mock
-            //    var mock = new Mock<IEventPersistance>();
+            try
+            {
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
 
-            //    Team team1 = new Team { Name = "Nacional" };
-            //    Team team2 = new Team { Name = "Defensor" };
-            //    Team team3 = new Team { Name = "FC Barcelona" };
-            //    Team team4 = new Team { Name = "Sevilla" };
-            //    List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-            //    Sport sport = new Sport("Football", teams);
-            //    Event event1 = new Event(DateTime.Now, sport, team1, team3);
-            //    Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
+                Team team1 = new Team { Name = "Nacional", Id = 1 };
+                Team team2 = new Team { Name = "Defensor", Id = 2 };
+                Team team3 = new Team { Name = "Barcelona", Id = 3 };
+                Team team4 = new Team { Name = "Sevilla", Id = 4 };
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
 
-            //    // Todays event that will be returned.
-            //    List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
+                var ev1Teams = new List<Team> { team1, team3 };
+                var ev2Teams = new List<Team> { team2, team1 };
+                Event event1 = new Event(DateTime.Now, sport, ev1Teams);
+                event1.Id = 1;
 
-            //    eventMock.Setup(up => up.GetTodayEvents()).Returns(todaysMockedEvents);
-            //    #endregion
+                eventMock.Setup(up => up.GetEventById(1, true)).Returns(event1);
+                #endregion
 
-            //    // Instancio UserLogic con el mock como parametro.
-            //    EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-            //    Event eventToValidate = new Event(DateTime.Now, sport, team1, team2);
+                // Instancio UserLogic con el mock como parametro.
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                eventLogic.DeleteEventById(1);
 
-            //    eventLogic.AddEvent(eventToValidate);
-
-            //    Assert.IsTrue(true);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Assert.Fail(ex.Message);
-            //}
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
         }
 
         [TestMethod]
@@ -182,7 +185,6 @@ namespace UnitTests.LogicTests
                 eventMock.Setup(ep => ep.GetAllEvents()).Returns(new List<Event>());
 
                 EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-                //int eventToSearch = 3;
                 List<Event> foundEvent = eventLogic.GetAllEvents();
 
                 Assert.IsTrue(true);
@@ -194,7 +196,7 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
-        public void TryToModifyEventThatDoNotExists()
+        public void TryAddEventEventWithDuplicatedTeamNames()
         {
             try
             {
@@ -203,148 +205,81 @@ namespace UnitTests.LogicTests
                 var sportMock = new Mock<ISportPersistance>();
                 var teamMock = new Mock<ITeamPersistance>();
 
-                eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns((Event)null);
+                Team team1 = new Team { Name = "Nacional" };
+                Team team2 = new Team { Name = "Defensor" };
+                Team team3 = new Team { Name = "FC Barcelona" };
+                Team team4 = new Team { Name = "Sevilla" };
+                var ev1Teams = new List<Team> { team1, team3 };
+                var ev2Teams = new List<Team> { team2, team1 };
+
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
+                Event event1 = new Event(DateTime.Now, sport, ev1Teams);
+                Event event2 = new Event(DateTime.Now.AddHours(3), sport, ev2Teams);
+
+                // Events that will be returned for today.
+                List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
+                eventMock.Setup(em => em.GetEventsByDate(event1.InitialDate)).Returns(todaysMockedEvents);
+                sportMock.Setup(sm => sm.GetSportByName(sport.Name, true)).Returns(sport);
+                teamMock.Setup(tm => tm.GetTeamByName(team1.Name)).Returns(team1);
+                teamMock.Setup(tm => tm.GetTeamByName(team3.Name)).Returns(team2);
+                #endregion
+
+                var expectedTeamNames = new List<string> { team1.Name, team1.Name };
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                eventLogic.AddEvent(sport.Name, expectedTeamNames, event1.InitialDate);
+
+                Assert.Fail();
+            }
+            catch (EntitiesException eEx)
+            {
+                string expectedEx = string.Format(Constants.EventError.EVENT_TEAM_EXISTS, 0, DateTime.Now.Date);
+                Assert.AreEqual(eEx.Message, Constants.SportErrors.REPEATED_TEAMS);
+                Assert.AreEqual(eEx.StatusCode, ExceptionStatusCode.InvalidData);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [TestMethod]
+        public void TryToModifyEventWithDuplicateTeamNames()
+        {
+            try
+            {
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
+
+                Team team1 = new Team { Name = "Nacional", Id = 1 };
+                Team team2 = new Team { Name = "Defensor", Id = 2 };
+                Team team3 = new Team { Name = "Barcelona", Id = 3 };
+                Team team4 = new Team { Name = "Sevilla", Id = 4 };
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
+
+                var ev1Teams = new List<Team> { team1, team2 };
+                Event event1 = new Event(DateTime.Now, sport, ev1Teams);
+                event1.Id = 1;
+
+                // Events that will be returned for today.
+                List<Event> todaysMockedEvents = new List<Event> { event1 };
+
+                eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(event1);
+                eventMock.Setup(em => em.GetEventsByDate(It.IsAny<DateTime>())).Returns(todaysMockedEvents);
                 #endregion
 
                 EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-                string dummySportNameA = string.Empty;
-                string dummySportNameB = string.Empty;
+                var dummySportNames = new List<string> { team1.Name, team1.Name };
 
-                // TODO: Refactor
-                //eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now);
-
-                Assert.Fail();
+                eventLogic.ModifyEvent(1, dummySportNames, DateTime.Now.AddHours(10));
             }
             catch (EntitiesException eEx)
             {
-                Assert.AreEqual(eEx.Message, Constants.EventError.NOT_FOUND);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
-
-        [TestMethod]
-        public void TryToModifyEventWithWrongTeamA()
-        {
-            try
-            {
-                //#region Initialize Mock
-                //var eventMock = new Mock<IEventPersistance>();
-                //var sportMock = new Mock<ISportPersistance>();
-                //var teamMock = new Mock<ITeamPersistance>();
-
-                //Team team1 = new Team { Name = "Nacional" };
-                //Team team2 = new Team { Name = "Defensor" };
-                //Team team3 = new Team { Name = "Barcelona" };
-                //Team team4 = new Team { Name = "Sevilla" };
-                //List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-                //Sport sport = new Sport("Football", teams);
-
-                //Event mockedEvent = new Event(DateTime.Now, sport, team1, team4);
-
-                //eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(mockedEvent);
-                //#endregion
-
-                //EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-                //string dummySportNameA = "Aguada";
-                //string dummySportNameB = string.Empty;
-
-                // TODO: Refactor
-                //eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now);
-
-                Assert.Fail();
-            }
-            catch (EntitiesException eEx)
-            {
-                Assert.AreEqual(eEx.Message, string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, "Aguada"));
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
-
-        [TestMethod]
-        public void TryToModifyEventWithWrongTeamB()
-        {
-            try
-            {
-                //#region Initialize Mock
-                //var eventMock = new Mock<IEventPersistance>();
-                //var sportMock = new Mock<ISportPersistance>();
-                //var teamMock = new Mock<ITeamPersistance>();
-
-                //Team team1 = new Team { Name = "Nacional" };
-                //Team team2 = new Team { Name = "Defensor" };
-                //Team team3 = new Team { Name = "Barcelona" };
-                //Team team4 = new Team { Name = "Sevilla" };
-                //List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-                //Sport sport = new Sport("Football", teams);
-
-                //Event mockedEvent = new Event(DateTime.Now, sport, team1, team4);
-
-                //eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(mockedEvent);
-                //#endregion
-
-                //EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-                //string dummySportNameA = team3.Name;
-                //string dummySportNameB = "Aguada";
-
-                // TODO: Refactor
-                //eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now);
-
-                Assert.Fail();
-            }
-            catch (EntitiesException eEx)
-            {
-                Assert.AreEqual(eEx.Message, string.Format(Constants.SportErrors.TEAM_NOT_IN_SPORT, "Aguada"));
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
-
-        [TestMethod]
-        public void TryToModifyEventThatAlredyExists()
-        {
-            try
-            {
-                //#region Initialize Mock
-                //var eventMock = new Mock<IEventPersistance>();
-                //var sportMock = new Mock<ISportPersistance>();
-                //var teamMock = new Mock<ITeamPersistance>();
-
-                // TODO: Refactor
-
-                //Team team1 = new Team { Name = "Nacional" };
-                //Team team2 = new Team { Name = "Defensor" };
-                //Team team3 = new Team { Name = "Barcelona" };
-                //Team team4 = new Team { Name = "Sevilla" };
-                //List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-                //Sport sport = new Sport("Football", teams);
-                //Event event1 = new Event(DateTime.Now, sport, team1, team3);
-                //Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
-
-                //// Events that will be returned for today.
-                //List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
-
-                //eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(event1);
-                //eventMock.Setup(em => em.GetEventsByDate(It.IsAny<DateTime>())).Returns(todaysMockedEvents);
-                //#endregion
-
-                //EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-                //string dummySportNameA = team1.Name;
-                //string dummySportNameB = team3.Name;
-
-                //eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now.AddHours(10));
-                Assert.Fail();
-            }
-            catch (EntitiesException eEx)
-            {
-                Assert.AreEqual(eEx.Message, Constants.EventError.ALREADY_EXISTS);
+                Assert.AreEqual(eEx.Message, Constants.SportErrors.REPEATED_TEAMS);
+                Assert.AreEqual(eEx.StatusCode, ExceptionStatusCode.InvalidData);
             }
             catch (Exception ex)
             {
@@ -357,37 +292,42 @@ namespace UnitTests.LogicTests
         {
             try
             {
-                // TODO: Refactor
+                #region Initialize Mock
+                var eventMock = new Mock<IEventPersistance>();
+                var sportMock = new Mock<ISportPersistance>();
+                var teamMock = new Mock<ITeamPersistance>();
 
-                //#region Initialize Mock
-                //var eventMock = new Mock<IEventPersistance>();
-                //var sportMock = new Mock<ISportPersistance>();
-                //var teamMock = new Mock<ITeamPersistance>();
+                Team team1 = new Team { Name = "Nacional", Id = 1 };
+                Team team2 = new Team { Name = "Defensor", Id = 2 };
+                Team team3 = new Team { Name = "Barcelona", Id = 3 };
+                Team team4 = new Team { Name = "Sevilla", Id = 4 };
+                List<Team> teams = new List<Team> { team1, team2, team3, team4 };
+                Sport sport = new Sport("Football", teams);
 
-                //Team team1 = new Team { Name = "Nacional" };
-                //Team team2 = new Team { Name = "Defensor" };
-                //Team team3 = new Team { Name = "Barcelona" };
-                //Team team4 = new Team { Name = "Sevilla" };
-                //List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-                //Sport sport = new Sport("Football", teams);
-                //Event event1 = new Event(DateTime.Now, sport, team1, team3);
-                //Event event2 = new Event(DateTime.Now.AddHours(3), sport, team3, team1);
+                var ev1Teams = new List<Team> { team1, team3 };
+                var ev2Teams = new List<Team> { team3, team1 };
+                Event event1 = new Event(DateTime.Now, sport, ev1Teams);
+                Event event2 = new Event(DateTime.Now.AddHours(3), sport, ev2Teams);
+                event1.Id = 1;
+                event2.Id = 2;
 
-                //// Events that will be returned for today.
-                //List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
+                // Events that will be returned for today.
+                List<Event> todaysMockedEvents = new List<Event> { event1, event2 };
 
-                //eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(event1);
-                //eventMock.Setup(em => em.GetEventsByDate(It.IsAny<DateTime>())).Returns(todaysMockedEvents);
-                //eventMock.Setup(em => em.ModifyEvent(It.IsAny<Event>())).Verifiable();
-                //#endregion
+                teamMock.Setup(tm => tm.GetTeamByName("Defensor")).Returns(team2);
+                teamMock.Setup(tm => tm.GetTeamByName("Sevilla")).Returns(team4);
+                eventMock.Setup(em => em.GetEventById(It.IsAny<int>(), true)).Returns(event1);
+                eventMock.Setup(em => em.GetEventsByDate(It.IsAny<DateTime>())).Returns(todaysMockedEvents);
+                eventMock.Setup(em => em.ModifyEvent(It.IsAny<Event>())).Verifiable();
+                #endregion
 
-                //EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
-                //string dummySportNameA = team2.Name;
-                //string dummySportNameB = team4.Name;
+                EventLogic eventLogic = new EventLogic(eventMock.Object, sportMock.Object, teamMock.Object);
+                string dummySportNameA = team2.Name;
+                string dummySportNameB = team4.Name;
+                var dummySportsNames = new List<string> { dummySportNameA, dummySportNameB };
 
-                //eventLogic.ModifyEvent(1, dummySportNameA, dummySportNameB, DateTime.Now.AddHours(10));
-                //Assert.IsTrue(true);
-                Assert.Fail();
+                eventLogic.ModifyEvent(1, dummySportsNames, DateTime.Now.AddHours(10));
+                Assert.IsTrue(true);
             }
             catch (EntitiesException eEx)
             {

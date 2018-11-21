@@ -63,6 +63,7 @@ namespace BusinessLogic
 
             Event eventToModify = this.GetEventById(eventId, true);
             List<Team> foundTeams = this.FindTeams(teamNames);
+
             ValidateTeamsEventExistsWithEventId(foundTeams, newDate, eventId);
 
             eventToModify.ModifyTeams(foundTeams);
