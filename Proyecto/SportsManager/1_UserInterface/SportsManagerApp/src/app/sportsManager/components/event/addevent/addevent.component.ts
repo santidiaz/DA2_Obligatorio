@@ -108,12 +108,14 @@ export class AddEventComponent extends BaseComponent {
     }
 
     private handleError(error: any, element: EventRequest) {
+        this.eventsToAdd = null;
         if(this.errorMessage == null) this.errorMessage = '';
         this.errorMessage += 'The event : ' + element.teamNames + ' has error : ' + error.error + "<br/>";
     }
 
     private handleErrorDynamic(error: any) {
         this.errorMessage = error.error;
+        this.eventsToAdd = null;
     }
 
 }
