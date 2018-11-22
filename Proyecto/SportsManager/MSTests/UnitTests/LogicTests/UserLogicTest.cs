@@ -655,49 +655,6 @@ namespace UnitTests.LogicTests
         }
 
         [TestMethod]
-        public void GetCommentsOfUserFavouriteTemasEventsTest()
-        {
-            try
-            {
-                // TODO: Refactor
-
-                //var mockUserPersitance = new Mock<IUserPersistance>();
-                //var mockTeamPersitance = new Mock<ITeamPersistance>();
-
-                //User mockedUser = Utility.GenerateRandomUser();
-
-                //Team team1 = new Team { Name = "Nacional" };
-                //Team team2 = new Team { Name = "Defensor" };
-                //Team team3 = new Team { Name = "FC Barcelona" };
-                //Team team4 = new Team { Name = "Sevilla" };
-                //List<Team> teams = new List<Team> { team1, team2, team3, team4 };
-                //Sport sport = new Sport("Football", teams);
-                //Event event1 = new Event(DateTime.Now, sport, team1, team3);
-                //Event event2 = new Event(DateTime.Now.AddHours(3), sport, team2, team1);
-
-                //List<Event> mockedEvents = new List<Event> { event1, event2};
-
-                //mockUserPersitance.Setup(up => up.GetUserByUserName(mockedUser.UserName, false)).Returns(mockedUser);
-                //mockUserPersitance.Setup(up => up.GetCommentsOfUserFavouriteTemasEvents(mockedUser)).Returns(mockedEvents);
-
-                //UserLogic userLogic = new UserLogic(mockUserPersitance.Object, mockTeamPersitance.Object);
-
-                //List<Event> result = userLogic.GetCommentsOfUserFavouriteTemasEvents(mockedUser.UserName);
-                //Assert.IsNotNull(result);
-
-                Assert.Fail();
-            }
-            catch (EntitiesException eEx)
-            {
-                Assert.Fail(eEx.Message);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
-
-        [TestMethod]
         public void TryDeleteUserFavouriteTeamThatDoNotExists()
         {
             try

@@ -8,13 +8,10 @@ import {
     AfterViewChecked,
     OnDestroy
 } from "@angular/core";
-import { SessionService } from "../services/session.service";
 
 
 export class BaseComponent implements OnChanges, OnInit, AfterContentInit, AfterContentChecked,
     AfterViewInit, AfterViewChecked, OnDestroy {
-
-    //protected _contextInfo: UserInfo;
 
     protected isAdmin: boolean;
 
@@ -61,8 +58,6 @@ export class BaseComponent implements OnChanges, OnInit, AfterContentInit, After
 
     protected componentOnDestroy() {
         // unsubscribe all the active subscriptions
-        //this.subscriptionManager.endAllSubscriptions();
-        //this.subscriptionManager.endAllTimeouts();
     }
 
     protected componentDoCheck() {

@@ -54,11 +54,11 @@ namespace BusinessEntities
                 this.TeamsResult.Add(new TeamResult(teamNames[1], 0));
             }
         }
-        private void GenerateResultForPlayers(List<string> teamsResult)
+        private void GenerateResultForPlayers(List<string> teamsNames)
         {
             this.TeamsResult = new List<TeamResult>();
             int count = 0;
-            teamsResult.ForEach(teamName
+            teamsNames.ForEach(teamName
                 => {
                     if (count == 0)
                         this.TeamsResult.Add(new TeamResult(teamName, 3));
