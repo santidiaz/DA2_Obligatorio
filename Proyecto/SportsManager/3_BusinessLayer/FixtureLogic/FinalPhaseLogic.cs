@@ -88,7 +88,6 @@ namespace FixtureLogic
             List<Event> generatedEvents = new List<Event>();
 
             var teams = new List<Team>();
-            // TODO refactor..
             foreach (Match currentMatch in matches)
             {
                 teams = new List<Team>();

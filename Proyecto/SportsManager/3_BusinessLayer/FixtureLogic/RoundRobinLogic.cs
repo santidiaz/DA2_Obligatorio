@@ -92,7 +92,6 @@ namespace FixtureLogic
                             {
                                 if (this.DoesTodayTeamMatchExists(events, aMatch, initialDate))
                                 {
-                                    // TODO: Refactor...
                                     //events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
                                     List<Team> teams = new List<Team>();
                                     teams.Add(aMatch.Local);
@@ -105,8 +104,7 @@ namespace FixtureLogic
                         }
                         else
                         {   // First iteration
-
-                            // TODO: Refactor...
+                            
                             //events.Add(new Event(initialDate, aSport, aMatch.Local, aMatch.Away));
                             List<Team> teams = new List<Team>();
                             teams.Add(aMatch.Local);

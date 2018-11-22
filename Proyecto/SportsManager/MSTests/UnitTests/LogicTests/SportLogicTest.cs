@@ -163,8 +163,7 @@ namespace UnitTests.LogicTests
                 // Creo el objeto mock, en este caso una implementacion mockeada de IUserPersistance.
                 var mock = new Mock<ISportPersistance>();
                 Sport sportToDelete = Utility.GenerateRandomSport(Constants.Sport.NAME_SPORT_FUTBOL);
-
-                //TODO : Como mockeo un retorno NULL ?
+                
                 mock.Setup(up => up.GetSportByName(It.IsAny<string>(), true)).Returns((new Sport()));
                 mock.Setup(up => up.GetEventsBySport(It.IsAny<Sport>())).Returns(new List<Event>());
 
