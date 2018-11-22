@@ -29,6 +29,7 @@ export class LoginComponent extends BaseComponent {
   }
 
   componentOnInit() {
+    this.sessionService.logOff();
     this.loginForm = { username: '', password: '' };
     this.errorMessage = undefined;
   }

@@ -8,7 +8,12 @@ import { environment } from '../../../environments/environment';
 export class BaseService {
 
     private basicHeaderConfig = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    private tokenHeaderConfig = undefined;
+    private tokenHeaderConfig = new HttpHeaders(
+        {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': this.sessionService.getToken()
+        });
 
     constructor(private http: HttpClient, private sessionService: SessionService) { }
 
