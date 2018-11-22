@@ -53,7 +53,7 @@ export class ListSportsComponent extends BaseComponent {
         this.selectedSport.newName = sport.name;
         this.selectedSport.oldName = sport.name;
         this.selectedSport.multipleTeamsAllowed = sport.multipleTeamsAllowed;
-        this.selectedSport.sportOID = sport.sportOID;
+        this.selectedSport.sportOID = sport.id;
         this.isFormActive = true;
       }
 

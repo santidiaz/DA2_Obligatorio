@@ -17,7 +17,7 @@ namespace FixtureProvider
             try
             {
                 string rootPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\"));
-                string algorithmsPath = string.Concat(rootPath, @"\\Resources\\\Algorithms");
+                string algorithmsPath = string.Concat(rootPath, @"Resources\Algorithms");
 
                 // Load assemblies.
                 List<Assembly> algorithmsAssemblies = GetAlgorithmsAssemblies(algorithmsPath);
@@ -26,7 +26,7 @@ namespace FixtureProvider
                 IEnumerable<Type> allowedTypes = GetAllowedTypes(algorithmsAssemblies);
 
                 // Instantiate types.
-                loadedAlgorithms = InstantiateTypes(allowedTypes);
+                loadedAlgorithms = InstantiateTypes(allowedTypes);  
             }
             catch (Exception ex)
             {

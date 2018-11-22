@@ -1,7 +1,7 @@
 import { TeamRequest } from "./team-request";
 
 export interface SportRequest {
-    sportOID: number;
+    id: number;
     name: string;
     multipleTeamsAllowed: boolean;
     teams: Array<TeamRequest>;
