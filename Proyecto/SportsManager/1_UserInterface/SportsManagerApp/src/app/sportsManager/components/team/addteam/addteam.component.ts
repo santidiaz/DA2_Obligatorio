@@ -40,9 +40,7 @@ export class AddTeamComponent extends BaseComponent {
       this.sports = response;
     });
   }
-
-  upLoadSPor
-
+  
   onSubmit() {
 
     if (this.formModel.name == '' ||

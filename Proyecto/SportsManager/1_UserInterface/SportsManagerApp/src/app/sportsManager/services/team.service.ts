@@ -4,11 +4,14 @@ import { Observable } from "rxjs";
 import { TeamRequest } from "../interfaces/team-request";
 import { TeamModifyRequest } from "../interfaces/teammodifyrequest";
 import { TeamRequestFilter } from "../interfaces/team-request-filter";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { SessionService } from "./session.service";
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class TeamService {
 
-  constructor(private baseService: BaseService) { }
+  constructor(private http: HttpClient, private sessionService: SessionService, private baseService: BaseService) { }
 
   addTeam(request: TeamRequest): Observable<any> {
     let formData: FormData = new FormData();
@@ -16,7 +19,8 @@ export class TeamService {
     formData.append('TeamName', request.name);
     formData.append('SportID', request.sportOID.toString());
 
-    return this.baseService.post<FormData, any>('team', formData);
+    var url = 'team';
+    return this.http.post(`${environment.apiUrl}${url}`, formData);
   }
 
   getTeams(teamRequestFilter: TeamRequestFilter): Observable<TeamRequest[]> {
