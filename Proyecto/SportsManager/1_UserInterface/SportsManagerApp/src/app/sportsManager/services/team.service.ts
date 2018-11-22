@@ -39,7 +39,8 @@ export class TeamService {
     formData.append('OldName', request.oldName);
     formData.append('NewName', request.newName);
 
-    return this.baseService.put<FormData, any>('team', formData);
+    var url = 'team';
+    return this.http.put(`${environment.apiUrl}${url}`, formData);
   }
 
   getEventsByTeam(teamName: string): Observable<Array<Event>> {

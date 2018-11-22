@@ -91,8 +91,7 @@ namespace SportsWebApi.Controllers
                 return this.StatusCode(500, ex.Message);
             }
         }
-
-        [PermissionFilter(true)]
+        
         [HttpPut()]
         public IActionResult ModifyTeamByName([FromForm] ModifyTeamInput input)
         {
