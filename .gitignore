@@ -336,6 +336,3 @@ Proyecto/SportsManager/4_DataLayer/DataAccess/Migrations/
 
 # Ignore Visual Studio Code folder
 Proyecto/SportsManager/.vscode/
-
-# exception to the rule
-!Release/.gitkeep 
