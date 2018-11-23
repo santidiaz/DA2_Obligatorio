@@ -18,10 +18,10 @@ export class SetupEventResultComponent extends BaseComponent {
     // private errorMessage: any;
     winnerTeam: string;
 
-    protected currentEvent: Event;
-    protected eventResultRequest: SetupEventResultRequest;
-    protected showSuccessMessage: boolean = false;
-    protected disableElements: boolean = false;
+    currentEvent: Event;
+    eventResultRequest: SetupEventResultRequest;
+    showSuccessMessage: boolean = false;
+    disableElements: boolean = false;
 
     constructor(
         private eventService: EventService,

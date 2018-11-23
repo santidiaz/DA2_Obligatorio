@@ -14,8 +14,8 @@ import { Router } from '@angular/router';
 export class EventListComponent extends BaseComponent {
 
   private errorMessage: any;// TODO: Ver que retorna y crear una interfaz con eso. codigo y mensaje ?
-  protected events: Array<Event>;
-  protected eventTypeTitle: string = 'Teams';
+  events: Array<Event>;
+  eventTypeTitle: string = 'Teams';
   successMessage: string = null;
 
   constructor(

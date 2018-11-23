@@ -70,7 +70,7 @@ export class AddEventManualComponent extends BaseComponent {
     };
   }
 
-  onChangeSport(event: EventTarget, sport: SportRequest) {
+  onChangeSport(event: EventTarget) {
     this.errorMessageManual = null;
     this.sports.forEach(element => {
       if(element.name == this.fromModel.sportName) this.teams = element.teams;

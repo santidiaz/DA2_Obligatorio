@@ -6,7 +6,7 @@
             <div class="form-group">
                 <label>Sport</label>
                 <select [(ngModel)]="fromModel.sportName" name="sportSelected" class="form-control" required 
-                        (change)="onChangeSport($event, sport)">
+                        (change)="onChangeSport($event)">
                     <option *ngFor="let sport of sports" [ngValue]="sport.name" #name>{{sport.name}}</option>
                 </select>
             </div>

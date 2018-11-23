@@ -13,7 +13,7 @@ import { UserService } from 'src/app/sportsManager/services/user.service';
 export class UserFavouriteTeamsEventsComponent extends BaseComponent {
 
     private errorMessage: any;
-    protected events: Array<Event> = [];
+    events: Array<Event> = [];
     successMessage: string = null;
 
     constructor(private userService: UserService, private sessionService: SessionService) {

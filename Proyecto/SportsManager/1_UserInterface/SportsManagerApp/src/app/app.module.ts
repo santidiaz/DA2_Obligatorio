@@ -30,11 +30,11 @@ import { NavigationBar } from './sportsManager/components/navigation/nav-bar';
 import { EventService } from './sportsManager/services/event.service';
 
 // EVENT COMPONENTS
-import { EventListComponent } from './sportsManager/components/event/eventlist/event-list.component';
+import { EventListComponent } from './sportsManager/components/event/eventList/event-list.component';
 import { AddEventComponent } from './sportsManager/components/event/addevent/addevent.component';
 import { AddEventDynamicComponent } from './sportsManager/components/event/addeventdynamic/addeventdynamic.component';
 import { AddEventManualComponent } from './sportsManager/components/event/addeventmanual/addeventmanual.component';
-import { EventsCalendar } from './sportsManager/components/event/eventCalendar/event-calendar.component';
+import { EventsCalendar } from './sportsManager/components/event/eventcalendar/event-calendar.component';
 import { EventDetailsComponent } from './sportsManager/components/event/eventdetails/event-details.component';
 import { EventListByParamComponent } from './sportsManager/components/event/eventListByParam/eventListByParam.component';
 

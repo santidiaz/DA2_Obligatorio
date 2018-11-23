@@ -13,7 +13,7 @@ import {
 export class BaseComponent implements OnChanges, OnInit, AfterContentInit, AfterContentChecked,
     AfterViewInit, AfterViewChecked, OnDestroy {
 
-    protected isAdmin: boolean;
+    isAdmin: boolean;
 
     constructor() {
     }

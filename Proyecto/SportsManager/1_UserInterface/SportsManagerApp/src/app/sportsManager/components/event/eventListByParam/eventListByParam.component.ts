@@ -16,8 +16,8 @@ import { SportService } from 'src/app/sportsManager/services/sport.service';
 export class EventListByParamComponent extends BaseComponent {
 
     private errorMessage: any;// TODO: Ver que retorna y crear una interfaz con eso. codigo y mensaje ?
-    protected events: Array<Event>;
-    protected eventTypeTitle: string = 'Teams';
+    events: Array<Event>;
+    eventTypeTitle: string = 'Teams';
     successMessage: string = null;
     title: string = null;
 
